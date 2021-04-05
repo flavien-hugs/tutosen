@@ -1,0 +1,13 @@
+# utils.context_proc.py
+
+from core import settings
+
+
+def tutosen_context_processor(request):
+    return {
+        'title': settings.SITE_NAME,
+        'addr_email': 'contact@tutosen.com',
+        'site_description': settings.SITE_DESCRIPTION,
+        'site_keywords': settings.META_KEYWORDS,
+        'request': request,
+    }
