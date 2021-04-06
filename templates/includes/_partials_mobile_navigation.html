@@ -1,0 +1,135 @@
+{% comment %} mobile navigation {% endcomment %}
+
+{% load static %}{% get_static_prefix as STATIC_PREFIX %}
+<ul	class="navbar-nav navbar-right-wrap ml-auto d-lg-none d-flex nav-top-wrap">
+	<li class="dropdown stopevent">
+		<a class="btn btn-light btn-icon rounded-circle text-muted indicator indicator-primary" href="#!"
+		role="button" id="dropdownNotification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<i class="fe fe-bell"></i>
+		</a>
+
+		<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownNotification">
+			<div>
+				<div class="border-bottom px-3 pt-1 pb-3 d-flex justify-content-between align-items-center">
+					<span class="h5 mb-0">Notifications</span>
+					<a href="#" class="text-muted">
+						<span class="align-middle">
+							<i class="fe fe-settings mr-1"></i>
+						</span>
+					</a>
+				</div>
+
+				<ul class="list-group list-group-flush notification-list-scroll">
+					<li class="list-group-item bg-light">
+						<div class="row">
+							<div class="col">
+								<div class="d-flex">
+									<img height="256" width="256" src="{{ STATIC_PREFIX }}img/avatar-1.jpg" alt="" class="avatar-md rounded-circle"/>
+									<div class="ml-3">
+										<h5 class="font-weight-bold mb-1">Kristin Watson:</h5>
+										<p class="mb-3">Krisitn Watsan like your comment on course Javascript
+										Introduction!</p>
+
+										<span class="font-size-xs text-muted">
+											<span>
+												<span class="fe fe-thumbs-up text-success mr-1"></span>
+												2 hours ago,
+											</span>
+											<span class="ml-1">2:19 PM</span>
+										</span>
+								  	</div>
+								</div>
+								<a class="stretched-link" href="#!"></a>
+							</div>
+
+							<div class="col-auto text-center">
+							   	<a href="#!" class="badge-dot badge-info" data-toggle="tooltip" data-placement="top" title="" 
+							   	data-original-title="Mark as read"></a>
+							   	
+							   	<div>
+							   		<a href="#!" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remove">
+							   			<i class="fe fe-x text-muted"></i>
+								  	</a>
+							   	</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+
+				<div class="border-top px-3 pt-3 pb-0">
+					<a href="p#" class="text-muted">
+						Voir toutes les notifications
+					</a>
+				</div>
+			</div>
+		</div>
+	</li>
+
+	<li class="dropdown ml-2">
+		<a class="rounded-circle" href="#!" role="button" id="dropdownUser" data-toggle="dropdown"
+		aria-haspopup="true" aria-expanded="false">
+			<div class="avatar avatar-md avatar-indicators avatar-online">
+				<img alt="avatar" src="{{ STATIC_PREFIX }}img/avatar-1.jpg" class="rounded-circle"/>
+			</div>
+		</a>
+
+		<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownUser">
+			<div class="dropdown-item">
+				<div class="d-flex">
+					<div class="avatar avatar-md avatar-indicators avatar-online">
+						<img alt="avatar" src="{{ STATIC_PREFIX }}img/avatar-1.jpg" class="rounded-circle"/>
+					</div>
+
+					<div class="ml-3 lh-1">
+						<h5 class="mb-1">Annette Black</h5>
+						<p class="mb-0 text-muted">annette@geeksui.com</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="dropdown-divider"></div>
+
+			<ul class="list-unstyled">
+				<li>
+					<a class="dropdown-item" href="#">
+						<i class="fe fe-user mr-2"></i>
+						Profile
+					</a>
+				</li>
+
+				<li>
+					<a class="dropdown-item" href="#">
+						<i class="fe fe-star mr-2"></i>
+						Subscription
+					</a>
+				</li>
+
+				<li>
+					<a class="dropdown-item" href="#!">
+						<i class="fe fe-settings mr-2"></i>
+						Settings
+					</a>
+				</li>
+			</ul>
+
+			<div class="dropdown-divider"></div>
+
+			<ul class="list-unstyled">
+				<li>
+					<a class="dropdown-item" href="#">
+						<i class="fe fe-power nav-icon"></i>
+						Deconnexion
+					</a>
+				</li>
+			</ul>
+		</div>
+	</li>
+</ul>
+
+{% comment %} Button {% endcomment %}
+<button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbar-default"
+aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
+	<span class="icon-bar top-bar mt-0"></span>
+	<span class="icon-bar middle-bar"></span>
+	<span class="icon-bar bottom-bar"></span>
+</button>

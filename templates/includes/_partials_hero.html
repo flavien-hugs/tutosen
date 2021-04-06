@@ -1,0 +1,96 @@
+{% comment %} hero section {% endcomment %}
+{% load static %}
+<div class="bg-primary pt-8">
+	<div class="container">
+		<div class="row align-items-center no-gutters">
+			<div class="col-xl-5 col-lg-6 col-md-12">
+				<div class="py-5 py-lg-0">
+					<h1 class="text-white display-4 font-weight-bold">
+						Bienvenue sur {{ title|upper }}
+					</h1>
+					<p class="text-white-50 mb-4 lead">
+						Choisissez parmi des centaines de tuteurs, contactez votre tuteur choisi;
+						et commencez votre cours individuel personnalisé à un moment qui vous convient.
+					</p>
+					<a href="#" class="btn btn-success">Parcourir les cours</a>
+					<a href="#" class="btn btn-white">Vous êtes un instructeur ?</a>
+				</div>
+			</div>
+			<div class=" col-xl-7 col-lg-6 col-md-12 text-lg-right text-center">
+				<img src="{{ STATIC_PREFIX }}img/hero-img.png" alt="" class="img-fluid"/>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% comment %} features {% endcomment %}
+<div class="bg-white py-4 shadow-sm">
+	<div class="container">
+		<div class="row align-items-center no-gutters">
+			<div class="col-xl-4 col-lg-4 col-md-6 mb-lg-0 mb-4">
+				<div class="d-flex align-items-center">
+					<span class="icon-sahpe icon-lg bg-light-warning rounded-circle text-center text-dark-warning font-size-md">
+						<i class="fe fe-video"></i>
+					</span>
+					<div class="ml-3">
+						<h4 class="mb-0 font-weight-semi-bold">30,000 cours en ligne</h4>
+						<p class="mb-0">Profitez d'une variété de sujets inédits</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-xl-4 col-lg-4 col-md-6 mb-lg-0 mb-4">
+				<div class="d-flex align-items-center">
+					<span class="icon-sahpe icon-lg bg-light-warning rounded-circle text-center text-dark-warning font-size-md">
+						<i class="fe fe-users"></i>
+					</span>
+					<div class="ml-3">
+						<h4 class="mb-0 font-weight-semi-bold">Instruction experte</h4>
+						<p class="mb-0">Trouvez le bon instructeur pour vous</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-xl-4 col-lg-4 col-md-12">
+				<div class="d-flex align-items-center">
+					<span class="icon-sahpe icon-lg bg-light-warning rounded-circle text-center text-dark-warning font-size-md">
+						<i class="fe fe-clock"></i>
+					</span>
+					<div class="ml-3">
+						<h4 class="mb-0 font-weight-semi-bold">Accès à vie</h4>
+						<p class="mb-0">Apprenez à votre rythme</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+{% comment %} page header {% endcomment %}
+<div class="pt-8 pb-9 ">
+	<div class="container">
+		<div class="row ">
+			<div class="offset-xl-2 col-xl-8 offset-lg-1 col-lg-10 col-md-12 col-12">
+				<div class="text-center mb-5">
+					<h1 class="display-2 font-weight-bold">
+						Trouver l'instructeur qui vous convient
+					</h1>
+					<p class="lead">
+						Leurs caractéristiques, leurs parcours,
+						leurs conseils font qu'ils sont les meilleurs de leur domaine.
+					</p>
+				</div>
+
+				<form class="form-row px-md-20">
+					<div class="form-group col pl-0">
+						<input type="email" class="form-control" placeholder="Rechercher un tuteur, un spécialiste,..." required="">
+					</div>
+					<div class="form-group col-auto pl-0">
+						<button class="btn btn-primary" type="submit">Rechercher</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

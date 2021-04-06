@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="fr">
+	<head>
+		{% load static %}{% get_static_prefix as STATIC_PREFIX %}
+
+		{% include "includes/_partials_meta.html" %}
+		{% include "includes/_static_css_link.html" %}
+		
+		<title>
+			{% block title %}
+				{% if page_title %}
+					{{ page_title|capfirst }}
+				{% else %}
+					{{ site_description|capfirst }}
+				{% endif %} &smid; {{ title|upper }}
+			{% endblock title %}
+		</title>
+	</head>
+
+	<body class="d-flex flex-column">
+		{% include "includes/_partials_navigation.html" %}
+		{% include "includes/_partials_hero.html" %}
+
+		{% block page_content %}
+			
+		{% endblock page_content %}
+		
+		{% include "includes/_partials_footer.html" %}
+		{% include "includes/_static_javascript_link.html" %}
+	</body>
+</html>
