@@ -3,7 +3,7 @@
 {% url 'accounts:login_url' as login_url %}
 {% url 'accounts:teacher_all_url' as teacher_all_url %}
 {% url 'courses:courses_list_url' as courses_list_url %}
-
+{% url 'boards:teacher_dashboard_url' as teacher_dashboard_url %}
 
 <div class="collapse navbar-collapse" id="navbar-default">
 
@@ -121,7 +121,7 @@
 				
 				<ul class="list-unstyled">
 					<li>
-						<a class="dropdown-item" href="#">
+						<a class="dropdown-item" href="{{ teacher_dashboard_url }}">
 							<i class="fe fe-user mr-2"></i>
 							Mon Profile
 						</a>
