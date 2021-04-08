@@ -29,7 +29,7 @@ TEMPLATE_DEBUG = config('DEBUG', default=True, cast=bool)
 
 META_KEYWORDS = ''
 DEFAULT_CHARSET = 'UTF-8'
-SITE_DESCRIPTION = "tutosen"
+SITE_DESCRIPTION = "Apprendre, Comprendre, Innover & Partager"
 DEFAULT_CONTENT_TYPE = 'text/html'
 
 ALLOWED_HOSTS = []
@@ -63,10 +63,11 @@ PACKAGES_APPS = [
 ]
 
 LOCALS_APPS = [
-
+    'accounts.apps.AccountsConfig',
+    'courses.apps.CoursesConfig',
 ]
 
-INSTALLED_APPS += PACKAGES_APPS
+INSTALLED_APPS += PACKAGES_APPS + LOCALS_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -92,7 +93,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
 
-                'core.context_proc.tutosen_context_processor',
+                'utils.context_proc.tutosen_context_processor',
             ],
 
             'debug': DEBUG,

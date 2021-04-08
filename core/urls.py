@@ -5,12 +5,18 @@ from django.conf import settings
 from django.urls import path, include
 from django.conf.urls.static import static
 
+from django.views import generic
+
 admin.site.site_header = "TUTOSEN"
 admin.site.site_title = "TUTOSEN"
 admin.site.index_title = "WELCOME TO TUTOSEN"
 
 
 urlpatterns = [
+	path('', generic.TemplateView.as_view(template_name='index.html'), name='home'),
+    path('accounts/', include('accounts.urls', namespace='accounts')),
+    path('cours/', include('courses.urls', namespace='courses')),
+
 	path('jet/', include('jet.urls', 'jet')),
     path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     path('tinymce/', include('tinymce.urls')),

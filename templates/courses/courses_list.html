@@ -1,0 +1,418 @@
+{% extends "index.html" %}
+
+{% comment %} gabarit: liste des cours {% endcomment %}
+
+{% block page_content %}
+    {% url 'courses:courses_detail_url' as courses_detail_url %}
+
+    {% include "courses/snippets/_snippet_courses_header.html" %}
+
+    {% comment %} contenu liste des cours {% endcomment %}
+    <div class="py-6">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-12 mb-4">
+                    <div class="row d-lg-flex justify-content-between align-items-center">
+                        <div class="col-md-6 col-lg-8 col-xl-9">
+                            <h4 class="mb-3 mb-lg-0">Affichage de 9 sur 68 cours</h4>
+                        </div>
+
+                        <div class="d-inline-flex">
+                            <select class="selectpicker" data-width="100%">
+                                <option value="">Trier par</option>
+                                <option value="Newest">Les plus récent</option>
+                                <option value="Free">Gratuit</option>
+                                <option value="Most Popular">Les plus populaire</option>
+                                <option value="Highest Rated">Les plus cotés</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                {% comment %} sidebar for courses list {% endcomment %}
+                {% include "courses/snippets/_snippet_sidebar_courses_list.html" %}
+
+                {% comment %} content page {% endcomment %}
+                <div class="col-xl-9 col-lg-9 col-md-8 col-12">
+                    <div class="tab-content">
+                        <div class="pb-4">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6 col-12">
+                                    <div class="card  mb-4 card-hover">
+                                        <a href="{{ courses_detail_url }}" class="card-img-top">
+                                            <img src="{{ STATIC_PREFIX }}img/cours/course-react.jpg" alt="" 
+                                            class="card-img-top rounded-top">
+                                        </a>
+
+                                        <div class="card-body">
+                                            <h4 class="mb-2 text-truncate-line-2 ">
+                                                <a href="{{ courses_detail_url }}" class="text-inherit">
+                                                    Comment créer facilement un site web avec React ?
+                                                </a>
+                                            </h4>
+
+                                            <ul class="mb-3 list-inline">
+                                                <li class="list-inline-item">
+                                                    <i class="far fa-clock mr-1"></i>
+                                                    3h 56m
+                                                </li>
+
+                                                <li class="list-inline-item">
+                                                    <svg class="mr-1 mt-n1" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <rect x="3" y="8" width="2" height="6" rx="1" fill="#754FFE"></rect>
+                                                        <rect x="7" y="5" width="2" height="9" rx="1" fill="#DBD8E9"></rect>
+                                                        <rect x="11" y="2" width="2" height="12" rx="1" fill="#DBD8E9"></rect>
+                                                    </svg>Débutant
+                                                </li>
+                                            </ul>
+
+                                            <div class="lh-1">
+                                                <span>
+                                                    <i class="mdi mdi-star text-warning mr-n1"></i>
+                                                    <i class="mdi mdi-star text-warning mr-n1"></i>
+                                                    <i class="mdi mdi-star text-warning mr-n1"></i>
+                                                    <i class="mdi mdi-star text-warning mr-n1"></i>
+                                                    <i class="mdi mdi-star text-warning"></i>
+                                                </span>
+
+                                                <span class="text-warning">4.5</span>
+                                                <span class="font-size-xs text-muted">(7,700)</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="card-footer">
+                                            <div class="row align-items-center no-gutters">
+                                                <div class="col-auto">
+                                                    <img src="{{ STATIC_PREFIX }}img/avatar-1.jpg" class="rounded-circle avatar-xs" alt="">
+                                                </div>
+
+                                                <div class="col ml-2">
+                                                    <span>Flavien HUGS</span>
+                                                </div>
+
+                                                <div class="col-auto">
+                                                    <a href="#!" class="text-muted" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add to Bookmarks">
+                                                    <i class="fe fe-bookmark"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-6 col-12">
+                                    <div class="card  mb-4 card-hover">
+                                        <a href="{{ courses_detail_url }}" class="card-img-top">
+                                            <img src="{{ STATIC_PREFIX }}img/cours/course-python.jpg" alt="" 
+                                            class="card-img-top rounded-top">
+                                        </a>
+
+                                        <div class="card-body">
+                                            <h4 class="mb-2 text-truncate-line-2 ">
+                                                <a href="{{ courses_detail_url }}" class="text-inherit">
+                                                    Cours Python : construire une application web
+                                                </a>
+                                            </h4>
+
+                                            <ul class="mb-3 list-inline">
+                                                <li class="list-inline-item">
+                                                    <i class="far fa-clock mr-1"></i>
+                                                    3h 56m
+                                                </li>
+
+                                                <li class="list-inline-item">
+                                                    <svg class="mr-1 mt-n1" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <rect x="3" y="8" width="2" height="6" rx="1" fill="#754FFE"></rect>
+                                                        <rect x="7" y="5" width="2" height="9" rx="1" fill="#DBD8E9"></rect>
+                                                        <rect x="11" y="2" width="2" height="12" rx="1" fill="#DBD8E9"></rect>
+                                                    </svg>Débutant
+                                                </li>
+                                            </ul>
+
+                                            <div class="lh-1">
+                                                <span>
+                                                    <i class="mdi mdi-star text-warning mr-n1"></i>
+                                                    <i class="mdi mdi-star text-warning mr-n1"></i>
+                                                    <i class="mdi mdi-star text-warning mr-n1"></i>
+                                                    <i class="mdi mdi-star text-warning mr-n1"></i>
+                                                    <i class="mdi mdi-star text-warning"></i>
+                                                </span>
+
+                                                <span class="text-warning">4.5</span>
+                                                <span class="font-size-xs text-muted">(7,700)</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="card-footer">
+                                            <div class="row align-items-center no-gutters">
+                                                <div class="col-auto">
+                                                    <img src="{{ STATIC_PREFIX }}img/avatar-1.jpg" class="rounded-circle avatar-xs" alt="">
+                                                </div>
+
+                                                <div class="col ml-2">
+                                                    <span>Flavien HUGS</span>
+                                                </div>
+
+                                                <div class="col-auto">
+                                                    <a href="#!" class="text-muted" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add to Bookmarks">
+                                                    <i class="fe fe-bookmark"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-6 col-12">
+                                    <div class="card  mb-4 card-hover">
+                                        <a href="{{ courses_detail_url }}" class="card-img-top">
+                                            <img src="{{ STATIC_PREFIX }}img/cours/course-graphql.jpg" alt="" 
+                                            class="card-img-top rounded-top">
+                                        </a>
+
+                                        <div class="card-body">
+                                            <h4 class="mb-2 text-truncate-line-2 ">
+                                                <a href="{{ courses_detail_url }}" class="text-inherit">
+                                                    GraphQL : introduction à graphQL pour les débutants
+                                                </a>
+                                            </h4>
+
+                                            <ul class="mb-3 list-inline">
+                                                <li class="list-inline-item">
+                                                    <i class="far fa-clock mr-1"></i>
+                                                    3h 56m
+                                                </li>
+
+                                                <li class="list-inline-item">
+                                                    <svg class="mr-1 mt-n1" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <rect x="3" y="8" width="2" height="6" rx="1" fill="#754FFE"></rect>
+                                                        <rect x="7" y="5" width="2" height="9" rx="1" fill="#DBD8E9"></rect>
+                                                        <rect x="11" y="2" width="2" height="12" rx="1" fill="#DBD8E9"></rect>
+                                                    </svg>Débutant
+                                                </li>
+                                            </ul>
+
+                                            <div class="lh-1">
+                                                <span>
+                                                    <i class="mdi mdi-star text-warning mr-n1"></i>
+                                                    <i class="mdi mdi-star text-warning mr-n1"></i>
+                                                    <i class="mdi mdi-star text-warning mr-n1"></i>
+                                                    <i class="mdi mdi-star text-warning mr-n1"></i>
+                                                    <i class="mdi mdi-star text-warning"></i>
+                                                </span>
+
+                                                <span class="text-warning">4.5</span>
+                                                <span class="font-size-xs text-muted">(7,700)</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="card-footer">
+                                            <div class="row align-items-center no-gutters">
+                                                <div class="col-auto">
+                                                    <img src="{{ STATIC_PREFIX }}img/avatar-1.jpg" class="rounded-circle avatar-xs" alt="">
+                                                </div>
+
+                                                <div class="col ml-2">
+                                                    <span>Flavien HUGS</span>
+                                                </div>
+
+                                                <div class="col-auto">
+                                                    <a href="#!" class="text-muted" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add to Bookmarks">
+                                                    <i class="fe fe-bookmark"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-6 col-12">
+                                    <div class="card  mb-4 card-hover">
+                                        <a href="{{ courses_detail_url }}" class="card-img-top">
+                                            <img src="{{ STATIC_PREFIX }}img/cours/course-angular.jpg" alt="" 
+                                            class="card-img-top rounded-top">
+                                        </a>
+
+                                        <div class="card-body">
+                                            <h4 class="mb-2 text-truncate-line-2 ">
+                                                <a href="{{ courses_detail_url }}" class="text-inherit">
+                                                    Angular: le guide complet pour les débutants
+                                                </a>
+                                            </h4>
+
+                                            <ul class="mb-3 list-inline">
+                                                <li class="list-inline-item">
+                                                    <i class="far fa-clock mr-1"></i>
+                                                    3h 56m
+                                                </li>
+
+                                                <li class="list-inline-item">
+                                                    <svg class="mr-1 mt-n1" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <rect x="3" y="8" width="2" height="6" rx="1" fill="#754FFE"></rect>
+                                                        <rect x="7" y="5" width="2" height="9" rx="1" fill="#DBD8E9"></rect>
+                                                        <rect x="11" y="2" width="2" height="12" rx="1" fill="#DBD8E9"></rect>
+                                                    </svg>Débutant
+                                                </li>
+                                            </ul>
+
+                                            <div class="lh-1">
+                                                <span>
+                                                    <i class="mdi mdi-star text-warning mr-n1"></i>
+                                                    <i class="mdi mdi-star text-warning mr-n1"></i>
+                                                    <i class="mdi mdi-star text-warning mr-n1"></i>
+                                                    <i class="mdi mdi-star text-warning mr-n1"></i>
+                                                    <i class="mdi mdi-star text-warning"></i>
+                                                </span>
+
+                                                <span class="text-warning">4.5</span>
+                                                <span class="font-size-xs text-muted">(7,700)</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="card-footer">
+                                            <div class="row align-items-center no-gutters">
+                                                <div class="col-auto">
+                                                    <img src="{{ STATIC_PREFIX }}img/avatar-1.jpg" class="rounded-circle avatar-xs" alt="">
+                                                </div>
+
+                                                <div class="col ml-2">
+                                                    <span>Flavien HUGS</span>
+                                                </div>
+
+                                                <div class="col-auto">
+                                                    <a href="#!" class="text-muted" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add to Bookmarks">
+                                                    <i class="fe fe-bookmark"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-6 col-12">
+                                    <div class="card  mb-4 card-hover">
+                                        <a href="{{ courses_detail_url }}" class="card-img-top">
+                                            <img src="{{ STATIC_PREFIX }}img/cours/course-css.jpg" alt="" 
+                                            class="card-img-top rounded-top">
+                                        </a>
+
+                                        <div class="card-body">
+                                            <h4 class="mb-2 text-truncate-line-2 ">
+                                                <a href="{{ courses_detail_url }}" class="text-inherit">
+                                                    CSS : cours ultime de CSS, de débutant à avancé
+                                                </a>
+                                            </h4>
+
+                                            <ul class="mb-3 list-inline">
+                                                <li class="list-inline-item">
+                                                    <i class="far fa-clock mr-1"></i>
+                                                    3h 56m
+                                                </li>
+
+                                                <li class="list-inline-item">
+                                                    <svg class="mr-1 mt-n1" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <rect x="3" y="8" width="2" height="6" rx="1" fill="#754FFE"></rect>
+                                                        <rect x="7" y="5" width="2" height="9" rx="1" fill="#DBD8E9"></rect>
+                                                        <rect x="11" y="2" width="2" height="12" rx="1" fill="#DBD8E9"></rect>
+                                                    </svg>Débutant
+                                                </li>
+                                            </ul>
+
+                                            <div class="lh-1">
+                                                <span>
+                                                    <i class="mdi mdi-star text-warning mr-n1"></i>
+                                                    <i class="mdi mdi-star text-warning mr-n1"></i>
+                                                    <i class="mdi mdi-star text-warning mr-n1"></i>
+                                                    <i class="mdi mdi-star text-warning mr-n1"></i>
+                                                    <i class="mdi mdi-star text-warning"></i>
+                                                </span>
+
+                                                <span class="text-warning">4.5</span>
+                                                <span class="font-size-xs text-muted">(7,700)</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="card-footer">
+                                            <div class="row align-items-center no-gutters">
+                                                <div class="col-auto">
+                                                    <img src="{{ STATIC_PREFIX }}img/avatar-1.jpg" class="rounded-circle avatar-xs" alt="">
+                                                </div>
+
+                                                <div class="col ml-2">
+                                                    <span>Flavien HUGS</span>
+                                                </div>
+
+                                                <div class="col-auto">
+                                                    <a href="#!" class="text-muted" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add to Bookmarks">
+                                                    <i class="fe fe-bookmark"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-6 col-12">
+                                    <div class="card  mb-4 card-hover">
+                                        <a href="{{ courses_detail_url }}" class="card-img-top">
+                                            <img src="{{ STATIC_PREFIX }}img/cours/course-javascript.jpg" alt="" 
+                                            class="card-img-top rounded-top">
+                                        </a>
+
+                                        <div class="card-body">
+                                            <h4 class="mb-2 text-truncate-line-2 ">
+                                                <a href="{{ courses_detail_url }}" class="text-inherit">
+                                                    JavaScript : le JavaScript moderne depuis le début
+                                                </a>
+                                            </h4>
+
+                                            <ul class="mb-3 list-inline">
+                                                <li class="list-inline-item">
+                                                    <i class="far fa-clock mr-1"></i>
+                                                    3h 56m
+                                                </li>
+
+                                                <li class="list-inline-item">
+                                                    <svg class="mr-1 mt-n1" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <rect x="3" y="8" width="2" height="6" rx="1" fill="#754FFE"></rect>
+                                                        <rect x="7" y="5" width="2" height="9" rx="1" fill="#DBD8E9"></rect>
+                                                        <rect x="11" y="2" width="2" height="12" rx="1" fill="#DBD8E9"></rect>
+                                                    </svg>Débutant
+                                                </li>
+                                            </ul>
+
+                                            <div class="lh-1">
+                                                <span>
+                                                    <i class="mdi mdi-star text-warning mr-n1"></i>
+                                                    <i class="mdi mdi-star text-warning mr-n1"></i>
+                                                    <i class="mdi mdi-star text-warning mr-n1"></i>
+                                                    <i class="mdi mdi-star text-warning mr-n1"></i>
+                                                    <i class="mdi mdi-star text-warning"></i>
+                                                </span>
+
+                                                <span class="text-warning">4.5</span>
+                                                <span class="font-size-xs text-muted">(7,700)</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="card-footer">
+                                            <div class="row align-items-center no-gutters">
+                                                <div class="col-auto">
+                                                    <img src="{{ STATIC_PREFIX }}img/avatar-1.jpg" class="rounded-circle avatar-xs" alt="">
+                                                </div>
+
+                                                <div class="col ml-2">
+                                                    <span>Flavien HUGS</span>
+                                                </div>
+
+                                                <div class="col-auto">
+                                                    <a href="#!" class="text-muted" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add to Bookmarks">
+                                                    <i class="fe fe-bookmark"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock page_content %}

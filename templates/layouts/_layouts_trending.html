@@ -1,14 +1,17 @@
 {% comment %} layout for recommend {% endcomment %}
 
+{% url 'courses:courses_list_url' as courses_list_url %}
+
 <div class="bg-white pt-lg-8 pb-lg-3 pt-8 pb-6">
 	<div class="container">
 		<div class="row d-lg-flex align-items-center mb-4">
 			<div class="col">
-				<h2 class="mb-0">Tendance</h2>
+				<h2 class="mb-1 text-uppercase">Tendance</h2>
+				<p class="mb-0">Atteignez vos objectifs professionnels</p>
 			</div>
 			<div class="col-auto">
-				<a href="#" class="btn btn-outline-primary btn-sm text-uppercase">
-				voir tout</a>
+				<a href="{{ courses_list_url }}" class="btn btn-outline-primary btn-sm font-weight-bold font-weight-bold btn-sm text-uppercase">
+				voir tout <i class="mdi mdi-arrow-right-bold ml-2"></i></a>
 			</div>
 		</div>
 

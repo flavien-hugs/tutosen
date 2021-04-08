@@ -1,28 +1,32 @@
 {% comment %} layout for recommend {% endcomment %}
 
+{% url 'courses:courses_list_url' as courses_list_url %}
+{% url 'courses:courses_detail_url' as courses_detail_url %}
+
 <div class="bg-white pt-lg-8 pb-lg-3 pt-8 pb-6">
 	<div class="container">
 		<div class="row d-lg-flex align-items-center mb-4">
 			<div class="col">
-				<h2 class="mb-0">Recommandé pour vous</h2>
+				<h2 class="mb-1 text-uppercase">recommandé pour vous</h2>
+				<p class="mb-0">Allez au bout de vos passions</p>
 			</div>
 			<div class="col-auto">
-				<a href="#" class="btn btn-outline-primary btn-sm text-uppercase">
-				voir tout</a>
+				<a href="{{ courses_list_url }}" class="btn btn-outline-primary btn-sm font-weight-bold btn-sm text-uppercase">
+				voir tout <i class="mdi mdi-arrow-right-bold ml-2"></i></a>
 			</div>
 		</div>
 
 		<div class="row">
 			<div class="col-lg-3 col-md-6 col-12">
 				<div class="card  mb-4 card-hover">
-					<a href="#" class="card-img-top">
+					<a href="{{ courses_detail_url }}" class="card-img-top">
 						<img src="{{ STATIC_PREFIX }}img/cours/course-react.jpg" alt=""
 						class="rounded-top card-img-top">
 					</a>
 
 					<div class="card-body">
 						<h4 class="mb-2 text-truncate-line-2 ">
-							<a href="#" class="text-inherit">
+							<a href="{{ courses_detail_url }}" class="text-inherit">
 								Comment créer facilement un site web avec React ?
 							</a>
 						</h4>
@@ -76,13 +80,13 @@
 
 			<div class="col-lg-3 col-md-6 col-12">
 				<div class="card  mb-4 card-hover">
-					<a href="#" class="card-img-top">
+					<a href="{{ courses_detail_url }}" class="card-img-top">
 						<img src="{{ STATIC_PREFIX }}img/cours/course-graphql.jpg" alt=""
 						class="rounded-top card-img-top">
 					</a>
 					<div class="card-body">
 						<h4 class="mb-2 text-truncate-line-2 ">
-							<a href="#" class="text-inherit">
+							<a href="{{ courses_detail_url }}" class="text-inherit">
 								GraphQL : introduction à graphQL pour les débutants
 							</a>
 						</h4>
@@ -139,7 +143,7 @@
 
 			<div class="col-lg-3 col-md-6 col-12">
 				<div class="card  mb-4 card-hover">
-					<a href="#" class="card-img-top">
+					<a href="{{ courses_detail_url }}" class="card-img-top">
 						<img src="{{ STATIC_PREFIX }}img/cours/course-angular.jpg" alt=""
 						class="card-img-top rounded-top">
 					</a>
@@ -201,14 +205,14 @@
 
 			<div class="col-lg-3 col-md-6 col-12">
 				<div class="card  mb-4 card-hover">
-					<a href="#" class="card-img-top">
+					<a href="{{ courses_detail_url }}" class="card-img-top">
 						<img src="{{ STATIC_PREFIX }}img/cours/course-python.jpg" alt=""
 						class="card-img-top rounded-top">
 					</a>
 
 					<div class="card-body">
 						<h4 class="mb-2 text-truncate-line-2 ">
-							<a href="#" class="text-inherit">
+							<a href="{{ courses_detail_url }}" class="text-inherit">
 							Le cours Python : construire une application web</a>
 						</h4>
 

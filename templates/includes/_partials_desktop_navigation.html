@@ -1,22 +1,39 @@
+{% comment %} header navigation {% endcomment %}
+
+{% url 'accounts:login_url' as login_url %}
+{% url 'accounts:teacher_all_url' as teacher_all_url %}
+{% url 'courses:courses_list_url' as courses_list_url %}
+
+
 <div class="collapse navbar-collapse" id="navbar-default">
-	
-	<!-- <form class="mt-3 mt-lg-0 mx-lg-4 d-flex align-items-center w-50">
+
+	<ul class="navbar-nav navbar-left-wrap mt-3 mt-lg-0">
+		<li class="d-inline-block nav-item">
+			<a href="{{ courses_list_url }}" class="nav-link text-uppercase font-weight-bold">
+				tous les cours
+			</a>
+		</li>
+	</ul>
+
+	<form class="mt-3 mt-lg-0 ml-lg-3 d-flex align-items-center">
 		<span class="position-absolute pl-3 search-icon">
 			<i class="fe fe-search"></i>
 		</span>
-		<input type="search" class="form-control pl-6" placeholder="Rechercher un cours, un tuteur, une spécialité">
-	</form>  -->
+		<input type="search" class="form-control pl-6 rounded-0" placeholder="Rechercher...">
+	</form>
 
 	<ul class="navbar-nav navbar-right-wrap ml-auto d-none d-lg-block">
+
 		<li class="d-inline-block">
-			<a class="btn btn-md btn-success mx-2 mr-lg-0" href="#!">
-				Tuteur
+			<a href="{{ teacher_all_url }}" class="btn btn-md btn-outline-primary rounded-0 text-uppercase font-weight-bold mx-2 mr-lg-0">
+				trouver un instructeur
 			</a>
 		</li>
 
 		<li class="d-inline-block">
-			<a class="btn btn-md btn-primary mx-2 mr-lg-0" href="#!">
-				Etudiant
+			<a class="btn btn-md btn-outline-success rounded-0 text-uppercase font-weight-bold mx-2 mr-lg-0" 
+			href="{{ login_url }}">
+				se connecter
 			</a>
 		</li>
 
@@ -63,12 +80,12 @@
 							   	
 							   	<div class="col-auto text-center">
 							   		<a href="#!" class="badge-dot badge-info" data-toggle="tooltip"
-							   		data-placement="top" title="" data-original-title="Mark as read">
+							   		data-placement="top" title="" data-original-title="Marquer comme lu">
 								  	</a>
 
 								  	<div>
 								  		<a href="#!" class="bg-transparent" data-toggle="tooltip"
-										data-placement="top" title="" data-original-title="Remove">
+										data-placement="top" title="" data-original-title="Supprimer">
 										<i class="fe fe-x text-muted"></i></a>
 								  	</div>
 							   	</div>
@@ -94,8 +111,8 @@
 							<img alt="avatar" src="{{ STATIC_PREFIX }}img/avatar-1.jpg" class="rounded-circle">
 						</div>
 						<div class="ml-3 lh-1">
-							<h5 class="mb-1">Annette Black</h5>
-							<p class="mb-0 text-muted">annette@geeksui.com</p>
+							<h5 class="mb-1">Flavien HUGS</h5>
+							<p class="mb-0 text-muted">contact@unsta.net</p>
 						</div>
 					</div>
 				</div>
@@ -106,21 +123,21 @@
 					<li>
 						<a class="dropdown-item" href="#">
 							<i class="fe fe-user mr-2"></i>
-							Profile
+							Mon Profile
 						</a>
 					</li>
 
 					<li>
 						<a class="dropdown-item" href="#">
 							<i class="fe fe-star mr-2"></i>
-							Subscription
+							Souscription
 						</a>
 					</li>
 
 					<li>
 						<a class="dropdown-item" href="#!">
 							<i class="fe fe-settings mr-2"></i>
-							Settings
+							Configuration
 						</a>
 					</li>
 				</ul>
@@ -130,7 +147,7 @@
 				<ul class="list-unstyled">
 					<li>
 						<a class="dropdown-item" href="{{ home_url }}">
-							<i class="fe fe-power nav-icon"></i>Sign Out
+							<i class="fe fe-power nav-icon"></i> Deconnexion
 						</a>
 					</li>
 				</ul>

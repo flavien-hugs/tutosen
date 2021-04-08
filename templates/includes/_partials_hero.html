@@ -1,5 +1,8 @@
 {% comment %} hero section {% endcomment %}
-{% load static %}
+
+{% url 'accounts:signup_url' as signup_url %}
+{% url 'courses:courses_list_url' as courses_list_url %}
+
 <div class="bg-primary pt-8">
 	<div class="container">
 		<div class="row align-items-center no-gutters">
@@ -12,8 +15,8 @@
 						Choisissez parmi des centaines de tuteurs, contactez votre tuteur choisi;
 						et commencez votre cours individuel personnalisé à un moment qui vous convient.
 					</p>
-					<a href="#" class="btn btn-success">Parcourir les cours</a>
-					<a href="#" class="btn btn-white">Vous êtes un instructeur ?</a>
+					<a href="{{ courses_list_url }}" class="btn btn-success">Parcourir les cours</a>
+					<a href="{{ signup_url }}" class="btn btn-white">Vous êtes un instructeur ?</a>
 				</div>
 			</div>
 			<div class=" col-xl-7 col-lg-6 col-md-12 text-lg-right text-center">
@@ -68,28 +71,19 @@
 
 
 {% comment %} page header {% endcomment %}
-<div class="pt-8 pb-9 ">
+<div class="pt-8 pb-5">
 	<div class="container">
 		<div class="row ">
 			<div class="offset-xl-2 col-xl-8 offset-lg-1 col-lg-10 col-md-12 col-12">
 				<div class="text-center mb-5">
 					<h1 class="display-2 font-weight-bold">
-						Trouver l'instructeur qui vous convient
+						Trouver l'instructeur qui vous convient.
 					</h1>
 					<p class="lead">
-						Leurs caractéristiques, leurs parcours,
-						leurs conseils font qu'ils sont les meilleurs de leur domaine.
+						Des milliers de cours interactifs 100% en ligne 24/7 réalisés par 
+						les meilleurs Instructeurs et sur tous vos sujets préférés ! 
 					</p>
 				</div>
-
-				<form class="form-row px-md-20">
-					<div class="form-group col pl-0">
-						<input type="email" class="form-control" placeholder="Rechercher un tuteur, un spécialiste,..." required="">
-					</div>
-					<div class="form-group col-auto pl-0">
-						<button class="btn btn-primary" type="submit">Rechercher</button>
-					</div>
-				</form>
 			</div>
 		</div>
 	</div>

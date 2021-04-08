@@ -1,0 +1,176 @@
+{% extends "index.html" %}
+
+{% comment %} page profile detail {% endcomment %}
+
+{% block page_content %}
+
+    {% url 'courses:courses_detail_url' as courses_detail_url %}
+    {% include "courses/snippets/_snippet_courses_header.html" %}
+
+    {% comment %} intructor content info {% endcomment %}
+    <div class="py-5 py-md-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-12">
+                    <div class="card border-0 mb-4">
+                        <div class="card-body">
+                            <h4>Qui suis-je ?</h4>
+                            <p>
+                                I am an Innovation designer focussing on UX/UI based in
+                                Berlin. As a creative resident at Figma explored the city of
+                                the future and how new technologies like AI, voice control,
+                                and augmented reality will change our interfaces.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card border-0 mb-4 mb-lg-0">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between border-bottom pb-3 mb-3">
+                                <div>
+                                    <h4 class="mb-0 font-weight-bold">32</h4>
+                                    <p class="font-size-xs mb-0">Cours</p>
+                                </div>
+                                <div>
+                                    <span><i class="fe fe-file-text font-size-lg"></i></span>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex align-items-center justify-content-between border-bottom pb-3 mb-3">
+                                <div>
+                                    <h4 class="mb-0 font-weight-bold">11,604</h4>
+                                    <p class="font-size-xs mb-0">Total Étudiants</p>
+                                </div>
+                                <div>
+                                    <span><i class="fe fe-users font-size-lg"></i></span>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div>
+                                    <h4 class="mb-0 font-weight-bold">12,230</h4>
+                                    <p class="font-size-xs mb-0">Commentaires</p>
+                                </div>
+                                <div>
+                                    <span><i class="fe fe-star font-size-lg"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-9 col-md-8 col-12">
+                    <div class="card border-0">
+                        <div class="card-header">
+                            <h4 class="mb-0">
+                                Mes Cours <span class="text-muted font-size-xs">(12)</span>
+                            </h4>
+                        </div>
+
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item px-0 pb-3 pt-0">
+                                    <article class="d-flex align-items-center justify-content-between">
+                                        <a href="{{ courses_detail_url }}">
+                                            <div class="d-lg-flex align-items-center">
+                                                <div>
+                                                    <img src="{{ STATIC_PREFIX }}img/cours/course-wordpress.jpg" alt="" class="rounded img-4by3-lg" />
+                                                </div>
+
+                                                <div class="ml-lg-3 mt-2 mt-lg-0">
+                                                    <h4 class="text-primary-hover">
+                                                        Créer un site web avec WordPress
+                                                        <span class="badge badge-light-success text-success">
+                                                        Nouveau</span>
+                                                    </h4>
+
+                                                    <ul class="list-inline font-size-xs mb-0 text-inherit">
+                                                        <li class="list-inline-item">
+                                                            <i class="far fa-clock mr-1"></i>3h 30m
+                                                        </li>
+
+                                                        <li class="list-inline-item">
+                                                            <svg class="mt-n1" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <rect x="3" y="8" width="2" height="6" rx="1" fill="#754FFE"></rect>
+                                                                <rect x="7" y="5" width="2" height="9" rx="1" fill="#DBD8E9"></rect>
+                                                                <rect x="11" y="2" width="2" height="12" rx="1" fill="#DBD8E9"></rect>
+                                                            </svg>
+                                                            Débutant
+                                                        </li>
+                                                        <li class="list-inline-item">
+                                                            <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                            <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                            <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                            <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                            <i class="mdi mdi-star text-warning"></i>
+                                                            <span class="text-warning">4.5</span>
+                                                            <span class="text-muted">(1,345)</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </a>
+
+                                        <div>
+                                            {% include "includes/snippets/_snippet_share_link.html" %}
+                                        </div>
+                                    </article>
+                                </li>
+
+                                <li class="list-group-item px-0 py-3">
+                                    <article class="d-flex align-items-center justify-content-between">
+                                        <a href="{{ courses_detail_url }}">
+                                            <div class="d-lg-flex align-items-center">
+                                                <div>
+                                                    <img src="{{ STATIC_PREFIX }}img/cours/course-javascript.jpg" alt="" class="rounded img-4by3-lg" />
+                                                </div>
+
+                                                <div class="ml-lg-3 mt-2 mt-lg-0">
+                                                    <h4 class="text-primary-hover">
+                                                        Principes de base du JavaScript
+                                                    </h4>
+
+                                                    <ul class="list-inline font-size-xs mb-0 text-inherit">
+                                                        <li class="list-inline-item">
+                                                            <i class="far fa-clock mr-1"></i>1h 20m
+                                                        </li>
+
+                                                        <li class="list-inline-item">
+                                                            <svg class="mt-n1" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <rect x="3" y="8" width="2" height="6" rx="1" fill="#754FFE"></rect>
+                                                                <rect x="7" y="5" width="2" height="9" rx="1" fill="#754FFE"></rect>
+                                                                <rect x="11" y="2" width="2" height="12" rx="1" fill="#754FFE"></rect>
+                                                            </svg>
+                                                            Avancée
+                                                        </li>
+
+                                                        <li class="list-inline-item">
+                                                            <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                            <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                            <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                            <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                            <i class="mdi mdi-star text-light"></i>
+                                                            <span class="text-warning">4</span>
+                                                            <span class="text-muted">(1,000)</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </a>
+
+                                        <div>
+                                            {% include "includes/snippets/_snippet_share_link.html" %}
+                                        </div>
+                                    </article>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% endblock page_content %}

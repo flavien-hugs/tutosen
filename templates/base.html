@@ -18,14 +18,23 @@
 	</head>
 
 	<body class="d-flex flex-column">
-		{% include "includes/_partials_navigation.html" %}
-		{% include "includes/_partials_hero.html" %}
+		{% if not request.resolver_match.url_name == 'login_url' and not request.resolver_match.url_name == 'signup_url' and not request.resolver_match.url_name == 'password_reset_url' %}
+			{% include "includes/_partials_navigation.html" %}
+			{% if not request.resolver_match.url_name == 'courses_list_url' and not request.resolver_match.url_name == 'teacher_profile_url' and not request.resolver_match.url_name == 'teacher_all_url' and not request.resolver_match.url_name == 'courses_detail_url' %}	
+				{% include "includes/_partials_hero.html" %}
+			{% endif %}
+		{% endif %}
 
-		{% block page_content %}
+		<main>
+			{% block page_content %}
 			
-		{% endblock page_content %}
+			{% endblock page_content %}
+		</main>
+
+		{% if not request.resolver_match.url_name == 'login_url' and not request.resolver_match.url_name == 'signup_url' %}
+			{% include "includes/_partials_footer.html" %}
+		{% endif %}
 		
-		{% include "includes/_partials_footer.html" %}
 		{% include "includes/_static_javascript_link.html" %}
 	</body>
 </html>
