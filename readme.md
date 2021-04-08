@@ -1,4 +1,4 @@
-# [tutosen](https://github.com/flavien-hugs/tutosen.git) - Online Learning Platform
+# [tutosen](https://github.com/flavien-hugs/tutosen.git) - Plateforme d'apprentissage et de mentorat en ligne 
 
 [![tutosen](https://img.shields.io/badge/tutosen-build-orange.svg)](https://www.tutosen.com/)
 [![Django Version](https://img.shields.io/badge/Django-Version3-success.svg)](http://www.djangoproject.com)
@@ -6,9 +6,8 @@
 
 ## Vision
 
-Tuto-Sen est une plateforme web de mise en relation entre enseignants disposant du temps libre et
+TutoSen est une plateforme web de mise en relation entre enseignants disposant du temps libre et
 des étudiants en difficultés d’enseignements pour du tutorat.
-
 
 ## Installation
 
@@ -49,3 +48,10 @@ Amusez-vous bien :) !
 ## License
 
 Tous les droits sont réservés © [tutosen](https://www.tutosen.com)
+
+
+## Freelance développeur Django
+
+Je suis un technologue passionné. J'adore Python et Django pour sa flexibilité et son code propre.
+Je vous offre des services complets de développement et de conseil pour votre entreprise avec Python, le framework Django, sqlite, MySQL et PostgreSQL.
+Écrivez-moi à flavienhugs@pm.me pour donner forme à votre idée.
