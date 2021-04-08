@@ -1,0 +1,298 @@
+{% comment %} layout for recommend {% endcomment %}
+
+{% url 'courses:courses_list_url' as courses_list_url %}
+{% url 'courses:courses_detail_url' as courses_detail_url %}
+
+<div class="pt-lg-8 pb-lg-3 pt-8 pb-6">
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-12">
+				<div class="card mb-4 shadow-lg card-hover">
+					<div class="row no-gutters">
+						<a href="blog-single.html" class="col-lg-8 col-md-12 col-12 bg-cover img-left-rounded"
+						style="background-image: url({{ STATIC_PREFIX }}img/blogpost-2.jpg);">
+
+						<img src="{{ STATIC_PREFIX }}img/blogpost-2.jpg" class="img-fluid d-lg-none invisible" alt=""></a>
+
+						<div class="col-lg-4 col-md-12 col-12">
+							<div class="card-body">
+								<a href="#!" class="font-size-sm mb-3 font-weight-semi-bold d-block">
+									Comment ça marche ?
+								</a>
+								<h1 class="mb-4">
+									<span class="text-inherit">
+										Trouver votre instructeur parmis les meilleurs.
+									</span>
+								</h1>
+
+								<p>
+									Choisissez parmi l'un de nos tuteurs recommandés et testés ou 
+									utilisez la fonctionnalité de recherche pour choisir un tuteur à votre goût.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row d-lg-flex align-items-center mb-4">
+			<div class="col">
+				<h2 class="mb-1 text-uppercase">Les plus populaires</h2>
+				<p class="mb-0">Apprendre, un jeu d’enfant</p>
+			</div>
+			<div class="col-auto">
+				<a href="{{ courses_list_url }}" class="btn btn-outline-primary btn-sm font-weight-bold text-uppercase">
+				voir tout <i class="mdi mdi-arrow-right-bold ml-2"></i></a>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-3 col-md-6 col-12">
+				<div class="card  mb-4 card-hover">
+					<a href="#" class="card-img-top">
+						<img src="{{ STATIC_PREFIX }}img/cours/course-gatsby.jpg" alt=""
+						class="rounded-top card-img-top">
+					</a>
+
+					<div class="card-body">
+						<h4 class="mb-2 text-truncate-line-2 ">
+							<a href="#" class="text-inherit">
+								Gatsby JS : construire un blog avec GraphQL et React
+							</a>
+						</h4>
+
+						<ul class="mb-3 list-inline">
+							<li class="list-inline-item">
+								<i class="far fa-clock mr-1"></i>
+								3h 56m
+							</li>
+
+							<li class="list-inline-item">
+								<svg class="mr-1 mt-n1" width="16" height="16" viewBox="0 0 16 16" fill="none"
+								xmlns="http://www.w3.org/2000/svg">
+								<rect x="3" y="8" width="2" height="6" rx="1" fill="#754FFE"/>
+								<rect x="7" y="5" width="2" height="9" rx="1" fill="#DBD8E9"/>
+								<rect x="11" y="2" width="2" height="12" rx="1" fill="#DBD8E9"/>
+								</svg>Débutant
+							</li>
+						</ul>
+
+						<div class="lh-1">
+							<span>
+								<i class="mdi mdi-star text-warning mr-n1"></i>
+								<i class="mdi mdi-star text-warning mr-n1"></i>
+								<i class="mdi mdi-star text-warning mr-n1"></i>
+								<i class="mdi mdi-star text-warning mr-n1"></i>
+								<i class="mdi mdi-star text-warning"></i>
+							</span>
+							<span class="text-warning">4.5</span>
+							<span class="font-size-xs text-muted">(7,700)</span>
+						</div>
+					</div>
+
+					<div class="card-footer">
+						<div class="row align-items-center no-gutters">
+							<div class="col-auto">
+								<img src="{{ STATIC_PREFIX }}img/avatar-1.jpg" class="rounded-circle avatar-xs" alt="">
+							</div>
+							<div class="col ml-2">
+								<span>Flavien HUGS</span>
+							</div>
+							<div class="col-auto">
+								<a href="#!" class="text-muted" data-toggle="tooltip" data-placement="top" title="Add to Bookmarks">
+									<i class="fe fe-bookmark "></i>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-3 col-md-6 col-12">
+				<div class="card  mb-4 card-hover">
+					<a href="#" class="card-img-top">
+						<img src="{{ STATIC_PREFIX }}img/cours/course-javascript.jpg" alt=""
+						class="rounded-top card-img-top">
+					</a>
+					<div class="card-body">
+						<h4 class="mb-2 text-truncate-line-2 ">
+							<a href="#" class="text-inherit">
+								Premiers pas avec JavaScript
+							</a>
+						</h4>
+
+						<ul class="mb-3 list-inline">
+							<li class="list-inline-item">
+								<i class="far fa-clock mr-1"></i>
+								2h 46m
+							</li>
+
+							<li class="list-inline-item">
+								<svg class="mr-1 mt-n1" width="16" height="16" viewBox="0 0 16 16" fill="none"
+									xmlns="http://www.w3.org/2000/svg">
+									<rect x="3" y="8" width="2" height="6" rx="1" fill="#754FFE" />
+									<rect x="7" y="5" width="2" height="9" rx="1" fill="#754FFE" />
+									<rect x="11" y="2" width="2" height="12" rx="1" fill="#754FFE" />
+								</svg>
+								Avancé
+							</li>
+						</ul>
+
+						<div class="lh-1">
+							<span>
+								<i class="mdi mdi-star text-warning mr-n1"></i>
+								<i class="mdi mdi-star text-warning mr-n1"></i>
+								<i class="mdi mdi-star text-warning mr-n1"></i>
+								<i class="mdi mdi-star text-warning mr-n1"></i>
+								<i class="mdi mdi-star text-warning"></i>
+							</span>
+							<span class="text-warning">4.5</span>
+							<span class="font-size-xs text-muted">(9,300)</span>
+						</div>
+					</div>
+
+					<div class="card-footer">
+						<div class="row align-items-center no-gutters">
+							<div class="col-auto">
+								<img src="{{ STATIC_PREFIX }}img/avatar-1.jpg" class="rounded-circle avatar-xs" alt="">
+							</div>
+
+							<div class="col ml-2">
+								<span>Ted Hawkins</span>
+							</div>
+							
+							<div class="col-auto">
+								<a href="#!" class="text-muted" data-toggle="tooltip" data-placement="top" title="Add to Bookmarks">
+									<i class="fe fe-bookmark"></i>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-3 col-md-6 col-12">
+				<div class="card  mb-4 card-hover">
+					<a href="#" class="card-img-top">
+						<img src="{{ STATIC_PREFIX }}img/cours/course-css.jpg" alt=""
+						class="card-img-top rounded-top">
+					</a>
+
+					<div class="card-body">
+						<h4 class="mb-2 text-truncate-line-2">
+							<a href="#" class="text-inherit">
+								CSS : cours ultime de CSS, de débutant à avancé
+							</a>
+						</h4>
+
+						<ul class="mb-3 list-inline">
+							<li class="list-inline-item">
+								<i class="far fa-clock mr-1"></i>1h 30m
+							</li>
+
+							<li class="list-inline-item">
+								<svg class="mr-1 mt-n1" width="16" height="16" viewBox="0 0 16 16" fill="none"
+									xmlns="http://www.w3.org/2000/svg">
+									<rect x="3" y="8" width="2" height="6" rx="1" fill="#754FFE"/>
+									<rect x="7" y="5" width="2" height="9" rx="1" fill="#DBD8E9"/>
+									<rect x="11" y="2" width="2" height="12" rx="1" fill="#DBD8E9"/>
+								</svg>
+								Débutant
+							</li>
+						</ul>
+
+						<div class="lh-1">
+							<span>
+								<i class="mdi mdi-star text-warning mr-n1"></i>
+								<i class="mdi mdi-star text-warning mr-n1"></i>
+								<i class="mdi mdi-star text-warning mr-n1"></i>
+								<i class="mdi mdi-star text-warning mr-n1"></i>
+								<i class="mdi mdi-star text-warning"></i>
+							</span>
+							<span class="text-warning">4.5</span>
+							<span class="font-size-xs text-muted">(8,890)</span>
+						</div>
+					</div>
+
+					<div class="card-footer">
+						<div class="row align-items-center no-gutters">
+							<div class="col-auto">
+								<img src="{{ STATIC_PREFIX }}img/avatar-1.jpg" class="rounded-circle avatar-xs" alt="">
+							</div>
+							<div class="col ml-2">
+								<span>Juanita Bell</span>
+							</div>
+							<div class="col-auto">
+								<a href="#!" class="text-muted" data-toggle="tooltip" data-placement="top" title="Add to Bookmarks">
+									<i class="fe fe-bookmark"></i>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-3 col-md-6 col-12">
+				<div class="card  mb-4 card-hover">
+					<a href="#" class="card-img-top">
+						<img src="{{ STATIC_PREFIX }}img/cours/course-wordpress.jpg" alt=""
+						class="card-img-top rounded-top">
+					</a>
+
+					<div class="card-body">
+						<h4 class="mb-2 text-truncate-line-2 ">
+							<a href="#" class="text-inherit">
+								Wordpress : thème et plugin WordPress complets
+							</a>
+						</h4>
+
+						<ul class="mb-3 list-inline">
+							<li class="list-inline-item">
+								<i class="far fa-clock mr-1"></i>2h 30m
+							</li>
+
+							<li class="list-inline-item">
+								<svg class="mr-1 mt-n1" width="16" height="16" viewBox="0 0 16 16" fill="none"
+									xmlns="http://www.w3.org/2000/svg">
+									<rect x="3" y="8" width="2" height="6" rx="1" fill="#754FFE"/>
+									<rect x="7" y="5" width="2" height="9" rx="1" fill="#754FFE"/>
+									<rect x="11" y="2" width="2" height="12" rx="1" fill="#DBD8E9"/>
+								</svg>
+								Intermédiaire
+							</li>
+						</ul>
+
+						<div class="lh-1">
+							<span>
+								<i class="mdi mdi-star text-warning mr-n1"></i>
+								<i class="mdi mdi-star text-warning mr-n1"></i>
+								<i class="mdi mdi-star text-warning mr-n1"></i>
+								<i class="mdi mdi-star text-warning mr-n1"></i>
+								<i class="mdi mdi-star text-warning"></i>
+							</span>
+							<span class="text-warning">4.5</span>
+							<span class="font-size-xs text-muted">(13,245)</span>
+						</div>
+					</div>
+
+					<div class="card-footer">
+						<div class="row align-items-center no-gutters">
+							<div class="col-auto">
+								<img src="{{ STATIC_PREFIX }}img/avatar-1.jpg" class="rounded-circle avatar-xs" alt="">
+							</div>
+							<div class="col ml-2">
+								<span>Claire Robertson</span>
+							</div>
+							<div class="col-auto">
+								<a href="#!" class="text-muted" data-toggle="tooltip" data-placement="top" title="Add to Bookmarks">
+									<i class="fe fe-bookmark"></i>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

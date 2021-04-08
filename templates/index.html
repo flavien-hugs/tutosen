@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% comment %} gabarit: home page {% endcomment %}
+
+{% block page_content %}
+	{% include "layouts/_layouts_recommended.html" %}
+
+	{% include "layouts/_layouts_most_popular.html" %}
+
+	{% include "layouts/_layouts_trending.html" %}
+{% endblock page_content %}

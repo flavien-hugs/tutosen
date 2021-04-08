@@ -1,0 +1,497 @@
+{% extends "index.html" %}
+{% comment %} gabarit: detail cours {% endcomment %}
+
+{% block page_content %}
+    {% url 'courses:courses_resume_url' as courses_resume_url %}
+    {% url 'accounts:teacher_profile_url' as teacher_profile_url %}
+
+    {% include "courses/snippets/_snippet_courses_header.html" %}
+
+    {% comment %} page content {% endcomment %}
+    <div class="pb-10">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-12 col-12 mt-n8 mb-4 mb-lg-0">
+                    <div class="card rounded-lg">
+                        <div class="card-header border-bottom-0 p-0">
+                            <div>
+                                <ul class="nav nav-lb-tab" id="tab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="table-tab" data-toggle="pill" href="#table" role="tab"
+                                        aria-controls="table" aria-selected="true">Contenu</a>
+                                    </li>
+                                  
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="description-tab" data-toggle="pill" href="#description" role="tab"
+                                        aria-controls="description" aria-selected="false">Description</a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="review-tab" data-toggle="pill" href="#review" role="tab" 
+                                        aria-controls="review" aria-selected="false">Commentaire</a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="faq-tab" data-toggle="pill" href="#faq" role="tab" aria-controls="faq"
+                                        aria-selected="false">FAQ</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="tab-content" id="tabContent">
+
+                                {% comment %} contenu {% endcomment %}
+                                <div class="tab-pane fade show active" id="table" role="tabpanel" aria-labelledby="table-tab">
+                                    <div class="accordion" id="courseAccordion">
+                                        <div>
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item px-0 pt-0">
+                                                    <a class=" h4 mb-0 d-flex align-items-center text-inherit text-decoration-none active"
+                                                    data-toggle="collapse" href="#courseTwo" aria-expanded="true" aria-controls="courseTwo">
+                                                        <div class="mr-auto">Introduction à JavaScript </div>
+                                                        <span class="chevron-arrow ml-4">
+                                                            <i class="fe fe-chevron-down font-size-md"></i>
+                                                        </span>
+                                                    </a>
+
+                                                    <div class="collapse show" id="courseTwo" data-parent="#courseAccordion">
+                                                        <div class="pt-3 pb-2">
+                                                            <a href="{{ courses_resume_url }}" class="mb-2 d-flex justify-content-between align-items-center text-inherit text-decoration-none">
+                                                                <div class="text-truncate">
+                                                                    <span class="icon-shape bg-light text-primary icon-sm rounded-circle mr-2">
+                                                                        <i class="mdi mdi-play font-size-md"></i>
+                                                                    </span>
+                                                                    <span>Introduction</span>
+                                                                </div>
+                                                            
+                                                                <div class="text-truncate">
+                                                                    <span>1m 7s</span>
+                                                                </div>
+                                                            </a>
+
+                                                            <a href="{{ courses_resume_url }}" class="mb-2 d-flex justify-content-between align-items-center text-inherit text-decoration-none">
+                                                                <div class="text-truncate">
+                                                                    <span class="icon-shape bg-light text-primary icon-sm rounded-circle mr-2">
+                                                                        <i class="mdi mdi-play font-size-md"></i>
+                                                                    </span>
+                                                                    <span>Installation du logiciel de développement</span>
+                                                                </div>
+
+                                                                <div class="text-truncate">
+                                                                    <span>3m 11s</span>
+                                                                </div>
+                                                            </a>
+
+                                                            <a href="{{ courses_resume_url }}" class="mb-2 d-flex justify-content-between align-items-center text-inherit text-decoration-none">
+                                                                <div class="text-truncate">
+                                                                    <span class="icon-shape bg-light text-primary icon-sm rounded-circle mr-2">
+                                                                        <i class="mdi mdi-play font-size-md"></i>
+                                                                    </span>
+                                                                    
+                                                                    <span>Projet Hello World depuis GitHub</span>
+                                                                </div>
+
+                                                                <div class="text-truncate">
+                                                                    <span>2m 33s</span>
+                                                                </div>
+                                                            </a>
+
+                                                            <a href="{{ courses_resume_url }}" class="d-flex justify-content-between align-items-center text-inherit text-decoration-none">
+                                                                <div class="text-truncate">
+                                                                    <span class="icon-shape bg-light text-primary icon-sm rounded-circle mr-2">
+                                                                        <i class="mdi mdi-play font-size-md"></i>
+                                                                    </span>
+                                                                    <span>Notre exemple de site web</span>
+                                                                </div>
+
+                                                                <div class="text-truncate">
+                                                                  <span>2m 15s</span>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+
+                                                <li class="list-group-item px-0">
+                                                    <a class="h4 mb-0 d-flex align-items-center text-inherit text-decoration-none"
+                                                    data-toggle="collapse" href="#courseTen" aria-expanded="false" aria-controls="courseTen">
+                                                        <div class="mr-auto">Portée en JavaScript </div>
+                                                        <span class="chevron-arrow ml-4">
+                                                          <i class="fe fe-chevron-down font-size-md"></i>
+                                                        </span>
+                                                    </a>
+
+                                                    <div class="collapse" id="courseTen" data-parent="#courseAccordion">
+                                                        <div class="pt-3 pb-2">
+                                                            <a href="#!" class="mb-2 d-flex justify-content-between align-items-center text-inherit text-decoration-none disableClick">
+                                                                <div class="text-truncate">
+                                                                    <span class="icon-shape bg-light text-secondary icon-sm rounded-circle mr-2">
+                                                                        <i class="fe fe-lock font-size-md"></i>
+                                                                    </span>
+                                                                    
+                                                                    <span>Introduction</span>
+                                                                </div>
+                                                                <div class="text-truncate">
+                                                                    <span>1m 20s</span>
+                                                                </div>
+                                                            </a>
+                                                      
+                                                            <a href="#!" class="mb-2 d-flex justify-content-between align-items-center text-inherit text-decoration-none disableClick">
+                                                                <div class="text-truncate">
+                                                                    <span class="icon-shape bg-light text-secondary icon-sm rounded-circle mr-2">
+                                                                        <i class="fe fe-lock font-size-md"></i>
+                                                                    </span>
+                                                                    <span>Global Scope </span>
+                                                                </div>
+                                                                <div class="text-truncate">
+                                                                    <span>4m 7s</span>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+
+                                                <li class="list-group-item px-0 pb-0">
+                                                    <a class="h4 mb-0 d-flex align-items-center text-inherit text-decoration-none"
+                                                    data-toggle="collapse" href="#courseEleven" aria-expanded="false"
+                                                    aria-controls="courseEleven">
+                                                        <div class="mr-auto"> Résumé </div>
+                                                        <span class="chevron-arrow ml-4">
+                                                            <i class="fe fe-chevron-down font-size-md"></i>
+                                                        </span>
+                                                    </a>
+                                                    
+                                                    <div class="collapse" id="courseEleven" data-parent="#courseAccordion">
+                                                        <div class="pt-3 pb-2">
+                                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae esse velit eos sunt ab inventore est tenetur blanditiis? Voluptas eius molestiae ad itaque tempora
+                                                            nobis minima eveniet aperiam molestias, maiores natus expedita dolores ea non possimus
+                                                            magnam corrupt i quas rem unde quo enim porro culpa! Quaerat veritatis veniam corrupti iusto.</p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {% comment %} description {% endcomment %}
+                                <div class="tab-pane fade" id="description" role="tabpanel" aria-labelledby="description-tab">
+                                    <div class="mb-4">
+                                        <h3 class="mb-2">Description du cours</h3>
+                                        <p>
+                                            If you’re learning to program for the first time, or if you’re coming from a different language, this course, JavaScript: Getting Started, will give you the basics for coding in JavaScript.
+                                            First, you'll discover the types of applications that can be built with JavaScript, and the
+                                            platforms they’ll run on.
+                                        </p>
+                                        
+                                        <p>
+                                            Next, you’ll explore the basics of the language, giving plenty of examples. Lastly, you’ll put
+                                            your JavaScript knowledge to work and modify a modern, responsive web page. When you’re finished
+                                            with this course, you’ll have the skills and knowledge in JavaScript to create simple programs,
+                                            create simple web applications, and modify web pages.
+                                        </p>
+                                    </div>
+                                    
+                                    <h4 class="mb-3">Ce que vous allez apprendre</h4>
+                                    <div class="row mb-3">
+                                        <div class="col-12 col-md-6">
+                                            <ul class="list-unstyled">
+                                                <li class="d-flex mb-2">
+                                                    <i class="far fa-check-circle text-success mr-2 mt-2"></i>
+                                                    <span>Recognize the importance of understanding your objectives when addressing an
+                                                    audience.</span>
+                                                </li>
+
+                                                <li class="d-flex mb-2">
+                                                    <i class="far fa-check-circle text-success mr-2 mt-2"></i>
+                                                    <span>Identify the fundaments of composing a successful close.</span>
+                                                </li>
+
+                                                <li class="d-flex mb-2">
+                                                    <i class="far fa-check-circle text-success mr-2 mt-2"></i>
+                                                    <span>Explore how to connect with your audience through crafting compelling stories.</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="col-12 col-md-6">
+                                            <ul class="list-unstyled">
+                                                <li class="d-flex mb-2">
+                                                    <i class="far fa-check-circle text-success mr-2 mt-2"></i>
+                                                    <span>Examine ways to connect with your audience by personalizing your content.</span>
+                                                </li>
+
+                                                <li class="d-flex mb-2">
+                                                    <i class="far fa-check-circle text-success mr-2 mt-2"></i>
+                                                    <span>Break down the best ways to exude executive presence.</span>
+                                                </li>
+
+                                                <li class="d-flex mb-2">
+                                                    <i class="far fa-check-circle text-success mr-2 mt-2"></i>
+                                                    <span>Explore how to communicate the unknown in an impromptu communication.</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                        
+                                    <p>Maecenas viverra condimentum nulla molestie condimentum. Nunc ex libero, feugiat quis lectus vel,
+                                    ornare euismod ligula. Aenean sit amet arcu nulla.</p>
+
+                                    <p>Duis facilisis ex a urna blandit ultricies. Nullam sagittis ligula non eros semper, nec mattis odio
+                                    ullamcorper. Phasellus feugiat sit amet leo eget consectetur.</p>
+                                </div>
+
+                                {% comment %} commentaire {% endcomment %}
+                                <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
+                                    <div class="mb-3">
+                                        <h3 class="mb-4">Comment les étudiants ont évalué ce cours</h3>
+                                        <div class="row align-items-center">
+                                            <div class="col-auto text-center">
+                                                <h3 class="display-2 font-weight-bold">4.5</h3>
+                                                <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                <i class="mdi mdi-star mr-n1-half text-warning"></i>
+                                                <p class="mb-0 font-size-xs">(Based on 27 reviews)</p>
+                                            </div>
+
+                                            <div class="col pt-3 order-3 order-md-2">
+                                                <div class="progress mb-3" style="height: 6px;">
+                                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 90%;" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+
+                                                <div class="progress mb-3" style="height: 6px;">
+                                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 80%;" aria-valuenow="80"
+                                                    aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+
+                                                <div class="progress mb-3" style="height: 6px;">
+                                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 70%;" aria-valuenow="70"
+                                                    aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+
+                                                <div class="progress mb-3" style="height: 6px;">
+                                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 60%;" aria-valuenow="60"
+                                                    aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+
+                                                <div class="progress mb-0" style="height: 6px;">
+                                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 50%;" aria-valuenow="50"
+                                                    aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-auto col-6 order-2 order-md-3">
+                                                <div>
+                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                    <span class="ml-1">53%</span>
+                                                </div>
+
+                                                <div>
+                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                    <i class="mdi mdi-star mr-n1 text-light"></i>
+                                                    <span class="ml-1">36%</span>
+                                                </div>
+                                                
+                                                <div>
+                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                    <i class="mdi mdi-star mr-n1 text-light"></i>
+                                                    <i class="mdi mdi-star mr-n1 text-light"></i>
+                                                    <span class="ml-1">9%</span>
+                                                </div>
+
+                                                <div>
+                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                    <i class="mdi mdi-star mr-n1 text-light"></i>
+                                                    <i class="mdi mdi-star mr-n1 text-light"></i>
+                                                    <i class="mdi mdi-star mr-n1 text-light"></i>
+                                                    <span class="ml-1">3%</span>
+                                                </div>
+                                                
+                                                <div>
+                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                    <i class="mdi mdi-star mr-n1 text-light"></i>
+                                                    <i class="mdi mdi-star mr-n1 text-light"></i>
+                                                    <i class="mdi mdi-star mr-n1 text-light"></i>
+                                                    <i class="mdi mdi-star mr-n1 text-light"></i>
+                                                    <span class="ml-1">2%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr class="my-5"/>
+
+                                    <div class="mb-3">
+                                        <div class="d-lg-flex align-items-center justify-content-between mb-5">
+                                            <div class="mb-3 mb-lg-0">
+                                                <h3 class="mb-0">Commentaires</h3>
+                                            </div>
+                                            
+                                            <div>
+                                                <form class="form-inline">
+                                                    <div class="d-flex align-items-center mr-2">
+                                                        <span class="position-absolute pl-3">
+                                                            <i class="fe fe-search"></i>
+                                                        </span>
+                                                        <input type="search" class="form-control pl-6" placeholder="Search Review" />
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                        <div class="media border-bottom pb-4 mb-4">
+                                            <img src="{{ STATIC_PREFIX }}img/avatar-1.jpg" alt="" class="rounded-circle avatar-lg" />
+                                            <div class="media-body ml-3">
+                                                <h4 class="mb-1">
+                                                    Hugs F.
+                                                    <span class="ml-1 font-size-xs text-muted">2 jours maintent</span>
+                                                </h4>
+
+                                                <div class="font-size-xs mb-2">
+                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                </div>
+                                                <p>Lectures were at a really good pace and I never felt lost. The instructor was well informed 
+                                                and allowed me to learn and navigate Figma easily.</p>
+                                            
+                                                <div class="d-lg-flex">
+                                                    <p class="mb-0">Cet avis a-t-il été utile ?</p>
+                                                    <a href="#!" class="btn btn-xs btn-primary ml-lg-3">Oui</a>
+                                                    <a href="#!" class="btn btn-xs btn-outline-white ml-1">Non</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {% comment %} FAQ {% endcomment %}
+                                <div class="tab-pane fade" id="faq" role="tabpanel" aria-labelledby="faq-tab">
+                                    <div>
+                                        <h3 class="mb-3">Course - Frequently Asked Questions</h3>
+                                        <div class="mb-4">
+                                            <h4>How this course help me to design layout?</h4>
+                                            <p>
+                                                My name is Jason Woo and I work as human duct tape at Gatsby, that means that I do a lot of
+                                                different things. Everything from dev roll to writing content to writing code. And I used to
+                                                work as an architect at IBM. I live in Portland, Oregon.
+                                            </p>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <h4>What is important of this course?</h4>
+                                            <p>
+                                                We'll dive into GraphQL, the fundamentals of GraphQL. We're only gonna use the pieces of it that
+                                                we need to build in Gatsby. We're not gonna be doing a deep dive into what GraphQL is or
+                                                the language specifics. We're also gonna get into MDX. MDX is a way to write React components in
+                                                your markdown.
+                                            </p>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <h4>Why Take This Course?</h4>
+                                            <p>
+                                            We'll dive into GraphQL, the fundamentals of GraphQL. We're only gonna use the pieces of it that
+                                            we need to build in Gatsby. We're not gonna be doing a deep dive into what GraphQL is or
+                                            the language specifics. We're also gonna get into MDX. MDX is a way to write React components in
+                                            your markdown.</p>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <h4>Is able to create application after this course?</h4>
+                                            <p>
+                                                We'll dive into GraphQL, the fundamentals of GraphQL. We're only gonna use the pieces of it that
+                                                we need to build in Gatsby. We're not gonna be doing a deep dive into what GraphQL is or
+                                                the language specifics. We're also gonna get into MDX. MDX is a way to write React components in
+                                                your markdown.
+                                            </p>
+                                            
+                                            <p>
+                                                We'll dive into GraphQL, the fundamentals of GraphQL. We're only gonna use the pieces of it that
+                                                we need to build in Gatsby. We're not gonna be doing a deep dive into what GraphQL is or
+                                                the language specifics. We're also gonna get into MDX. MDX is a way to write React components in
+                                                your markdown.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% comment %} sidebar single detail {% endcomment %}
+                <div class="col-lg-4 col-md-12 col-12 mt-lg-n22">
+                    <div class="card mb-3 mb-4">
+                        <div class="p-1">
+                            <div class="d-flex justify-content-center position-relative rounded py-10 border-white border rounded-lg bg-cover" style="background-image: url({{ STATIC_PREFIX }}img/cours/course-javascript.jpg);">
+                                <a class="popup-youtube icon-shape rounded-circle btn-play icon-xl text-decoration-none" href="https://www.youtube.com/watch?v=JRzWRZahOVU">
+                                    <i class="fe fe-play"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <a href="#!" class="btn btn-primary btn-block">Démarrer votre mois gratuit</a>
+                            <a href="~" class="btn btn-outline-primary btn-block">Obtenir un accès complet</a>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-4">
+                        <div>
+                            <div class="card-header">
+                            <h4 class="mb-0">What’s included</h4>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                            <li class="list-group-item bg-transparent">
+                                <i class="fe fe-play-circle align-middle mr-2 text-primary"></i>
+                                12 heures de vidéo</li>
+                                
+                                <li class="list-group-item bg-transparent">
+                                    <i class="fe fe-award mr-2 align-middle text-success"></i>
+                                    Certificat inclu
+                                </li>
+                                
+                                <li class="list-group-item bg-transparent">
+                                    <i class="fe fe-calendar align-middle mr-2 text-info"></i>
+                                    12 Articles
+                                </li>
+                                
+                                <li class="list-group-item bg-transparent">
+                                    <i class="fe fe-video align-middle mr-2 text-secondary"></i>
+                                    Regarder hors ligne
+                                </li>
+                                
+                                <li class="list-group-item bg-transparent border-bottom-0">
+                                    <i class="fe fe-clock align-middle mr-2 text-warning"></i>
+                                    Accès à vie
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    {% include "accounts/teacher/snippet/_snippet_teacher_profile.html" %}
+                </div>
+            </div>
+
+            {% comment %} cours similaires {% endcomment %}
+            {% include "courses/snippets/_snippet_related_courses.html" %}
+        </div>
+    </div>
+{% endblock page_content %}

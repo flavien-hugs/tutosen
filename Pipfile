@@ -1,0 +1,22 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "*"
+python-decouple = "*"
+pillow = "*"
+argon2-cffi = "*"
+whitenoise = {extras = ["brotli"], version = "*"}
+django-3-jet = "*"
+django-tinymce = "*"
+django-phonenumber-field = "*"
+phonenumbers = "*"
+mysqlclient = "*"
+gunicorn = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.8"

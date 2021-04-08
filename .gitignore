@@ -1,0 +1,6 @@
+*.lock
+.env
+*.sqlite3
+logs/
+media/
+.idea/

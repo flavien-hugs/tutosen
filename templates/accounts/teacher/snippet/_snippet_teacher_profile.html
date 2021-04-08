@@ -1,0 +1,54 @@
+{% comment %} teacher profile detail {% endcomment %}
+
+<div class="card">
+    <div class="card-body">
+        <div class="d-flex align-items-center">
+            <div class="position-relative">
+                <img src="{{ STATIC_PREFIX }}img/avatar-1.jpg" alt="" class="rounded-circle avatar-xl"/>
+                <a href="{{ teacher_profile_url }}" class="position-absolute mt-2 ml-n3" data-toggle="tooltip" data-placement="top" title="Compte vérifié">
+                    <img src="{{ STATIC_PREFIX }}img/checked-mark.svg" alt="" height="30" width="30"/>
+                </a>
+            </div>
+
+            <div class="ml-4">
+                <h4 class="mb-0">Flavien HUGS</h4>
+                <p class="mb-1 font-size-xs">Developpeur Frontend &amp; backend, Designer</p>
+                <span class="font-size-xs">
+                    <span class="text-warning">4.5</span>
+                    <span class="mdi mdi-star text-warning mr-2"></span>
+                    Évaluation de l'instructeur
+                </span>
+            </div>
+        </div>
+
+        <div class="border-top row mt-3 border-bottom mb-3 no-gutters">
+            <div class="col">
+                <div class="pr-1 pl-2 py-3">
+                    <h5 class="mb-0">11,604</h5>
+                    <span>Étudiants</span>
+                </div>
+            </div>
+
+            <div class="col border-left">
+                <div class="pr-1 pl-3 py-3">
+                    <h5 class="mb-0">32</h5>
+                    <span>Cours</span>
+                </div>
+            </div>
+
+            <div class="col border-left">
+                <div class="pr-1 pl-3 py-3">
+                    <h5 class="mb-0">12,230</h5>
+                    <span>Commentaires</span>
+                </div>
+            </div>
+        </div>
+
+        <p>Je suis un developpeur d'innovation spécialisé en Python basé en Côte d'Ivoire.
+            En tant que résident créatif freelance, j'ai exploré la ville du futur et 
+        comment les nouvelles technologies.</p>
+
+        <a href="{{ teacher_profile_url }}" class="btn btn-outline-white btn-sm">
+        Afficher les détails</a>
+    </div>
+</div>
