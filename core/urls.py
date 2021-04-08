@@ -28,7 +28,7 @@ def handler500(request, template_name='500.html'):
 urlpatterns = [
 	path('', generic.TemplateView.as_view(template_name='index.html'), name='home'),
     path('accounts/', include('accounts.urls', namespace='accounts')),
-    path('dashboard/', include('dashboard.urls', namespace='dashboard')),
+    path('dashboard/', include('boards.urls', namespace='boards')),
     path('cours/', include('courses.urls', namespace='courses')),
     path('sp-', include('pages.urls', namespace='pages')),
 
