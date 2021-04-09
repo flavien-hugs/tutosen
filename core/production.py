@@ -1,4 +1,4 @@
-# locanto.production.py
+# core.production.py
 
 from core.settings import *
 
@@ -8,8 +8,9 @@ DEBUG = TEMPLATE_DEBUG = False
 
 # https://docs.djangoproject.com/en/3.0/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = [
+    'tutosen.unsta.net',
+    '*.unsta.net'
 ]
-
 
 # APPLICATION DEFINITION
 

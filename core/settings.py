@@ -64,7 +64,9 @@ PACKAGES_APPS = [
 
 LOCALS_APPS = [
     'accounts.apps.AccountsConfig',
+    'boards.apps.BoardsConfig',
     'courses.apps.CoursesConfig',
+    'pages.apps.PagesConfig',
 ]
 
 INSTALLED_APPS += PACKAGES_APPS + LOCALS_APPS
