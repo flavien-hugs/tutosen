@@ -15,6 +15,7 @@ django-phonenumber-field = "*"
 phonenumbers = "*"
 mysqlclient = "*"
 gunicorn = "*"
+feedparser = "*"
 
 [dev-packages]
 
