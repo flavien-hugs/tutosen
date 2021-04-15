@@ -1,6 +1,5 @@
 # utils.func_utils.py
 
-
 import os
 import string
 import random
