@@ -20,9 +20,6 @@
 	<body class="d-flex flex-column">
 		{% if not request.resolver_match.url_name == 'login_url' and not request.resolver_match.url_name == 'signup_url' and not request.resolver_match.url_name == 'password_reset_url' %}
 			{% include "includes/_partials_navigation.html" %}
-			{% if not request.resolver_match.url_name == 'courses_resume_url' and not request.resolver_match.url_name == 'teacher_add_course_url' and not request.resolver_match.url_name == 'teacher_dashboard_url' and not request.resolver_match.url_name == 'courses_list_url' and not request.resolver_match.url_name == 'teacher_profile_url' and not request.resolver_match.url_name == 'teacher_all_url' and not request.resolver_match.url_name == 'courses_detail_url' %}	
-				{% include "includes/_partials_hero.html" %}
-			{% endif %}
 		{% endif %}
 
 		<main>
