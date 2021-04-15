@@ -1,3 +1,14 @@
-from django.contrib import admin
+# pages.admin.py
 
-# Register your models here.
+from django.contrib import admin
+from django.contrib.auth.models import Group
+
+from pages.models import AboutUs, PageCGU, PageSupport
+
+
+admin.site.register(AboutUs)
+admin.site.register(PageCGU)
+admin.site.register(PageSupport)
+
+
+admin.site.unregister(Group)
