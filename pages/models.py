@@ -1,6 +1,9 @@
 # pages.models.py
 
 from django.db import models
+from django.utils.text import Truncator
+from django.utils.html import mark_safe
+
 from tinymce.models import HTMLField
 
 
@@ -16,7 +19,37 @@ class AboutUs(models.Model):
         verbose_name_plural = 'qui sommes-nous'
 
     def __str__(self):
-        return '{}'.format('Qui sommes-nous ?')
+        truncated_content = Truncator(self.content)
+        return mark_safe(truncated_content.words(10))
 
-    def __repr__(self):
-        return self.__str__()
+
+class PageCGU(models.Model):
+    
+    content = HTMLField(
+        verbose_name='description de la CGU',
+        help_text="Description de la Condition Générale d'Utilisation du site."
+    )
+
+    class Meta:
+        db_table = 'cgu_db'
+        verbose_name_plural = 'CGU'
+
+    def __str__(self):
+        truncated_content = Truncator(self.content)
+        return mark_safe(truncated_content.chars(50))
+
+
+class PageSupport(models.Model):
+    
+    content = HTMLField(
+        verbose_name='description faq',
+        help_text="Description des questions"
+    )
+
+    class Meta:
+        db_table = 'support_db'
+        verbose_name_plural = 'Support'
+
+    def __str__(self):
+        truncated_content = Truncator(self.content)
+        return mark_safe(truncated_content.chars(50))
