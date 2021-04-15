@@ -38,6 +38,7 @@ SITE_NAME = 'tutosen'
 THOUSAND_SEPARATOR = ' '
 USE_THOUSAND_SEPARATOR = True
 
+SITE_ID = 1
 
 # Application definition
 
@@ -56,8 +57,8 @@ INSTALLED_APPS = [
 PACKAGES_APPS = [
     'jet.dashboard',
     'jet',
-    'django.contrib.admin',
     'tinymce',
+    'django.contrib.admin',
     'phonenumber_field',
     'phonenumbers',
 ]
@@ -233,17 +234,19 @@ JET_CHANGE_FORM_SIBLING_LINKS = True
 # https://django-tinymce.readthedocs.io/en/latest/installation.html#configuration
 
 TINYMCE_DEFAULT_CONFIG = {
+    "height": "400px",
     'cleanup_on_startup': True,
     'custom_undo_redo_levels': 20,
-    'selector': 'textarea',
-    'theme': 'silver',
-    "plugins": "advlist,autolink,lists,link,image,charmap,print,preview,anchor,searchreplace,visualblocks,code,fullscreen,insertdatetime,media,table,paste,",
-    'toolbar': '''
-        fullscreen preview bold italic underline | fontselect,
-        fontsizeselect | forecolor backcolor | alignleft alignright |
-        aligncenter alignjustify | indent outdent | bullist numlist table |
-        | link image media | codesample |
-    ''',
+    "menubar": "file edit view insert format tools table help",
+    "plugins": "advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code "
+    "fullscreen insertdatetime media table paste code help wordcount spellchecker",
+    "toolbar": "undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft "
+    "aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor "
+    "backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | "
+    "fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | "
+    "a11ycheck ltr rtl | showcomments addcomment code",
+    "custom_undo_redo_levels": 10,
+    "language": "fr_FR",
     'contextmenu': 'formats | link image',
     'menubar': True,
     'statusbar': True,

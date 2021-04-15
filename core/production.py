@@ -22,6 +22,7 @@ MIDDLEWARE += ['whitenoise.middleware.WhiteNoiseMiddleware',]
 # https://docs.djangoproject.com/fr/3.0/ref/settings/
 # Let's Encrypt ssl/tls https
 
+X_FRAME_OPTIONS = "DENY"
 SECURE_SSL_REDIRECT = True
 SECURE_HSTS_SECONDS = 86400
 SECURE_HSTS_PRELOAD = True
