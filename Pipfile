@@ -16,6 +16,7 @@ phonenumbers = "*"
 mysqlclient = "*"
 gunicorn = "*"
 feedparser = "*"
+django-allauth = "*"
 
 [dev-packages]
 
