@@ -5,8 +5,9 @@
 {% block page_content %}
 
     {% url 'home' as home_url %}
-    {% url 'accounts:signup_url' as signup_url %}
-    {% url 'accounts:password_reset_url' as password_reset_url %}
+    {% url 'account_login' as account_login %}
+    {% url 'account_signup' as account_signup %}
+    {% url 'account_reset_password' as account_reset_password %}
 
     <div class="container d-flex flex-column">
         <div class="row align-items-center justify-content-center no-gutters min-vh-100">
@@ -20,20 +21,22 @@
 
                             <h1 class="mb-1 font-weight-bold">Se connecter</h1>
                             <span>Vous n'avez pas de compte ?
-                                <a href="{{ signup_url }}" class="ml-1">S'inscrire</a>
+                                <a href="{{ account_signup }}" class="ml-1">S'inscrire</a>
                             </span>
                         </div>
 
-                        <form>
+                        <form method="POST" action="{{ account_login }}">
+                            {% csrf_token %}
+
                             <div class="form-group">
-                                <label for="email" class="form-label">Nom d'utilisateur ou email</label>
-                                <input type="email" id="email" class="form-control" name="email" placeholder="Adresse électronique"
+                                <label for="{{ form.login.id_for_label }}" class="form-label">Nom d'utilisateur ou email</label>
+                                <input type="email" id="{{ form.login.id_for_label }}" class="form-control" name="{{ form.login.name }}" placeholder="Adresse électronique"
                                 required>
                             </div>
 
                             <div class="form-group">
-                                <label for="password" class="form-label">Mot de passe</label>
-                                <input type="password" id="password" class="form-control" name="password" placeholder="**************"
+                                <label for="{{ form.password.id_for_label }}" class="form-label">Mot de passe</label>
+                                <input type="password" id="{{ form.password.id_for_label }}" class="form-control" name="{{ form.password.name }}" placeholder="**************"
                                 required>
                             </div>
 
@@ -45,7 +48,7 @@
                                 </div>
                                 
                                 <div>
-                                    <a href="{{ password_reset_url }}">Mot de passe oublié ?</a>
+                                    <a href="{{ account_reset_password }}">Mot de passe oublié ?</a>
                                 </div>
                             </div>
                             
@@ -58,7 +61,7 @@
                             <hr class="my-4">
 
                             <div class="mt-4 text-center">
-                                {% include "includes/snippets/_snippet_social_link.html" %}
+                                {% include "account/teacher/snippet/_snippet_socialaccount.html" %}
                             </div>
                         </form>
                     </div>
