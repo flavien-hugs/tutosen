@@ -1,0 +1,56 @@
+{% extends "account/base.html" %}
+
+{% block head_title %} Connexions des comptes {% endblock head_title %}
+
+{% block account_content_body %}
+    {% url 'socialaccount_connections' as socialaccount_connections %}
+
+    <div class="mb-4">
+        <h1 class="mb-1 font-weight-bold">Connexions de comptes</h1>
+
+        <p>
+            Vous pouvez vous connecter à votre compte en utilisant 
+            l'un des comptes tiers suivants suivants :
+        </p>
+    </div>
+
+    {% if form.accounts %}
+        <form method="post" action="{{ socialaccount_connections }}">
+            {% csrf_token %}
+
+            <fieldset>
+                {% if form.non_field_errors %}
+                    <div id="errorMsg">{{ form.non_field_errors }}</div>
+                {% endif %}
+
+                {% for base_account in form.accounts %}
+                    {% with base_account.get_provider_account as account %}
+                        <div>
+                            <label for="id_account_{{ base_account.id }}">
+                                <input id="id_account_{{ base_account.id }}" type="radio" name="account" value="{{ base_account.id }}"/>
+                                <span class="socialaccount_provider {{ base_account.provider }} {{ account.get_brand.id }}">{{account.get_brand.name}}</span>
+                                {{ account }}
+                            </label>
+                        </div>
+                    {% endwith %}
+                {% endfor %}
+
+                <div>
+                    <button type="submit">Supprimer</button>
+                </div>
+            </fieldset>
+        </form>
+
+    {% else %}
+        <p>
+            Vous n'avez actuellement aucun compte de réseau social connecté à ce compte.
+        </p>
+    {% endif %}
+
+    <h2>Ajouter un compte tiers</h2>
+
+    <ul class="socialaccount_providers">
+        {% include "socialaccount/snippets/provider_list.html" with process="connect" %}
+    </ul>
+    {% include "socialaccount/snippets/login_extra.html" %}
+{% endblock account_content_body %}

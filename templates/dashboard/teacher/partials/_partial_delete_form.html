@@ -1,0 +1,23 @@
+{% extends "dashboard/teacher/base.html" %}
+
+
+{% block teacher_content %}
+    {% url "home" as home_url %}
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="mb-0">Suppression de votre compte</h3>
+            <p class="mb-0">Supprimer ou fermer définitivement votre compte.</p>
+        </div>
+
+        <div class="card-body p-4">
+            <span class="text-danger h4">Avertissement</span>
+            <p>
+                Si vous fermez votre compte, vous serez désinscrit de tous vos 0 cours,
+                et vous en perdrez l'accès pour toujours.
+            </p>
+            <a href="{{ request.user.get_userdetail_url }}" class="btn btn-outline-danger btn-sm">
+            Fermer mon compte</a>
+        </div>
+    </div>
+{% endblock teacher_content %}

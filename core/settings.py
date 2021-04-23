@@ -38,11 +38,14 @@ SITE_NAME = 'tutosen'
 THOUSAND_SEPARATOR = ' '
 USE_THOUSAND_SEPARATOR = True
 
-SITE_ID = 1
+SITE_ID = 2
+ADMIN_URL = 'xx-tutosen/'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 # Application definition
 
-INSTALLED_APPS = [
+DJANGO_APPS = [
     'django.contrib.auth',
 
     'django.contrib.contenttypes',
@@ -50,15 +53,25 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'django.contrib.sites',
+
     'django.contrib.humanize',
     'django.contrib.sitemaps',
 ]
 
-PACKAGES_APPS = [
+THIRD_PARTY_APPS = [
     'jet.dashboard',
     'jet',
     'tinymce',
     'django.contrib.admin',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
+
+    "widget_tweaks",
     'phonenumber_field',
     'phonenumbers',
 ]
@@ -70,31 +83,57 @@ LOCALS_APPS = [
     'pages.apps.PagesConfig',
 ]
 
-INSTALLED_APPS += PACKAGES_APPS + LOCALS_APPS
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCALS_APPS
+
+# MIGRATIONS
+# https://docs.djangoproject.com/en/dev/ref/settings/#migration-modules
+
+# MIGRATION_MODULES = {
+#     "sites": "core.contrib.sites.migrations"
+# }
+
+# https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
+
+AUTH_USER_MODEL = "accounts.User"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "django.middleware.locale.LocaleMiddleware",
+
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    "django.middleware.common.BrokenLinkEmailsMiddleware",
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
 
+# https://docs.djangoproject.com/en/dev/ref/settings/#templates
+# https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-TEMPLATES-BACKEND
+# https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
+# https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
+# https://docs.djangoproject.com/en/dev/ref/templates/api/#loader-types
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [str(BASE_DIR / 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+                "django.template.context_processors.i18n",
+                "django.template.context_processors.media",
+                "django.template.context_processors.static",
+                "django.template.context_processors.tz",
+                "django.contrib.messages.context_processors.messages",
 
                 'utils.context_proc.tutosen_context_processor',
             ],
@@ -106,6 +145,23 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
+# https://docs.djangoproject.com/en/dev/ref/settings/#form-renderer
+# FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
+
+# https://docs.djangoproject.com/en/dev/ref/settings/#fixture-dirs
+# FIXTURE_DIRS = (str(BASE_DIR / "fixtures"),)
+
+# https://docs.djangoproject.com/en/dev/ref/settings/#session-cookie-httponly
+SESSION_COOKIE_HTTPONLY = True
+
+# https://docs.djangoproject.com/en/dev/ref/settings/#csrf-cookie-httponly
+CSRF_COOKIE_HTTPONLY = True
+
+# https://docs.djangoproject.com/en/dev/ref/settings/#secure-browser-xss-filter
+SECURE_BROWSER_XSS_FILTER = True
+
+# https://docs.djangoproject.com/en/dev/ref/settings/#x-frame-options
+X_FRAME_OPTIONS = "DENY"
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -119,27 +175,16 @@ if DEBUG:
             'PASSWORD': config('DATABASE_PASSWORD'),
             'HOST': config('DATABASE_HOST'),
             'PORT': config('DATABASE_PORT'),
+            'ATOMIC_REQUESTS': True,
             'OPTIONS': {
                 "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
             }
         }
     }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
-
-AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-        'OPTIONS': {'max_similarity': 0.9,}},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-        'OPTIONS': {'min_length': 9,}},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
-]
-
 # password hashers
-# https://docs.djangoproject.com/fr/3.1/topics/auth/passwords/
+# https://docs.djangoproject.com/en/dev/ref/settings/#password-hashers
+# https://docs.djangoproject.com/en/dev/topics/auth/passwords/#using-argon2-with-django
 
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.Argon2PasswordHasher',
@@ -152,6 +197,18 @@ PASSWORD_HASHERS = [
 # https://docs.djangoproject.com/fr/3.1/ref/settings/
 
 DEFAULT_HASHING_ALGORITHM = 'sha1'
+
+# Password validation
+# https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
+
+AUTH_PASSWORD_VALIDATORS = [
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'OPTIONS': {'max_similarity': 0.9,}},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {'min_length': 9,}},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
+]
 
 
 # Internationalization
@@ -172,7 +229,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
-
 # staticfiles finders
 # See: https://docs.djangoproject.com/en/3.1/ref/contrib/staticfiles/#staticfiles-finders
 
@@ -180,6 +236,133 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
+
+# AUTHENTICATION CONFIGURATION
+AUTHENTICATION_BACKENDS = [
+    # Nécessaire pour se connecter par nom
+    # d'utilisateur dans l'admin Django, indépendamment de `allauth`
+
+    'django.contrib.auth.backends.ModelBackend',
+
+    # méthodes d'authentification spécifiques à` allauth`,
+    # comme la connexion par e-mail
+
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+# Les utilisateurs connectés sont redirigés ici s'ils
+# consultent les pages de connexion/inscription
+
+# https://docs.djangoproject.com/fr/dev/ref/settings/#logout-url
+LOGOUT_URL = 'home'
+
+# https://docs.djangoproject.com/fr/dev/ref/settings/#login-url
+LOGIN_URL = 'account_login'
+ACCOUNT_LOGOUT_REDIRECT_URL = 'home'
+
+# https://docs.djangoproject.com/fr/dev/ref/settings/#login-redirect-url
+LOGIN_REDIRECT_URL = 'boards:teacher_dashboard_url'
+
+# Configuration django-allauth
+# https://django-allauth.readthedocs.io/en/latest/configuration.html
+
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_MIN_LENGTH = 5
+ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_USERNAME_VALIDATORS = False
+ACCOUNT_ALLOW_REGISTRATION = True
+ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 86400
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_USER_MODEL_EMAIL_FIELD = 'email'
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_PRESERVE_USERNAME_CASING = False
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
+ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
+ACCOUNT_EMAIL_SUBJECT_PREFIX = "TuoSen <no-reply@tutosen.com>"
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = LOGIN_REDIRECT_URL
+
+ACCOUNT_ADAPTER = "accounts.adapter.CustomAccountAdapter"
+# Control the forms that django-allauth uses
+
+ACCOUNT_FORMS = {
+    # "login": "allauth.account.forms.LoginForm",
+    # "add_email": "allauth.account.forms.AddEmailForm",
+    # "change_password": "allauth.account.forms.ChangePasswordForm",
+    # "set_password": "allauth.account.forms.SetPasswordForm",
+    # "reset_password": "allauth.account.forms.ResetPasswordForm",
+    # "reset_password_from_key": "allauth.account.forms.ResetPasswordKeyForm",
+    # "disconnect": "allauth.socialaccount.forms.DisconnectForm",
+    
+    # Use our custom signup form
+    "signup": "accounts.forms.CustomSignupForm",
+}
+
+EMAIL_PORT = 587
+EMAIL_TIMEOUT = 5
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp-relay.sendinblue.com'
+EMAIL_HOST_USER = 'flavienhgs@gmail.com'
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+SENDGRID_API_KEY = config('SENDGRID_API_KEY', default='')
+DEFAULT_FROM_EMAIL = SERVER_EMAIL = 'hello@tutosen.com'
+
+# Pour le développement, envoyer tous les courriers électroniques
+# à la console au lieu de les envoyer
+
+EMAIL_BACKEND = config(
+    'EMAIL_BACKEND',
+    default='django.core.mail.backends.smtp.EmailBackend',
+)
+
+# Social Account Settings
+SOCIALACCOUNT_PROVIDERS = {
+    'facebook': {
+        'METHOD': 'oauth2',
+        'SCOPE': ['email', 'public_profile', 'user_friends', 'publish_stream'],
+        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+        'INIT_PARAMS': {'cookie': True},
+        'FIELDS': [
+            'id',
+            'email',
+            'name',
+            'first_name',
+            'last_name',
+            'verified',
+            'locale',
+            'timezone',
+            'link',
+            'gender',
+            'updated_time',
+        ],
+        'EXCHANGE_TOKEN': True,
+        'LOCALE_FUNC': lambda request: 'fr_FR',
+        'VERIFIED_EMAIL': False,
+        'VERSION': 'v7.0',
+    },
+    
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
+# facebook
+
+SOCIAL_AUTH_FACEBOOK_KEY = config('FACEBOOK_KEY')
+SOCIAL_AUTH_FACEBOOK_SECRET = config('FACEBOOK_SECRET')
+
+SOCIALACCOUNT_QUERY_EMAIL = True
+SOCIALACCOUNT_EMAIL_REQUIRED = True
+SOCIALACCOUNT_STORE_TOKENS = False
 
 # Activez le backend de stockage WhiteNoise qui se charge de compresser
 # les fichiers statiques et de créer des noms uniques pour chaque version
@@ -251,3 +434,51 @@ TINYMCE_DEFAULT_CONFIG = {
     'menubar': True,
     'statusbar': True,
 }
+
+# https://docs.djangoproject.com/en/dev/ref/settings/#logging
+# See https://docs.djangoproject.com/en/dev/topics/logging for
+# more details on how to customize your logging configuration.
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    "filters": {
+        "require_debug_false": {
+            "()": "django.utils.log.RequireDebugFalse"
+        }
+    },
+    "formatters": {
+        "verbose": {
+            "format": "%(levelname)s %(asctime)s %(module)s "
+            "%(process)d %(thread)d %(message)s"
+        }
+    },
+    "handlers": {
+        "mail_admins": {
+            "level": "ERROR",
+            "filters": ["require_debug_false"],
+            "class": "django.utils.log.AdminEmailHandler",
+        },
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        },
+    },
+    "root": {"level": "INFO", "handlers": ["console"]},
+    "loggers": {
+        "django.request": {
+            "handlers": ["mail_admins"],
+            "level": "ERROR",
+            "propagate": True,
+        },
+        "django.security.DisallowedHost": {
+            "level": "ERROR",
+            "handlers": ["console", "mail_admins"],
+            "propagate": True,
+        },
+    },
+}
+
+PHONENUMBER_DEFAULT_REGION = "CI"
+PHONENUMBER_DB_FORMAT = "INTERNATIONAL"

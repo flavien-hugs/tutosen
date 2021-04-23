@@ -1,0 +1,16 @@
+{% extends "account/base.html" %}
+
+{% block head_title %} Inscription fermée {% endblock head_title %}
+
+{% block account_content_body %}
+    {% url 'account_set_password' as account_set_password %}
+
+    <div class="mb-4">
+        <a href="{{ home_url }}">
+            <img src="{{ STATIC_PREFIX }}img/logo-icon.svg" class="mb-4" alt="{{ title }}">
+        </a>
+
+        <h3 class="mb-1 font-weight-bold">Inscription fermée</h3>
+        <p>Nous sommes désolés, mais l'inscription est actuellement fermée.</p>
+    </div>
+{% endblock account_content_body %}

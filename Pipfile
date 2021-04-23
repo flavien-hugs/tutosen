@@ -17,6 +17,8 @@ mysqlclient = "*"
 gunicorn = "*"
 feedparser = "*"
 django-allauth = "*"
+django-widget-tweaks = "*"
+babel = "*"
 
 [dev-packages]
 

@@ -1,169 +1,158 @@
-{% extends "index.html" %}
+{% extends "dashboard/teacher/base.html" %}
 
-{% block page_content %}
-    {% include "courses/snippets/_snippet_courses_header.html" %}
+{% block teacher_content %}
 
-    <div class="pb-5 py-md-5">
-        <div class="container">
-            <div class="row">
-                {% include "dashboard/teacher/partials/_partial_sidebar_teacher.html" %}
-
-                <section class="col-lg-9 col-md-8 col-12">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-12 col-12">
-                            <div class="card mb-4">                                
-                                <div class="card-body p-4">
-                                    <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
-                                        <div>
-                                            <span class="font-size-xs text-uppercase font-weight-semi-bold">
-                                            Revenue</span>
-                                        </div>
-                                        
-                                        <div>
-                                            <span class="fe fe-shopping-bag font-size-lg text-primary"></span>
-                                        </div>
-                                    </div>
-
-                                    <h2 class="mt-4 font-weight-bold mb-1 d-flex align-items-center h1 lh-1">
-                                        50 000 Fr
-                                    </h2>
-
-                                    <span class="text-success font-weight-semi-bold">
-                                        <i class="fe fe-trending-up mr-1"></i>
-                                        +20 000 Fr gains du mois
-                                    </span>
-                                </div>
-                            </div>
+    <div class="row">
+        <div class="col-lg-4 col-md-12 col-12">
+            <div class="card mb-4">                                
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
+                        <div>
+                            <span class="font-size-xs text-uppercase font-weight-semi-bold">
+                            Revenue</span>
                         </div>
 
-                        <div class="col-lg-4 col-md-12 col-12">
-                            <div class="card mb-4">
-                                <div class="card-body p-4">
-                                    <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
-                                        <div>
-                                            <span class="font-size-xs text-uppercase font-weight-semi-bold">
-                                            Étudiants Inscrits</span>
-                                        </div>
-                                        
-                                        <div>
-                                            <span class="fe fe-users font-size-lg text-primary"></span>
-                                        </div>
-                                    </div>
-
-                                    <h2 class="mt-4 font-weight-bold mb-1 d-flex align-items-center h1 lh-1">
-                                        100
-                                    </h2>
-
-                                    <span class="text-success font-weight-semi-bold">
-                                        <i class="fe fe-trending-up mr-1"></i>
-                                        +5 inscrits ce mois-ci
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-12 col-12">
-                            <div class="card mb-4">
-                                <div class="card-body p-4">
-                                    <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
-                                        <div>
-                                            <span class="font-size-xs text-uppercase font-weight-semi-bold">
-                                            Évaluation des cours</span>
-                                        </div>
-                                        
-                                        <div>
-                                            <span class="fe fe-book-open font-size-lg text-primary"></span>
-                                        </div>
-                                    </div>
-
-                                    <h2 class="mt-4 font-weight-bold mb-1 d-flex align-items-center h1 lh-1">
-                                        4.80
-                                    </h2>
-
-                                    <span class="text-success font-weight-semi-bold">
-                                        <i class="fe fe-trending-up mr-1"></i>
-                                        +2.5 points obtenus
-                                    </spa>
-                                </div>
-                            </div>
+                        <div>
+                            <span class="fe fe-shopping-bag font-size-lg text-primary"></span>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-lg-6 col-md-12 col-12">
-                            <div class="card mb-4">
-                                <div class="card-header">
-                                    <h3 class="h4 mb-0">Revenu mensuel</h3>
-                                </div>
-                                <div class="card-body">
-                                    <div id="earning" class="apex-charts"></div>
-                                </div>
-                            </div>
+                    <h2 class="mt-4 font-weight-bold mb-1 d-flex align-items-center h1 lh-1">
+                        50 000 Fr
+                    </h2>
+
+                    <span class="text-success font-weight-semi-bold">
+                        <i class="fe fe-trending-up mr-1"></i>
+                        +20 000 Fr gains du mois
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-12 col-12">
+            <div class="card mb-4">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
+                        <div>
+                            <span class="font-size-xs text-uppercase font-weight-semi-bold">
+                            Étudiants Inscrits</span>
                         </div>
 
-                        <div class="col-lg-6 col-md-12 col-12">
-                            <div class="card mb-4">
-                                <div class="card-header">
-                                    <h3 class="h4 mb-0">Commandes mensuelles</h3>
-                                </div>
-                                <div class="card-body">
-                                    <div id="orderColumn" class="apex-charts"></div>
-                                </div>
-                            </div>
+                        <div>
+                            <span class="fe fe-users font-size-lg text-primary"></span>
+                        </div>
+                    </div>
+
+                    <h2 class="mt-4 font-weight-bold mb-1 d-flex align-items-center h1 lh-1">
+                        100
+                    </h2>
+
+                    <span class="text-success font-weight-semi-bold">
+                        <i class="fe fe-trending-up mr-1"></i>
+                        +5 inscrits ce mois-ci
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-12 col-12">
+            <div class="card mb-4">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
+                        <div>
+                            <span class="font-size-xs text-uppercase font-weight-semi-bold">
+                            Évaluation des cours</span>
+                        </div>
+
+                        <div>
+                            <span class="fe fe-book-open font-size-lg text-primary"></span>
                         </div>
                     </div>
 
-                    <div class="card mb-4">
-                        <div class="card-header border-bottom-0">
-                            <h3 class="h4 mb-0">Cours les plus vendus</h3>
-                        </div>
+                    <h2 class="mt-4 font-weight-bold mb-1 d-flex align-items-center h1 lh-1">
+                        4.80
+                    </h2>
 
-                        <div class="table-responsive border-0">
-                            <table class="table mb-0">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" class="border-0">COURS</th>
-                                        <th scope="col" class="border-0">VENTES</th>
-                                        <th scope="col" class="border-0">MONTANT</th>
-                                        <th scope="col" class="border-0"></th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    <tr>
-                                        <td class="align-middle border-top-0">
-                                            <a href="#">
-                                                <div class="d-lg-flex align-items-center">
-                                                    <img src="{{ STATIC_PREFIX }}img/cours/course-laravel.jpg" alt="" class="rounded img-4by3-lg" />
-                                                    <h5 class="mb-0 ml-lg-3 mt-2 mt-lg-0 text-primary-hover">
-                                                        Construire des API évolutives avec GraphQL
-                                                    </h5>
-                                                </div>
-                                            </a>
-                                        </td>
-                                        <td class="align-middle border-top-0">34</td>
-                                        <td class="align-middle border-top-0">30 000 Fr</td>
-                                        <td class="text-muted align-middle border-top-0">
-                                            <span class="dropdown">
-                                                <a class="text-muted text-decoration-none" href="#!" role="button" id="courseDropdown1"
-                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <i class="fe fe-more-vertical"></i>
-                                                </a>
-                                                <span class="dropdown-menu" aria-labelledby="courseDropdown1">
-                                                    <span class="dropdown-header">Modifier</span>
-                                                    <a class="dropdown-item" href="#!"><i class="fe fe-edit dropdown-item-icon"></i>Éditer</a>
-                                                    <a class="dropdown-item" href="#!"><i class="fe fe-trash dropdown-item-icon"></i>Supprimer</a>
-                                                </span>
-                                            </span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </section>
+                    <span class="text-success font-weight-semi-bold">
+                        <i class="fe fe-trending-up mr-1"></i>
+                        +2.5 points obtenus
+                    </spa>
+                </div>
             </div>
         </div>
     </div>
 
-{% endblock page_content %}
+    <div class="row">
+        <div class="col-lg-6 col-md-12 col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 class="h4 mb-0">Revenu mensuel</h3>
+                </div>
+                <div class="card-body">
+                    <div id="earning" class="apex-charts"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-12 col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 class="h4 mb-0">Commandes mensuelles</h3>
+                </div>
+                <div class="card-body">
+                    <div id="orderColumn" class="apex-charts"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header border-bottom-0">
+            <h3 class="h4 mb-0">Cours les plus vendus</h3>
+        </div>
+
+        <div class="table-responsive border-0">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th scope="col" class="border-0">COURS</th>
+                        <th scope="col" class="border-0">VENTES</th>
+                        <th scope="col" class="border-0">MONTANT</th>
+                        <th scope="col" class="border-0"></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="align-middle border-top-0">
+                            <a href="#">
+                                <div class="d-lg-flex align-items-center">
+                                    <img src="{{ STATIC_PREFIX }}img/cours/course-laravel.jpg" alt="" class="rounded img-4by3-lg" />
+                                    <h5 class="mb-0 ml-lg-3 mt-2 mt-lg-0 text-primary-hover">
+                                        Construire des API évolutives avec GraphQL
+                                    </h5>
+                                </div>
+                            </a>
+                        </td>
+                        <td class="align-middle border-top-0">34</td>
+                        <td class="align-middle border-top-0">30 000 Fr</td>
+                        <td class="text-muted align-middle border-top-0">
+                            <span class="dropdown">
+                                <a class="text-muted text-decoration-none" href="#!" role="button" id="courseDropdown1"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fe fe-more-vertical"></i>
+                            </a>
+                            <span class="dropdown-menu" aria-labelledby="courseDropdown1">
+                                <span class="dropdown-header">Modifier</span>
+                                <a class="dropdown-item" href="#!"><i class="fe fe-edit dropdown-item-icon"></i>Éditer</a>
+                                <a class="dropdown-item" href="#!"><i class="fe fe-trash dropdown-item-icon"></i>Supprimer</a>
+                            </span>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
+
+{% endblock teacher_content %}

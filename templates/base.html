@@ -7,18 +7,18 @@
 		{% include "includes/_static_css_link.html" %}
 		
 		<title>
-			{% block title %}
+			{% block head_title %}
 				{% if page_title %}
 					{{ page_title|capfirst }}
 				{% else %}
 					{{ site_description|capfirst }}
-				{% endif %} &smid; {{ title|upper }}
-			{% endblock title %}
+				{% endif %}
+			{% endblock head_title %} &smid; {{ title|upper }}
 		</title>
 	</head>
 
 	<body class="d-flex flex-column h-100">
-		{% if not request.resolver_match.url_name == 'account_login' and not request.resolver_match.url_name == 'account_signup' and not request.resolver_match.url_name == 'account_reset_password' %}
+		{% if not request.resolver_match.url_name == 'account_logout' and not request.resolver_match.url_name == 'account_confirm_email' and not request.resolver_match.url_name == 'account_login' and not request.resolver_match.url_name == 'account_signup' and not request.resolver_match.url_name == 'account_reset_password' %}
 			{% include "includes/_partials_navigation.html" %}
 		{% endif %}
 
@@ -28,7 +28,7 @@
 			{% endblock page_content %}
 		</main>
 
-		{% if not request.resolver_match.url_name == 'account_login' and not request.resolver_match.url_name == 'account_signup' %}
+		{% if not request.resolver_match.url_name == 'account_logout' and not request.resolver_match.url_name == 'account_confirm_email' and not request.resolver_match.url_name == 'account_login' and not request.resolver_match.url_name == 'account_signup' %}
 			{% include "includes/_partials_footer.html" %}
 		{% endif %}
 		

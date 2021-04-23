@@ -1,13 +1,15 @@
 {% comment %} partial sidebar for tearcher {% endcomment %}
 
-{% url 'boards:teacher_dashboard_url' as teacher_dashboard_url %}
+{% load boards_tags %}
+{% url 'account_logout' as account_logout %}
 {% url 'boards:teacher_add_course_url' as teacher_add_course_url %}
 
 
 <aside class="col-lg-3 col-md-4 col-12">
     <nav class="navbar navbar-expand-md navbar-light shadow-sm mb-4 mb-lg-0 small-sidenav">
         <a class="d-xl-none d-lg-none d-md-none text-inherit font-weight-bold" href="#!">
-        Menu</a>
+            Menu
+        </a>
         
         <button class="navbar-toggler d-md-none icon-shape icon-sm rounded bg-primary text-light" type="button"
         data-toggle="collapse" data-target="#smallSidenav" aria-controls="smallSidenav" aria-expanded="false"
@@ -19,10 +21,10 @@
             <div class="navbar-nav flex-column">
                 <span class="navbar-header">Tableau de bord</span>
                 <ul class="list-unstyled ml-n2 mb-4">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{ teacher_dashboard_url }}">
+                    <li class="nav-item {% active_link 'user_detail' %}">
+                        <a class="nav-link" href="{{ request.user.get_userdetail_url }}">
                             <i class="fe fe-home nav-icon"></i>
-                            Mon Tableau de bord
+                            Tableau de bord
                         </a>
                     </li>
 
@@ -79,8 +81,8 @@
                 <span class="navbar-header">Réglages du compte</span>
 
                 <ul class="list-unstyled ml-n2 mb-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="profile-edit.html">
+                    <li class="nav-item {% active_link 'user_update' %}">
+                        <a class="nav-link" href="{{ request.user.get_userupdate_url }}">
                             <i class="fe fe-settings nav-icon"></i>
                             Éditer votre profil
                         </a>
@@ -114,15 +116,15 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
+                    <li class="nav-item {% active_link 'user_delete' %}">
+                        <a class="nav-link" href="{{ request.user.get_userdelete_url }}">
                             <i class="fe fe-trash nav-icon"></i>
                             Supprimer le profil
                         </a>
                     </li>
                 </ul>
 
-                <a href="#" class="btn btn-outline-primary btn-sm mt-3">
+                <a href="{{ account_logout }}" class="btn btn-outline-primary btn-sm mt-3">
                     <i class="fe fe-power nav-icon"></i>
                     Se déconnecter
                 </a>

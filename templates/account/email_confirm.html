@@ -1,0 +1,41 @@
+{% extends "account/base.html" %}
+{% load account %}
+{% block head_title %} Confirmez votre adresse e-mail {% endblock head_title %}
+
+{% block account_content_body %}
+    {% url 'account_login' as account_login %}
+    {% url 'account_confirm_email' confirmation.key as account_confirm_email %}
+    
+    <a href="{{ home_url }}">
+        <img src="{{ STATIC_PREFIX }}img/logo-icon.svg" class="mb-4" alt="{{ title }}">
+    </a>
+
+    {% if confirmation %}
+        {% user_display confirmation.email_address.user as user_display %}
+
+        <p class="verification_sent_info" >
+            {% with confirmation.email_address.email as email %} 
+                S'il vous plaît, veuillez confirmer que
+                <a class="font-weight-bold" href="mailto:{{ email }}">{{ email }}</a> 
+                est une adresse e-mail pour l'utilisateur <strong>{{ user_display }}</strong>.
+            {% endwith %}
+        </p>
+
+        <form method="post" action="{{ account_confirm_email }}">
+            {% csrf_token %}
+            <button class="btn btn-block btn-primary text-uppercase border-0 text-uppercase" type="submit">
+                confirmer
+            </button>
+        </form>
+    {% else %}
+        <p class="verification_sent_info" >
+            Ce lien de confirmation par e-mail a expiré ou n'est pas valide.
+            S'il vous plaît <a class="font-weight-bold" href="{{ email_url }}"> émettre une nouvelle demande de confirmation par e-mail</a>.
+            Vous serez redirigé vers la page de connexion dans 5 secondes.
+        </p>
+        
+        <script>
+            setTimeout("location.href = '{{ account_login }}';", 5000);
+        </script>
+    {% endif %}
+{% endblock account_content_body %}

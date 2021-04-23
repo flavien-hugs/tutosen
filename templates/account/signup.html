@@ -1,0 +1,85 @@
+{% extends "account/base.html" %}
+{% load widget_tweaks %}
+{% block head_title %} S'inscrire {% endblock head_title %}
+
+{% comment %} page d'inscription {% endcomment %}
+
+{% block account_content_body %}
+    {% url 'home' as home_url %}
+    {% url 'account_login' as account_login %}
+    {% url 'account_signup' as account_signup %}
+    {% url 'pages:page_cgu' as page_cgu %}
+
+    <div class="mb-4">
+        <a href="{{ home_url }}">
+            <img src="{{ STATIC_PREFIX }}img/logo-icon.svg" class="mb-4" alt="{{ title }}">
+        </a>
+
+        <h3 class="mb-1 font-weight-bold">S'inscrire</h3>
+        <span>Vous avez déjà un compte ?
+            <a href="{{ account_login }}" class="ml-1">
+                Connectez-vous
+            </a>
+        </span>
+    </div>
+
+    <form method="post" action="{{ account_signup }}">
+        {% csrf_token %}
+
+        <div class="form-group">
+            {{ form.first_name|add_label_class:"form-label" }}
+            <div class="input-group">
+                {% render_field form.civility class+="custom-select w-25" %}
+                {% render_field form.first_name class+="form-control w-75" placeholder=form.first_name.label %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form.last_name|add_label_class:"form-label" }}
+            {% render_field form.last_name class+="form-control" placeholder=form.last_name.label %}
+        </div>
+
+        <div class="form-group">
+            {{ form.email|add_label_class:"form-label" }}
+            {% render_field form.email|attr:"type:email" class+="form-control" placeholder=form.email.label %}
+        </div>
+
+        <div class="form-group">
+            {{ form.type|add_label_class:"form-label" }}
+            <div class="input-group">
+                {% render_field form.type class+="custom-select" %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form.password1|add_label_class:"form-label" }}
+            {% render_field form.password1|attr:"type:password" class+="form-control" placeholder="**************" %}
+        </div>
+
+        <div class="form-group">            
+            {{ form.password2|add_label_class:"form-label" }}
+            {% render_field form.password2|attr:"type:password" class+="form-control" placeholder="**************" %}
+        </div>
+
+        <div class="form-group">
+            <div class="custom-control custom-checkbox">
+                {% render_field form.privacy|attr:"type:checkbox" class+="custom-control-input" %}
+                <label class="custom-control-label" for="{{ form.privacy.id_for_label }}">
+                    <span>J'accepte les <a href="{{ page_cgu }}">Conditions d'utilisation </a> et
+                        <a href="{{ page_cgu }}">Politique de confidentialité.</a>
+                    </span>
+                </label>
+            </div>
+        </div>
+
+        {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
+        {% endif %}
+
+        <div>
+            <button type="submit" class="btn btn-primary btn-block">
+                Créez votre compte &raquo;
+            </button>
+        </div>
+ </form>
+{% endblock account_content_body %}

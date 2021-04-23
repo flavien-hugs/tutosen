@@ -1,0 +1,26 @@
+{% extends "index.html" %}
+
+{% block head_title %} {% endblock head_title %}
+
+{% comment %} base account template {% endcomment %}
+
+{% block page_content %}
+
+    <div class="container d-flex flex-column">
+        <div class="row align-items-center justify-content-center no-gutters min-vh-100">
+            <div class="col-lg-5 col-md-8 py-8 py-xl-0">
+                <div class="card shadow">
+                    <div class="card-body p-6">
+                        {% block message %}
+                            
+                        {% endblock message %}
+                        
+                        {% block account_content_body %}
+                            
+                        {% endblock account_content_body %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock page_content %}

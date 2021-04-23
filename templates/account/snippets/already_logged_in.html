@@ -1,0 +1,22 @@
+{% extends "account/base.html" %}
+
+{% load account %}
+
+{% block account_content_body %}
+
+    {% user_display user as user_display %}
+
+    <div class="mb-4">
+        <h3 class="mb-1 font-weight-bold"> Déjà connecté ! </h3>
+
+        <p>
+            Vous êtes déjà connecté en tant que
+            <h1 class="display-3"> {{ user_display }}</h1>.
+        </p>
+
+        <a class="btn btn-link" href="{{ request.user.get_userdetail_url }}">
+            Retourner au profil
+        </a>
+    </div>
+
+{% endblock account_content_body %}

@@ -1,0 +1,30 @@
+{% extends "account/base.html" %}
+
+{% block head_title %} Inscription {% endblock head_title %}
+
+{% block account_content_body %}
+    {% url 'socialaccount_signup' as socialaccount_signup %}
+    
+    <div class="mb-4">
+        <h1 class="mb-1 font-weight-bold">Inscription</h1>
+
+        <p>
+            {% with provider_name=account.get_provider.name site_name=site.name %}
+                Vous êtes sur le point d'utiliser votre compte  {{ provider_name }} 
+                pour vous connecter à {{ site_name }}.
+                Pour terminer, veuillez remplir le formulaire suivant :
+            {% endwith %}
+        </p>
+    </div>
+
+    <form method="post" action="{{ socialaccount_signup }}">
+        {% csrf_token %}
+        {{ form }}
+        {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+      <button type="submit" class="btn btn-primary btn-block">s'inscrire &raquo;</button>
+    </form>
+
+    <p>Une erreur s'est produite lors de la tentative de connexion via votre compte de réseau social.</p>
+{% endblock account_content_body %}

@@ -1,0 +1,18 @@
+{% extends "index.html" %}
+
+{% load account %}
+
+{% block page_content %}
+    {% user_display user as user_display %}
+
+    <div class="container-fluid text-center">
+        <h3 class="h3" id="head_banner">Vous êtes déjà connecté !</h3>
+        <p class="forgot_password_info">
+            Vous êtes déjà connecté en tant que
+            <h1 class="display-3">{{ user_display }}</h1>.
+        </p>
+        <a class="btn btn-outline-danger" id="custom_logout_no" href="/accounts/profile/">
+            Retour au profil
+        </a>
+    </div>
+{% endblock page_content %}

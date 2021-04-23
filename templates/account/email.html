@@ -1,0 +1,89 @@
+{% extends "account/base.html" %}
+{% load widget_tweaks %}
+{% block head_title %} Compte {% endblock head_title %}
+
+{% block account_content_body %}
+    {% url "home" as home_url %}
+    {% url 'account_email' as account_email %}
+
+    {% block message %}
+        {% include "account/snippets/_snippet_message.html" %}
+    {% endblock message %}
+
+    <div class="mb-4">
+        <a href="{{ home_url }}">
+            <img src="{{ STATIC_PREFIX }}img/logo-icon.svg" class="mb-4" alt="{{ title }}">
+        </a>
+
+        <h3 class="mb-1 font-weight-bold">Adresse E-mail</h3>
+
+        {% if user.emailaddress_set.all %}
+            <p>Les adresses électroniques suivantes sont associées à votre compte : </p>
+
+            <form method="POST" class="text-center" action="{{ account_email }}">
+                {% csrf_token %}
+
+                {% for emailaddress in user.emailaddress_set.all %}
+                    <div class="ctrlHolder">
+                        <label for="email_radio_{{ forloop.counter }}" class="{% if emailaddress.primary %} text-primary {%endif%}">
+                            {{ emailaddress.email }}
+                            {% if emailaddress.verified %}
+                                <span class="verified">&nbsp;
+                                    <i class="fa fa-check" aria-hidden="true"> (Verified) &nbsp;</i>
+                                </span>
+                            {% else %}
+                                <span class="unverified">&nbsp;
+                                    <i class="fa fa-circle-o-notch" aria-hidden="true">
+                                    (Not Verified!) &nbsp;</i>
+                                </span>
+                            {% endif %}
+
+                            <input id="email_radio_{{ forloop.counter }}" type="radio" name="email" {% if emailaddress.primary or user.emailaddress_set.count == 1 %} checked="checked" {%endif %} value="{{emailaddress.email}}"/>
+
+                            {% if emailaddress.primary %}
+                                <span class="primary">&nbsp;Email principale</span>
+                            {% endif %}
+                        </label>
+                    </div>
+                {% endfor %}
+
+                <div class="container">
+                    <button class="btn btn-outline-primary" type="submit" name="action_primary" >Make Primary</button>
+                    <button class="btn btn-outline-info" type="submit" name="action_send" >Re-send Verification</button>
+                    <button class="btn btn-outline-danger" type="submit" name="action_remove" >Supprimer</button>
+                </div>
+            </form>
+        {% else %}
+            <p class="email_settings_info">
+                <strong>Avertissement: </strong>
+                Vous n'avez actuellement pas d'adresse électronique configurée.
+                Vous devriez vraiment ajouter une adresse e-mail afin de pouvoir recevoir des 
+                notifications, réinitialiser votre mot de passe, etc.
+            </p>
+        {% endif %}
+
+        <p>Ajouter une adresse électronique. </p>
+        <form method="post" action="{% url 'account_email' %}" class="add_email">
+            {% csrf_token %}
+            
+            {{ form|crispy }}
+
+            <button class="btn btn-primary" name="action_add" type="submit">
+            Ajouter une adresse électronique.</button>
+        </form>
+    </div>
+    <script type="text/javascript">
+        (function() {
+            var message = "Do you really want to remove the selected e-mail address ?";
+            var actions = document.getElementsByName('action_remove');
+            if (actions.length) {
+                actions[0].addEventListener("click", function(e) {
+                    if (!confirm(message)) {
+                        e.preventDefault();
+                    }
+                });
+            }
+        })();
+        $('.form-group').removeClass('row');
+    </script>
+{% endblock account_content_body %}

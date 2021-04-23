@@ -1,0 +1,25 @@
+{% extends "account/base.html" %}
+
+{% block head_title %} Vérifier votre adresse électronique {% endblock head_title %}
+
+{% block account_content_body %}
+    {% url 'account_email' as email_url %}
+
+    <div class="mb-4">
+        <a href="{{ home_url }}">
+            <img src="{{ STATIC_PREFIX }}img/logo-icon.svg" class="mb-4" alt="{{ title }}">
+        </a>
+
+        <h3 class="mb-1 font-weight-bold">Vérifier votre adresse électronique</h3>
+        <p>
+            Cette partie du site nous oblige à vérifier que vous êtes bien la personne que vous prétendez être.
+            À cette fin, nous vous demandons de vérifier la propriété de votre adresse électronique.
+        </p>
+
+        <p>
+            <strong> Note: </strong> vous pouvez toujours modifier votre adresse électronique à l' 
+            <a class="font-weight-bold" href="{{ email_url }}">adresse</a>
+        </p>
+
+    </div>
+{% endblock account_content_body %}

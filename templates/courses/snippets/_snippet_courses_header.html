@@ -111,7 +111,7 @@
     </div>
 
 {% elif request.resolver_match.url_name == 'teacher_all_url' %}
-    <div class="pt-12 pb-2">
+    <div class="pt-4 pb-2">
         <div class="container">
             <div class="row">
                 <div class="offset-xl-2 col-xl-8 offset-lg-1 col-lg-10 col-md-12 col-12">
@@ -140,7 +140,7 @@
     </div>
 
 {% elif request.resolver_match.url_name == 'teacher_dashboard_url' %}
-    <div class="pt-12">
+    <div class="pt-4">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-12">
@@ -155,8 +155,20 @@
                                 </a>
                             </div>
                             <div class="lh-1">
-                                <h2 class="mb-0">Flvien Hugs</h2>
-                                <p class="mb-0 d-block">@flavienhugs</p>
+                                <h2 class="mb-0">
+                                    {% if request.user.first_name or request.user.last_name %}
+                                        {{ request.user.first_name }} {{ request.user.last_name }}
+                                    {% else %}
+                                        {{ request.user.username }}
+                                    {% endif %}
+                                </h2>
+                                <p class="mb-0 d-block">
+                                    @{% if request.user.first_name %}
+                                        {{ request.user.first_name }}
+                                    {% else %}
+                                        {{ request.user.username }}
+                                    {% endif %}
+                                </p>
                             </div>
                         </div>
                         <div>
@@ -170,7 +182,7 @@
     </div>
 
 {% elif request.resolver_match.url_name == 'teacher_add_course_url' %}
-    <div class="pt-12 py-8 bg-primary">
+    <div class="pt-4 py-8 bg-primary">
         <div class="container">
             <div class="row">
                 <div class="offset-lg-1 col-lg-10 col-md-12 col-12">

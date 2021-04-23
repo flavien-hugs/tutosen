@@ -1,0 +1,16 @@
+{% extends "account/base.html" %}
+
+{% block head_title %} Compte inactif {% endblock head_title %}
+
+{% block account_content_body %}
+    {% url "home" as home_url %}
+
+    <div class="mb-4">
+        <a href="{{ home_url }}">
+            <img src="{{ STATIC_PREFIX }}img/logo-icon.svg" class="mb-4" alt="{{ title }}">
+        </a>
+
+        <h3 class="mb-1 font-weight-bold">Votre compte a été désactivé.</h3>
+        <p>Ce compte est inactif.</p>
+    </div>
+{% endblock account_content_body %}

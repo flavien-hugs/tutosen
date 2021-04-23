@@ -1,157 +1,38 @@
 {% comment %} header navigation {% endcomment %}
 
-{% url 'accounts:login_url' as login_url %}
+{% url 'account_login' as account_login %}
+{% url 'account_signup' as account_signup %}
+{% url 'account_logout' as account_logout %}
 {% url 'accounts:teacher_all_url' as teacher_all_url %}
 {% url 'courses:courses_list_url' as courses_list_url %}
-{% url 'boards:teacher_dashboard_url' as teacher_dashboard_url %}
 
 <div class="collapse navbar-collapse" id="navbar-default">
 
 	<ul class="navbar-nav navbar-left-wrap mt-3 mt-lg-0">
 		<li class="d-inline-block nav-item">
 			<a href="{{ courses_list_url }}" class="nav-link text-uppercase font-weight-bold">
-				tous les cours
+				tous les modules
+			</a>
+		</li>
+
+		<li class="d-inline-block nav-item">
+			<a href="{{ teacher_all_url }}" class="nav-link text-uppercase font-weight-bold">
+				trouver un instructeur
 			</a>
 		</li>
 	</ul>
 
-	<form class="mt-3 mt-lg-0 ml-lg-3 d-flex align-items-center">
-		<span class="position-absolute pl-3 search-icon">
-			<i class="fe fe-search"></i>
-		</span>
-		<input type="search" class="form-control pl-6 rounded-0" placeholder="Rechercher...">
-	</form>
-
 	<ul class="navbar-nav navbar-right-wrap ml-auto d-none d-lg-block">
 
 		<li class="d-inline-block">
-			<a href="{{ teacher_all_url }}" class="btn btn-md btn-outline-primary rounded-0 text-uppercase font-weight-bold mx-2 mr-lg-0">
-				trouver un instructeur
-			</a>
+			<form class="mt-3 mt-lg-0 ml-lg-3 d-flex align-items-center">
+				<span class="position-absolute pl-3 search-icon">
+					<i class="fe fe-search"></i>
+				</span>
+				<input type="search" class="form-control pl-6 rounded-0" placeholder="Rechercher...">
+			</form>
 		</li>
 
-		<li class="d-inline-block">
-			<a class="btn btn-md btn-outline-success rounded-0 text-uppercase font-weight-bold mx-2 mr-lg-0" 
-			href="{{ login_url }}">
-				se connecter
-			</a>
-		</li>
-
-		<li class="dropdown d-inline-block stopevent">
-			<a class="btn btn-light btn-icon rounded-circle text-muted indicator indicator-primary"
-			href="#!" role="button" id="dropdownNotificationSecond"
-			data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<i class="fe fe-bell"></i>
-			</a>
-			<div class="dropdown-menu dropdown-menu-xl dropdown-menu-right" aria-labelledby="dropdownNotificationSecond">
-				<div>
-					<div class="border-bottom px-3 pt-1 pb-3 d-flex justify-content-between align-items-center">
-						<span class="h5 mb-0">Notifications</span>
-						<a href="# " class="text-muted">
-							<span class="align-middle">
-								<i class="fe fe-settings mr-1"></i>
-							</span>
-						</a>
-					</div>
-
-					<ul class="list-group list-group-flush notification-list-scroll">
-						<li class="list-group-item bg-light">
-							<div class="row">
-							   	<div class="col">
-							   		<div class="d-flex">
-							   			<img src="{{ STATIC_PREFIX }}img/avatar-1.jpg"
-										alt="" class="avatar-md rounded-circle"/>
-
-										<div class="ml-3">
-											<h5 class="font-weight-bold mb-1">Kristin Watson:</h5>
-											<p class="mb-3">Krisitn Watsan like your comment on course 
-											Javascript Introduction!</p>
-											<span class="font-size-xs text-muted">
-												<span>
-													<span class="fe fe-thumbs-up text-success mr-1">
-													</span>2 hours ago,
-												</span>
-												<span class="ml-1">2:19 PM</span>
-											</span>
-									 	</div>
-								  	</div>
-								  	<a class="stretched-link" href="#!"></a>
-							   	</div>
-							   	
-							   	<div class="col-auto text-center">
-							   		<a href="#!" class="badge-dot badge-info" data-toggle="tooltip"
-							   		data-placement="top" title="" data-original-title="Marquer comme lu">
-								  	</a>
-
-								  	<div>
-								  		<a href="#!" class="bg-transparent" data-toggle="tooltip"
-										data-placement="top" title="" data-original-title="Supprimer">
-										<i class="fe fe-x text-muted"></i></a>
-								  	</div>
-							   	</div>
-							</div>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</li>
-
-		<li class="dropdown ml-2 d-inline-block">
-			<a class="rounded-circle" href="#!" role="button" id="dropdownUserProfile"
-			data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<div class="avatar avatar-md avatar-indicators avatar-online">
-					<img alt="avatar" src="{{ STATIC_PREFIX }}img/avatar-1.jpg" class="rounded-circle">
-				</div>
-			</a>
-
-			<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownUserProfile">
-				<div class="dropdown-item">
-					<div class="d-flex">
-						<div class="avatar avatar-md avatar-indicators avatar-online">
-							<img alt="avatar" src="{{ STATIC_PREFIX }}img/avatar-1.jpg" class="rounded-circle">
-						</div>
-						<div class="ml-3 lh-1">
-							<h5 class="mb-1">Flavien HUGS</h5>
-							<p class="mb-0 text-muted">contact@unsta.net</p>
-						</div>
-					</div>
-				</div>
-
-				<div class="dropdown-divider"></div>
-				
-				<ul class="list-unstyled">
-					<li>
-						<a class="dropdown-item" href="{{ teacher_dashboard_url }}">
-							<i class="fe fe-user mr-2"></i>
-							Mon Profile
-						</a>
-					</li>
-
-					<li>
-						<a class="dropdown-item" href="#">
-							<i class="fe fe-star mr-2"></i>
-							Souscription
-						</a>
-					</li>
-
-					<li>
-						<a class="dropdown-item" href="#!">
-							<i class="fe fe-settings mr-2"></i>
-							Configuration
-						</a>
-					</li>
-				</ul>
-				
-				<div class="dropdown-divider"></div>
-
-				<ul class="list-unstyled">
-					<li>
-						<a class="dropdown-item" href="{{ home_url }}">
-							<i class="fe fe-power nav-icon"></i> Deconnexion
-						</a>
-					</li>
-				</ul>
-			</div>
-		</li>
+		{% include "includes/snippets/_snippet_navigation.html" %}
 	</ul>
 </div>

@@ -1,0 +1,119 @@
+{% extends "dashboard/teacher/base.html" %}
+
+{% load widget_tweaks boards_tags %}
+
+{% block teacher_content %}
+    <div class="card">
+
+        <div class="card-header">
+            <h3 class="mb-0">Détails du profil</h3>
+            <p class="mb-0">
+                Vous avez le contrôle total pour gérer les paramètres de votre propre compte.
+            </p>
+        </div>
+
+        <div class="card-body">
+            <div class="d-lg-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center mb-4 mb-lg-0">
+                    {{ email|gravatar:80 }}
+                    <div class="ml-3">
+                        <h4 class="mb-0">Votre avatar</h4>
+                        <p class="mb-0">
+                            PNG ou JPG ne dépassant pas 800px de largeur et de hauteur.
+                        </p>
+                    </div>
+                </div>
+                <div>
+                    <a href="#!" class="btn btn-outline-white btn-sm">Mise à jour</a>
+                    <a href="{{ request.user.get_userdelete_url }}" class="btn btn-outline-danger btn-sm">
+                    Supprimer</a>
+                </div>
+            </div>
+
+            <hr class="my-5"/>
+            
+            <div>
+                <h4 class="mb-0">Informations personnelles</h4>
+                <p class="mb-4">
+                    Modifiez vos informations personnelles et votre adresse.
+                </p>
+
+                <form class="form-row" method="POST">
+                    {% csrf_token %}
+
+                    <div class="form-group col-12 col-md-6">
+                        {{ form.first_name|add_label_class:"form-label" }}
+                        <div class="input-group">
+                            {% render_field form.civility class+="custom-select w-25" %}
+                            {% render_field form.first_name class+="form-control w-75" placeholder=form.first_name.label %}
+                        </div>
+                    </div>
+
+                    <div class="form-group col-12 col-md-6">
+                        {{ form.last_name|add_label_class:"form-label" }}
+                        {% render_field form.last_name class+="form-control" placeholder=form.last_name.label %}
+                    </div>
+
+                    <div class="form-group col-12 col-md-6">
+                        {{ form.type|add_label_class:"form-label" }}
+                        <div class="input-group">
+                            {% render_field form.type class+="custom-select" %}
+                        </div>
+                    </div>
+
+                    <div class="form-group col-12 col-md-6">
+                        <label class="form-label" for="phone">Phone</label>
+                        <input type="text" id="phone" class="form-control" placeholder="Phone" required />
+                    </div>
+
+                    <div class="form-group col-12 col-md-6">
+                        <label class="form-label" for="phone">Phone</label>
+                        <input type="text" id="phone" class="form-control" placeholder="Phone" required />
+                    </div>
+
+                    <div class="form-group col-12 col-md-6">
+                        <label class="form-label" for="birth">Birthday</label>
+                        <input class="form-control flatpickr" type="text" placeholder="Birth of Date" id="birth"
+                        name="birth"/>
+                    </div>
+
+                    <div class="form-group col-12 col-md-6">
+                        <label class="form-label" for="address">Address Line 1</label>
+                        <input type="text" id="address" class="form-control" placeholder="Address" required />
+                    </div>
+
+                    <div class="form-group col-12 col-md-6">
+                        <label class="form-label" for="address2">Address Line 2</label>
+                        <input type="text" id="address2" class="form-control" placeholder="Address" required />
+                    </div>
+
+                    <div class="form-group col-12 col-md-6">
+                        <label class="form-label">State</label>
+                        <select class="selectpicker" data-width="100%">
+                            <option value="">Select State</option>
+                            <option value="1">Gujarat</option>
+                            <option value="2">Rajasthan</option>
+                            <option value="3">Maharashtra</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-12 col-md-6">
+                        <label class="form-label">Country</label>
+                        <select class="selectpicker" data-width="100%">
+                            <option value="">Select Country</option>
+                            <option value="1">India</option>
+                            <option value="2">UK</option>
+                            <option value="3">USA</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12">
+                        <button class="btn btn-primary" type="submit">
+                            Mise à jour du profil
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock teacher_content %}
