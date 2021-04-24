@@ -17,6 +17,7 @@ def gravatar_url(email, size=80):
     )
     return url
 
+
 @register.filter
 def gravatar(email, size=80):
     url = gravatar_url(email, size)
@@ -28,5 +29,5 @@ def gravatar(email, size=80):
 @register.simple_tag(takes_context=True)
 def active_link(context, name):
     if context['request'].resolver_match.url_name == name:
-        return 'active'
+        return 'active rounded-0'
     return ''
