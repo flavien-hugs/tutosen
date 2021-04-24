@@ -4,12 +4,15 @@ from django import forms as d_forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model, forms
 
+
+from accounts import models
 from allauth.account.forms import SignupForm
 
 User = get_user_model()
 
 
 class UserChangeForm(forms.UserChangeForm):
+
     class Meta(forms.UserChangeForm.Meta):
         model = User
 
@@ -76,4 +79,10 @@ class CustomSignupForm(SignupForm):
 
         # Sauvegarder le type de l'utilisateur dans
         # sa fiche de base de données
-        user.save() 
+        user.save()
+
+
+class UpdateDescriptionForm(d_forms.ModelForm):
+    class Meta:
+        model = models.TeacherMore
+        fields = ("brief_desc", 'qualification',)

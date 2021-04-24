@@ -1,6 +1,5 @@
 # accounts.models.py
 
-import uuid
 import hashlib
 from django.db import models
 from django.urls import reverse
@@ -10,7 +9,10 @@ from django.db.models.functions import Lower, Upper
 from django.contrib.auth.models import AbstractUser
 from allauth.socialaccount.models import SocialAccount
 
-from accounts.managers import TeacherManager, StudentManager
+from django_countries.fields import CountryField
+from phonenumber_field.modelfields import PhoneNumberField
+
+# from accounts import managers
 
 
 class User(AbstractUser):
@@ -63,12 +65,25 @@ class User(AbstractUser):
             )
         ]
 
+    def get_fullname(self):
+        return '{0} {1} {2}'.format(
+            self.civility,
+            self.first_name,
+            self.last_name
+        )
+    get_fullname.short_description = 'Nom & prénom'
+
+    def get_speudonyme(self):
+        return '@{0}'.format(
+            self.first_name.lower(),
+        )
+
     def get_userdetail_url(self):
         return reverse(
             'boards:user_detail',
             kwargs={
                 'first_name': str(self.first_name.lower()),
-                'id': str(self.id),
+                'pk': str(self.id),
             }
         )
 
@@ -77,7 +92,7 @@ class User(AbstractUser):
             'boards:user_update',
             kwargs={
                 'first_name': str(self.first_name.lower()),
-                'id': str(self.id),
+                'pk': str(self.id),
             }
         )
 
@@ -86,7 +101,7 @@ class User(AbstractUser):
             'boards:user_delete',
             kwargs={
                 'first_name': str(self.first_name.lower()),
-                'id': str(self.id),
+                'pk': str(self.id),
             }
         )
 
@@ -112,9 +127,75 @@ class User(AbstractUser):
 # User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[:0])
 
 
+class TeacherManager(models.Manager):
+
+    def get_queryset(self, *args, **kwargs):
+        is_teacher = User.Types.TEACHER
+        return super().get_queryset(*args, **kwargs).filter(type=is_teacher)
+
+
+class StudentManager(models.Manager):
+    
+    def get_queryset(self, *args, **kwargs):
+        is_student = User.Types.STUDENT
+        return super().get_queryset(*args, **kwargs).filter(type=is_student)
+
+
 class TeacherMore(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    gadgets = models.TextField()
+    user = models.OneToOneField(
+        'Teacher',
+        on_delete=models.CASCADE,
+        verbose_name='instructeur'
+    )
+    avatar = models.ImageField(
+        verbose_name='photo de profile',
+        upload_to='image/',
+        null=True, blank=True
+    )
+    brief_desc = models.TextField(
+        verbose_name='brief description',
+        blank=True, null=True
+    )
+    qualification = models.TextField(
+        verbose_name='qualification',
+        blank=True, null=True
+    )
+    phone_number = PhoneNumberField(
+        verbose_name='téléphone',
+        blank=True
+    )
+    state = models.CharField(
+        verbose_name='ville de résidence',
+        max_length=120,
+        blank=True, null=True
+    )
+    country = CountryField(
+        blank_label='sélection un pays',
+        verbose_name='pays de résidence',
+        multiple=False
+    )
+
+    facebook = models.CharField(
+        max_length=250,
+        blank=True,
+        null=True
+    )
+    twitter = models.CharField(
+        max_length=250,
+        blank=True,
+        null=True
+    )
+    linkedin = models.CharField(
+        max_length=250,
+        blank=True, 
+        null=True
+    )
+
+    class Meta:
+        verbose_name_plural = 'Intructeur detail'
+
+    def __str__(self):
+        return '{0}'.format(self.user.first_name)
 
 
 class Teacher(User):
@@ -122,21 +203,29 @@ class Teacher(User):
 
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['email']
+
     objects = TeacherManager()
 
     class Meta:
         proxy = True
+        ordering = ('-date_joined', '-last_login')
+        get_latest_by = ('-date_joined', '-last_login')
+        verbose_name_plural = 'Intructeur'
 
     def whisper(self):
         return "chuchoter"
 
 
 class StudentMore(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    model = models.CharField(max_length=255)
-    make = models.CharField(max_length=255)
-    year = models.IntegerField()
+    user = models.OneToOneField(
+        'Student',
+        verbose_name='etudiant',
+        on_delete=models.CASCADE
+    )
+
+    class Meta:
+        verbose_name_plural = 'Etudiant detail'
 
 
 class Student(User):
@@ -144,15 +233,19 @@ class Student(User):
 
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['email']
+
     objects = StudentManager()
 
-    @property
     def more(self):
-        return self.drivermore
+        return self.studentmore
+    more.short_description = "Qui suis-je ?"
 
     class Meta:
         proxy = True
+        ordering = ('-date_joined', '-last_login')
+        get_latest_by = ('-date_joined', '-last_login')
+        verbose_name_plural = 'Etudiant'
 
     def accelerate(self):
         return "Aller plus vite"

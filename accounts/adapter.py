@@ -8,6 +8,19 @@ from allauth.account.adapter import DefaultAccountAdapter
 
 class CustomAccountAdapter(DefaultAccountAdapter):
 
+    def save_user(self, request, user, form, commit=False):
+        data = form.cleaned_data
+        user.username = data['email']
+        user.email = data['email']
+
+        if 'password1' in data:
+            user.set_password(data['password1'])
+        else:
+            user.set_unusable_password()
+
+        user.save()
+        return user
+
     def is_open_for_signup(self, request: HttpRequest):
         return getattr(
             settings, "ACCOUNT_ALLOW_REGISTRATION", True
@@ -15,9 +28,9 @@ class CustomAccountAdapter(DefaultAccountAdapter):
 
     def get_login_redirect_url(self, request):
         if request.user.is_authenticated:
-            path = "/dashboard/{first_name}-{id}/"
+            path = "/dashboard/{first_name}.{id}/"
             return path.format(
-                first_name=request.user.first_name,
+                first_name=request.user.first_name.lower(),
                 id=request.user.id,
             )
 
