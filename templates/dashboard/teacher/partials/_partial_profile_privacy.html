@@ -1,0 +1,98 @@
+{% extends "dashboard/teacher/base.html" %}
+
+
+{% block teacher_content %}
+    {% url "home" as home_url %}
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="mb-0">Paramètres de confidentialité du profil</h3>
+            <p class="mb-0">Rendre votre profil public permet aux autres 
+            utilisateurs de voir ce que vous avez appris sur {{ title|upper }}.</p>
+        </div>
+
+        <div class="card-body">
+            <div class="row d-lg-flex justify-content-between">
+                <div class="col-lg-9 col-md-7 col-12 mb-3 mb-lg-0">
+                    <h4 class="mb-0">Niveaux de confidentialité.</h4>
+                    <p class="mb-0">
+                        Affichez votre profil en mode public et privé.
+                    </p>
+                </div>
+            </div>
+            
+            <hr class="my-5">
+            
+            <div>
+                <h4 class="mb-0">Paramètres du profil</h4>
+                <p class="mb-5">
+                    Ces contrôles vous donnent la possibilité 
+                    de personnaliser les zones de votre profil que les autres peuvent voir.
+                </p>
+
+                <ul class="list-group list-group-flush">
+
+                    <li class="list-group-item d-flex align-items-center justify-content-between px-0 py-2">
+                        <div>Afficher votre profil sur les moteurs de recherche</div>
+                        <div>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="swicthOne" checked="">
+                                <label class="custom-control-label" for="swicthOne"></label>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="list-group-item d-flex align-items-center justify-content-between px-0 py-2">
+                        <div>Afficher les cours que vous suivez sur votre page de profil</div>
+                        <div>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="switchTwo">
+                                <label class="custom-control-label" for="switchTwo"></label>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="list-group-item d-flex align-items-center justify-content-between px-0 py-2">
+                        <div>Montrer votre profil au publicc</div>
+                        <div>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="switchThree" checked="">
+                                <label class="custom-control-label" for="switchThree"></label>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="list-group-item d-flex align-items-center justify-content-between px-0 py-2">
+                        <div>En cours d'apprentissage</div>
+                        <div>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="switchFour" checked="">
+                                <label class="custom-control-label" for="switchFour"></label>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="list-group-item d-flex align-items-center justify-content-between px-0 py-2">
+                        <div>Cours terminés</div>
+                        <div>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="switchFive" checked="">
+                                <label class="custom-control-label" for="switchFive"></label>
+                            </div>
+                        </div>
+                    </li>
+                    
+                    <li class="list-group-item d-flex align-items-center justify-content-between px-0 py-2">
+                        <div>Vos centres d'intérêts</div>
+                        <div>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="switchSix" checked="">
+                                <label class="custom-control-label" for="switchSix"></label>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock teacher_content %}

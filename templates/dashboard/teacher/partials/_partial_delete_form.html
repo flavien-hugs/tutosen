@@ -12,12 +12,17 @@
 
         <div class="card-body p-4">
             <span class="text-danger h4">Avertissement</span>
+            
             <p>
                 Si vous fermez votre compte, vous serez désinscrit de tous vos 0 cours,
                 et vous en perdrez l'accès pour toujours.
             </p>
-            <a href="{{ request.user.get_userdetail_url }}" class="btn btn-outline-danger btn-sm">
-            Fermer mon compte</a>
+
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm">
+                Fermer mon compte</button>
+            </form>
         </div>
     </div>
 {% endblock teacher_content %}

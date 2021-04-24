@@ -1,0 +1,182 @@
+{% extends "dashboard/teacher/base.html" %}
+
+
+{% block teacher_content %}
+    {% url "home" as home_url %}
+
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <div>
+                <h3 class="mb-0">Notifications</h3>
+                <p class="mb-0">
+                     Vous ne recevrez que les notifications que vous avez activées.
+                </p>
+            </div>
+            <div>
+                <div class="custom-control custom-switch">
+                    <input class="custom-control-input" type="checkbox" id="checkAll" checked="">
+                    <label class="custom-control-label" for="checkAll"></label>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="mb-5">
+                <h4 class="mb-0">Alertes de sécurité</h4>
+                <p>
+                    Vous ne recevrez que les notifications par courrier électronique que vous souhaitez.
+                </p>
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex align-items-center justify-content-between px-0 py-2">
+                        <div>Envoyez-moi un courriel chaque fois que vous rencontrez une activité 
+                        inhabituelle.</div>
+                        <div>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="switchOne" checked="">
+                                <label class="custom-control-label" for="switchOne"></label>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="mb-5">
+                <h4 class="mb-0">Nouveautés</h4>
+                <p>
+                    Vous ne recevrez que les notifications par e-mail que vous souhaitez.
+                </p>
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex align-items-center justify-content-between px-0 py-2">
+                        <div>Prévenez-moi par courriel des ventes et des dernières nouvelles.</div>
+                        <div>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="switchThree" checked="">
+                                <label class="custom-control-label" for="switchThree"></label>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="list-group-item d-flex align-items-center justify-content-between px-0 py-2">
+                        <div>Envoyez-moi un courriel sur les nouvelles fonctionnalités et les mises 
+                        à jour.</div>
+                        <div>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="switchFour">
+                                <label class="custom-control-label" for="switchFour"></label>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="list-group-item d-flex align-items-center justify-content-between px-0 py-2">
+                        <div>Envoyez-moi un courriel sur les conseils d'utilisation du compte.</div>
+                        <div>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="switchFive" checked="">
+                                <label class="custom-control-label" for="switchFive"></label>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="mb-0">Cours</h4>
+                <p>
+                    Vous ne recevrez que les notifications par e-mail que vous souhaitez.
+                </p>
+                <ul class="list-group list-group-flush mb-4">
+                    <li class="list-group-item d-flex justify-content-between px-0">
+                        <div>
+                            <h5 class="mb-0">Mises à jour des cours que vous suivez</h5>
+                            <span>Annonces, événements, conseils et astuces.</span>
+                        </div>
+                        <div>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="switchSix" checked="">
+                                <label class="custom-control-label" for="switchSix"></label>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between px-0">
+                        <div>
+                            <h5 class="mb-0">Mises à jour des discussions avec les enseignants</h5>
+                            <span>Discussions publiques en dehors d'une classe que 
+                            les enseignants partagent avec tous leurs adeptes.</span>
+                        </div>
+                        <div>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="switchSeven">
+                                <label class="custom-control-label" for="switchSeven"></label>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between px-0">
+                        <div>
+                            <h5 class="mb-0">Des recommandations de cours personnalisées</h5>
+                            <span>Des recommandations hebdomadaires adaptées à vos centres d'intérêt.</span>
+                        </div>
+                        <div>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="switchEight">
+                                <label class="custom-control-label" for="switchEight"></label>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between px-0">
+                        <div>
+                            <h5 class="mb-0">Contenu en vedette</h5>
+                            <span>Conseils sur l'utilisation des cours et des tableaux de bord, 
+                            atelier, livres, didacticiels et de nombreux articles perspicaces.</span>
+                        </div>
+                        <div>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="switchNine">
+                                <label class="custom-control-label" for="switchNine"></label>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between px-0">
+                        <div>
+                            <h5 class="mb-0">Mises à jour des produits</h5>
+                            <span>Nous vous enverrons une newsletter annonçant les principales 
+                            mises à jour des Cours.</span>
+                        </div>
+                        <div>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="switchTen">
+                                <label class="custom-control-label" for="switchTen"></label>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between px-0">
+                        <div>
+                            <h5 class="mb-0">Événements et offres</h5>
+                            <span>Annonce de promotions et d'événements à venir, 
+                            tels que des sessions de type "Demandez-moi n'importe quoi" et des webinaires.</span>
+                        </div>
+                        <div>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="switchEleven">
+                                <label class="custom-control-label" for="switchEleven"></label>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+                <a href="#!" class="text-danger mb-2 d-block">
+                    <u>Se désabonner de tout ce qui précède</u>
+                </a>
+                <p class="mb-0">
+                   Remarque : vous continuerez à recevoir des e-mails administratifs importants, 
+                   tels que les réinitialisations de mot de passe.
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock teacher_content %}

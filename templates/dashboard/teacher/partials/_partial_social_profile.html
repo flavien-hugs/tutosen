@@ -1,0 +1,69 @@
+{% extends "dashboard/teacher/base.html" %}
+
+
+{% block teacher_content %}
+    {% url "home" as home_url %}
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="mb-0">Profils réseaux sociaux</h3>
+            <p class="mb-0">Ajoutez les liens de votre profil social dans 
+            les comptes sociaux ci-dessous.</p>
+        </div>
+
+        <div class="card-body p-4">
+
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="row mb-5">
+                    <div class="col-lg-3 col-md-4 col-12">
+                        <h5>Twitter</h5>
+                    </div>
+
+                    <div class="col-lg-9 col-md-8 col-12">
+                        <input type="text" class="form-control mb-1" placeholder="Twitter profile name">
+                        <small class="text-muted">
+                            Ajoutez votre nom d'utilisateur Twitter (par exemple flavien-hugs)
+                        </small>
+                    </div>
+                </div>
+
+                <div class="row mb-5">
+                    <div class="col-lg-3 col-md-4 col-12">
+                        <h5>URL du profil LinkedIn</h5>
+                    </div>
+
+                    <div class="col-lg-9 col-md-8 col-12">
+                        <input type="text" class="form-control mb-1" placeholder="URL du profil LinkedIn">
+                        <small class="text-muted">
+                            Ajoutez l'URL de votre profil linkedin. 
+                            ( https://www.linkedin.com/in/jitu-chauhan-ba004b78 )
+                        </small>
+                    </div>
+                </div>
+
+                <div class="row mb-5">
+                    <div class="col-lg-3 col-md-4 col-12">
+                        <h5>Facebook</h5>
+                    </div>
+
+                    <div class="col-lg-9 col-md-8 col-12">
+                        <input type="text" class="form-control mb-1" placeholder="Facebook profile name">
+                        <small class="text-muted">
+                            Ajoutez votre nom d'utilisateur Facebook (par exemple flavien-hugs)
+                        </small>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="offset-lg-3 col-lg-6 col-12">
+                        <a href="#!" class="btn btn-primary">
+                            Enregistrer le profil social
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock teacher_content %}

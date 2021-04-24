@@ -10,6 +10,9 @@
                 {% include "dashboard/teacher/partials/_partial_sidebar_teacher.html" %}
 
                 <section class="col-lg-9 col-md-8 col-12">
+                    
+                    {% include "account/snippets/_snippet_message.html" %}
+
                     {% block teacher_content %}
                         
                     {% endblock teacher_content %}
