@@ -2,13 +2,14 @@
 {% load widget_tweaks %}
 {% block head_title %} Compte {% endblock head_title %}
 
+
+{% block message %}
+    {% include "account/snippets/_snippet_message.html" %}
+{% endblock message %}
+
 {% block account_content_body %}
     {% url "home" as home_url %}
     {% url 'account_email' as account_email %}
-
-    {% block message %}
-        {% include "account/snippets/_snippet_message.html" %}
-    {% endblock message %}
 
     <div class="mb-4">
         <a href="{{ home_url }}">

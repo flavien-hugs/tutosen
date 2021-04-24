@@ -4,6 +4,6 @@
 
 {% for provider in socialaccount_providers %}
     <a title="Continuer avec {{ provider.name }}" href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}" class="btn-social btn-social-outline btn-{{ provider.name|lower }}">
-        <i class="fab fa-{{ provider.name|lower }}"></i>
+        <i class="mdi mdi-{{ provider.name|lower }} mdi-24px"></i>
     </a>
 {% endfor %}

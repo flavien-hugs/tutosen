@@ -9,12 +9,13 @@
     <div class="container d-flex flex-column">
         <div class="row align-items-center justify-content-center no-gutters min-vh-100">
             <div class="col-lg-5 col-md-8 py-8 py-xl-0">
+                
+                {% block message %}
+
+                {% endblock message %}
+                
                 <div class="card shadow">
-                    <div class="card-body p-6">
-                        {% block message %}
-                            
-                        {% endblock message %}
-                        
+                    <div class="card-body p-5">
                         {% block account_content_body %}
                             
                         {% endblock account_content_body %}

@@ -2,6 +2,10 @@
 
 {% block head_title %} Inscription fermée {% endblock head_title %}
 
+{% block message %}
+    {% include "account/snippets/_snippet_message.html" %}
+{% endblock message %}
+
 {% block account_content_body %}
     {% url 'account_set_password' as account_set_password %}
 

@@ -2,6 +2,10 @@
 {% load account %}
 {% block head_title %} Confirmez votre adresse e-mail {% endblock head_title %}
 
+{% block message %}
+    {% include "account/snippets/_snippet_message.html" %}
+{% endblock message %}
+
 {% block account_content_body %}
     {% url 'account_login' as account_login %}
     {% url 'account_confirm_email' confirmation.key as account_confirm_email %}
@@ -16,8 +20,8 @@
         <p class="verification_sent_info" >
             {% with confirmation.email_address.email as email %} 
                 S'il vous plaît, veuillez confirmer que
-                <a class="font-weight-bold" href="mailto:{{ email }}">{{ email }}</a> 
-                est une adresse e-mail pour l'utilisateur <strong>{{ user_display }}</strong>.
+                <a class="font-weight-bold" href="mailto:{{ email }}">{{ email }}</a>
+                est l'adresse e-mail pour l'utilisateur <strong>{{ user_display }}</strong>.
             {% endwith %}
         </p>
 

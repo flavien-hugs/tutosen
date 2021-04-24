@@ -28,24 +28,23 @@
         </span>
     </div>
 
-    <form method="POST" action="{{ account_login }}">
+    <form method="POST" action="{{ account_login }}" class="needs-validation" novalidate>
         {% csrf_token %}
 
         <div class="form-group">
             {{ form.login|add_label_class:"form-label" }}
-            {% render_field form.login class+="form-control" placeholder=form.login.label %}
+            {% render_field form.login|add_error_class:"is-invalid" class+="form-control" placeholder=form.login.label %}
         </div>
 
         <div class="form-group">
             {{ form.password|add_label_class:"form-label" }}
-            {% render_field form.password|attr:"type:password" class+="form-control" placeholder=form.password.label %}
+            {% render_field form.password|attr:"type:password"|add_error_class:"is-invalid" class+="form-control" placeholder=form.password.label %}
         </div>
 
         <div class="d-lg-flex justify-content-between align-items-center mb-4">
-            <div class="custom-control custom-checkbox">
+            <div class="custom-control custom-switch">
                 {% render_field form.remember|attr:"type:checkbox" class+="custom-control-input" placeholder=form.remember.label %}
-                <label class="custom-control-label" for="{{ form.remember.id_for_label }}">
-                {{ form.remember.label }}</label>
+                {{ form.remember|add_label_class:"custom-control-label" }}
             </div>
 
             <div>
@@ -60,9 +59,9 @@
         </div>
     </form>
 
-    <hr class="my-4">
+    <hr class="my-3">
 
-    <div class="mt-4 text-center">
+    <div class="mt-2 text-center">
         <p class="font-weight-bold">Continuer avec</p>
         {% include "account/teacher/snippet/_snippet_socialaccount.html" %}
     </div>

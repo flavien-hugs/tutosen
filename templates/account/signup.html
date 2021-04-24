@@ -4,6 +4,10 @@
 
 {% comment %} page d'inscription {% endcomment %}
 
+{% block message %}
+    {% include "account/snippets/_snippet_message.html" %}
+{% endblock message %}
+
 {% block account_content_body %}
     {% url 'home' as home_url %}
     {% url 'account_login' as account_login %}
@@ -30,18 +34,18 @@
             {{ form.first_name|add_label_class:"form-label" }}
             <div class="input-group">
                 {% render_field form.civility class+="custom-select w-25" %}
-                {% render_field form.first_name class+="form-control w-75" placeholder=form.first_name.label %}
+                {% render_field form.first_name|add_error_class:"is-invalid" class+="form-control w-75" placeholder=form.first_name.label %}
             </div>
         </div>
 
         <div class="form-group">
             {{ form.last_name|add_label_class:"form-label" }}
-            {% render_field form.last_name class+="form-control" placeholder=form.last_name.label %}
+            {% render_field form.last_name|add_error_class:"is-invalid" class+="form-control" placeholder=form.last_name.label %}
         </div>
 
         <div class="form-group">
             {{ form.email|add_label_class:"form-label" }}
-            {% render_field form.email|attr:"type:email" class+="form-control" placeholder=form.email.label %}
+            {% render_field form.email|attr:"type:email"|add_error_class:"is-invalid" class+="form-control" placeholder=form.email.label %}
         </div>
 
         <div class="form-group">
@@ -53,16 +57,11 @@
 
         <div class="form-group">
             {{ form.password1|add_label_class:"form-label" }}
-            {% render_field form.password1|attr:"type:password" class+="form-control" placeholder="**************" %}
-        </div>
-
-        <div class="form-group">            
-            {{ form.password2|add_label_class:"form-label" }}
-            {% render_field form.password2|attr:"type:password" class+="form-control" placeholder="**************" %}
+            {% render_field form.password1|attr:"type:password"|add_error_class:"is-invalid" class+="form-control" placeholder="**************" %}
         </div>
 
         <div class="form-group">
-            <div class="custom-control custom-checkbox">
+            <div class="custom-control custom-switch">
                 {% render_field form.privacy|attr:"type:checkbox" class+="custom-control-input" %}
                 <label class="custom-control-label" for="{{ form.privacy.id_for_label }}">
                     <span>J'accepte les <a href="{{ page_cgu }}">Conditions d'utilisation </a> et
