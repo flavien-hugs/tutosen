@@ -19,6 +19,7 @@ feedparser = "*"
 django-allauth = "*"
 django-widget-tweaks = "*"
 babel = "*"
+django-countries = "*"
 
 [dev-packages]
 
