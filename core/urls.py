@@ -34,7 +34,7 @@ urlpatterns = [
     path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     path('tinymce/', include('tinymce.urls')),
     path(settings.ADMIN_URL, admin.site.urls),
-    path('account/', include('accounts.urls', namespace='accounts')),
+    path('', include('accounts.urls', namespace='accounts')),
     path('accounts/', include('allauth.urls'))
 ]
 
