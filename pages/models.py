@@ -4,19 +4,19 @@ from django.db import models
 from django.utils.text import Truncator
 from django.utils.html import mark_safe
 
-from tinymce.models import HTMLField
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class AboutUs(models.Model):
     
-    content = HTMLField(
+    content = RichTextUploadingField(
         verbose_name='description',
         help_text="Description de l\'Entreprise: Activité, Mission, Objectif, etc"
     )
 
     class Meta:
         db_table = 'aboutus_db'
-        verbose_name_plural = 'qui sommes-nous'
+        verbose_name_plural = 'About Us'
 
     def __str__(self):
         truncated_content = Truncator(self.content)
@@ -25,7 +25,7 @@ class AboutUs(models.Model):
 
 class PageCGU(models.Model):
     
-    content = HTMLField(
+    content = RichTextUploadingField(
         verbose_name='description de la CGU',
         help_text="Description de la Condition Générale d'Utilisation du site."
     )
@@ -41,8 +41,8 @@ class PageCGU(models.Model):
 
 class PageSupport(models.Model):
     
-    content = HTMLField(
-        verbose_name='description faq',
+    content = RichTextUploadingField(
+        verbose_name='description support',
         help_text="Description des questions"
     )
 

@@ -17,7 +17,7 @@ def aboutUsDetail(request, template='pages/ps-page.html'):
     }
     return render(request, template, context)
 
-page_about_us_view = aboutUsDetail
+page_aboutus_view = aboutUsDetail
 
 
 def pageCGUDetail(request, template='pages/ps-page.html'):
