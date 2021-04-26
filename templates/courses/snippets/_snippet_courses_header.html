@@ -77,7 +77,7 @@
         </div>
     </div>
 
-{% elif request.resolver_match.url_name == 'teacher_profile_url' %}
+{% elif request.resolver_match.url_name == 'teacher_detail_view' %}
     <div class="py-20" style="background: url({{ STATIC_PREFIX }}/img/profile-bg.jpg) no-repeat; background-position: center;">
     </div>
 
@@ -87,41 +87,38 @@
                 <div class="col-lg-8 col-md-8 col-12">
                     <div class="d-flex align-items-center">
                         <div class="position-relative mt-n9">
-                            {{ email|gravatar:80 }}
+                            {{ object.email|gravatar:80 }}
                         </div>
 
                         <div class="ml-3">
                             <div class="d-flex align-items-center">
                                 <h3 class="mb-0 font-weight-bold mr-2">
-                                    {% if request.user.first_name or request.user.last_name %}
-                                        {{ request.user.first_name }} {{ request.user.last_name }}
+                                    {% if object.get_fullname %}
+                                        {{ object.get_fullname }}
                                     {% else %}
-                                        {{ request.user.username }}
+                                        {{ object.username }}
                                     {% endif %}
                                 </h3>
-                                <span class="badge badge-light-primary text-primary">
-                                {{ request.user.type }}</span>
                             </div>
-                            <span class="font-size-xs">Développeur Frontend, Backend, Designer, Instructeur</span>
+                            <span class="font-size-xs">
+                                Développeur Frontend, Backend, Designer, Instructeur
+                            </span>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-lg-4 col-md-4 col-12">
                     <div class="font-size-md mt-4 mt-lg-0 pb-2 pb-lg-0 d-lg-flex justify-content-end">
-                        <a href="#!" class="mdi mdi-youtube text-muted mr-2"></a>
-                        <a href="#!" class="mdi mdi-instagram text-muted mr-2"></a>
-                        <a href="#!" class="mdi mdi-facebook text-muted mr-2"></a>
-                        <a href="#!" class="mdi mdi-twitter text-muted mr-2"></a>
-                        <a href="#!" class="mdi mdi-linkedin text-muted mr-2"></a>
-                        <a href="#!" class="mdi mdi-link-variant text-muted"></a>
+                        <a target="_blank" href="{{ object.facebook }}" class="mdi mdi-facebook text-muted mr-2"></a>
+                        <a target="_blank" href="{{ object.twitter }}" class="mdi mdi-twitter text-muted mr-2"></a>
+                        <a target="_blank" href="{{ object.linkedin }}" class="mdi mdi-linkedin text-muted mr-2"></a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-{% elif request.resolver_match.url_name == 'teacher_all_url' %}
+{% elif request.resolver_match.url_name == 'teacher_list_view' %}
     <div class="pt-4 pb-2">
         <div class="container">
             <div class="row">
@@ -152,7 +149,7 @@
 
 {% elif request.resolver_match.url_name == 'user_detail' or request.resolver_match.url_name == 'user_update' or request.resolver_match.url_name == 'user_delete' or request.resolver_match.url_name == 'teacher_social_account_url' or request.resolver_match.url_name == 'teacher_profil_privacy_url' or request.resolver_match.url_name == 'teacher_notification_url' %}
     <div class="pt-4">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row align-items-center">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-12">
                     <div class="pt-16 rounded-top" style="background: url({{ STATIC_PREFIX }}img/profile-bg.jpg) no-repeat; background-size: cover;"></div>

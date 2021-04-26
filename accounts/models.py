@@ -9,6 +9,7 @@ from django.db.models.functions import Lower, Upper
 from django.contrib.auth.models import AbstractUser
 from allauth.socialaccount.models import SocialAccount
 
+from ckeditor.fields import RichTextField
 from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -151,11 +152,11 @@ class TeacherMore(models.Model):
         upload_to='image/',
         null=True, blank=True
     )
-    brief_desc = models.TextField(
+    brief_desc = RichTextField(
         verbose_name='brief description',
         blank=True, null=True
     )
-    qualification = models.TextField(
+    qualification = RichTextField(
         verbose_name='qualification',
         blank=True, null=True
     )

@@ -10,7 +10,6 @@ pillow = "*"
 argon2-cffi = "*"
 whitenoise = {extras = ["brotli"], version = "*"}
 django-3-jet = "*"
-django-tinymce = "*"
 django-phonenumber-field = "*"
 phonenumbers = "*"
 mysqlclient = "*"
@@ -20,6 +19,7 @@ django-allauth = "*"
 django-widget-tweaks = "*"
 babel = "*"
 django-countries = "*"
+django-ckeditor = "*"
 
 [dev-packages]
 
