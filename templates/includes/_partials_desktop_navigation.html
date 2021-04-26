@@ -3,8 +3,8 @@
 {% url 'account_login' as account_login %}
 {% url 'account_signup' as account_signup %}
 {% url 'account_logout' as account_logout %}
-{% url 'accounts:teacher_all_url' as teacher_all_url %}
 {% url 'courses:courses_list_url' as courses_list_url %}
+{% url 'accounts:teacher_list_view' as teacher_list_view %}
 
 <div class="collapse navbar-collapse" id="navbar-default">
 
@@ -16,7 +16,7 @@
 		</li>
 
 		<li class="d-inline-block nav-item">
-			<a href="{{ teacher_all_url }}" class="nav-link text-uppercase font-weight-bold">
+			<a href="{{ teacher_list_view }}" class="nav-link text-uppercase font-weight-bold">
 				trouver un instructeur
 			</a>
 		</li>

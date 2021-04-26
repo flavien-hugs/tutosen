@@ -1,6 +1,6 @@
 {% comment %} hero section {% endcomment %}
 
-{% url 'accounts:signup_url' as signup_url %}
+{% url 'account_signup' as account_signup %}
 {% url 'courses:courses_list_url' as courses_list_url %}
 
 <div class="bg-primary pt-8">
@@ -16,7 +16,7 @@
 						et commencez votre cours individuel personnalisé à un moment qui vous convient.
 					</p>
 					<a href="{{ courses_list_url }}" class="btn btn-success">Parcourir les cours</a>
-					<a href="{{ signup_url }}" class="btn btn-white">Vous êtes un instructeur ?</a>
+					<a href="{{ account_signup }}" class="btn btn-white">Vous êtes un instructeur ?</a>
 				</div>
 			</div>
 			<div class=" col-xl-7 col-lg-6 col-md-12 text-lg-right text-center">
