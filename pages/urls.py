@@ -8,7 +8,7 @@ from pages import views as pages_views
 
 app_name = 'pages'
 urlpatterns = [
-    path('qui-sommes-nous/', pages_views.aboutUsDetail, name='about_us'),
-    path('conditition-generale-utilisation/', pages_views.pageCGUDetail, name='page_cgu'),
-    path('support/', pages_views.pageSupportetail, name='page_support'),
+    path(route='qui-sommes-nous/', view=pages_views.about_us_view, name='about_us'),
+    path(route='conditition-generale-utilisation/', view=pages_views.page_cgu_detail, name='page_cgu'),
+    path(route='support/', view=pages_views.page_support_detail, name='page_support'),
 ]

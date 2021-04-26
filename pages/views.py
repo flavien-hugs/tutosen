@@ -17,6 +17,8 @@ def aboutUsDetail(request, template='pages/ps-page.html'):
     }
     return render(request, template, context)
 
+page_about_us_view = aboutUsDetail
+
 
 def pageCGUDetail(request, template='pages/ps-page.html'):
     cgu_content = get_object_or_404(PageCGU, pk=1)
@@ -29,6 +31,8 @@ def pageCGUDetail(request, template='pages/ps-page.html'):
     }
     return render(request, template, context)
 
+page_cgu_detail = pageCGUDetail
+
 
 def pageSupportetail(request, template='pages/ps-page.html'):
     support_content = get_object_or_404(PageSupport, pk=1)
@@ -40,3 +44,5 @@ def pageSupportetail(request, template='pages/ps-page.html'):
         'content': support_content,
     }
     return render(request, template, context)
+
+page_support_detail = pageSupportetail
