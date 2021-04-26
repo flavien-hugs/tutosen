@@ -104,7 +104,6 @@ class User(AbstractUser):
                 'pk': str(self.id),
             }
         )
-
  
     def account_verified(self):
         if self.user.is_authenticated:
@@ -212,6 +211,15 @@ class Teacher(User):
         ordering = ('-date_joined', '-last_login')
         get_latest_by = ('-date_joined', '-last_login')
         verbose_name_plural = 'Intructeur'
+
+    def get_teacher_detail_url(self):
+        return reverse(
+            'accounts:teacher_detail_view',
+            kwargs={
+                'first_name': str(self.first_name.lower()),
+                'pk': str(self.id),
+            }
+        )
 
     def whisper(self):
         return "chuchoter"

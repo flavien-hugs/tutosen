@@ -6,6 +6,8 @@ from django.urls import reverse, reverse_lazy
 from django.contrib.auth import get_user_model
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+
+from accounts.models import Teacher
 from accounts.decorators import teacher_required, student_required
 
 User = get_user_model()
@@ -123,3 +125,30 @@ def update_bio(request):
         )
 
 user_update_bio_view = update_bio
+
+
+class TeacherListView(generic.ListView):
+    model = Teacher
+    paginaate_by = 100
+    context_object_name = 'teacher_list'
+
+    def get_queryset(self, *args, **kwargs):
+        queryset = super(TeacherListView, self).get_queryset(*args, **kwargs)
+        queryset = queryset.order_by("-date_joined")
+        return queryset
+
+
+teacher_list_view = TeacherListView.as_view(
+    template_name='account/teacher/teacher_list.html',
+    extra_context={'page_title': 'trouver votre instructeur'}
+)
+
+
+class TeacherDetailView(generic.DetailView):
+    model = Teacher
+
+
+teacher_detail_view = TeacherDetailView.as_view(
+    template_name='account/teacher/teacher_detail.html'
+)
+
