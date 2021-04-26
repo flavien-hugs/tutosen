@@ -32,7 +32,7 @@ urlpatterns = [
 
 	path('jet/', include('jet.urls', 'jet')),
     path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
-    path('tinymce/', include('tinymce.urls')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
     path(settings.ADMIN_URL, admin.site.urls),
     path('', include('accounts.urls', namespace='accounts')),
     path('accounts/', include('allauth.urls'))

@@ -62,7 +62,8 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     'jet.dashboard',
     'jet',
-    'tinymce',
+    'ckeditor',
+    'ckeditor_uploader',
     'django.contrib.admin',
 
     'allauth',
@@ -161,7 +162,7 @@ CSRF_COOKIE_HTTPONLY = True
 SECURE_BROWSER_XSS_FILTER = True
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#x-frame-options
-X_FRAME_OPTIONS = "DENY"
+X_FRAME_OPTIONS = "SAMEORIGINE"
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -419,28 +420,6 @@ JET_THEMES = [
 JET_SIDE_MENU_COMPACT = True
 JET_CHANGE_FORM_SIBLING_LINKS = True
 
-# configuration tinymce
-# https://django-tinymce.readthedocs.io/en/latest/installation.html#configuration
-
-TINYMCE_DEFAULT_CONFIG = {
-    "height": "400px",
-    'cleanup_on_startup': True,
-    'custom_undo_redo_levels': 20,
-    "menubar": "file edit view insert format tools table help",
-    "plugins": "advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code "
-    "fullscreen insertdatetime media table paste code help wordcount spellchecker",
-    "toolbar": "undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft "
-    "aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor "
-    "backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | "
-    "fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | "
-    "a11ycheck ltr rtl | showcomments addcomment code",
-    "custom_undo_redo_levels": 10,
-    "language": "fr_FR",
-    'contextmenu': 'formats | link image',
-    'menubar': True,
-    'statusbar': True,
-}
-
 # https://docs.djangoproject.com/en/dev/ref/settings/#logging
 # See https://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
@@ -488,3 +467,74 @@ LOGGING = {
 
 PHONENUMBER_DEFAULT_REGION = "CI"
 PHONENUMBER_DB_FORMAT = "INTERNATIONAL"
+
+# https://pypi.org/project/django-ckeditor/
+CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
+CKEDITOR_UPLOAD_PATH = "uploads/"
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar_Custom': [
+            {'name': 'document', 'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 
+                'Print', '-', 'Templates']
+            },
+            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText',
+                'PasteFromWord', '-', 'Undo', 'Redo']
+            },
+            {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
+            {'name': 'forms', 'items': [
+                'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select',
+                'Button', 'ImageButton', 'HiddenField'
+            ]},
+            '/',
+            {'name': 'basicstyles',
+                'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript',
+                'Superscript', '-', 'RemoveFormat']
+            },
+            {'name': 'paragraph',
+             'items': ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 
+                'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 
+                'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language']
+            },
+            {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
+            {'name': 'insert', 'items': ['Image', 'Youtube','Flash', 'Table', 'HorizontalRule',
+                'Smiley', 'SpecialChar', 'PageBreak', 'Iframe']
+            },
+            '/',
+            {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
+            {'name': 'colors', 'items': ['TextColor', 'BGColor']},
+            {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
+            {'name': 'about', 'items': ['CodeSnippet']},
+            {'name': 'about', 'items': ['About']},
+            '/',
+            {'name': 'yourcustomtools', 'items': [
+                'Preview',
+                'Maximize',
+            ]},
+        ],
+        'toolbar': 'Custom',
+        'toolbarGroups': [{ 'name': 'document', 'groups': [ 'mode', 'document', 'doctools' ] }],
+        'height': 400,
+        'filebrowserWindowHeight': 725,
+        'filebrowserWindowWidth': 940,
+        'toolbarCanCollapse': True,
+        'mathJaxLib': '//cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
+        'tabSpaces': 4,
+        'extraPlugins': ','.join([
+            'uploadimage',
+            'div',
+            'autolink',
+            'autoembed',
+            'embedsemantic',
+            'autogrow',
+            'devtools',
+            'widget',
+            'lineutils',
+            'clipboard',
+            'dialog',
+            'dialogui',
+            'elementspath',
+            'codesnippet',
+        ]),
+    }
+}
