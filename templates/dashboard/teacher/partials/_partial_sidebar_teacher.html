@@ -3,7 +3,6 @@
 {% load boards_tags %}
 {% url 'account_logout' as account_logout %}
 {% url 'boards:teacher_add_course_url' as teacher_add_course_url %}
-{% url "boards:teacher_social_account_url" as teacher_social_account_url %}
 {% url "boards:teacher_profil_privacy_url" as teacher_profil_privacy_url %}
 {% url "boards:teacher_notification_url" as teacher_notification_url %}
 {% url "boards:teacher_list_cours_url" as teacher_list_cours_url %}
@@ -124,8 +123,8 @@
                             </a>
                         </li>  -->
 
-                        <li class="nav-item {% active_link 'teacher_social_account_url' %}">
-                            <a class="nav-link" href="{{ teacher_social_account_url }}">
+                        <li class="nav-item {% active_link 'social_account_update' %}">
+                            <a class="nav-link" href="{{ request.user.get_social_profile_update_url }}">
                                 <i class="fe fe-refresh-cw nav-icon"></i>
                                 Profils sociaux
                             </a>
@@ -162,35 +161,37 @@
         </nav>
     </div>
 
-    <div class="card border-0 mb-3 mb-lg-0">
-        <div class="card-body">
-            <div class="d-flex align-items-center justify-content-between border-bottom pb-3 mb-3">
-                <div>
-                    <h4 class="mb-0 font-weight-bold">32</h4>
-                    <p class="font-size-xs mb-0">Courses</p>
+    {% if request.user.is_authenticated and request.user.type == 'TEACHER' %}
+        <div class="card border-0 mb-3 mb-lg-0">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between border-bottom pb-3 mb-3">
+                    <div>
+                        <h4 class="mb-0 font-weight-bold">32</h4>
+                        <p class="font-size-xs mb-0">Courses</p>
+                    </div>
+                    <div>
+                        <span><i class="fe fe-file-text font-size-lg"></i></span>
+                    </div>
                 </div>
-                <div>
-                    <span><i class="fe fe-file-text font-size-lg"></i></span>
+                <div class="d-flex align-items-center justify-content-between border-bottom pb-3 mb-3">
+                    <div>
+                        <h4 class="mb-0 font-weight-bold">11,604</h4>
+                        <p class="font-size-xs mb-0">Total Students</p>
+                    </div>
+                    <div>
+                        <span><i class="fe fe-users font-size-lg"></i></span>
+                    </div>
                 </div>
-            </div>
-            <div class="d-flex align-items-center justify-content-between border-bottom pb-3 mb-3">
-                <div>
-                    <h4 class="mb-0 font-weight-bold">11,604</h4>
-                    <p class="font-size-xs mb-0">Total Students</p>
-                </div>
-                <div>
-                    <span><i class="fe fe-users font-size-lg"></i></span>
-                </div>
-            </div>
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <h4 class="mb-0 font-weight-bold">12,230</h4>
-                    <p class="font-size-xs mb-0">Reviews</p>
-                </div>
-                <div>
-                    <span><i class="fe fe-star font-size-lg"></i></span>
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <h4 class="mb-0 font-weight-bold">12,230</h4>
+                        <p class="font-size-xs mb-0">Reviews</p>
+                    </div>
+                    <div>
+                        <span><i class="fe fe-star font-size-lg"></i></span>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    {% endif %}
 </aside>
