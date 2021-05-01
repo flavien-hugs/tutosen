@@ -7,6 +7,7 @@
 {% endblock message %}
 
 {% block account_content_body %}
+    {% url 'account_email' as email_url %}
     {% url 'account_login' as account_login %}
     {% url 'account_confirm_email' confirmation.key as account_confirm_email %}
     
@@ -34,12 +35,13 @@
     {% else %}
         <p class="verification_sent_info" >
             Ce lien de confirmation par e-mail a expiré ou n'est pas valide.
-            S'il vous plaît <a class="font-weight-bold" href="{{ email_url }}"> émettre une nouvelle demande de confirmation par e-mail</a>.
+            S'il vous plaît <a class="font-weight-bold" href="{{ email_url }}">
+            émettre une nouvelle demande de confirmation par e-mail</a>.
             Vous serez redirigé vers la page de connexion dans 5 secondes.
         </p>
-        
-        <script>
-            setTimeout("location.href = '{{ account_login }}';", 5000);
-        </script>
     {% endif %}
+
+    <script type="text/javascript">
+        setTimeout("location.href = '{{ account_login }}';", 5000);
+    </script>
 {% endblock account_content_body %}
