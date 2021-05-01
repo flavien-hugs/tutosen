@@ -8,13 +8,13 @@ from django.contrib.auth import get_user_model, forms
 from accounts import models
 from allauth.account.forms import SignupForm
 
-User = get_user_model()
+CustomUser = get_user_model()
 
 
 class UserChangeForm(forms.UserChangeForm):
 
     class Meta(forms.UserChangeForm.Meta):
-        model = User
+        model = CustomUser
 
 
 class UserCreationForm(forms.UserCreationForm):
@@ -26,14 +26,14 @@ class UserCreationForm(forms.UserCreationForm):
     )
 
     class Meta(forms.UserCreationForm.Meta):
-        model = User
+        model = CustomUser
 
     def clean_email(self):
         email = self.cleaned_data["email"]
 
         try:
-            User.objects.get(email=email)
-        except User.DoesNotExist:
+            CustomUser.objects.get(email=email)
+        except CustomUser.DoesNotExist:
             return email
 
         raise ValidationError(self.error_messages["duplicate_email"])
@@ -45,7 +45,7 @@ class CustomSignupForm(SignupForm):
     # Spécifiez un champ de choix qui correspond
     # au champ de choix de notre modèle utilisateur.
     civility = d_forms.TypedChoiceField(
-        label="Civilité", choices=User.CIVILITY_CHOICES,
+        label="Civilité", choices=CustomUser.CIVILITY_CHOICES,
         initial='1', coerce=str, required=True,
     )
     first_name = d_forms.CharField(label="Nom", max_length=100)
@@ -85,4 +85,10 @@ class CustomSignupForm(SignupForm):
 class UpdateDescriptionForm(d_forms.ModelForm):
     class Meta:
         model = models.TeacherMore
-        fields = ("brief_desc", 'qualification',)
+        fields = ["brief_desc", 'qualification']
+
+
+class SocialProfileForm(d_forms.ModelForm):
+    class Meta:
+        model = models.TeacherMore
+        fields = ["facebook", 'twitter', 'linkedin']

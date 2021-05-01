@@ -59,11 +59,8 @@ class User(AbstractUser):
         verbose_name_plural = 'Utilisateur'
 
         indexes = [
-            Index(
-                Lower('first_name'),
-                Upper('last_name').desc(),
-                name='first_last_name_idx',
-            )
+            Index(Lower('first_name'), Upper('last_name').desc(), name='first_last_name_idx'),
+            models.Index(fields=['id'], name='id_index'),
         ]
 
     def get_fullname(self):
@@ -105,6 +102,15 @@ class User(AbstractUser):
                 'pk': str(self.id),
             }
         )
+
+    def get_social_profile_update_url(self):
+        return reverse(
+            'boards:social_account_update',
+            kwargs={
+                'first_name': str(self.first_name.lower()),
+                'pk': str(self.id),
+            }
+        )
  
     def account_verified(self):
         if self.user.is_authenticated:
@@ -112,19 +118,6 @@ class User(AbstractUser):
             if len(result):
                 return result[0].verified
         return False
-
-#     def profile_image_url(self):
-#         fb_uid = SocialAccount.objects.filter(
-#             user_id=self.user.id,
-#             provider='facebook'
-#         )
-        
-#         if len(fb_uid):
-#             return "http://graph.facebook.com/{0}/picture?width=40&height=40".format(fb_uid[0].uid)
-
-#         return "http://www.gravatar.com/avatar/{0}?s=40".format(hashlib.md5(self.user.email).hexdigest())
-
-# User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[:0])
 
 
 class TeacherManager(models.Manager):
@@ -172,23 +165,20 @@ class TeacherMore(models.Model):
     country = CountryField(
         blank_label='sélection un pays',
         verbose_name='pays de résidence',
-        multiple=False
+        multiple=False,
+        blank=True
     )
-
     facebook = models.CharField(
         max_length=250,
-        blank=True,
-        null=True
+        blank=True, null=True
     )
     twitter = models.CharField(
         max_length=250,
-        blank=True,
-        null=True
+        blank=True, null=True
     )
     linkedin = models.CharField(
         max_length=250,
-        blank=True, 
-        null=True
+        blank=True, null=True
     )
 
     class Meta:

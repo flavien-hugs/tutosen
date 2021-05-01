@@ -32,15 +32,15 @@ collectstatic:
 	$(MANAGE) collectstatic
 
 dumpdata:
-	$(MANAGE) dumpdata --format=json accounts.user > __backups__/users.json
-	$(MANAGE) dumpdata --format=json sites.site > __backups__/sites.json
-	$(MANAGE) dumpdata --format=json pages.aboutus > __backups__/page_aboutus.json
-	$(MANAGE) dumpdata --format=json pages.pagecgu > __backups__/page_cgu.json
-	$(MANAGE) dumpdata --format=json pages.pagesupport > __backups__/page_upport.json
+	$(MANAGE) dumpdata --indent=4 --format=json accounts.user > __backups__/users.json
+	$(MANAGE) dumpdata --indent=4 --format=json sites.site > __backups__/sites.json
+	$(MANAGE) dumpdata --indent=4 --format=json pages.aboutus > __backups__/page_aboutus.json
+	$(MANAGE) dumpdata --indent=4 --format=json pages.pagecgu > __backups__/page_cgu.json
+	$(MANAGE) dumpdata --indent=4 --format=json pages.pagesupport > __backups__/page_upport.json
 
 loaddata:
 	$(MANAGE) loaddata __backups__/users.json
-	$(MANAGE) dumpdata --format=json sites.site > __backups__/sites.json
+	$(MANAGE) loaddata __backups__/sites.json
 
 test-deploy:
 	$(MANAGE) check --deploy
