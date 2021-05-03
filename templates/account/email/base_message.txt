@@ -1,0 +1,24 @@
+{% load account %}
+
+{% autoescape off %}
+    {% user_display user as user_display %}
+    {% with site_name=current_site.name %} Hello {{ user_display }}{% endwith %}
+
+    <div class="page-content p-4">
+        <div class="row">
+            <div class="offset-xl-3 col-xl-6 offset-lg-2 col-lg-8 col-md-12 col-12">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        {% block message_content %}
+                        {% endblock message_content %}
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+
+    {% with site_name=current_site.name site_domain=current_site.domain %}
+        Merci d'utiliser {{ site_name }} !
+        <br>{{ site_domain }}
+    {% endwith %}
+{% endautoescape %}

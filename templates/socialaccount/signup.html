@@ -1,11 +1,20 @@
 {% extends "account/base.html" %}
+{% load widget_tweaks %}
 
-{% block head_title %} Inscription {% endblock head_title %}
+{% block head_title %} S'inscrire {% endblock head_title %}
+
+{% block message %}{% endblock message %}
 
 {% block account_content_body %}
+    
+    {% url 'home' as home_url %}
     {% url 'socialaccount_signup' as socialaccount_signup %}
     
     <div class="mb-4">
+        <a href="{{ home_url }}">
+            <img src="{{ STATIC_PREFIX }}img/logo-icon.svg" class="mb-4" alt="{{ title }}">
+        </a>
+
         <h1 class="mb-1 font-weight-bold">Inscription</h1>
 
         <p>
@@ -17,14 +26,28 @@
         </p>
     </div>
 
-    <form method="post" action="{{ socialaccount_signup }}">
+    <form method="post" action="{{ socialaccount_signup }}" novalidate>
         {% csrf_token %}
-        {{ form }}
+
+        <div class="form-group">
+            {{ form.email|add_label_class:"form-label" }}
+            {% render_field form.email|add_error_class:"is-invalid" class+="form-control" placeholder=form.email.label %}
+        
+            {% if form.email.errors %}
+                <small class="text-muted">
+                    {% for error in form.email.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </small>
+            {% endif %}
+        </div>
+
         {% if redirect_field_value %}
             <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
         {% endif %}
-      <button type="submit" class="btn btn-primary btn-block">s'inscrire &raquo;</button>
+
+        <button type="submit" class="btn btn-primary btn-block text-uppercase">
+        s'inscrire</button>
     </form>
 
-    <p>Une erreur s'est produite lors de la tentative de connexion via votre compte de réseau social.</p>
 {% endblock account_content_body %}

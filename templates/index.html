@@ -1,6 +1,8 @@
-{% extends "base.html" %}
+{% extends "_base.html" %}
 
-{% comment %} gabarit: home page {% endcomment %}
+{% block navigation %}
+	{% include "includes/_partials_navigation.html" %}
+{% endblock navigation %}
 
 {% block page_content %}
 	{% include "includes/_partials_hero.html" %}
@@ -11,3 +13,7 @@
 
 	{% include "layouts/_layouts_trending.html" %}
 {% endblock page_content %}
+
+{% block footer %}
+	{% include "includes/_partials_footer.html" %}
+{% endblock footer %}

@@ -1,16 +1,34 @@
 # accounts.managers.py
 
+
 from django.db import models
-from django.contrib.auth.models import BaseUserManager
 
 
 class TeacherManager(models.Manager):
+
     def get_queryset(self, *args, **kwargs):
-        is_teacher = User.Types.TEACHER
-        return super().get_queryset(*args, **kwargs).filter(type=is_teacher)
+        return super().get_queryset(*args, **kwargs).filter(type='TEACHER')
+
+    def get_related(self, instance):
+        teachers = self.get_queryset().filter(type=instance.type)
+        return (teachers).exclude(id=instance.id).distinct()
+
+    def recomended_teacher(self, instance):
+        teacher = self.get_queryset().filter(
+            user=instance.user).exclude(id=instance.id)
+        teacher_list = random.shuffle(list(product))[:50]
+        return teacher_list
+
+    def create(self, **kwargs):
+        kwargs.update({'type': 'TEACHER'})
+        return super(TeacherManager, self).create(**kwargs)
 
 
 class StudentManager(models.Manager):
+
     def get_queryset(self, *args, **kwargs):
-        is_student = User.Types.STUDENT
-        return super().get_queryset(*args, **kwargs).filter(type=is_student)
+        return super().get_queryset(*args, **kwargs).filter(type='STUDENT')
+
+    def create(self, **kwargs):
+        kwargs.update({'type': 'STUDENT'})
+        return super(StudentManager, self).create(**kwargs)

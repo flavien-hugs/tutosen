@@ -1,9 +1,30 @@
 {% extends "dashboard/teacher/base.html" %}
 
+{% block dashboard_subheader %}
+    <div class="mb-2 mb-lg-0">
+        <h1 class="mb-1 h2 font-weight-bold">
+            {{ page_title|capfirst }}
+        </h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ request.user.get_userdetail_url }}">Dashboard</a>
+                </li>
+
+                <li class="breadcrumb-item">
+                    <a href="{{ request.user.get_userupdate_url }}">Paramètres</a>
+                </li>
+                
+                <li class="breadcrumb-item active" aria-current="page">
+                    {{ page_title|capfirst }}
+                </li>
+            </ol>
+        </nav>
+    </div>
+{% endblock dashboard_subheader %}
+
 
 {% block teacher_content %}
-    {% url "home" as home_url %}
-
     <div class="card">
         <div class="card-header">
             <h3 class="mb-0">Paramètres de confidentialité du profil</h3>
@@ -20,9 +41,9 @@
                     </p>
                 </div>
             </div>
-            
+
             <hr class="my-5">
-            
+
             <div>
                 <h4 class="mb-0">Paramètres du profil</h4>
                 <p class="mb-5">
@@ -81,7 +102,7 @@
                             </div>
                         </div>
                     </li>
-                    
+
                     <li class="list-group-item d-flex align-items-center justify-content-between px-0 py-2">
                         <div>Vos centres d'intérêts</div>
                         <div>

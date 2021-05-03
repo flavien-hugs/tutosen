@@ -3,7 +3,11 @@
 {% get_providers as socialaccount_providers %}
 
 {% for provider in socialaccount_providers %}
-    <a title="Continuer avec {{ provider.name }}" href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}" class="btn-social btn-social-outline btn-{{ provider.name|lower }}">
-        <i class="mdi mdi-{{ provider.name|lower }} mdi-24px"></i>
-    </a>
+    <div>
+        <a title="Continuer avec {{ provider.name }}" href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}" class="btn-social btn-{{ provider.name|lower }} text-truncate font-weight-bold text-uppercase w-100 h-100 p-2">
+            <i class="mdi mdi-{{ provider.name|lower }} mdi-24px"></i>
+            Continuer avec {{ provider.name }}
+        </a>
+    </div>
 {% endfor %}
+

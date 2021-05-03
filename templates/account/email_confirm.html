@@ -7,6 +7,7 @@
 {% endblock message %}
 
 {% block account_content_body %}
+    {% url "home" as home_url %}
     {% url 'account_email' as email_url %}
     {% url 'account_login' as account_login %}
     {% url 'account_confirm_email' confirmation.key as account_confirm_email %}
@@ -22,7 +23,7 @@
             {% with confirmation.email_address.email as email %} 
                 S'il vous plaît, veuillez confirmer que
                 <a class="font-weight-bold" href="mailto:{{ email }}">{{ email }}</a>
-                est l'adresse e-mail pour l'utilisateur <strong>{{ user_display }}</strong>.
+                est votre adresse e-mail.
             {% endwith %}
         </p>
 
@@ -40,8 +41,8 @@
             Vous serez redirigé vers la page de connexion dans 5 secondes.
         </p>
     {% endif %}
-
-    <script type="text/javascript">
-        setTimeout("location.href = '{{ account_login }}';", 5000);
-    </script>
 {% endblock account_content_body %}
+
+<script type="text/javascript">
+    setTimeout("location.href = '{{ account_login }}';", 5000);
+</script>

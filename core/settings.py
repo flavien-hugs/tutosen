@@ -170,16 +170,13 @@ X_FRAME_OPTIONS = "SAMEORIGINE"
 if DEBUG:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': config('DATABASE_NAME'),
-            'USER': config('DATABASE_USER'),
-            'PASSWORD': config('DATABASE_PASSWORD'),
-            'HOST': config('DATABASE_HOST'),
-            'PORT': config('DATABASE_PORT'),
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'tutosen_db',
+            'USER': 'tutosen',
+            'PASSWORD': 'tutosen',
+            'HOST': 'localhost',
+            'PORT': '5432',
             'ATOMIC_REQUESTS': True,
-            'OPTIONS': {
-                "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
-            }
         }
     }
 
@@ -262,7 +259,7 @@ LOGIN_URL = 'account_login'
 ACCOUNT_LOGOUT_REDIRECT_URL = 'home'
 
 # https://docs.djangoproject.com/fr/dev/ref/settings/#login-redirect-url
-LOGIN_REDIRECT_URL = 'boards:teacher_dashboard_url'
+LOGIN_REDIRECT_URL = 'boards:user_detail'
 
 # Configuration django-allauth
 # https://django-allauth.readthedocs.io/en/latest/configuration.html

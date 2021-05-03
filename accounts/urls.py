@@ -13,6 +13,6 @@ urlpatterns = [
         view=views.teacher_list_view, name='teacher_list_view'
     ),
 
-    path(route='instructeur/<str:first_name>.<int:pk>/',
+    path(route='instructeur/<username>-<pk>/',
         view=views.teacher_detail_view, name='teacher_detail_view'),
 ]

@@ -15,7 +15,7 @@
     </div>
 
     {% if form.accounts %}
-        <form method="post" action="{{ socialaccount_connections }}">
+        <form method="post" action="{{ socialaccount_connections }}" novalidate>
             {% csrf_token %}
 
             <fieldset>

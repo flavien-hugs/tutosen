@@ -1,173 +1,157 @@
 {% comment %} partial sidebar for tearcher {% endcomment %}
 
 {% load boards_tags %}
-{% url 'account_logout' as account_logout %}
-{% url 'boards:teacher_add_course_url' as teacher_add_course_url %}
-{% url "boards:teacher_profil_privacy_url" as teacher_profil_privacy_url %}
-{% url "boards:teacher_notification_url" as teacher_notification_url %}
+{% url "home" as home_url %}
 {% url "boards:teacher_list_cours_url" as teacher_list_cours_url %}
+{% url "boards:teacher_profil_privacy_url" as teacher_profil_privacy_url %}
 
-<aside class="col-lg-3 col-md-2 col-12">
-    <div class="card border-0 mb-3">
-        <nav class="navbar navbar-expand-md navbar-light shadow-sm mb-lg-0 small-sidenav">
-            <span class="d-xl-none d-lg-none d-md-none text-inherit font-weight-bold">
-                Tableau de bord
-            </span>
-            
-            <button class="navbar-toggler d-md-none icon-shape icon-sm rounded bg-primary text-light" type="button"
-            data-toggle="collapse" data-target="#smallSidenav" aria-controls="smallSidenav" aria-expanded="false"
-            aria-label="Toggle navigation">
-                <span class="fe fe-menu"></span>
-            </button>
+<nav class="navbar-vertical navbar">
+    <div class="nav-scroller">
+        <a class="navbar-brand" href="{{ home_url }}">
+            <img src="{{ STATIC_PREFIX }}img/logo-inverse.svg" alt="{{ title }}"/>
+        </a>
 
-            <div class="collapse navbar-collapse" id="smallSidenav">
-                <div class="navbar-nav flex-column">
-                    <span class="navbar-header">Tableau de bord</span>
-                    <ul class="list-unstyled ml-n2">
-                        <li class="nav-item {% active_link 'user_detail' %}">
-                            <a class="nav-link" href="{{ request.user.get_userdetail_url }}">
-                                <i class="fe fe-home nav-icon"></i>
-                                Tableau de bord
-                            </a>
-                        </li>
+        <ul class="navbar-nav flex-column" id="sideNavbar">
+            <li class="nav-item">
+                <a class="nav-link {% active_link 'user_detail' %}" href="{{ request.user.get_userdetail_url }}">
+                    <i class="nav-icon fe fe-home mr-2"></i>
+                    Dashboard
+                </a>
+            </li>
 
-                        <li class="nav-item {% active_link 'teacher_list_cours_url' %}">
-                            <a class="nav-link" href="{{ teacher_list_cours_url }}">
-                                <i class="fe fe-book nav-icon"></i>
-                                Mes cours
+            <li class="nav-item">
+                <a class="nav-link {% active_link 'user_detail' %}" href="#!" data-toggle="collapse" data-target="#navCours" aria-expanded="false" aria-controls="navCours">
+                    <i class="nav-icon fe fe-book mr-2"></i>
+                    Mes Cours
+                </a>
+                
+                <div id="navCours" class="collapse" data-parent="#sideNavbar">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link {% active_link 'teacher_list_cours_url' %}" href="{{ teacher_list_cours_url }}">
+                                Mes Cours
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a class="nav-link" href="#">
-                                <i class="fe fe-shopping-cart nav-icon"></i>
-                                Ma Boutique
+                                Avis sur mes cours
                             </a>
                         </li>
+                    </ul>
+                </div>
+            </li>
 
+            <li class="nav-item">
+                <a class="nav-link " href="#!" data-toggle="collapse" data-target="#navStudent" aria-expanded="false" aria-controls="navStudent">
+                    <i class="nav-icon fe fe-users mr-2"></i>
+                    Mes Étudiants
+                </a>
+                
+                <div id="navStudent" class="collapse" data-parent="#sideNavbar">
+                    <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="fe fe-shopping-bag nav-icon"></i>
-                                Mes Commandes
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="fe fe-book-open nav-icon"></i>
-                                Mon Blog
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="fe fe-pie-chart nav-icon"></i>
-                                Revenus
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="fe fe-dollar-sign nav-icon"></i>
-                                Paiements
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="fe fe-users nav-icon"></i>
+                            <a class="nav-link {% active_link 'teacher_list_cours_url' %}" href="{{ teacher_list_cours_url }}">
                                 Mes Étudiants
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a class="nav-link" href="#">
-                                <i class="fe fe-star nav-icon"></i>
-                                Avis sur mes cours
+                                Étudiants inscrits
                             </a>
                         </li>
                     </ul>
                 </div>
-            </div>
-        </nav>
-    </div>
+            </li>
 
-    <div class="card border-0 mb-3">
-        <nav class="navbar navbar-expand-md navbar-light shadow-sm mb-lg-0 small-sidenav">
-            <span class="d-xl-none d-lg-none d-md-none text-inherit font-weight-bold">
-                Réglages
-            </span>
-            
-            <button class="navbar-toggler d-md-none icon-shape icon-sm rounded bg-primary text-light" type="button"
-            data-toggle="collapse" data-target="#smallSidenavSetting" aria-controls="smallSidenavSetting" aria-expanded="false"
-            aria-label="Toggle navigation">
-                <span class="fe fe-menu"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="smallSidenavSetting">
-                <div class="navbar-nav flex-column">
-                    <span class="navbar-header">Réglages du compte</span>
-
-                    <ul class="list-unstyled ml-n2 mb-0">
-                        <li class="nav-item {% active_link 'user_update' %}">
-                            <a class="nav-link" href="{{ request.user.get_userupdate_url }}">
-                                <i class="fe fe-settings nav-icon"></i>
-                                Éditer votre profil
+            <li class="nav-item">
+                <a class="nav-link " href="#!" data-toggle="collapse" data-target="#navBlog" aria-expanded="false" aria-controls="navBlog">
+                    <i class="nav-icon fe fe-book-open mr-2"></i>
+                    Mon Blog
+                </a>
+                
+                <div id="navBlog" class="collapse" data-parent="#sideNavbar">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link {% active_link 'teacher_list_cours_url' %}" href="{{ teacher_list_cours_url }}">
+                                Mes Articles
                             </a>
                         </li>
 
-                        <!-- <li class="nav-item">
+                        <li class="nav-item">
+                            <a class="nav-link {% active_link 'teacher_list_cours_url' %}" href="{{ teacher_list_cours_url }}">
+                                Nouvel Article
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
                             <a class="nav-link" href="#">
-                                <i class="fe fe-user nav-icon"></i>
-                                Sécurité
-                            </a>
-                        </li>  -->
-
-                        <li class="nav-item {% active_link 'social_account_update' %}">
-                            <a class="nav-link" href="{{ request.user.get_social_profile_update_url }}">
-                                <i class="fe fe-refresh-cw nav-icon"></i>
-                                Profils sociaux
-                            </a>
-                        </li>
-
-                        <li class="nav-item {% active_link 'teacher_notification_url' %}">
-                            <a class="nav-link" href="{{ teacher_notification_url }}">
-                                <i class="fe fe-bell nav-icon"></i>
-                                Notifications
-                            </a>
-                        </li>
-
-                        <li class="nav-item {% active_link 'teacher_profil_privacy_url' %}">
-                            <a class="nav-link" href="{{ teacher_profil_privacy_url }}">
-                                <i class="fe fe-lock nav-icon"></i>
-                                Confidentialité du profil
-                            </a>
-                        </li>
-
-                        <li class="nav-item {% active_link 'user_delete' %}">
-                            <a class="nav-link" href="{{ request.user.get_userdelete_url }}">
-                                <i class="fe fe-trash nav-icon"></i>
-                                Supprimer le profil
+                                Commentaires
                             </a>
                         </li>
                     </ul>
-
-                    <a href="{{ account_logout }}" class="btn btn-danger btn-md mt-3 rounded-bottom">
-                        <i class="fe fe-power nav-icon"></i>
-                        Se déconnecter
-                    </a>
                 </div>
-            </div>
-        </nav>
-    </div>
+            </li>
 
-    {% if request.user.is_authenticated and request.user.type == 'TEACHER' %}
-        <div class="card border-0 mb-3 mb-lg-0">
-            <div class="card-body">
+            <li class="nav-item"><div class="nav-divider"></div></li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#!" data-toggle="collapse" data-target="#navSiteVendor" aria-expanded="false" aria-controls="navSiteVendor">
+                    <i class="nav-icon fe fe-shopping-bag mr-2"></i>
+                    Ma boutique
+                </a>
+
+                <div id="navSiteVendor" class="collapse" data-parent="#sideNavbar">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Mes Commandes</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Revenus</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="nav-item"><div class="nav-divider"></div></li>
+
+            <li class="nav-item">
+                <div class="navbar-heading">Configuration</div>
+            </li>
+
+            <li class="nav-item">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ request.user.get_userupdate_url }}">
+                        <i class="fe fe-settings nav-icon mr-2"></i>
+                        Modifier le profile
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ teacher_profil_privacy_url }}">
+                        <i class="fe fe-lock nav-icon mr-2"></i>
+                        Confidentialités
+                    </a>
+                </li>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link " href="#!">
+                    <i class="nav-icon fe fe-help-circle mr-2"></i>
+                    Centre d'aide
+                </a>
+            </li>
+        </ul>
+
+        <div class="card bg-light shadow-none mx-4 my-8">
+            <div class="card-body py-6">
                 <div class="d-flex align-items-center justify-content-between border-bottom pb-3 mb-3">
                     <div>
                         <h4 class="mb-0 font-weight-bold">32</h4>
-                        <p class="font-size-xs mb-0">Courses</p>
+                        <p class="font-size-xs mb-0">Cours</p>
                     </div>
                     <div>
                         <span><i class="fe fe-file-text font-size-lg"></i></span>
@@ -176,7 +160,7 @@
                 <div class="d-flex align-items-center justify-content-between border-bottom pb-3 mb-3">
                     <div>
                         <h4 class="mb-0 font-weight-bold">11,604</h4>
-                        <p class="font-size-xs mb-0">Total Students</p>
+                        <p class="font-size-xs mb-0">Étudiants</p>
                     </div>
                     <div>
                         <span><i class="fe fe-users font-size-lg"></i></span>
@@ -185,7 +169,7 @@
                 <div class="d-flex align-items-center justify-content-between">
                     <div>
                         <h4 class="mb-0 font-weight-bold">12,230</h4>
-                        <p class="font-size-xs mb-0">Reviews</p>
+                        <p class="font-size-xs mb-0">Commentaires</p>
                     </div>
                     <div>
                         <span><i class="fe fe-star font-size-lg"></i></span>
@@ -193,5 +177,19 @@
                 </div>
             </div>
         </div>
-    {% endif %}
-</aside>
+
+        <div class="card bg-dark-primary shadow-none text-center mx-4 my-8">
+            <div class="card-body py-6">
+                <img src="{{ STATIC_PREFIX }}img/giftbox.png" alt="giftbox">
+                <div class="mt-4">
+                    <h5 class="text-white">Access Illimitté</h5>
+                    <p class="text-white-50 font-size-xs">
+                        Passez d'un essai gratuit à un plan d'affaires. Commencez maintenant.
+                    </p>
+                    <a href="#!" class="btn btn-white btn-sm mt-2">
+                    Mettre à niveau</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

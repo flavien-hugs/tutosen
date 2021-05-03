@@ -1,0 +1,98 @@
+{% load boards_tags %}
+
+{% url 'account_logout' as account_logout %}
+
+<nav class="navbar-default navbar navbar-expand-lg">
+    <a id="nav-toggle" href="#!"><i class="fe fe-menu"></i></a>
+
+    <div class="ml-lg-3 d-none d-md-none d-lg-block">
+        <form class="d-flex align-items-center">
+            <span class="position-absolute pl-3 search-icon">
+                <i class="fe fe-search"></i>
+            </span>
+            <input type="search" class="form-control pl-6" placeholder="Search Entire Dashboard"/>
+        </form>
+    </div>
+
+    <!-- snippet notifications -->
+
+    <ul class="navbar-nav navbar-right-wrap ml-auto d-flex nav-top-wrap">
+        <li class="dropdown stopevent">
+            <a class="btn btn-light btn-icon rounded-circle indicator indicator-primary text-muted" href="#!"
+            role="button" id="dropdownNotification" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false"><i class="fe fe-bell"></i></a>
+
+            <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg" aria-labelledby="dropdownNotification">
+                <div class="border-bottom px-3 pt-1 pb-3 align-items-center">
+                    <span class="h5 mb-0">Notifications</span>
+                    <a href="# " class="text-muted">
+                        <span class="align-middle">
+                            <i class="fe fe-settings mr-1"></i>
+                        </span>
+                    </a>
+                </div>
+
+                {% include "includes/_partial_notification.html" %}
+            </div>
+        </li>
+
+        <li class="dropdown ml-2">
+            <a class="rounded-circle " href="#!" role="button" id="dropdownUser" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+                <div class="avatar avatar-md avatar-indicators avatar-online">
+                    {{ email|gravatar:80 }}
+                </div>
+            </a>
+
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownUser">
+                <div class="dropdown-item">
+                    <div class="d-flex">
+                        <div class="avatar avatar-md avatar-indicators avatar-online">
+                            {{ email|gravatar:80 }}
+                        </div>
+
+                        <div class="ml-3 lh-1">
+                            <h5 class="mb-1">
+                                {% if request.user.first_name or request.user.last_name %}
+                                    {{ request.user.first_name }} {{ request.user.last_name }}
+                                {% else %}
+                                    {{ request.user.username }}
+                                {% endif %}
+                            </h5>
+                            <p class="mb-0 text-muted">{{ request.user.email }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dropdown-divider"></div>
+
+                <ul class="list-unstyled">
+                    <li>
+                        <a class="dropdown-item" href="{{ request.user.get_userdetail_url }}">
+                            <i class="fe fe-user mr-2"></i>
+                            Profile
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="dropdown-item" href="{{ request.user.get_userupdate_url }}">
+                            <i class="fe fe-settings mr-2"></i>
+                            Paramètres
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="dropdown-divider"></div>
+
+                <ul class="list-unstyled">
+                    <li>
+                        <a class="dropdown-item" href="{{ account_logout }}">
+                            <i class="fe fe-power nav-icon"></i>
+                            Déconnexion
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+</nav>

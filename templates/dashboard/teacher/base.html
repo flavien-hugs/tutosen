@@ -1,22 +1,35 @@
-{% extends "index.html" %}
+{% extends "_base.html" %}
 
 {% block page_content %}
+    
+    <div id="db-wrapper">
+        {% include "dashboard/teacher/partials/_partial_sidebar_teacher.html" %}
+        
+        <div id="page-content">
+            <div class="header">
+                {% include "dashboard/teacher/partials/_partial_navigation.html" %}
+            </div>
 
-    {% include "courses/snippets/_snippet_courses_header.html" %}
-
-    <div class="pb-5 py-md-5">
-        <div class="container-fluid">
-            <div class="row">
-                {% include "dashboard/teacher/partials/_partial_sidebar_teacher.html" %}
-
-                <section class="col-lg-9 col-md-8 col-12">
-                    
-                    {% include "account/snippets/_snippet_message.html" %}
-
-                    {% block teacher_content %}
+            <div class="container-fluid p-4">
+                <div class="row">
+                    <div class="{% block hover_css %} col-lg-12 {% endblock hover_css %} col-md-12 col-12">
+                        {% include "account/snippets/_snippet_message.html" %}
                         
-                    {% endblock teacher_content %}
-                </section>
+                        <div class="border-bottom pb-4 mb-4 d-lg-flex justify-content-between align-items-center">
+                            {% block dashboard_subheader %}
+                                <div><h1 class="mb-0 h2 font-weight-bold">Dashboard</h1></div>
+                                <div class="d-flex">
+                                    <a href="{{ request.user.get_userupdate_url }}" class="btn btn-primary">
+                                    Paramètres</a>
+                                </div>
+                            {% endblock dashboard_subheader %}
+                        </div>
+
+                        {% block teacher_content %}
+                                
+                        {% endblock teacher_content %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>

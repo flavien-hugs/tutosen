@@ -4,9 +4,7 @@
 
 {% comment %} page d'inscription {% endcomment %}
 
-{% block message %}
-    {% include "account/snippets/_snippet_message.html" %}
-{% endblock message %}
+{% block message %}{% endblock message %}
 
 {% block account_content_body %}
     {% url 'home' as home_url %}
@@ -27,37 +25,83 @@
         </span>
     </div>
 
-    <form method="post" action="{{ account_signup }}">
+    <form method="post" action="{{ account_signup }}" novalidate>
         {% csrf_token %}
 
         <div class="form-group">
             {{ form.first_name|add_label_class:"form-label" }}
             <div class="input-group">
-                {% render_field form.civility class+="custom-select w-25" %}
+                {% render_field form.civility|add_error_class:"is-invalid" class+="custom-select w-25" %}
                 {% render_field form.first_name|add_error_class:"is-invalid" class+="form-control w-75" placeholder=form.first_name.label %}
+            
+                {% if form.first_name.errors %}
+                    <small class="text-muted">
+                        {% for error in form.first_name.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </small>
+                {% endif %}
             </div>
         </div>
 
         <div class="form-group">
             {{ form.last_name|add_label_class:"form-label" }}
             {% render_field form.last_name|add_error_class:"is-invalid" class+="form-control" placeholder=form.last_name.label %}
+            
+            {% if form.last_name.errors %}
+                <small class="text-muted">
+                    {% for error in form.last_name.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </small>
+            {% endif %}
         </div>
+        
 
         <div class="form-group">
             {{ form.email|add_label_class:"form-label" }}
             {% render_field form.email|attr:"type:email"|add_error_class:"is-invalid" class+="form-control" placeholder=form.email.label %}
+            
+            {% if form.email.errors %}
+                <small class="text-muted">
+                    {% for error in form.email.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </small>
+            {% endif %}
         </div>
 
         <div class="form-group">
             {{ form.type|add_label_class:"form-label" }}
             <div class="input-group">
-                {% render_field form.type class+="custom-select" %}
+                {% render_field form.type|add_error_class:"is-invalid" class+="form-control custom-select" %}
             </div>
         </div>
 
         <div class="form-group">
             {{ form.password1|add_label_class:"form-label" }}
             {% render_field form.password1|attr:"type:password"|add_error_class:"is-invalid" class+="form-control" placeholder="**************" %}
+            
+            {% if form.password1.errors %}
+                <small class="text-muted">
+                    {% for error in form.password1.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </small>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form.password2|add_label_class:"form-label" }}
+            {% render_field form.password2|attr:"type:password"|add_error_class:"is-invalid" class+="form-control" placeholder="**************" %}
+            
+            {% if form.password2.errors %}
+                <small class="text-muted">
+                    {% for error in form.password2.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </small>
+            {% endif %}
         </div>
 
         <div class="form-group">
@@ -77,8 +121,15 @@
 
         <div>
             <button type="submit" class="btn btn-primary btn-block">
-                Créez votre compte &raquo;
+                Créez votre compte
             </button>
         </div>
- </form>
+    </form>
+
+    <hr class="my-3">
+
+    <div class="mt-2 text-center">
+        <p class="font-weight-bold">Continuez avec</p>
+        {% include "account/teacher/snippet/_snippet_socialaccount.html" %}
+    </div>
 {% endblock account_content_body %}

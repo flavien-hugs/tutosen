@@ -5,33 +5,33 @@ from django.contrib.auth.models import Group
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from accounts.models import Teacher, TeacherMore, StudentMore
+from accounts.models import Teacher, Student
 from accounts.forms import UserChangeForm, UserCreationForm
 
 CustomUser = get_user_model()
 
 
-# class TeacherMoreInline(admin.StackedInline):
-#     model = TeacherMore
-#     can_delete = False
-#     verbose_name_plural = 'Instructeur détail'
-
-
-# @admin.register(Teacher)
-# class TeacherAdmin(admin.ModelAdmin):
-#     inlines = [TeacherMoreInline]
-
-
-@admin.register(CustomUser)
+@admin.register(Teacher)
 class TeacherAdmin(BaseUserAdmin):
     date_hierarchy = 'date_joined'
-    model = CustomUser
+    model = Teacher
     form = UserChangeForm
     add_form = UserCreationForm
 
     fieldsets = (
-        (None, {'fields': (("type", "email"),)}),
-        ('Information personnelle', {'fields': ('username', ('first_name', 'last_name'),)}),
+
+        ('Information personnelle',
+            {'fields': 
+                ("type", 'username', ('first_name', 'last_name'),)
+            }
+        ),
+        ('Adresse', {'fields': 
+            ("country", "state", "phone_number", "email",)
+        }),
+        ('Descriprion', {'fields': ("brief_desc",)}),
+        ('Compte réseaux sociaux', {'fields': 
+            ("facebook", "twitter", "linkedin",)
+        }),
         ('Permissions', {'fields': 
             ( "is_active", "is_staff", "is_superuser", "user_permissions",)
         }),
@@ -47,7 +47,8 @@ class TeacherAdmin(BaseUserAdmin):
 
     list_display = [
         "get_fullname", "email",
-        "type", "date_joined", "is_active"
+        "country", "date_joined",
+        "is_active",
     ]
     list_display_links = [
         'email',
@@ -62,10 +63,9 @@ class TeacherAdmin(BaseUserAdmin):
         "is_active",
     )
     list_per_page = 5
-    ordering = ('date_joined',)
+    ordering = ['-date_joined',]
     search_fields = ["get_fullname", 'email']
     filter_horizontal = ('groups', 'user_permissions',)
 
-admin.site.register(TeacherMore)
-admin.site.register(StudentMore)
+admin.site.register(Student)
 admin.site.unregister(Group)

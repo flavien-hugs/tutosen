@@ -17066,14 +17066,10 @@ body {
 }
 .btn-social {
    display:inline-block;
-   width:2.25rem;
-   height:2.25rem;
-   padding:0;
    border:1px solid transparent;
    transition:border-color .25s ease-in-out,background-color .25s ease-in-out,color .25s ease-in-out;
    border-radius:.25rem;
-   background-color:#eae7f5;
-   color:#a8a3b9;
+   color:#ffffff;
    font-size:.875rem;
    text-align:center;
    line-height:2.25rem
@@ -17095,7 +17091,7 @@ body {
 .btn-social-outline:hover {
    border-color:transparent
 }
-.btn-facebook:hover {
+.btn-facebook {
    background-color:#3b5998
 }
 .btn-twitter:hover {
@@ -17104,7 +17100,7 @@ body {
 .btn-instagram:hover {
    background-color:#5851db
 }
-.btn-google:hover {
+.btn-google {
    background-color:#ea4335
 }
 .btn-linkedin:hover {

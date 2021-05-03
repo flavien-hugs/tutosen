@@ -20,6 +20,7 @@ django-widget-tweaks = "*"
 babel = "*"
 django-countries = "*"
 django-ckeditor = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 

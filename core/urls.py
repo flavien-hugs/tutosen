@@ -48,7 +48,7 @@ if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
     urlpatterns += [
-        path('404', handler404, {'exception': Exception("Page non trouvée !")}),
-        path('403', handler403, {'exception': Exception("Permission non accordée !")}),
-        path('500', handler500, {'exception': Exception("Erreur interne !")}),
+        path('404/', handler404, {'exception': Exception("Page non trouvée !")}),
+        path('403/', handler403, {'exception': Exception("Permission non accordée !")}),
+        path('500/', handler500, {'exception': Exception("Erreur interne !")}),
     ]

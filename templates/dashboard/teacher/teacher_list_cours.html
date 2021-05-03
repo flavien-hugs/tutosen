@@ -2,9 +2,37 @@
 
 {% load widget_tweaks boards_tags %}
 
+{% block dashboard_subheader %}
+    {% url 'boards:teacher_list_cours_url' as teacher_list_cours_url %}
+    {% url 'boards:teacher_add_course_url' as teacher_add_course_url %}
+
+    <div class="mb-2 mb-lg-0">
+        <h1 class="mb-1 h2 font-weight-bold">Liste de vos cours</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ request.user.get_userdetail_url }}">Dashboard</a>
+                </li>
+
+                <li class="breadcrumb-item">
+                    <a href="{{ teacher_list_cours_url }}">Cours</a>
+                </li>
+                
+                <li class="breadcrumb-item active" aria-current="page">
+                    Tous les cours
+                </li>
+            </ol>
+        </nav>
+    </div>
+    
+    <div>
+        <a href="{{ teacher_add_course_url }}" class="btn btn-primary">
+        Ajouter un nouveau cours</a>
+    </div>
+{% endblock dashboard_subheader %}
+
 {% block teacher_content %}
     <div class="card">
-
         <div class="card-header">
             <h3 class="mb-0">Vos cours</h3>
             <p class="mb-0">

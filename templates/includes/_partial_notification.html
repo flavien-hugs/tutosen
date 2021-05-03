@@ -1,0 +1,44 @@
+{% load boards_tags %}
+{% url "boards:teacher_notification_url" as teacher_notification_url %}
+
+<ul class="list-group list-group-flush notification-list-scroll">
+    <li class="list-group-item bg-light">
+        <div class="row">
+            <div class="col">
+                <div class="d-flex">
+                    {{ email|gravatar:80 }}
+
+                    <div class="ml-3">
+                        <h5 class="font-weight-bold mb-1">Kristin Watson:</h5>
+                        <p class="mb-3">Krisitn Watsan like your comment</p>
+                        <span class="font-size-xs text-muted">
+                            <span>
+                                <span class="fe fe-thumbs-up text-success mr-1">
+                                </span>2 hours ago,
+                            </span>
+                            <span class="ml-1">2:19 PM</span>
+                        </span>
+                    </div>
+                </div>
+                <a class="stretched-link" href="#!"></a>
+            </div>
+
+            <div class="col-auto text-center">
+                <a href="#!" class="badge-dot badge-info" data-toggle="tooltip"
+                data-placement="top" title="" data-original-title="Marquer comme lu"></a>
+
+                <div>
+                    <a href="#!" class="bg-transparent" data-toggle="tooltip"
+                    data-placement="top" title="" data-original-title="Supprimer">
+                    <i class="fe fe-x text-muted"></i></a>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>
+
+<div class="border-top px-3 pt-3 pb-0">
+    <a href="{{ teacher_notification_url }}" class="text-muted">
+        Voir toutes les notifications
+    </a>
+</div>

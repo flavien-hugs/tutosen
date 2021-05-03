@@ -7,7 +7,7 @@
 {% endblock message %}
 
 {% block account_content_body %}
-
+    {% url "home" as home_url %}
     <div class="mb-4">
         <a href="{{ home_url }}">
             <img src="{{ STATIC_PREFIX }}img/logo-icon.svg" class="mb-4" alt="{{ title }}">
