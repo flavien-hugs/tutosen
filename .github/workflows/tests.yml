@@ -3,16 +3,14 @@ name: Tests Runner
 on:
 	push:
 		branches:
-			- main
+		- main
 		paths-ignore:
-			- '**.md'
+		- '**.md'
 	pull_request:
-		branches:
-			- main
 		paths-ignore:
-			- '**.md'
+		- '**.md'
 	schedule:
-		- cron: "0 0* * 1-5"
+	- cron: "0 0* * 1-5"
 
 jobs:
 	test:
@@ -21,6 +19,7 @@ jobs:
   		steps:
   			- name: Get the code
   			  uses: actions/checkout@v2
+  			
   			- name: Lint
   			  with:
   			  	fetch-depth: 1
@@ -36,16 +35,8 @@ jobs:
   			  with: python-version: '3.x'
   			  architecture: 'x64'
 
-  			- name: Install packages
-  			  run: |
-  				# Postgres dev headers for pg_config
-  				# libpq-dev
-  				# Graphviz support
-  				# python3-dev graphviz libgraphviz-dev
-  				sudo apt install libpq-dev python3-dev graphviz libgraphviz-dev
-			
-			- name: Install packages
-			  run: pip install -r requirements.txt
+            - name: Install packages
+              run: pip install -r requirements.txt
 
 			- name: Test it
 			  run: make coverage
