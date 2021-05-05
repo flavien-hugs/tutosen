@@ -1,7 +1,7 @@
 # accounts.tests.tests_views.py
 
+from django.urls import reverse
 from django.test import TestCase
-from django.urls import reverse, resolve
 from django.contrib.auth import get_user_model
 
 

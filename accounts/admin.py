@@ -20,21 +20,22 @@ class TeacherAdmin(BaseUserAdmin):
 
     fieldsets = (
 
-        ('Information personnelle',
-            {'fields': 
-                ("type", 'username', ('first_name', 'last_name'),)
-            }
+        (
+            'Information personnelle',
+            {'fields': ("type", 'username', ('first_name', 'last_name'),)}
         ),
-        ('Adresse', {'fields': 
-            ("country", "state", "phone_number", "email",)
-        }),
+        (
+            'Adresse',
+            {'fields': ("country", "state", "phone_number", "email",)}
+        ),
         ('Descriprion', {'fields': ("brief_desc",)}),
-        ('Compte réseaux sociaux', {'fields': 
-            ("facebook", "twitter", "linkedin",)
-        }),
-        ('Permissions', {'fields': 
-            ( "is_active", "is_staff", "is_superuser", "user_permissions",)
-        }),
+        (
+            'Compte réseaux sociaux', {'fields': ("facebook", "twitter", "linkedin",)}
+        ),
+        (
+            'Permissions',
+            {'fields': ("is_active", "is_staff", "is_superuser", "user_permissions",)}
+        ),
         ('dates importantes', {'fields': ('last_login', 'date_joined')}),
     )
 
@@ -63,9 +64,10 @@ class TeacherAdmin(BaseUserAdmin):
         "is_active",
     )
     list_per_page = 5
-    ordering = ['-date_joined',]
+    ordering = ['-date_joined']
     search_fields = ["get_fullname", 'email']
     filter_horizontal = ('groups', 'user_permissions',)
+
 
 admin.site.register(Student)
 admin.site.unregister(Group)

@@ -1,13 +1,13 @@
 # accounts.mixins.py
 
-from django.urls import reverse
 from django.utils import timezone
+from django.contrib import messages
 from django.contrib.auth import get_user_model
 
 CustomUser = get_user_model()
 
 
-class GetUserObject(object):
+class GetUserObject:
 
     def get_object(self):
 
@@ -20,3 +20,11 @@ class GetUserObject(object):
         current_user.save()
 
         return current_user
+
+    @property
+    def success_message(self):
+        return NotImplemented
+
+    def form_valid(self, form):
+        messages.info(self.request, self.success_message)
+        return super().form_valid(form)

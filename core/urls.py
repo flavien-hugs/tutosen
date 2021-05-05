@@ -13,25 +13,26 @@ admin.site.index_title = "WELCOME TO TUTOSEN"
 
 
 def handler404(request, exception, template_name='404.html'):
-    return render(request, template_name=template_name, status=404,
-        context={'page_title': 'Page non trouvée'})
+    context = {'page_title': 'Page non trouvée'}
+    return render(request, template_name, context, status=404)
+
 
 def handler403(request, exception, template_name='403.html'):
-    return render(request, template_name=template_name, status=403,
-        context={'page_title': 'Permission non accordée'})
+    context = {'page_title': 'Permission non accordée'}
+    return render(request, template_name, context, status=403)
+
 
 def handler500(request, template_name='500.html'):
-    return render(request, template_name=template_name,
-        status=500, context={'page_title': 'Erreur interne'})
+    context = {'page_title': 'Erreur interne'}
+    return render(request, template_name, context, status=500)
 
 
 urlpatterns = [
-	path('', generic.TemplateView.as_view(template_name='index.html'), name='home'),
+    path('', generic.TemplateView.as_view(template_name='index.html'), name='home'),
     path('dashboard/', include('boards.urls', namespace='boards')),
     path('cours/', include('courses.urls', namespace='courses')),
     path('sp-', include('pages.urls', namespace='pages')),
-
-	path('jet/', include('jet.urls', 'jet')),
+    path('jet/', include('jet.urls', 'jet')),
     path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path(settings.ADMIN_URL, admin.site.urls),

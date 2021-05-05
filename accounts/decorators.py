@@ -7,8 +7,8 @@ from django.contrib.auth.decorators import user_passes_test
 def student_required(
     function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url="login"
 ):
-    """Décorateur pour les vues qui vérifie que l'utilisateur connecté est un 
-    étudiant, redirige vers la page de connexion si nécessaire."""
+    """Décorateur pour les vues qui vérifie que l'utilisateur connecté \
+    est un étudiant, redirige vers la page de connexion si nécessaire."""
 
     actual_decorator = user_passes_test(
         lambda user: user.is_active and user.type,

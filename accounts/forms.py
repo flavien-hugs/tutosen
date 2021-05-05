@@ -5,7 +5,6 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model, forms
 
 from accounts.models import Teacher
-from ckeditor.widgets import CKEditorWidget
 from allauth.account.forms import SignupForm
 
 CustomUser = get_user_model()
@@ -77,7 +76,7 @@ class UserUpdateForm(d_forms.ModelForm):
         choices=[("TEACHER", "Instructeur"), ("STUDENT", "Étudiant(e)")],
         required=True,
     )
-    
+
     class Meta:
         model = Teacher
         fields = [

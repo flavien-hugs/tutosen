@@ -6,7 +6,4 @@ class AccountsConfig(AppConfig):
     verbose_name = 'compte utilisateur'
 
     def ready(self):
-        try:
-            import accounts.signals
-        except ImportError:
-            pass
+        import accounts.signals.handlers # noqa

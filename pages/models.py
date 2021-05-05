@@ -8,7 +8,6 @@ from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class AboutUs(models.Model):
-    
     content = RichTextUploadingField(
         verbose_name='description',
         help_text="Description de l\'Entreprise: Activité, Mission, Objectif, etc"
@@ -24,7 +23,6 @@ class AboutUs(models.Model):
 
 
 class PageCGU(models.Model):
-    
     content = RichTextUploadingField(
         verbose_name='description de la CGU',
         help_text="Description de la Condition Générale d'Utilisation du site."
@@ -40,7 +38,6 @@ class PageCGU(models.Model):
 
 
 class PageSupport(models.Model):
-    
     content = RichTextUploadingField(
         verbose_name='description support',
         help_text="Description des questions"

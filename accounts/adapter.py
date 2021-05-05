@@ -2,7 +2,6 @@
 
 from django.conf import settings
 from django.http import HttpRequest
-from django.forms import ValidationError
 from allauth.account.adapter import DefaultAccountAdapter
 
 
@@ -27,13 +26,11 @@ class CustomAccountAdapter(DefaultAccountAdapter):
         )
 
     def get_login_redirect_url(self, request):
-        
         if request.user.is_authenticated:
             path = "/dashboard/{uuid}/"
             return path.format(uuid=request.user.uuid)
 
     def get_signup_redirect_url(self, request):
-        
         if request.user.is_authenticated:
             path = "/dashboard/{uuid}/"
             return path.format(uuid=request.user.uuid)

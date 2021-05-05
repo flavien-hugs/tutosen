@@ -1,7 +1,7 @@
 # pages.tests.tests_views.py
 
+from django.urls import reverse
 from django.test import TestCase
-from django.urls import reverse, resolve
 
 
 class HomepageTests(TestCase):
@@ -9,7 +9,7 @@ class HomepageTests(TestCase):
     def setUp(self):
         url = reverse('home')
         self.response = self.client.get(url)
-    
+
     def test_homepage_status_code(self):
         self.assertEqual(self.response.status_code, 200)
 

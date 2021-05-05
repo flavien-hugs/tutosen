@@ -17,6 +17,7 @@ def aboutUsDetail(request, template='pages/ps-page.html'):
     }
     return render(request, template, context)
 
+
 page_aboutus_view = aboutUsDetail
 
 
@@ -31,6 +32,7 @@ def pageCGUDetail(request, template='pages/ps-page.html'):
     }
     return render(request, template, context)
 
+
 page_cgu_detail = pageCGUDetail
 
 
@@ -44,5 +46,6 @@ def pageSupportetail(request, template='pages/ps-page.html'):
         'content': support_content,
     }
     return render(request, template, context)
+
 
 page_support_detail = pageSupportetail

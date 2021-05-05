@@ -10,8 +10,8 @@ __version__ = 'V.0.0.1'
 __copyright__ = '© 2021 unsta'
 
 from pathlib import Path
+import psycopg2.extensions
 from decouple import config
-from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -177,6 +177,9 @@ if DEBUG:
             'HOST': 'localhost',
             'PORT': '5432',
             'ATOMIC_REQUESTS': True,
+            'OPTIONS': {
+                'isolation_level': psycopg2.extensions.ISOLATION_LEVEL_SERIALIZABLE,
+            },
         }
     }
 
@@ -200,12 +203,15 @@ DEFAULT_HASHING_ALGORITHM = 'sha1'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-        'OPTIONS': {'max_similarity': 0.9,}},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-        'OPTIONS': {'min_length': 9,}},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'OPTIONS': {'max_similarity': 0.9}},
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {'min_length': 9}
+    },
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
 
@@ -292,7 +298,6 @@ ACCOUNT_ADAPTER = "accounts.adapter.CustomAccountAdapter"
 # Control the forms that django-allauth uses
 
 ACCOUNT_FORMS = {
-
     # "login": "allauth.account.forms.LoginForm",
     # "add_email": "allauth.account.forms.AddEmailForm",
     # "change_password": "allauth.account.forms.ChangePasswordForm",
@@ -300,7 +305,6 @@ ACCOUNT_FORMS = {
     # "reset_password": "allauth.account.forms.ResetPasswordForm",
     # "reset_password_from_key": "allauth.account.forms.ResetPasswordKeyForm",
     # "disconnect": "allauth.socialaccount.forms.DisconnectForm",
-    
     # Use our custom signup form
     "signup": "accounts.forms.CustomSignupForm",
 }
@@ -347,15 +351,9 @@ SOCIALACCOUNT_PROVIDERS = {
         'VERIFIED_EMAIL': False,
         'VERSION': 'v7.0',
     },
-    
     'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        }
+        'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': {'access_type': 'online'}
     }
 }
 
@@ -472,30 +470,53 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_CONFIGS = {
     'default': {
         'toolbar_Custom': [
-            {'name': 'document', 'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 
-                'Print', '-', 'Templates']
+            {
+                'name': 'document',
+                'items': [
+                    'Source', '-', 'Save', 'NewPage', 'Preview',
+                    'Print', '-', 'Templates'
+                ]
             },
-            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText',
-                'PasteFromWord', '-', 'Undo', 'Redo']
+            {
+                'name': 'clipboard',
+                'items': [
+                    'Cut', 'Copy', 'Paste', 'PasteText',
+                    'PasteFromWord', '-', 'Undo', 'Redo'
+                ]
             },
-            {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
-            {'name': 'forms', 'items': [
-                'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select',
-                'Button', 'ImageButton', 'HiddenField'
-            ]},
+            {
+                'name': 'editing',
+                'items': ['Find', 'Replace', '-', 'SelectAll']},
+            {
+                'name': 'forms',
+                'items': [
+                    'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea',
+                    'Select', 'Button', 'ImageButton', 'HiddenField'
+                ]
+            },
             '/',
-            {'name': 'basicstyles',
-                'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript',
-                'Superscript', '-', 'RemoveFormat']
+            {
+                'name': 'basicstyles',
+                'items': [
+                    'Bold', 'Italic', 'Underline', 'Strike', 'Subscript',
+                    'Superscript', '-', 'RemoveFormat'
+                ]
             },
-            {'name': 'paragraph',
-             'items': ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 
-                'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 
-                'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language']
+            {
+                'name': 'paragraph',
+                'items': [
+                    'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                    'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter',
+                    'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
+                ]
             },
             {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
-            {'name': 'insert', 'items': ['Image', 'Youtube','Flash', 'Table', 'HorizontalRule',
-                'Smiley', 'SpecialChar', 'PageBreak', 'Iframe']
+            {
+                'name': 'insert',
+                'items': [
+                    'Image', 'Youtube', 'Flash', 'Table', 'HorizontalRule', 'Smiley',
+                    'SpecialChar', 'PageBreak', 'Iframe'
+                ]
             },
             '/',
             {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
@@ -510,7 +531,7 @@ CKEDITOR_CONFIGS = {
             ]},
         ],
         'toolbar': 'Custom',
-        'toolbarGroups': [{ 'name': 'document', 'groups': [ 'mode', 'document', 'doctools' ] }],
+        'toolbarGroups': [{'name': 'document', 'groups': ['mode', 'document', 'doctools']}],
         'height': 400,
         'filebrowserWindowHeight': 725,
         'filebrowserWindowWidth': 940,

@@ -7,6 +7,7 @@ from django.utils.safestring import mark_safe
 
 register = template.Library()
 
+
 @register.filter
 def gravatar_url(email, size=80):
     default = 'mm'
@@ -21,9 +22,8 @@ def gravatar_url(email, size=80):
 @register.filter
 def gravatar(email, size=80):
     url = gravatar_url(email, size)
-    return mark_safe('<img src="{0}" width="{1}" height="{2}" class="avatar-xl rounded-circle"/>'.format(
-        url, size, size)
-    )
+    return mark_safe('<img src="{0}" width="{1}" height="{2}" class="avatar-xl \
+        rounded-circle"/>'.format(url, size, size))
 
 
 @register.simple_tag(takes_context=True)

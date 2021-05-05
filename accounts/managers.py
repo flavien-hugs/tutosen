@@ -1,6 +1,6 @@
 # accounts.managers.py
 
-
+import random
 from django.db import models
 
 
@@ -16,7 +16,7 @@ class TeacherManager(models.Manager):
     def recomended_teacher(self, instance):
         teacher = self.get_queryset().filter(
             user=instance.user).exclude(id=instance.id)
-        teacher_list = random.shuffle(list(product))[:50]
+        teacher_list = random.shuffle(list(teacher))[:50]
         return teacher_list
 
     def create(self, **kwargs):

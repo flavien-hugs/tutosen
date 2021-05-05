@@ -3,12 +3,10 @@
 import uuid
 from django.db import models
 from django.urls import reverse
-from django.conf import settings
 from django.db.models import Index
 from allauth.account.models import EmailAddress
 from django.db.models.functions import Lower, Upper
 from django.contrib.auth.models import AbstractUser
-from allauth.socialaccount.models import SocialAccount
 
 from ckeditor.fields import RichTextField
 from django_countries.fields import CountryField
@@ -44,8 +42,8 @@ class User(AbstractUser):
     )
     type = models.CharField(
         verbose_name='statut',
-        max_length=50, 
-        choices=Types.choices, 
+        max_length=50,
+        choices=Types.choices,
         default=base_type
     )
     avatar = models.ImageField(
@@ -73,22 +71,23 @@ class User(AbstractUser):
         blank=True
     )
     facebook = models.CharField(
-        verbose_name='facebook',
+        verbose_name='compte facebook',
         max_length=250,
         blank=True, null=True
     )
     twitter = models.CharField(
-        verbose_name='twitter',
+        verbose_name='compte twitter',
         max_length=250,
         blank=True, null=True
     )
     linkedin = models.URLField(
-        verbose_name='linkedin',
+        verbose_name='compte linkedin',
         max_length=250,
-        blank=True, null=True
+        blank=True,
+        null=True
     )
- 
-    class Meta:        
+
+    class Meta:
         db_table = 'user_profile'
         ordering = ('-date_joined', '-last_login')
         get_latest_by = ('-date_joined', '-last_login')
@@ -104,17 +103,14 @@ class User(AbstractUser):
         ]
 
     def _get_unique_username(self):
-        
         if self.username:
             username = str(self.username)
-        else: 
+        else:
             username = "tutosen"
         unique_username = username
 
         if User.objects.filter(username=unique_username).exists():
-            unique_username = "ts-{0}".format(username)
-        else:
-            unique_username = "tsn-{0}".format(username)
+            unique_username = "{0}".format(username)
         return unique_username
 
     def save(self, *args, **kwargs):
@@ -164,13 +160,13 @@ class User(AbstractUser):
             'boards:user_delete',
             kwargs={'pk': str(self.uuid)}
         )
- 
+
     def account_verified(self):
         if self.user.is_authenticated:
             result = EmailAddress.objects.filter(email=self.email)
             if len(result):
                 return result[0].verified
-        return False
+            return False
 
 
 class Teacher(User):
