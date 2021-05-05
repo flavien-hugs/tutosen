@@ -1,0 +1,47 @@
+# workflow name
+name: Tests Runner
+
+# on events
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
+
+
+# jobs to run
+jobs:
+
+    # jobs 1: test python module
+    test:
+        name: Run Tests
+        runs-on: ubuntu-20.04
+        steps:
+            - name: Get the code
+                uses: actions/checkout@v1
+                    with:
+                        fetch-depth: 1
+
+            - name: Cache python packages
+                uses: actions/cache@v1
+                with:
+                    path: ~/.cache/pip
+                    key: pip-${{ hashFiles('requirements.txt') }}
+
+            - name: Set up python
+                uses: actions/setup-python@v1
+                with: python-version: '3.x'
+                architecture: 'x64'
+
+            - name: Install packages
+                run: |
+                    # Postgres dev headers for pg_config
+                    # libpq-dev
+                    # Graphviz support
+                    # python3-dev graphviz libgraphviz-dev
+                    sudo apt install libpq-dev python3-dev graphviz libgraphviz-dev
+
+            - name: Install packages
+                run: pip install -r requirements.txt
