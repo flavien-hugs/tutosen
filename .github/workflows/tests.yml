@@ -21,8 +21,8 @@ jobs:
         steps:
             - name: Get the code
                 uses: actions/checkout@v2
-                    with:
-                        fetch-depth: 1
+                with:
+                    fetch-depth: 1
 
             - name: Cache python packages
                 uses: actions/cache@v1
