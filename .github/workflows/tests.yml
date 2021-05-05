@@ -1,13 +1,5 @@
 name: Tests Runner
-
-# on events
-on:
-  push:
-    branches:
-      - main
-	pull_request:
-    branches:
-      - main
+on: push
 
 jobs:
   test:
