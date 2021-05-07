@@ -36,8 +36,5 @@ jobs:
         python-version: '3.x'
         architecture: 'x64'
 
-    - name: Test it
-      run: make coverage
-
     - name: Check deploy configuration
       run: python manage.py check --deploy --fail-level WARNING
