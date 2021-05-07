@@ -75,6 +75,10 @@ THIRD_PARTY_APPS = [
     "widget_tweaks",
     'phonenumber_field',
     'phonenumbers',
+    'debug_toolbar',
+
+    'rest_framework',
+    'corsheaders',
 ]
 
 LOCALS_APPS = [
@@ -82,6 +86,8 @@ LOCALS_APPS = [
     'boards.apps.BoardsConfig',
     'courses.apps.CoursesConfig',
     'pages.apps.PagesConfig',
+
+    'api.apps.ApiConfig',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCALS_APPS
@@ -102,14 +108,17 @@ MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware",
 
     'django.contrib.sessions.middleware.SessionMiddleware',
-    "django.middleware.locale.LocaleMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
 
+    "django.middleware.locale.LocaleMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     "django.middleware.common.BrokenLinkEmailsMiddleware",
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -262,7 +271,7 @@ LOGOUT_URL = 'home'
 
 # https://docs.djangoproject.com/fr/dev/ref/settings/#login-url
 LOGIN_URL = 'account_login'
-ACCOUNT_LOGOUT_REDIRECT_URL = 'home'
+ACCOUNT_LOGOUT_REDIRECT = 'home'
 
 # https://docs.djangoproject.com/fr/dev/ref/settings/#login-redirect-url
 LOGIN_REDIRECT_URL = 'boards:user_detail'
@@ -556,3 +565,28 @@ CKEDITOR_CONFIGS = {
         ]),
     }
 }
+
+# config django-debug-toolbar
+# https://django-debug-toolbar.readthedocs.io/en/latest/installation.html
+
+SECURE_SSL_REDIRECT = False
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'http')
+INTERNAL_IPS = ['localhost', '127.0.0.1', '127.0.0.1:8001']
+
+# http://www.django-rest-framework.org/api-guide/settings/
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticated'],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication'
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 100,
+}
+
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:8000',
+    'htpp://localhost:8001',
+    'https://tutosen.unsta.net'
+)

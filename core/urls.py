@@ -29,6 +29,7 @@ def handler500(request, template_name='500.html'):
 
 urlpatterns = [
     path('', generic.TemplateView.as_view(template_name='index.html'), name='home'),
+    path('api/v1/', include('api.urls')),
     path('dashboard/', include('boards.urls', namespace='boards')),
     path('cours/', include('courses.urls', namespace='courses')),
     path('sp-', include('pages.urls', namespace='pages')),
@@ -37,7 +38,8 @@ urlpatterns = [
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path(settings.ADMIN_URL, admin.site.urls),
     path('', include('accounts.urls', namespace='accounts')),
-    path('accounts/', include('allauth.urls'))
+    path('accounts/', include('allauth.urls')),
+    path('api-auth/', include('rest_framework.urls')),
 ]
 
 handler404 = handler404
@@ -45,6 +47,8 @@ handler403 = handler403
 handler201600 = handler500
 
 if settings.DEBUG:
+    import debug_toolbar
+
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
@@ -52,4 +56,8 @@ if settings.DEBUG:
         path('404/', handler404, {'exception': Exception("Page non trouvée !")}),
         path('403/', handler403, {'exception': Exception("Permission non accordée !")}),
         path('500/', handler500, {'exception': Exception("Erreur interne !")}),
+    ]
+
+    urlpatterns += [
+        path('__debug__/', include(debug_toolbar.urls)),
     ]
