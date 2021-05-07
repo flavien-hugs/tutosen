@@ -35,6 +35,3 @@ jobs:
       with:
         python-version: '3.x'
         architecture: 'x64'
-
-    - name: Check deploy configuration
-      run: ./manage.py check --deploy
