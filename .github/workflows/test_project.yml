@@ -37,4 +37,4 @@ jobs:
         architecture: 'x64'
 
     - name: Check deploy configuration
-      run: python manage.py check --deploy --fail-level WARNING
+      run: ./manage.py check --deploy
