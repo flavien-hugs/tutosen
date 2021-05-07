@@ -21,10 +21,15 @@ babel = "*"
 django-countries = "*"
 django-ckeditor = "*"
 psycopg2-binary = "*"
+markdown = "*"
+djangorestframework = "*"
+django-filter = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 flake8 = "*"
 tox = "*"
+django-debug-toolbar = "*"
 
 [requires]
 python_version = "3.8"

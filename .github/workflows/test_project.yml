@@ -1,10 +1,20 @@
 # This is a basic workflow that is manually triggered
 
-name: Manual workflow
+name: Tests Runner
 
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
 on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+    pull_request:
+      paths-ignore:
+        - '**.md'
+    schedule:
+      - cron: "0 0* * 1-5"
   workflow_dispatch:
     # Inputs the workflow accepts.
     inputs:
@@ -27,4 +37,20 @@ jobs:
     steps:
     # Runs a single command using the runners shell
     - name: Send greeting
+      uses: actions/chechout@v2
       run: echo "Hello ${{ github.event.inputs.name }}"
+
+    - name: Set up python
+      uses: actions/setup-python@v1
+      with:
+        python-version: '3.x'
+        architecture: 'x64'
+
+    - name: Install packages
+      run: pip install -r requirements.txt
+
+    - name: Test it
+      run: make coverage
+
+    - name: Check deploy configuration
+      run: python manage.py check --deploy --fail-level WARNING
