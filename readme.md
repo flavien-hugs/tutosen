@@ -39,7 +39,7 @@ Assurez-vous de modifier les informations de la base de données `settings.py`
 
 ```bash
 python manage.py migrate
-python manage.py runserver
+python manage.py runserver or gunicorn core.wsgi:application
 
 ou
 
