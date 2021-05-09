@@ -1,0 +1,18 @@
+language: python
+python:
+    - '3.x'
+
+branches:
+    only:
+        - main
+
+before_script:
+    - pipenv install
+
+env: DJANGO_SETTINGS_MODULE="core.production"
+
+services:
+    - postgresql
+
+script:
+    - ./manage.py test
