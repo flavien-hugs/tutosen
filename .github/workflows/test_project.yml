@@ -58,4 +58,4 @@ jobs:
         DJANGO_ALLOWED_HOSTS: localhost 127.0.0.1 [::1]
         DEBUG_MODE: False
       run: |
-        python ./tutosen/manage.py check --deploy
+        python manage.py check --deploy
