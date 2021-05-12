@@ -9,6 +9,6 @@ register = template.Library()
 
 def model_name(self):
     try:
-        return obj._meta.model_name
+        return self.obj._meta.model_name
     except AttributeError:
         return None
