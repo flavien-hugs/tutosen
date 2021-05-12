@@ -1,98 +1,105 @@
 {% extends "index.html" %}
+{% load widget_tweaks %}
+
+{% block head_title %} {{ page_title|capfirst }} {% endblock head_title %}
 
 {% block page_content %}
-    {% include "courses/snippets/_snippet_courses_header.html" %}
+	{% include "courses/snippets/_snippet_courses_header.html" %}
 
-    <div class="pb-12">
-        <div class="container">
-          <div id="courseForm" class="bs-stepper">
-            <div class="row">
-              <div class="offset-lg-1 col-lg-10 col-md-12 col-12">
-                <!-- Stepper Button -->
-                <div class="bs-stepper-header shadow-sm" role="tablist">
-                  <div class="step" data-target="#test-l-1">
-                    <button type="button" class="step-trigger" role="tab" id="courseFormtrigger1" aria-controls="test-l-1">
-                      <span class="bs-stepper-circle">1</span>
-                      <span class="bs-stepper-label">Basic Information</span>
-                  </button>
-              </div>
-              <div class="bs-stepper-line"></div>
-              <div class="step" data-target="#test-l-2">
-                <button type="button" class="step-trigger" role="tab" id="courseFormtrigger2" aria-controls="test-l-2">
-                  <span class="bs-stepper-circle">2</span>
-                  <span class="bs-stepper-label">Courses Media</span>
-              </button>
-          </div>
-          <div class="bs-stepper-line"></div>
-          <div class="step" data-target="#test-l-3">
-            <button type="button" class="step-trigger" role="tab" id="courseFormtrigger3" aria-controls="test-l-3">
-              <span class="bs-stepper-circle">3</span>
-              <span class="bs-stepper-label">Curriculum</span>
-          </button>
-      </div>
-      <div class="bs-stepper-line"></div>
-      <div class="step" data-target="#test-l-4">
-        <button type="button" class="step-trigger" role="tab" id="courseFormtrigger4" aria-controls="test-l-4">
-          <span class="bs-stepper-circle">4</span>
-          <span class="bs-stepper-label">Settings</span>
-      </button>
-  </div>
-</div>
-<!-- Stepper content -->
-<div class="bs-stepper-content mt-5">
-  <form onSubmit="return false">
-    <!-- Content one -->
-    <div id="test-l-1" role="tabpanel" class="bs-stepper-pane fade" aria-labelledby="courseFormtrigger1">
-      <!-- Card -->
-      <div class="card mb-3 ">
-        <div class="card-header border-bottom px-4 py-3">
-          <h4 class="mb-0">Basic Information</h4>
-      </div>
-      <!-- Card body -->
-      <div class="card-body">
-          <div class="form-group">
-            <label for="courseTitle" class="form-label">Course Title</label>
-            <input id="courseTitle" class="form-control" type="text" placeholder="Course Title" />
-            <small>Write a 60 character course title.</small>
-        </div>
-        <div class="form-group">
-            <label class="form-label">Courses category</label>
-            <select class="selectpicker" data-width="100%">
-              <option value="">Select category</option>
-              <option value="React">React</option>
-              <option value="Javascript">Javascript</option>
-              <option value="HTML">HTML</option>
-              <option value="Vue">Vue js</option>
-              <option value="Gulp">Gulp js</option>
-          </select>
-          <small>Help people find your courses by choosing
-          categories that represent your course.</small>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Courses level</label>
-        <select class="selectpicker" data-width="100%">
-          <option value="">Select level</option>
-          <option value="intermediate">Intermediate</option>
-          <option value="Beignners">Beignners</option>
-          <option value="Advance">Advance</option>
-      </select>
-  </div>
-  <div class="form-group">
-    <label class="form-label">Course Description</label>
-    <div id="editor">
-      <p>Insert course description</p>
-      <p>Some initial <strong>bold</strong> text</p>
-      <p><br /></p>
-  </div>
-  <small>A brief summary of your courses.</small>
-</div>
-</div>
-</div>
-<!-- Button -->
-<button class="btn btn-primary" onclick="courseForm.next()">
-    Next
-</button>
-</div>
+    <div class="my-5">
+    	<div class="container">
+    		<div id="courseForm" class="bs-stepper">
+    			<div class="row">
+    				<div class="offset-lg-1 col-lg-10 col-md-12 col-12">
+    					<!-- Stepper Button -->
+    					<div class="bs-stepper-header shadow-sm" role="tablist">
+    						<div class="step" data-target="#test-l-1">
+    							<button type="button" class="step-trigger" role="tab" id="courseFormtrigger1" aria-controls="test-l-1">
+    								<span class="bs-stepper-circle">1</span>
+    								<span class="bs-stepper-label">Basic Information</span>
+                  				</button>
+              				</div>
+
+              				<div class="bs-stepper-line"></div>
+
+              				<div class="step" data-target="#test-l-2">
+              					<button type="button" class="step-trigger" role="tab" id="courseFormtrigger2" aria-controls="test-l-2">
+              						<span class="bs-stepper-circle">2</span>
+              						<span class="bs-stepper-label">Courses Media</span>
+              					</button>
+              				</div>
+
+              				<div class="bs-stepper-line"></div>
+
+              				<div class="step" data-target="#test-l-3">
+              					<button type="button" class="step-trigger" role="tab" id="courseFormtrigger3" aria-controls="test-l-3">
+              						<span class="bs-stepper-circle">3</span>
+              						<span class="bs-stepper-label">Curriculum</span>
+              					</button>
+              				</div>
+
+              				<div class="bs-stepper-line"></div>
+
+              				<div class="step" data-target="#test-l-4">
+              					<button type="button" class="step-trigger" role="tab" id="courseFormtrigger4" aria-controls="test-l-4">
+              						<span class="bs-stepper-circle">4</span>
+              						<span class="bs-stepper-label">Settings</span>
+      							</button>
+      						</div>
+      					</div>
+
+      					<!-- Stepper content -->
+      					<div class="bs-stepper-content mt-5">
+      						<form onSubmit="return false" method="post">
+      							{% csrf_token %}
+      							<!-- Content one -->
+      							<div id="test-l-1" role="tabpanel" class="bs-stepper-pane fade" aria-labelledby="courseFormtrigger1">
+      								<!-- Card -->
+      								<div class="card mb-3 ">
+      									<div class="card-header border-bottom px-4 py-3">
+      										<h4 class="mb-0">Basic Information</h4>
+								      	</div>
+								      	<!-- Card body -->
+
+								      	<div class="card-body">
+								      		<div class="form-group">
+								      			{{ form.course_title|add_label_class:"form-label" }}
+									            {% render_field form.course_title|add_error_class:"is-invalid" class+="form-control" placeholder=form.course_title.label %}
+									            
+									            {% if form.course_title.errors %}
+									                <small class="text-muted">
+									                    {% for error in form.course_title.errors %}
+									                        {{ error }}
+									                    {% endfor %}
+									                </small>
+									            {% endif %}
+									            <small>{{ form.course_title.help_text }}</small>
+								      		</div>
+
+									        <div class="form-group">
+									        	{{ form.course_category|add_label_class:"form-label" }}
+									        	{% render_field form.course_category class+="form-control custom-select" %}
+									          	<small>{{ form.course_category.help_text }}</small>
+									      	</div>
+
+									      	<div class="form-group">
+									        	{{ form.course_language|add_label_class:"form-label" }}
+									        	{% render_field form.course_language class+="form-control custom-select" %}
+									          	<small>{{ form.course_language.help_text }}</small>
+									      	</div>
+
+									      	<div class="form-group">
+										    	{{ form.course_brief|add_label_class:"form-label" }}
+											    {% render_field form.course_brief class+="form-control" %}
+										  		<small>{{ form.course_brief.help_text }}</small>
+											</div>
+										</div>
+									</div>
+
+									<button class="btn btn-primary" onclick="courseForm.next()">
+										Valider
+									</button>
+								</div>
 <!-- Content two -->
 <div id="test-l-2" role="tabpanel" class="bs-stepper-pane fade" aria-labelledby="courseFormtrigger2">
   <!-- Card -->
