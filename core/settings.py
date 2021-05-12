@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-TEMPLATE_DEBUG = os.environ.get('DEBUG', default=True, cast=bool)
+TEMPLATE_DEBUG = os.environ.get('DEBUG')
 
 META_KEYWORDS = ''
 DEFAULT_CHARSET = 'UTF-8'
@@ -325,7 +325,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp-relay.sendinblue.com'
 EMAIL_HOST_USER = 'flavienhgs@gmail.com'
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY', default='')
+SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
 DEFAULT_FROM_EMAIL = SERVER_EMAIL = 'hello@tutosen.com'
 
 # Pour le développement, envoyer tous les courriers électroniques
