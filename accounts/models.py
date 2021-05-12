@@ -1,14 +1,19 @@
 # accounts.models.py
 
 import uuid
+import time
+import datetime
+
 from django.db import models
 from django.urls import reverse
 from django.db.models import Index
-from allauth.account.models import EmailAddress
+from django.utils.text import Truncator
+from django.utils.html import format_html
 from django.db.models.functions import Lower, Upper
 from django.contrib.auth.models import AbstractUser
 
-from ckeditor.fields import RichTextField
+import markdown as md
+from allauth.account.models import EmailAddress
 from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -18,8 +23,9 @@ from accounts import managers
 class User(AbstractUser):
 
     class Types(models.TextChoices):
-        TEACHER = "TEACHER", "Intructeur(trice)"
-        STUDENT = "STUDENT", "Etudiant(e)"
+        STUDENT = "STUDENT", "Élève"
+        PARENT_OR_TUTOR = "PARENT_OR_TUTOR", "Parent/Tuteur"
+        TEACHER = "TEACHER", "Enseignant(e)/Professionnel(le)"
 
     base_type = Types.STUDENT
 
@@ -30,9 +36,10 @@ class User(AbstractUser):
     )
 
     uuid = models.UUIDField(
+        db_index=True,
         default=uuid.uuid4,
         editable=False,
-        verbose_name='ID'
+        verbose_name='UUID'
     )
     civility = models.CharField(
         max_length=4,
@@ -51,12 +58,20 @@ class User(AbstractUser):
         upload_to='image/',
         null=True, blank=True
     )
-    brief_desc = RichTextField(
+    statut = models.CharField(
+        max_length=150,
+        verbose_name='statut',
+        blank=True, null=True,
+        help_text='Votre statut actuelle.'
+    )
+    brief_desc = models.TextField(
         verbose_name='brief description',
-        blank=True, null=True
+        blank=True, null=True,
+        help_text='Vous pour utiliser la syntaxe markdown\
+        pour éditer votre profile.'
     )
     phone_number = PhoneNumberField(
-        verbose_name='téléphone',
+        verbose_name='Téléphone mobile',
         blank=True
     )
     state = models.CharField(
@@ -86,6 +101,10 @@ class User(AbstractUser):
         blank=True,
         null=True
     )
+    # num_of_reviews
+    # num_of_chapters
+    # average_review_rating
+    # num_of_published_courses
 
     class Meta:
         db_table = 'user_profile'
@@ -99,7 +118,7 @@ class User(AbstractUser):
                 Upper('last_name').desc(),
                 name='first_last_name_idx'
             ),
-            models.Index(fields=['id'], name='id_index'),
+            models.Index(fields=['id', 'uuid'], name='id_index'),
         ]
 
     def _get_unique_username(self):
@@ -114,7 +133,7 @@ class User(AbstractUser):
         return unique_username
 
     def save(self, *args, **kwargs):
-        if not self.id:
+        if not self.pk:
             self.type = self.base_type
         self.username = self._get_unique_username()
         return super().save(*args, **kwargs)
@@ -122,43 +141,80 @@ class User(AbstractUser):
     def __str__(self):
         return "{0}".format(self.get_fullname())
 
+    def colored_type(self):
+        if self.type == 'TEACHER':
+            color = "754ff6"
+        elif self.type == 'STUDENT':
+            color = "18113c"
+        else:
+            color = "19cb98"
+        render_color = format_html(
+            "<span style='color:#fff; background-color:#{0};\
+            display:inline-block; font-weight:500; write-space:nowrap;\
+            line-height:1;border-radius:.20rem; padding:.33rem .5rem;\
+            text-align:center;vertical-align:baseline;'>{1}</span>".format(
+                color, self.get_type_display())
+            )
+        return render_color
+    colored_type.allow_tags = True
+    colored_type.short_description = "STATUT"
+
+    # def get_teachers_courses(self):
+    #     # liste des cours de l'instructeur
+    #     # return teacher_list_courses
+
+    # def get_local_today(self):
+    #     # recupere la date de l'User conneceté
+    #     # en cours
+    #     return datetime.timezone.localedate()
+
     def get_fullname(self):
         return '{0} {1} {2}'.format(
             self.get_civility_display(),
             self.first_name,
             self.last_name
         )
+
+        time_start = time.perf_counter()
+        time_end = time.perf_counter()
+        result = time_start - time_end
+        print(f"Updated in {result:0.4f} second".format(result))
+
     get_fullname.short_description = 'Nom & prénom'
 
     def get_speudonyme(self):
-        return '@{0}'.format(
-            self.username.lower(),
-        )
+        return '@{0}'.format(self.username.lower())
     get_speudonyme.short_description = 'Speudo'
 
     def get_description(self):
-        if len(self.brief_desc) > 30:
-            return '{0} {1}'.format(self.brief_desc[:29], '...')
-        else:
-            return self.brief_desc
-    get_description.short_description = 'Description'
+        truncated_desc = Truncator(str(self.brief_desc))
+        truncated_desc_chars = truncated_desc.chars(30)
+        return truncated_desc_chars
+    get_description.short_description = 'User description'
+
+    def get_description_as_markdown(self):
+        markdown_render = md.markdown(
+            self.brief_desc or u'',
+            extensions=['markdown.extensions.fenced_code']
+        )
+        return markdown_render
 
     def get_userdetail_url(self):
-        return reverse(
-            'boards:user_detail',
-            kwargs={'pk': str(self.uuid)}
-        )
+        return reverse('boards:user_detail', kwargs={'pk': str(self.uuid)})
 
     def get_userupdate_url(self):
-        return reverse(
-            'boards:user_update',
-            kwargs={'pk': str(self.uuid)}
-        )
+        return reverse('boards:user_update', kwargs={'pk': str(self.uuid)})
 
     def get_userdelete_url(self):
+        return reverse('boards:user_delete', kwargs={'pk': str(self.uuid)})
+
+    def get_teacher_detail_url(self):
         return reverse(
-            'boards:user_delete',
-            kwargs={'pk': str(self.uuid)}
+            'accounts:teacher_detail_view',
+            kwargs={
+                'username': str(self.first_name.lower().replace(" ", "-")),
+                'pk': str(self.id)
+            }
         )
 
     def account_verified(self):
@@ -182,16 +238,26 @@ class Teacher(User):
         proxy = True
         ordering = ('-date_joined', '-last_login')
         get_latest_by = ('-date_joined', '-last_login')
-        verbose_name_plural = 'Intructeur(trice)'
+        verbose_name_plural = 'Enseignant(e) ou professionnel(le)'
 
-    def get_teacher_detail_url(self):
-        return reverse(
-            'accounts:teacher_detail_view',
-            kwargs={
-                'username': str(self.first_name.lower().replace(" ", "-")),
-                'pk': str(self.id)
-            }
-        )
+    def email_name(self):
+        email_address = self.email.split('@')[0]
+        return email_address
+
+    def sign_in(self, request):
+        request.session['user'] = self
+        self.date_joined = datetime.datetime.now()
+        self.save()
+
+    def sign_out(self):
+        if 'user' in self.request.session:
+            del self.request.session['user']
+
+    def get_signed_in(cls, request):
+        if 'user' in request.session:
+            return request.session['user']
+        else:
+            return None
 
 
 class Student(User):
@@ -209,20 +275,18 @@ class Student(User):
         get_latest_by = ('-date_joined', '-last_login')
         verbose_name_plural = 'Etudiant(e)'
 
-    def more(self):
-        return self.studentmore
-    more.short_description = "Qui suis-je ?"
 
+class ParentOrTutor(User):
+    base_type = User.Types.PARENT_OR_TUTOR
 
-# from django.dispatch import receiver
-# from django.db.models.signals import post_save
+    EMAIL_FIELD = 'email'
+    USERNAME_FIELD = 'first_name'
+    REQUIRED_FIELDS = ['email']
 
+    objects = managers.ParentOrTutorManager()
 
-# @receiver(post_save, sender=TeacherMore)
-# def create_user_profile(sender, instance, created, **kwargs):
-#     if created:
-#         TeacherMore.objects.create(user=instance)
-
-# @receiver(post_save, sender=TeacherMore)
-# def save_user_profile(sender, instance, **kwargs):
-#     instance.profile.save()
+    class Meta:
+        proxy = True
+        ordering = ('-date_joined', '-last_login')
+        get_latest_by = ('-date_joined', '-last_login')
+        verbose_name_plural = 'Etudiant(e)'

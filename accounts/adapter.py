@@ -27,12 +27,12 @@ class CustomAccountAdapter(DefaultAccountAdapter):
 
     def get_login_redirect_url(self, request):
         if request.user.is_authenticated:
-            path = "/dashboard/{uuid}/"
+            path = "/me/{uuid}/"
             return path.format(uuid=request.user.uuid)
 
     def get_signup_redirect_url(self, request):
         if request.user.is_authenticated:
-            path = "/dashboard/{uuid}/"
+            path = "/me/{uuid}/"
             return path.format(uuid=request.user.uuid)
 
     def get_logout_redirect_url(self, request):

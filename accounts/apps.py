@@ -1,9 +1,12 @@
+# accounts.apps.py
+
 from django.apps import AppConfig
 
 
 class AccountsConfig(AppConfig):
     name = 'accounts'
-    verbose_name = 'compte utilisateur'
+    verbose_name = 'Compte utilisateur'
 
     def ready(self):
-        import accounts.signals.handlers # noqa
+        import utils.signals # noqa
+        self.get_model('User')

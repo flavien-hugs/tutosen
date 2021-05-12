@@ -50,7 +50,11 @@ class CustomSignupForm(SignupForm):
 
     type = d_forms.ChoiceField(
         label='Je suis un(e)',
-        choices=[("STUDENT", "Étudiant(e)"), ("TEACHER", "Instructeur(trice)")],
+        choices=[
+            ("STUDENT", "Élève"),
+            ("PARENT_OR_TUTOR", "Parent ou tuteur"),
+            ("TEACHER", "Enseignant(e) ou professionnel(le)")
+        ],
         required=True,
     )
     privacy = d_forms.BooleanField(required=True)
@@ -71,31 +75,27 @@ class CustomSignupForm(SignupForm):
 
 
 class UserUpdateForm(d_forms.ModelForm):
-    type = d_forms.ChoiceField(
-        label='Je suis un',
-        choices=[("TEACHER", "Instructeur"), ("STUDENT", "Étudiant(e)")],
-        required=True,
-    )
+    required_css_class = 'required'
 
     class Meta:
         model = Teacher
         fields = [
             # user infos
-            'type',
             'avatar',
+            'statut',
             'civility',
             'username',
             'first_name',
             'last_name',
 
             # user adresse
-            'country',
             'state',
+            'country',
             'phone_number',
 
             # prodil social accout
-            'facebook',
             'twitter',
+            'facebook',
             'linkedin',
 
             # user description
