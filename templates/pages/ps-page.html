@@ -1,6 +1,6 @@
 {% extends "index.html" %}
 
-{% comment %} gabarit: static page {% endcomment %}
+{% block head_title %} {{ page_title|capfirst }} {% endblock head_title %}
 
 {% block page_content %}
     <div class="py-lg-5 py-5 bg-primary">
@@ -27,7 +27,7 @@
                     {{ content.content|safe }}
                 </section>
 
-                {% if request.resolver_match.url_name == 'page_support' %}
+                {% ifequal request.resolver_match.url_name 'page_support' %}
                     <div class="col-md-12 col-12 mt-lg-5 mt-4">
                         <div class="card">
                             <div class="card-body">
@@ -40,7 +40,7 @@
                             </div>
                         </div>
                     </div>
-                {% endif %}
+                {% endifequal %}
             </div>
         </div>
     </div>

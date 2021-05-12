@@ -1,5 +1,7 @@
 {% extends "_base.html" %}
 
+{% block head_title %} {{ page_title|capfirst }} {% endblock head_title %}
+
 {% block page_content %}
     {% url 'home' as home_url %}
 

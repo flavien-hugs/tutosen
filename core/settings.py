@@ -9,6 +9,7 @@ __author__ = 'Flavien-hugs <flavienhgs@pm.me>'
 __version__ = 'V.0.0.1'
 __copyright__ = '© 2021 unsta'
 
+import os
 from pathlib import Path
 import psycopg2.extensions
 from decouple import config
@@ -180,11 +181,11 @@ if DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'tutosen_db',
-            'USER': 'tutosen',
-            'PASSWORD': 'tutosen',
-            'HOST': 'localhost',
-            'PORT': '5432',
+            'NAME': os.environ.get('DATABASE_NAME'),
+            'USER': os.environ.get('DATABASE_USER'),
+            'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
+            'HOST': os.environ.get('DATABASE_HOST'),
+            'PORT': os.environ.get('DATABASE_PORT'),
             'ATOMIC_REQUESTS': True,
             'OPTIONS': {
                 'isolation_level': psycopg2.extensions.ISOLATION_LEVEL_SERIALIZABLE,
@@ -576,7 +577,9 @@ INTERNAL_IPS = ['localhost', '127.0.0.1', '127.0.0.1:8001']
 # http://www.django-rest-framework.org/api-guide/settings/
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticated'],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated'
+    ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication'

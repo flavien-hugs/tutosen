@@ -9,7 +9,7 @@ class UserSerializer(CountryFieldMixin, serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = [
-            'id', 'uuid', 'last_name', 'first_name',
+            'pk', 'uuid', 'last_name', 'first_name',
             'username', 'phone_number', 'email', 'type', 'statut',
             'state', 'country', 'facebook', 'twitter', 'linkedin',
             'date_joined', 'last_login'

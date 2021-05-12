@@ -88,21 +88,21 @@
                 <div class="col-lg-8 col-md-8 col-12">
                     <div class="d-flex align-items-center">
                         <div class="position-relative mt-n9">
-                            {{ object.email|gravatar:80 }}
+                            {{ teacher_object.email|gravatar:80 }}
                         </div>
 
                         <div class="ml-3">
                             <div class="d-flex align-items-center">
                                 <h3 class="mb-0 font-weight-bold mr-2">
-                                    {% if object.get_fullname %}
-                                        {{ object.get_fullname }}
+                                    {% if teacher_object.get_fullname %}
+                                        {{ teacher_object.get_fullname }}
                                     {% else %}
-                                        {{ object.username }}
+                                        {{ teacher_object.username }}
                                     {% endif %}
                                 </h3>
                             </div>
                             <span class="font-size-xs">
-                                Développeur Frontend, Backend, Designer, Instructeur
+                                {{ teacher_object.statut|safe }}
                             </span>
                         </div>
                     </div>
@@ -110,9 +110,9 @@
 
                 <div class="col-lg-4 col-md-4 col-12">
                     <div class="font-size-md mt-4 mt-lg-0 pb-2 pb-lg-0 d-lg-flex justify-content-end">
-                        <a target="_blank" href="{{ object.facebook }}" class="mdi mdi-facebook text-muted mr-2"></a>
-                        <a target="_blank" href="{{ object.twitter }}" class="mdi mdi-twitter text-muted mr-2"></a>
-                        <a target="_blank" href="{{ object.linkedin }}" class="mdi mdi-linkedin text-muted mr-2"></a>
+                        <a target="_blank" href="{{ teacher_object.facebook }}" class="mdi mdi-facebook text-muted mr-2"></a>
+                        <a target="_blank" href="{{ teacher_object.twitter }}" class="mdi mdi-twitter text-muted mr-2"></a>
+                        <a target="_blank" href="{{ teacher_object.linkedin }}" class="mdi mdi-linkedin text-muted mr-2"></a>
                     </div>
                 </div>
             </div>
@@ -125,7 +125,8 @@
             <div class="row">
                 <div class="offset-xl-2 col-xl-8 offset-lg-1 col-lg-10 col-md-12 col-12">
                     <div class="text-center mb-5">
-                        <h1 class=" display-2 font-weight-bold">Trouver votre instructeur</h1>
+                        <h1 class=" display-2 font-weight-bold">
+                        Trouver votre instructeur</h1>
                         <p class=" lead">
                             Our features, journey, tips and us being us.
                             Lorem ipsum dolor sit amet, accumsan in,
@@ -133,14 +134,18 @@
                         </p>
                     </div>
 
-                    <form class="form-row px-md-20">
+                    <form method="GET" class="form-row px-md-auto">
                         <div class="form-group col pl-0">
-                            <input type="email" class="form-control" placeholder="Trouver votre instructeur .."
-                            required="">
+                            <input id="search-input" role="search" name="q" type="search" class="form-control" placeholder="Trouver votre instructeur .."
+                            required>
                         </div>
 
                         <div class="form-group col-auto pl-0">
-                            <button class="btn btn-primary" type="submit">Trouver</button>
+                            <button id="search-btn" class="btn btn-primary text-uppercase" type="submit">
+                                <div id="search-spinner" role="status" class="" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div> trouver un instructeur
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -149,6 +154,8 @@
     </div>
 
 {% elif request.resolver_match.url_name == 'teacher_add_course_url' %}
+    {% url "boards:teacher_list_cours_url" as teacher_add_courses %}
+    
     <div class="pt-4 py-8 bg-primary">
         <div class="container">
             <div class="row">
@@ -161,8 +168,8 @@
                             </p>
                         </div>
                         <div>
-                            <a href="#" class="btn btn-white">Retour à la liste des cours</a>
-                            <a href="#" class="btn btn-success">Enregistrer</a>
+                            <a href="{{ teacher_add_courses }}" class="btn btn-white">Retour à la liste des cours</a>
+                            <button type="submit" class="btn btn-success">Enregistrer</button>
                         </div>
                     </div>
                 </div>

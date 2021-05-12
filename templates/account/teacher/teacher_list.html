@@ -1,8 +1,7 @@
 {% extends "index.html" %}
-
-{% comment %} list for teacher all {% endcomment %}
-
 {% load boards_tags %}
+
+{% block head_title %} {{ page_title|capfirst }} {% endblock head_title %}
 
 {% block page_content %}
     {% include "courses/snippets/_snippet_courses_header.html" %}
@@ -10,7 +9,7 @@
     <div class="pb-8">
         <div class="container">
             <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-12">
+                <!--  <div class="col-xl-12 col-lg-12 col-md-12 col-12">
                     <div class="flush-nav">
                         <nav class="nav">
                             <a class="nav-link active pl-0" href="#!">Tous</a>
@@ -24,66 +23,81 @@
                             <a class="nav-link" href="#">Informatique</a>
                         </nav>
                     </div>
-                </div>
+                </div> -->
 
-                {% for object in teacher_list %}
-                    <div class="col-lg-6 col-md-6 col-12">
-                        <div class="card  mb-4 ">
-                            <div class="card-body">
-                                <div class="d-lg-flex">
-                                    <div class="position-relative">
-                                        {{ email|gravatar:80 }}
-                                    </div>
+                {% if teacher_list %}      
+                    {% for object in teacher_list %}
+                        <div id="search-content" class="col-lg-6 col-md-6 col-12">
+                            <div class="card  mb-4 ">
+                                <div class="card-body">
+                                    <div class="d-lg-flex">
+                                        <div class="position-relative">
+                                            {{ email|gravatar:80 }}
+                                        </div>
 
-                                    <div class="ml-lg-4">
-                                        <h4 class="mb-0">{{ object.get_fullname }}</h4>
+                                        <div class="ml-lg-4">
+                                            <h4 class="mb-0">
+                                                {{ object.get_fullname }}
+                                            </h4>
 
-                                        <p class="mb-0 font-size-xs">
-                                        Backend &amp; Frontend Developer, Designer</p>
+                                            <p class="mb-0 font-size-xs">
+                                                {% if object.statut %}
+                                                    {{ object.statut|safe }}
+                                                {% else %}
+                                                    <span class="text-warning font-weight-bold">
+                                                        Statut non-défini.
+                                                    </span>
+                                                {% endif %}
+                                            </p>
 
-                                        <p class="font-size-xs mb-1 text-warning">
-                                            <span>4.5</span>
-                                            <span class="mdi mdi-star text-warning mr-2"></span>
-                                            Instructor Rating
-                                        </p>
+                                            <p class="font-size-xs mb-1 text-warning">
+                                                <span>4.5</span>
+                                                <span class="mdi mdi-star text-warning mr-2"></span>
+                                                Instructor Rating
+                                            </p>
 
-                                        <p class="font-size-xs text-muted">
-                                            <span class="mr-2">
-                                                <span class="text-dark font-weight-medium">42</span>
-                                                Cours
-                                            </span>
-                                            <span class="mr-2">
-                                                <span class="text-dark font-weight-medium">
-                                                    1,10,124
-                                                </span> Étudiants
-                                            </span>
-                                        </p>
+                                            <p class="font-size-xs text-muted">
+                                                <span class="mr-2">
+                                                    <span class="text-dark font-weight-medium">42</span>
+                                                    Cours
+                                                </span>
+                                                <span class="mr-2">
+                                                    <span class="text-dark font-weight-medium">
+                                                        1,10,124
+                                                    </span> Étudiants
+                                                </span>
+                                            </p>
 
-                                        <p>I start my development and digital career studying digital
-                                        design. After taking a couple of programming classes I realize
-                                        that code is what I wanted to be doing. </p>
+                                            <p>
+                                                {{ object.get_description_as_markdown|safe }}
+                                            </p>
 
-                                        <a href="{{ object.get_teacher_detail_url }}" class="btn btn-outline-white btn-sm">
-                                            Voir les details
-                                        </a>
+                                            <a href="{{ object.get_teacher_detail_url }}" class="btn btn-link btn-sm font-weight-bold text-uppercase">
+                                                Voir le profile
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                {% empty %}
-
-                {% endfor %}
-
-                <div class="col-xl-12 col-lg-12 col-md-12 col-12 text-center mt-4">
-                    <a href="#!" class="btn btn-primary">
-                        <div class="spinner-border spinner-border-sm mr-2" role="status">
-                            <span class="sr-only">Loading...</span>
-                        </div>
-                        Chargement
-                    </a>
-                </div>
+                    {% endfor %}
+                    {% include "includes/snippets/_snippet_paginate.html" %}
+                {% else %}
+                    
+                {% endif %}
             </div>
         </div>
     </div>
 {% endblock page_content %}
+
+{% block ajax_javascript %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#search-input').on('keypress', function () {
+                $('#search-spinner').addClass(
+                    "spinner-border spinner-border-sm mr-2"
+                );
+            })
+        });
+    </script>
+{% endblock ajax_javascript %}

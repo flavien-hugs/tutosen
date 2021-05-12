@@ -70,6 +70,6 @@ venv.bak/
 logs/
 media/
 .idea/
-__backups__/*
 tests/*
+*/migrations/*
 tutosen.egg-info/*

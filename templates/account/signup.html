@@ -25,7 +25,7 @@
         </span>
     </div>
 
-    <form method="post" action="{{ account_signup }}" novalidate>
+    <form id="signup_form" method="post" action="{{ account_signup }}" novalidate>
         {% csrf_token %}
 
         <div class="form-group">
@@ -133,3 +133,48 @@
         {% include "account/teacher/snippet/_snippet_socialaccount.html" %}
     </div>
 {% endblock account_content_body %}
+
+{% block ajax_javascript %}
+    <!-- soumission du formulaire via ajax -->
+    <script>
+        $(document).ready(function () {
+            $('#id_email').change(function () {
+                var form_data = $(this).closest("form");
+                var data_url = "{% url 'accounts:check_validate_data' %}";
+
+                // create an AJAX call
+                $.ajax({
+                    // get the form data
+                    type: 'GET',
+                    url: data_url,
+                    dataType: 'json',
+                    data: form_data.serialize(),
+
+                    // on success
+                    success: function (response) {
+                        // verify email data
+                        if (response.email_is_taken == true) {
+                            $('#id_email').removeClass('is_valid').addClass('is-invalid');
+                            $('#id_email').after(
+                                '<small class="text-warning font-weight-bold" id="emailError">Désolé, \
+                                    cette adresse email est déjà utilisé par un autre utilisateur !\
+                                </small>');
+                        } else {
+                            $('#id_email').removeClass('is-invalid').addClass('is-valid');
+                            $('#emailError').remove();
+                        }
+                    },
+
+                    // on error
+                    error: function (response) {
+                        // alert the error if any error occured
+                        alert(response.responseJSON.errors);
+                        console.log(response.responseJSON.errors)
+                    }
+                });
+
+                return false;
+            });
+        });
+    </script>        
+{% endblock ajax_javascript %}

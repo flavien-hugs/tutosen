@@ -1,6 +1,6 @@
 {% extends "index.html" %}
 
-{% comment %} page profile detail {% endcomment %}
+{% block head_title %} {{ page_title|capfirst }} {% endblock head_title %}
 
 {% block page_content %}
 
@@ -16,10 +16,11 @@
                         <div class="card-body">
                             <h4>Qui suis-je ?</h4>
                             <p>
-                                I am an Innovation designer focussing on UX/UI based in
-                                Berlin. As a creative resident at Figma explored the city of
-                                the future and how new technologies like AI, voice control,
-                                and augmented reality will change our interfaces.
+                                {{ teacher_object.get_description_as_markdown|safe }}
+                            </p>
+                            <p>
+                                <a href="#" class="text-uppercase font-weight-bold">
+                                visiter mon blog</a>
                             </p>
                         </div>
                     </div>

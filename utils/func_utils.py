@@ -3,7 +3,10 @@
 import os
 import string
 import random
+
+from django.db import models
 from django.utils.text import slugify
+from django.core.exceptions import ObjectDoesNotExist
 
 
 def random_string_generator(size=8, carac=string.ascii_lowercase + string.digits):
@@ -52,3 +55,26 @@ def upload_image_path(instance, filename):
     )
 
     return "image/{final_filename}".format(final_filename=final_filename)
+
+
+class CustomFields(models.PositiveIntegerField):
+
+    def __init__(self, for_fields=None, *args, **kwargs):
+        self.for_fields = for_fields
+        super(CustomFields, self).__init__(*args, **kwargs)
+
+    def pre_save(self, model_instance, add):
+        if getattr(model_instance, self.attname) is None:
+            try:
+                queryset = self.model.objects.all()
+                if self.for_fields:
+                    query = {field: getattr(model_instance, field) for field in self.for_fields}
+                    queryset = queryset.filter(**query)
+                last_item = queryset.latest(self.attname)
+                value = last_item.ordre + 1
+            except ObjectDoesNotExist:
+                value = 0
+            setattr(model_instance, self.attname, value)
+            return value
+        else:
+            return super(CustomFields, self).pre_save(model_instance, add)

@@ -8,11 +8,11 @@
 		
 		<title>
 			{% block head_title %}
-				{% if page_title %}
+				{% ifequal page_title 'page_title' %}
 					{{ page_title|capfirst }}
 				{% else %}
 					{{ site_description|capfirst }}
-				{% endif %}
+				{% endifequal %}
 			{% endblock head_title %} &smid; {{ title|upper }}
 		</title>
 	</head>
@@ -33,5 +33,9 @@
 		{% endblock footer %}
 
 		{% include "includes/_static_javascript_link.html" %}
+
+		{% block ajax_javascript %}
+			
+		{% endblock ajax_javascript %}
 	</body>
 </html>
