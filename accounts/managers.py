@@ -12,7 +12,6 @@ class TeacherManager(models.Manager):
 
     def get_recent_joined(self, **kwargs):
         queryset = self.get_queryset(**kwargs).filter(date_joined__lte=timezone.now(), **kwargs)
-        print(queryset)
         return queryset
 
     def get_related(self, instance):

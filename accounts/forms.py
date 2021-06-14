@@ -99,5 +99,6 @@ class UserUpdateForm(d_forms.ModelForm):
             'linkedin',
 
             # user description
+            'cover',
             'brief_desc',
         ]

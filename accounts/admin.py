@@ -18,7 +18,6 @@ class TeacherAdmin(BaseUserAdmin):
     date_hierarchy = 'date_joined'
 
     fieldsets = (
-
         (
             'Information personnelle',
             {'fields': ("type", 'username', ('first_name', 'last_name'),)}
@@ -74,23 +73,17 @@ class TeacherAdmin(BaseUserAdmin):
     )
     list_per_page = 10
     ordering = ['-date_joined']
-    readonly_fields = ['show_user_url']
+    readonly_fields = ['show_user_url', 'last_login', 'date_joined']
     search_fields = ["get_fullname", 'email']
     filter_horizontal = ['groups', 'user_permissions']
 
-
     def show_user_url(self, instance):
         if instance.type == 'TEACHER':
-            url = reverse('accounts:teacher_detail_view',
-                kwargs={
-                    'username': str(instance.first_name.lower().replace(" ", "-")),
-                    'pk': str(instance.pk)
-                })
+            url = reverse('accounts:teacher_detail_view', kwargs={'uuid': str(instance.uuid)})
             response = format_html("""<a href="{0}">{0}</a>""", url)
         else:
             response = 'NOT TEACHER'
         return response
-
     show_user_url.short_description = "User URL"
 
 

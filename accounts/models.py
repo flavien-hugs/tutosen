@@ -7,8 +7,10 @@ import datetime
 from django.db import models
 from django.urls import reverse
 from django.db.models import Index
+from django.dispatch import receiver
 from django.utils.text import Truncator
 from django.utils.html import format_html
+from django.db.models.signals import pre_save
 from django.db.models.functions import Lower, Upper
 from django.contrib.auth.models import AbstractUser
 
@@ -79,6 +81,11 @@ class User(AbstractUser):
         max_length=120,
         blank=True, null=True
     )
+    cover = models.ImageField(
+        verbose_name="instructor cover",
+        upload_to='instructor/cover/',
+        blank=True
+    )
     country = CountryField(
         blank_label='sélection un pays',
         verbose_name='pays de résidence',
@@ -110,7 +117,7 @@ class User(AbstractUser):
         db_table = 'user_profile'
         ordering = ('-date_joined', '-last_login')
         get_latest_by = ('-date_joined', '-last_login')
-        verbose_name_plural = 'Utilisateur'
+        verbose_name_plural = 'Utilisateurs'
 
         indexes = [
             Index(
@@ -125,17 +132,19 @@ class User(AbstractUser):
         if self.username:
             username = str(self.username)
         else:
-            username = "tutosen"
-        unique_username = username
+            username = str(self.email)
+        self.username = username
 
-        if User.objects.filter(username=unique_username).exists():
-            unique_username = "{0}".format(username)
-        return unique_username
+        if User.objects.filter(username=username).exists():
+            username = "{email}".format(email=self.email)
+        return username
 
     def save(self, *args, **kwargs):
         if not self.pk:
             self.type = self.base_type
-        self.username = self._get_unique_username()
+
+        if self.username:
+            self.username = "{username}".format(username=self._get_unique_username())
         return super().save(*args, **kwargs)
 
     def __str__(self):
@@ -154,7 +163,7 @@ class User(AbstractUser):
             line-height:1;border-radius:.20rem; padding:.33rem .5rem;\
             text-align:center;vertical-align:baseline;'>{1}</span>".format(
                 color, self.get_type_display())
-            )
+        )
         return render_color
     colored_type.allow_tags = True
     colored_type.short_description = "STATUT"
@@ -210,11 +219,7 @@ class User(AbstractUser):
 
     def get_teacher_detail_url(self):
         return reverse(
-            'accounts:teacher_detail_view',
-            kwargs={
-                'username': str(self.first_name.lower().replace(" ", "-")),
-                'pk': str(self.id)
-            }
+            'accounts:teacher_detail_view', kwargs={'uuid': str(self.uuid)}
         )
 
     def account_verified(self):
@@ -228,7 +233,6 @@ class User(AbstractUser):
 class Teacher(User):
     base_type = User.Types.TEACHER
 
-    USERNAME_FIELD = 'first_name'
     EMAIL_FIELD = 'email'
     REQUIRED_FIELDS = ['email']
 
@@ -245,17 +249,17 @@ class Teacher(User):
         return email_address
 
     def sign_in(self, request):
-        request.session['user'] = self
+        request.session['email'] = self
         self.date_joined = datetime.datetime.now()
         self.save()
 
     def sign_out(self):
-        if 'user' in self.request.session:
-            del self.request.session['user']
+        if 'email' in self.request.session:
+            del self.request.session['email']
 
     def get_signed_in(cls, request):
-        if 'user' in request.session:
-            return request.session['user']
+        if 'email' in request.session:
+            return request.session['email']
         else:
             return None
 
@@ -263,7 +267,6 @@ class Teacher(User):
 class Student(User):
     base_type = User.Types.STUDENT
 
-    USERNAME_FIELD = 'first_name'
     EMAIL_FIELD = 'email'
     REQUIRED_FIELDS = ['email']
 
@@ -290,3 +293,8 @@ class ParentOrTutor(User):
         ordering = ('-date_joined', '-last_login')
         get_latest_by = ('-date_joined', '-last_login')
         verbose_name_plural = 'Etudiant(e)'
+
+
+@receiver(pre_save, sender=User)
+def user_post_save_receiver(sender, instance, ** kwargs):
+    User.objects.filter(username=instance)
