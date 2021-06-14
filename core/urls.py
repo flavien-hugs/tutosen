@@ -30,8 +30,6 @@ def handler500(request, template_name='500.html'):
 
 urlpatterns = [
     path('', generic.TemplateView.as_view(template_name='index.html'), name='home'),
-    
-    path('api/v1/', include('api.urls')),
 
     path('me/', include('boards.urls', namespace='boards')),
     path('courses/', include('courses.urls', namespace='courses')),
@@ -43,6 +41,7 @@ urlpatterns = [
     path('', include('accounts.urls', namespace='accounts')),
     path('accounts/', include('allauth.urls')),
 
+    path('api/v1/', include('api.urls')),
     path('api-auth/', include('rest_framework.urls')),
 ]
 
