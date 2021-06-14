@@ -2,8 +2,8 @@
 
 {% load boards_tags %}
 {% url "home" as home_url %}
-{% url "boards:teacher_list_cours_url" as teacher_list_cours_url %}
-{% url "boards:teacher_profil_privacy_url" as teacher_profil_privacy_url %}
+{% url "boards:teacher_list_cours_url" user.uuid as teacher_list_cours_url %}
+{% url "boards:teacher_profil_privacy_url" user.uuid as teacher_profil_privacy_url %}
 
 <nav class="navbar-vertical navbar">
     <div class="nav-scroller">
@@ -17,7 +17,7 @@
                 <li class="nav-item">
                     <a target="_blank" class="nav-link font-weight-bold" href="{{ request.user.get_teacher_detail_url }}">
                         <i class="fe fe-globe nav-icon mr-2"></i>
-                        Voir votre profile
+                        See your profile
                     </a>
                 </li>
             {% endifequal %}
@@ -33,22 +33,21 @@
 
             <li class="nav-item">
                 <a class="nav-link {% active_link 'user_detail' %}" href="#!" data-toggle="collapse" data-target="#navCours" aria-expanded="false" aria-controls="navCours">
-                    <i class="nav-icon fe fe-book mr-2"></i>
-                    Mes Cours
+                    <i class="nav-icon fe fe-book mr-2"></i> Courses
                 </a>
                 
                 <div id="navCours" class="collapse" data-parent="#sideNavbar">
                     <ul class="nav flex-column">
                         <li class="nav-item">
                             <a class="nav-link {% active_link 'teacher_list_cours_url' %}" href="{{ teacher_list_cours_url }}">
-                                Mes Cours
+                                Courses
                             </a>
                         </li>
 
                         {% ifequal request.user.type 'TEACHER' %}
                             <li class="nav-item">
                                 <a class="nav-link" href="#">
-                                    Avis sur mes cours
+                                    Courses Feedback
                                 </a>
                             </li>
                         {% endifequal %}
@@ -61,20 +60,20 @@
                 <li class="nav-item">
                     <a class="nav-link " href="#!" data-toggle="collapse" data-target="#navStudent" aria-expanded="false" aria-controls="navStudent">
                         <i class="nav-icon fe fe-users mr-2"></i>
-                        Mes Étudiants
+                        Students
                     </a>
                     
                     <div id="navStudent" class="collapse" data-parent="#sideNavbar">
                         <ul class="nav flex-column">
                             <li class="nav-item">
                                 <a class="nav-link {% active_link 'teacher_list_cours_url' %}" href="{{ teacher_list_cours_url }}">
-                                    Mes Étudiants
+                                    Students
                                 </a>
                             </li>
 
                             <li class="nav-item">
                                 <a class="nav-link" href="#">
-                                    Étudiants inscrits
+                                    Students enrolled
                                 </a>
                             </li>
                         </ul>
@@ -84,26 +83,26 @@
                 <li class="nav-item">
                     <a class="nav-link " href="#!" data-toggle="collapse" data-target="#navBlog" aria-expanded="false" aria-controls="navBlog">
                         <i class="nav-icon fe fe-book-open mr-2"></i>
-                        Mon Blog
+                        Blog
                     </a>
                     
                     <div id="navBlog" class="collapse" data-parent="#sideNavbar">
                         <ul class="nav flex-column">
                             <li class="nav-item">
                                 <a class="nav-link {% active_link 'teacher_list_cours_url' %}" href="{{ teacher_list_cours_url }}">
-                                    Mes Articles
+                                    Articles
                                 </a>
                             </li>
 
                             <li class="nav-item">
                                 <a class="nav-link {% active_link 'teacher_list_cours_url' %}" href="{{ teacher_list_cours_url }}">
-                                    Nouvel Article
+                                    New Article
                                 </a>
                             </li>
 
                             <li class="nav-item">
                                 <a class="nav-link" href="#">
-                                    Commentaires
+                                    Feedback
                                 </a>
                             </li>
                         </ul>
@@ -115,17 +114,17 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#!" data-toggle="collapse" data-target="#navSiteVendor" aria-expanded="false" aria-controls="navSiteVendor">
                         <i class="nav-icon fe fe-shopping-bag mr-2"></i>
-                        Ma boutique
+                        Store
                     </a>
 
                     <div id="navSiteVendor" class="collapse" data-parent="#sideNavbar">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Mes Commandes</a>
+                                <a class="nav-link" href="#">Orders</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Revenus</a>
+                                <a class="nav-link" href="#">Earnings</a>
                             </li>
                         </ul>
                     </div>
@@ -136,7 +135,7 @@
             <li class="nav-item"><div class="nav-divider"></div></li>
 
             <li class="nav-item">
-                <div class="navbar-heading">Configuration</div>
+                <div class="navbar-heading">Setting</div>
             </li>
 
             <li class="nav-item">
@@ -144,14 +143,14 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ request.user.get_userupdate_url }}">
                         <i class="fe fe-settings nav-icon mr-2"></i>
-                        Paramètres
+                        Parameters
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link" href="{{ teacher_profil_privacy_url }}">
                         <i class="fe fe-lock nav-icon mr-2"></i>
-                        Confidentialités
+                        Privacy Policy
                     </a>
                 </li>
             </li>
@@ -159,7 +158,7 @@
             <li class="nav-item">
                 <a class="nav-link " href="#!">
                     <i class="nav-icon fe fe-help-circle mr-2"></i>
-                    Centre d'aide
+                    Help Center
                 </a>
             </li>
         </ul>
@@ -169,7 +168,7 @@
                 <div class="d-flex align-items-center justify-content-between border-bottom pb-3 mb-3">
                     <div>
                         <h4 class="mb-0 font-weight-bold">32</h4>
-                        <p class="font-size-xs mb-0">Cours</p>
+                        <p class="font-size-xs mb-0">Courses</p>
                     </div>
                     <div>
                         <span><i class="fe fe-file-text font-size-lg"></i></span>
@@ -178,7 +177,7 @@
                 <div class="d-flex align-items-center justify-content-between border-bottom pb-3 mb-3">
                     <div>
                         <h4 class="mb-0 font-weight-bold">11,604</h4>
-                        <p class="font-size-xs mb-0">Étudiants</p>
+                        <p class="font-size-xs mb-0">Students</p>
                     </div>
                     <div>
                         <span><i class="fe fe-users font-size-lg"></i></span>
@@ -187,7 +186,7 @@
                 <div class="d-flex align-items-center justify-content-between">
                     <div>
                         <h4 class="mb-0 font-weight-bold">12,230</h4>
-                        <p class="font-size-xs mb-0">Commentaires</p>
+                        <p class="font-size-xs mb-0">Feedback</p>
                     </div>
                     <div>
                         <span><i class="fe fe-star font-size-lg"></i></span>
@@ -200,12 +199,11 @@
             <div class="card-body py-6">
                 <img src="{{ STATIC_PREFIX }}img/giftbox.png" alt="giftbox">
                 <div class="mt-4">
-                    <h5 class="text-white">Access Illimitté</h5>
+                    <h5 class="text-white">Unlimited Access</h5>
                     <p class="text-white-50 font-size-xs">
-                        Passez d'un essai gratuit à un plan d'affaires. Commencez maintenant.
+                        Go from a free trial to a business plan. Start now.
                     </p>
-                    <a href="#!" class="btn btn-white btn-sm mt-2">
-                    Mettre à niveau</a>
+                    <a href="#!" class="btn btn-white btn-sm mt-2">Upgrade to a new level</a>
                 </div>
             </div>
         </div>
