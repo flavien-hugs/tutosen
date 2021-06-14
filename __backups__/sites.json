@@ -22,5 +22,13 @@
         "domain": "tutosen.unsta.net",
         "name": "tutosen.unsta.net"
     }
+},
+{
+    "model": "sites.site",
+    "pk": 5,
+    "fields": {
+        "domain": "127.0.0.1:8002",
+        "name": "127.0.0.1:8002"
+    }
 }
 ]
