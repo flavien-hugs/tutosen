@@ -7,7 +7,7 @@ from django.views import generic
 
 app_name = 'courses'
 urlpatterns = [
-    path('tous-les-cours/', generic.TemplateView.as_view(
+    path('all/', generic.TemplateView.as_view(
         template_name='courses/courses_list.html',
         extra_context={'page_title': 'tous les cours'}),
         name='courses_list_url'),
