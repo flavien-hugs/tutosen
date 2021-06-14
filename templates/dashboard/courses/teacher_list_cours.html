@@ -2,8 +2,8 @@
 {% load widget_tweaks boards_tags %}
 
 {% block dashboard_subheader %}
-    {% url 'boards:teacher_list_cours_url' as teacher_list_cours_url %}
-    {% url 'boards:teacher_add_course_url' as teacher_add_course_url %}
+    {% url 'boards:teacher_list_cours_url' user.uuid as teacher_list_cours_url %}
+    {% url 'boards:teacher_add_course_url' user.uuid as teacher_add_course_url %}
 
     <div class="mb-2 mb-lg-0">
         <h1 class="mb-1 h2 font-weight-bold">Liste de vos cours</h1>
@@ -14,11 +14,11 @@
                 </li>
 
                 <li class="breadcrumb-item">
-                    <a href="{{ teacher_list_cours_url }}">Cours</a>
+                    <a href="{{ teacher_list_cours_url }}">Courses</a>
                 </li>
                 
                 <li class="breadcrumb-item active" aria-current="page">
-                    Tous les cours
+                    All courses
                 </li>
             </ol>
         </nav>
