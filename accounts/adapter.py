@@ -9,14 +9,13 @@ class CustomAccountAdapter(DefaultAccountAdapter):
 
     def save_user(self, request, user, form, commit=False):
         data = form.cleaned_data
-        user.username = data['email']
         user.email = data['email']
+        user.username = data['first_name']
 
         if 'password1' in data:
             user.set_password(data['password1'])
         else:
             user.set_unusable_password()
-
         user.save()
         return user
 
@@ -27,12 +26,12 @@ class CustomAccountAdapter(DefaultAccountAdapter):
 
     def get_login_redirect_url(self, request):
         if request.user.is_authenticated:
-            path = "/me/{uuid}/"
+            path = "/me/{uuid}/detail/"
             return path.format(uuid=request.user.uuid)
 
     def get_signup_redirect_url(self, request):
         if request.user.is_authenticated:
-            path = "/me/{uuid}/"
+            path = "/me/{uuid}/detail/"
             return path.format(uuid=request.user.uuid)
 
     def get_logout_redirect_url(self, request):
