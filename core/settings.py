@@ -39,7 +39,7 @@ SITE_NAME = 'tutosen'
 THOUSAND_SEPARATOR = ' '
 USE_THOUSAND_SEPARATOR = True
 
-SITE_ID = 2
+SITE_ID = 3
 ADMIN_URL = 'xx-tutosen/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
@@ -79,7 +79,7 @@ THIRD_PARTY_APPS = [
     'debug_toolbar',
 
     'rest_framework',
-    'corsheaders',
+    'corsheaders'
 ]
 
 LOCALS_APPS = [
@@ -92,13 +92,6 @@ LOCALS_APPS = [
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCALS_APPS
-
-# MIGRATIONS
-# https://docs.djangoproject.com/en/dev/ref/settings/#migration-modules
-
-# MIGRATION_MODULES = {
-#     "sites": "core.contrib.sites.migrations"
-# }
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
 
@@ -293,12 +286,12 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_LOGIN_ON_PASSWORD_RESET = True
 ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 86400
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
-ACCOUNT_USER_MODEL_USERNAME_FIELD = 'email'
 ACCOUNT_PRESERVE_USERNAME_CASING = False
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
 ACCOUNT_PASSWORD_INPUT_RENDER_VALUE = True
 ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
+ACCOUNT_USER_MODEL_USERNAME_FIELD = 'username'
 ACCOUNT_EMAIL_SUBJECT_PREFIX = "TuoSen <no-reply@tutosen.com>"
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = LOGIN_URL
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = LOGIN_REDIRECT_URL
@@ -362,7 +355,10 @@ SOCIALACCOUNT_PROVIDERS = {
         'VERSION': 'v7.0',
     },
     'google': {
-        'SCOPE': ['profile', 'email'],
+        'SCOPE': [
+            'profile',
+            'email'
+        ],
         'AUTH_PARAMS': {'access_type': 'online'}
     }
 }
@@ -572,7 +568,7 @@ CKEDITOR_CONFIGS = {
 
 SECURE_SSL_REDIRECT = False
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'http')
-INTERNAL_IPS = ['localhost', '127.0.0.1', '127.0.0.1:8001']
+INTERNAL_IPS = ['localhost', '127.0.0.1', '127.0.0.1:8001', '127.0.0.1:8002']
 
 # http://www.django-rest-framework.org/api-guide/settings/
 
@@ -591,5 +587,6 @@ REST_FRAMEWORK = {
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:8000',
     'htpp://localhost:8001',
+    'htpp://localhost:8002',
     'https://tutosen.unsta.net'
 )
