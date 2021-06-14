@@ -8,7 +8,6 @@
 {% url 'boards:teacher_social_account_url' as teacher_social_account_url %}
 {% url 'boards:teacher_profil_privacy_url' as teacher_profil_privacy_url %}
 {% url 'boards:teacher_notification_url' as teacher_notification_url %}
-{% url 'boards:teacher_add_course_url' as teacher_add_course_url %}
 
 {% if request.resolver_match.url_name == 'courses_list_url' %}
 
@@ -154,7 +153,7 @@
     </div>
 
 {% elif request.resolver_match.url_name == 'teacher_add_course_url' %}
-    {% url "boards:teacher_list_cours_url" as teacher_add_courses %}
+    {% url "boards:teacher_list_cours_url" user.uuid as teacher_add_courses %}
     
     <div class="pt-4 py-8 bg-primary">
         <div class="container">
