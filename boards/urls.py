@@ -21,10 +21,8 @@ urlpatterns = [
         name='teacher_profil_privacy_url'),
 
     # /me/course/
-    path(route="courses/<uuid>/all/", view=courses_views.course_list_view,
-        name='teacher_list_cours_url'),
-    path(route='courses/<uuid>/add/', view=courses_views.course_create_view,
-        name='teacher_add_course_url'),
+    path(route="courses/<uuid>/all/", view=courses_views.course_list_view, name='teacher_list_cours_url'),
+    path(route='courses/<uuid>/add/', view=courses_views.course_create_view, name='teacher_add_course_url'),
 
     # /me/notifications/
     path(route="notifications/", view=generic.TemplateView.as_view(

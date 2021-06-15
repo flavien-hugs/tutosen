@@ -5,7 +5,6 @@ import uuid
 from django.db import models
 from django.urls import reverse
 from django.utils.text import Truncator
-from django.contrib.auth import get_user_model
 from django.template.loader import render_to_string
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
@@ -176,10 +175,9 @@ class CourseChapterContent(models.Model):
         related_name='course_chapter_content',
     )
     chapter_type_content = models.ForeignKey(
-        ContentType, 
-        models.CASCADE,
+        ContentType, models.CASCADE,
         limit_choices_to={
-            'model__in':(
+            'model__in': (
                 'text', 'video',
                 'image', 'file'
             )

@@ -15,4 +15,5 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [IsUserOrReadOnly]
     pagination_class = pagination.LimitOffsetPagination
 
+
 user_view_set = UserViewSet

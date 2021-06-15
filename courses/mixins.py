@@ -11,6 +11,7 @@ class InstructorMixin:
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset_filter = queryset.filter(instructor=self.request.user)
+        return queryset_filter
 
 
 class InstructorMixinEdit:
@@ -37,14 +38,13 @@ class StudentMixin:
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        queryset_filter = queryset.filter(
-            student=self.request.user,
-        )
+        queryset_filter = queryset.filter(student=self.request.user)
+        return queryset_filter
+
 
 class ParentOrTutorMixin:
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        queryset_filter = queryset.filter(
-            parent_or_tutor=self.request.user,
-        )
+        queryset_filter = queryset.filter(parent_or_tutor=self.request.user)
+        return queryset_filter

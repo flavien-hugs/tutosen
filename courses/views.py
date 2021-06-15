@@ -1,6 +1,5 @@
 # courses.views.py
 
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic as mxs
 from django.contrib.auth import mixins as auth_mxs
@@ -33,6 +32,7 @@ class CourseUpdateView(auth_mxs.PermissionRequiredMixin, mixins.InstructorCourse
         context = super().get_context_data(**kwargs)
         context['page_title'] = 'edit course "{0}"'.format(self.object.course_title)
         return context
+
 
 course_update_view = CourseUpdateView.as_view()
 

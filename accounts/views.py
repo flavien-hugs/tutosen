@@ -1,7 +1,5 @@
 # accounts.views.teacher_views.py
 
-import time
-
 from django.views import generic
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth import get_user_model

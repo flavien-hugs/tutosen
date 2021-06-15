@@ -2,8 +2,6 @@
 
 from django import template
 
-from courses.models import Course
-
 register = template.Library()
 
 

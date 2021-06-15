@@ -12,7 +12,6 @@ __copyright__ = '© 2021 unsta'
 import os
 from pathlib import Path
 import psycopg2.extensions
-from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

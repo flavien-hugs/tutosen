@@ -37,16 +37,12 @@ class GetUserObject:
 
 
 class InstructorSearchMixin:
-    
     def get_queryset(self, **kwargs):
         queryset = super().get_queryset(**kwargs)
         q = self.request.GET.get('q', None)
         if q:
             lookups = (
-                Q(statut__icontains=q)|
-                Q(brief_desc__icontains=q)|
-                Q(country__icontains=q)|
-                Q(state__icontains=q)
+                Q(statut__icontains=q) | Q(brief_desc__icontains=q) | Q(country__icontains=q) | Q(state__icontains=q)
             )
             resultat = queryset.filter(lookups).distinct()
             return resultat
