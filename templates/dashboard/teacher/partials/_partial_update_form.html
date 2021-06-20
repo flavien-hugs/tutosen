@@ -34,7 +34,7 @@
 {% block teacher_content %}
     {% url "boards:user_update" request.user.uuid as user_update_url %}
 
-    <form data-url="{{ user_update_url }}" id="personal-form-update" class="row" method="POST">
+    <form enctype="multipart/form-data" data-url="{{ user_update_url }}" id="personal-form-update" class="row" method="POST">
         {% csrf_token %}
 
         <div class="row">
@@ -208,7 +208,6 @@
             </section>
         </div>
 
-
         <div class="col-12">
             <button class="btn btn-primary text-uppercase" type="submit">
                 Enregistrer
@@ -216,55 +215,3 @@
         </div>
     </form>
 {% endblock teacher_content %}
-
-{% block ajax_javascript %}
-    <script>
-        $(document).ready(function () {
-
-            $('#personal-form-update').on('submit', function (event) {
-                event.preventDefault();
-                const form_data = $(this).serialize();
-                const form_method = $(this).attr("method");
-                const form_url = $(this).attr("data-url");
-                // create an AJAX call
-                $.ajax({
-                    type: form_method,
-                    url: form_url,
-                    data: form_data,
-                    dataType: 'json',
-                    encode: true,
-
-                    // on success
-                    success: function (response) {
-                        // verify form data
-                        console.log(response);
-
-                        if(response['success']) {
-                            console.log("success submit !");
-                        }
-                    },
-
-                    // on error
-                    error: function (response) {
-                        alert(response.responseJSON.errors);
-                        console.log(response.responseJSON.errors)
-                    }
-                }).done(function (response) {
-                    console.log(response);
-                    $('aside').html(
-                        "<div class='text-center alert alert-success m-0'>" + response.message + "</div>"
-                    );
-
-                }).fail(function (response) {
-                    $('aside').html(
-                        "<div class='text-center alert alert-success m-0' role='alert'>"
-                            + response.message +
-                        "</div>"
-                    );
-                });
-
-                return false;
-            });
-        });
-    </script>
-{% endblock ajax_javascript %}

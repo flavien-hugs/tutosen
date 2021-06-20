@@ -10,6 +10,7 @@ __version__ = 'V.0.0.1'
 __copyright__ = '© 2021 unsta'
 
 import os
+import logging
 from pathlib import Path
 import psycopg2.extensions
 
@@ -72,13 +73,16 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.facebook',
 
+    # 'taggit',
     "widget_tweaks",
     'phonenumber_field',
     'phonenumbers',
-    'debug_toolbar',
 
     'rest_framework',
-    'corsheaders'
+    'corsheaders',
+    
+    'debug_toolbar',
+    'nplusone.ext.django',
 ]
 
 LOCALS_APPS = [
@@ -111,6 +115,8 @@ MIDDLEWARE = [
     "django.middleware.common.BrokenLinkEmailsMiddleware",
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
+    # 'core.middleware.metric_middleware',
+    # "nplusone.ext.django.NPlusOneMiddleware",
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
@@ -424,6 +430,13 @@ JET_CHANGE_FORM_SIBLING_LINKS = True
 # See https://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
 
+# nplusone
+# https://pypi.org/project/nplusone/
+
+NPLUSONE_LOGGER = logging.getLogger("nplusone")
+NPLUSONE_LOG_LEVEL = logging.WARNING
+NPLUSONE_RAISE = False
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -462,6 +475,8 @@ LOGGING = {
             "handlers": ["console", "mail_admins"],
             "propagate": True,
         },
+        "nplusone": {"handlers": ["console"], "level": "WARN",},
+        "debug": {"handlers": ["console"], "level": "DEBUG",},
     },
 }
 

@@ -31,7 +31,7 @@ class TeacherAdmin(BaseUserAdmin):
         (
             'Descriprion', {
                 'classes': ('collapse',),
-                'fields': ("brief_desc",)
+                'fields': ("brief_desc", 'cover',)
             }
         ),
         (

@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.utils import timezone
 from django.contrib import messages
 from django.contrib.auth import get_user_model
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponseRedirect, HttpResponse
 
 CustomUser = get_user_model()
 
@@ -26,13 +26,11 @@ class GetUserObject:
         current_user = CustomUser.objects.filter(uuid=self.request.uuid)
         return current_user
 
-    @property
-    def success_message(self):
-        return NotImplemented
-
     def form_valid(self, form):
-        form.instance.user = self.request.user
-        messages.success(self.request, self.success_message)
+        form.instance.user = self.request.username
+        form.instance.user = self.request.username
+        messages = "Votre profile a été mis à jour avec success !"
+        messages.success(self.request, messages)
         return super().form_valid(form)
 
 
@@ -52,18 +50,15 @@ class InstructorSearchMixin:
         context = super().get_context_data(**kwargs)
         query = self.request.GET.get('q', None)
         if query:
-            context['page_title'] = 'Recherche pour "{0}"'.format(query)
+            context['page_title'] = 'Recherche pour "{query}"'.format(query=query)
         return context
 
 
 class AjaxResponseMixin:
-    def post(self, request, **kwargs):
-        if request.is_ajax() and request.method == "POST":
-            form = self.form_class(data=request.POST, instance=request.user)
+    def post(self, request, *args, **kwargs):
+        if request.method == "POST":
+            form = self.form_class(request.POST or None, request.FILES, instance=request.user)
             if form.is_valid():
                 self.object = form.save()
-                message = self.success_message
-                return JsonResponse({"success": True, "message": message})
-            else:
-                return JsonResponse({"error": form.errors})
-        return HttpResponse("success submit !")
+                return HttpResponseRedirect(self.get_success_url())
+        return HttpResponseRedirect(self.get_success_url())

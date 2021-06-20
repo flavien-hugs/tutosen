@@ -78,7 +78,13 @@
     </div>
 
 {% elif request.resolver_match.url_name == 'teacher_detail_view' %}
-    <div class="py-20" style="background: url({{ STATIC_PREFIX }}/img/profile-bg.jpg) no-repeat; background-position: center;">
+    <div class="py-20" style="background: url(
+    {% if teacher_object.cover %}
+        {{ teacher_object.cover.url }}
+    {% else %}
+        {{ STATIC_PREFIX }}/img/profile-bg.jpg
+    {% endif %}
+        ) no-repeat; background-position:center;">
     </div>
 
     <div class="card p-lg-2 pt-2 pt-lg-0 rounded-0 border-0">
@@ -109,9 +115,17 @@
 
                 <div class="col-lg-4 col-md-4 col-12">
                     <div class="font-size-md mt-4 mt-lg-0 pb-2 pb-lg-0 d-lg-flex justify-content-end">
-                        <a target="_blank" href="{{ teacher_object.facebook }}" class="mdi mdi-facebook text-muted mr-2"></a>
-                        <a target="_blank" href="{{ teacher_object.twitter }}" class="mdi mdi-twitter text-muted mr-2"></a>
-                        <a target="_blank" href="{{ teacher_object.linkedin }}" class="mdi mdi-linkedin text-muted mr-2"></a>
+                        <a {% if teacher_object.facebook %} target="_blank" href="{{ teacher_object.facebook }}"
+                            {% else %} href="{{ request.build_absolute_uri }}#"
+                            {% endif %} class="mdi mdi-facebook text-muted mr-2"></a>
+                        
+                        <a {% if teacher_object.twitter %} target="_blank" href="{{ teacher_object.twitter }}"
+                            {% else %} href="{{ request.build_absolute_uri }}#"
+                            {% endif %} class="mdi mdi-twitter text-muted mr-2"></a>
+                        
+                        <a {% if teacher_object.linkedin %} target="_blank" href="{{ teacher_object.linkedin }}"
+                            {% else %} href="{{ request.build_absolute_uri }}#"
+                            {% endif %} class="mdi mdi-linkedin text-muted mr-2"></a>
                     </div>
                 </div>
             </div>

@@ -296,5 +296,5 @@ class ParentOrTutor(User):
 
 
 @receiver(pre_save, sender=User)
-def user_post_save_receiver(sender, instance, ** kwargs):
+def user_post_save_receiver(sender, instance, **kwargs):
     User.objects.filter(username=instance)

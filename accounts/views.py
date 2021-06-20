@@ -4,7 +4,7 @@ from django.views import generic
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth import get_user_model
 from django.http import HttpResponse, JsonResponse
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from accounts import mixins as amxs
 from accounts.models import Teacher
@@ -45,11 +45,10 @@ class UserProfileUpdateView(LoginRequiredMixin, amxs.GetUserObject, amxs.AjaxRes
     model = CustomUser
     form_class = UserUpdateForm
     login_url = reverse_lazy('account_login')
-    success_message = "Votre profile a été mise à jour avec succes !"
 
     def get_success_url(self):
         return reverse(
-            "boards:user_update", kwargs={'pk': self.object.uuid}
+            "boards:user_update", kwargs={'pk': self.request.user.uuid}
         )
 
 
@@ -60,10 +59,11 @@ user_update_view = UserProfileUpdateView.as_view(
 
 
 class UserProfileDeleteView(LoginRequiredMixin, amxs.GetUserObject, generic.DeleteView):
+    slug_field = "uuid"
+    slug_url_kwarg = 'uuid'
     login_url = reverse_lazy('account_login')
     success_url = reverse_lazy("home")
     queryset = CustomUser.objects.all()
-    success_message = "Votre profile a été supprimer avec succès !"
 
     def delete(self, request, *args, **kwargs):
         return super().delete(request, *args, **kwargs)
@@ -93,6 +93,7 @@ class UserProfileListView(amxs.InstructorSearchMixin, generic.ListView):
     paginate_by = 150
     context_object_name = 'teacher_list'
     queryset = Teacher.objects.order_by('-date_joined')
+    template_name_suffix = '_list'
 
     def head(self, *args, **kwargs):
         last_teacher_register = self.get_queryset().latest('date_joined')
@@ -108,17 +109,23 @@ teacher_list_view = UserProfileListView.as_view(
 )
 
 
-class UserProfileDetailView(generic.DetailView):
+class UserProfileDetailView(generic.DetailView, UserPassesTestMixin):
     model = Teacher
     slug_field = "uuid"
     slug_url_kwarg = 'uuid'
     context_object_name = 'teacher_object'
+    template_name_suffix = '_detail'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        profile = self.object.get_fullname()
-        context['page_title'] = 'profile de "{0}"'.format(profile)
+        fullname = self.object.get_fullname()
+        context['page_title'] = 'profile de "{fullname}"'.format(fullname=fullname)
         return context
+    
+    def test_func(self):
+        obj = self.get_object()
+        print(obj)
+        return obj.type == self.request.user
 
 
 teacher_detail_view = UserProfileDetailView.as_view(
