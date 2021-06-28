@@ -8,21 +8,22 @@
 <nav class="navbar-vertical navbar">
     <div class="nav-scroller">
         <a class="navbar-brand" href="{{ home_url }}">
-            <img src="{{ STATIC_PREFIX }}img/logo-inverse.svg" alt="{{ title }}"/>
+            <img src="{{ STATIC_PREFIX }}img/logo_inverse_tutosen.svg" alt="{{ title }}" />
         </a>
 
         <ul class="navbar-nav flex-column" id="sideNavbar">
-
             {% ifequal request.user.type 'TEACHER' %}
-                <li class="nav-item">
-                    <a target="_blank" class="nav-link font-weight-bold" href="{{ request.user.get_teacher_detail_url }}">
-                        <i class="fe fe-globe nav-icon mr-2"></i>
-                        See your profile
-                    </a>
-                </li>
+            <li class="nav-item">
+                <a target="_blank" class="nav-link font-weight-bold" href="{{ request.user.get_teacher_detail_url }}">
+                    <i class="fe fe-globe nav-icon mr-2"></i>
+                    See your profile
+                </a>
+            </li>
             {% endifequal %}
 
-            <li class="nav-item"><div class="nav-divider"></div></li>
+            <li class="nav-item">
+                <div class="nav-divider"></div>
+            </li>
 
             <li class="nav-item">
                 <a class="nav-link {% active_link 'user_detail' %}" href="{{ request.user.get_userdetail_url }}">
@@ -32,107 +33,119 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {% active_link 'user_detail' %}" href="#!" data-toggle="collapse" data-target="#navCours" aria-expanded="false" aria-controls="navCours">
+                <a class="nav-link {% active_link 'user_detail' %}" href="#!" data-toggle="collapse"
+                    data-target="#navCours" aria-expanded="false" aria-controls="navCours">
                     <i class="nav-icon fe fe-book mr-2"></i> Courses
                 </a>
-                
+
                 <div id="navCours" class="collapse" data-parent="#sideNavbar">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link {% active_link 'teacher_list_cours_url' %}" href="{{ teacher_list_cours_url }}">
+                            <a class="nav-link {% active_link 'teacher_list_cours_url' %}"
+                                href="{{ teacher_list_cours_url }}">
                                 Courses
                             </a>
                         </li>
 
                         {% ifequal request.user.type 'TEACHER' %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    Courses Feedback
-                                </a>
-                            </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                Courses Feedback
+                            </a>
+                        </li>
                         {% endifequal %}
                     </ul>
                 </div>
             </li>
 
             {% ifequal request.user.type 'TEACHER' %}
-                
-                <li class="nav-item">
-                    <a class="nav-link " href="#!" data-toggle="collapse" data-target="#navStudent" aria-expanded="false" aria-controls="navStudent">
-                        <i class="nav-icon fe fe-users mr-2"></i>
-                        Students
-                    </a>
-                    
-                    <div id="navStudent" class="collapse" data-parent="#sideNavbar">
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link {% active_link 'teacher_list_cours_url' %}" href="{{ teacher_list_cours_url }}">
-                                    Students
-                                </a>
-                            </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    Students enrolled
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+            <li class="nav-item">
+                <a class="nav-link " href="#!" data-toggle="collapse" data-target="#navStudent" aria-expanded="false"
+                    aria-controls="navStudent">
+                    <i class="nav-icon fe fe-users mr-2"></i>
+                    Students
+                </a>
 
-                <li class="nav-item">
-                    <a class="nav-link " href="#!" data-toggle="collapse" data-target="#navBlog" aria-expanded="false" aria-controls="navBlog">
-                        <i class="nav-icon fe fe-book-open mr-2"></i>
-                        Blog
-                    </a>
-                    
-                    <div id="navBlog" class="collapse" data-parent="#sideNavbar">
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link {% active_link 'teacher_list_cours_url' %}" href="{{ teacher_list_cours_url }}">
-                                    Articles
-                                </a>
-                            </li>
+                <div id="navStudent" class="collapse" data-parent="#sideNavbar">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link {% active_link 'teacher_list_cours_url' %}"
+                                href="{{ teacher_list_cours_url }}">
+                                Students
+                            </a>
+                        </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link {% active_link 'teacher_list_cours_url' %}" href="{{ teacher_list_cours_url }}">
-                                    New Article
-                                </a>
-                            </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                Students enrolled
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    Feedback
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+            <li class="nav-item">
+                <a class="nav-link " href="#!" data-toggle="collapse" data-target="#navBlog" aria-expanded="false"
+                    aria-controls="navBlog">
+                    <i class="nav-icon fe fe-book-open mr-2"></i>
+                    Blog
+                </a>
 
-                <li class="nav-item"><div class="nav-divider"></div></li>
+                <div id="navBlog" class="collapse" data-parent="#sideNavbar">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link {% active_link 'teacher_list_cours_url' %}"
+                                href="{{ teacher_list_cours_url }}">
+                                Articles
+                            </a>
+                        </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#!" data-toggle="collapse" data-target="#navSiteVendor" aria-expanded="false" aria-controls="navSiteVendor">
-                        <i class="nav-icon fe fe-shopping-bag mr-2"></i>
-                        Store
-                    </a>
+                        <li class="nav-item">
+                            <a class="nav-link {% active_link 'teacher_list_cours_url' %}"
+                                href="{{ teacher_list_cours_url }}">
+                                New Article
+                            </a>
+                        </li>
 
-                    <div id="navSiteVendor" class="collapse" data-parent="#sideNavbar">
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Orders</a>
-                            </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                Feedback
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Earnings</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+            <li class="nav-item">
+                <div class="nav-divider"></div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#!" data-toggle="collapse" data-target="#navSiteVendor" aria-expanded="false"
+                    aria-controls="navSiteVendor">
+                    <i class="nav-icon fe fe-shopping-bag mr-2"></i>
+                    Store
+                </a>
+
+                <div id="navSiteVendor" class="collapse" data-parent="#sideNavbar">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Orders</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Earnings</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
 
             {% endifequal %}
 
-            <li class="nav-item"><div class="nav-divider"></div></li>
+            <li class="nav-item">
+                <div class="nav-divider"></div>
+            </li>
 
             <li class="nav-item">
                 <div class="navbar-heading">Setting</div>
@@ -140,19 +153,19 @@
 
             <li class="nav-item">
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ request.user.get_userupdate_url }}">
-                        <i class="fe fe-settings nav-icon mr-2"></i>
-                        Parameters
-                    </a>
-                </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ request.user.get_userupdate_url }}">
+                    <i class="fe fe-settings nav-icon mr-2"></i>
+                    Parameters
+                </a>
+            </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ teacher_profil_privacy_url }}">
-                        <i class="fe fe-lock nav-icon mr-2"></i>
-                        Privacy Policy
-                    </a>
-                </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ teacher_profil_privacy_url }}">
+                    <i class="fe fe-lock nav-icon mr-2"></i>
+                    Privacy Policy
+                </a>
+            </li>
             </li>
 
             <li class="nav-item">

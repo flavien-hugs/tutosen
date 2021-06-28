@@ -82,7 +82,7 @@ class TeacherAdmin(BaseUserAdmin):
             url = reverse('accounts:teacher_detail_view', kwargs={'uuid': str(instance.uuid)})
             response = format_html("""<a href="{0}">{0}</a>""", url)
         else:
-            response = 'NOT TEACHER'
+            response = 'Not URL'
         return response
     show_user_url.short_description = "User URL"
 

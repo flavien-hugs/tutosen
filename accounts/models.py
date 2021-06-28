@@ -6,6 +6,7 @@ import datetime
 
 from django.db import models
 from django.urls import reverse
+from django.contrib import admin
 from django.db.models import Index
 from django.dispatch import receiver
 from django.utils.text import Truncator
@@ -150,6 +151,7 @@ class User(AbstractUser):
     def __str__(self):
         return "{0}".format(self.get_fullname())
 
+    @admin.display(ordering='type')
     def colored_type(self):
         if self.type == 'TEACHER':
             color = "754ff6"
@@ -183,12 +185,6 @@ class User(AbstractUser):
             self.first_name,
             self.last_name
         )
-
-        time_start = time.perf_counter()
-        time_end = time.perf_counter()
-        result = time_start - time_end
-        print(f"Updated in {result:0.4f} second".format(result))
-
     get_fullname.short_description = 'Nom & prénom'
 
     def get_speudonyme(self):
