@@ -19,7 +19,7 @@ course_list_view = CourseListView.as_view(
 class CourseCreateView(auth_mxs.PermissionRequiredMixin, mixins.InstructorCourseEditMixin, mxs.CreateView):
     model = models.Course
     permission_required = 'courses.add_course'
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.request.POST:
@@ -27,7 +27,7 @@ class CourseCreateView(auth_mxs.PermissionRequiredMixin, mixins.InstructorCourse
         else:
             context['titles'] = forms.course_chapter_formset()
         return context
-    
+
     def form_valid(self, form):
         context = self.get_context_data()
         titles = context['titles']
@@ -55,7 +55,7 @@ class CourseUpdateView(auth_mxs.PermissionRequiredMixin, mixins.InstructorCourse
         context = super().get_context_data(**kwargs)
         context['page_title'] = 'edit course "{0}"'.format(self.object.course_title)
         if self.request.POST:
-            context['titles'] = Coforms.course_chapter_formsetllectionTitleFormSet(
+            context['titles'] = forms.course_chapter_formsetllectionTitleFormSet(
                 self.request.POST, instance=self.object)
         else:
             context['titles'] = forms.course_chapter_formset(instance=self.object)
