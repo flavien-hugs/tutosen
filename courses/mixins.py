@@ -27,7 +27,8 @@ class InstructorCourseMixin(InstructorMixin, mixins.LoginRequiredMixin):
         'course_language', 'course_title', 'course_category',
         'course_brief', 'course_fee'
     ]
-    success_url = reverse_lazy('courses:teacher_list_cours_url')
+    # success_url = reverse_lazy('courses:teacher_list_cours_url')
+    success_url = None
 
 
 class InstructorCourseEditMixin(InstructorCourseMixin, InstructorMixinEdit):
