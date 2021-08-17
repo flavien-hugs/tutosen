@@ -47,7 +47,7 @@ urlpatterns = [
 
 handler404 = handler404
 handler403 = handler403
-handler201600 = handler500
+handler500 = handler500
 
 if settings.DEBUG:
     import debug_toolbar
