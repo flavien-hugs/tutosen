@@ -1,0 +1,83 @@
+# This is a basic workflow that is manually triggered
+
+name: Run Django tests
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "**.md"
+  schedule:
+    - cron: '20 13 * * *'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+env:
+  FAIL_LEVEL: WARNING
+  ENV_TYPE: venv
+  APP_PATH: tutosen/
+  DEP_PATH: tutosen/requirements.txt
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python '3.x'
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+          architecture: 'x64'
+      - name: Cache pip
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+            ${{ runner.os }}-
+      - name: Install dependencies and Run tests
+        run: |
+          make ga-env
+          make ga-install
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out master
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Scan Django settings for security issues
+        id: check
+        uses: actions/checkout@v2
+      - name: Upload output
+        uses: actions/upload-artifact@v2
+        with:
+          name: totusen-project
+          path: output.txt
+  test-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+          architecture: 'x64'
+      - name: Install dependencies
+        run: |
+          sudo apt-get install libpq-dev
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Lint with flake8
+        env:
+          DEBUG: False
+          SECRET_KEY: '69pbav1&&+wdea&&^36o0fx-b00i1dhxb(efnfixj$df=@u*&2'
+        run: |
+          pip install flake8 django
+          python manage.py test honoma --verbosity=0 --parallel --failfast
+          # stop the build if there are Python syntax errors or undefined names
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
