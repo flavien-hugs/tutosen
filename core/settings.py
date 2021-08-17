@@ -80,7 +80,7 @@ THIRD_PARTY_APPS = [
 
     'rest_framework',
     'corsheaders',
-    
+
     'debug_toolbar',
     'nplusone.ext.django',
 ]
@@ -174,8 +174,18 @@ X_FRAME_OPTIONS = "SAMEORIGINE"
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
-if DEBUG:
+if os.environ.get('GITHUB_WORKFLOW'):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'github-actions',
+            'USER': 'postgres',
+            'PASSWORD': 'postgress',
+            'HOST': 'localhost',
+            'PORT': '5432'
+        }
+    }
+else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
