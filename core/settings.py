@@ -440,13 +440,6 @@ JET_CHANGE_FORM_SIBLING_LINKS = True
 # See https://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
 
-# nplusone
-# https://pypi.org/project/nplusone/
-
-NPLUSONE_LOGGER = logging.getLogger("nplusone")
-NPLUSONE_LOG_LEVEL = logging.WARNING
-NPLUSONE_RAISE = False
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
