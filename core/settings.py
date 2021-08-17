@@ -82,7 +82,6 @@ THIRD_PARTY_APPS = [
     'corsheaders',
 
     'debug_toolbar',
-    'nplusone.ext.django',
 ]
 
 LOCALS_APPS = [
@@ -116,7 +115,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     # 'core.middleware.metric_middleware',
-    # "nplusone.ext.django.NPlusOneMiddleware",
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
@@ -478,8 +476,6 @@ LOGGING = {
             "handlers": ["console", "mail_admins"],
             "propagate": True,
         },
-        "nplusone": {"handlers": ["console"], "level": "WARN",},
-        "debug": {"handlers": ["console"], "level": "DEBUG",},
     },
 }
 
