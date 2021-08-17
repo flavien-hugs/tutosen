@@ -75,7 +75,7 @@ jobs:
           DEBUG: False
           SECRET_KEY: '69pbav1&&+wdea&&^36o0fx-b00i1dhxb(efnfixj$df=@u*&2'
         run: |
-          pip install flake8 django
+          pip install flake8 django django-debug-toolbar
           python manage.py test honoma --verbosity=0 --parallel --failfast
           # stop the build if there are Python syntax errors or undefined names
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
