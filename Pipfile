@@ -29,11 +29,7 @@ django-taggit = "*"
 
 [dev-packages]
 flake8 = "*"
-tox = "*"
 django-debug-toolbar = "*"
-faker = "*"
-nplusone = "*"
-pytest-django = "*"
 
 [requires]
 python_version = "3.8"
