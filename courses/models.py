@@ -1,10 +1,16 @@
 # courses.models.py
 
 import uuid
+import datetime
 
 from django.db import models
 from django.urls import reverse
+from django.contrib import admin
+from django.utils import timezone
+from django.dispatch import receiver
 from django.utils.text import Truncator
+from django.utils.html import format_html
+from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
@@ -13,241 +19,455 @@ import markdown as md
 from utils import func_utils
 from accounts import models as mdl
 
+from courses.managers import SubjectManager
 
-class Course(models.Model):
+
+class Subject(models.Model):
     LANGUAGE_CHOICES = (
         ('FR', 'Français'),
         ('ANG', 'Anglais')
     )
-    COURSES_CATEGORY = (
-        ('ANGL', 'Anglais'),
-        ('FRAN', 'Français'),
-        ('PHIL', 'Philosophie'),
-        ('MATH', 'Mathématique'),
-        ('PCHI', 'Physique/Chimie'),
-        ('HIST', 'Histoire/Géographie'),
+    SUBJECT_CATEGORY = (
+        ('ANGL', 'Anglais'), ('FRAN', 'Français'),
+        ('PHIL', 'Philosophie'), ('MATH', 'Mathématique'),
+        ('CHIM', 'Chimie'), ('PHYS', 'Physique'),
+        ('HIST', 'Histoire'), ('GEOG', 'Géographie')
+    )
+    SUBJECT_LEVEL = (
+        ('6ième', '6ième'), ('5ième', '5ième'),
+        ('4ième', '4ième'), ('3ième', '3ième'),
+        ('2nde C', '2nde C'), ('2nde A', '2nde A'),
+        ('1ère A', '1ère A'), ('1ère D', '1ère D'),
+        ('1ère C', '1ère C'), ('Tle A', 'Tle A'),
+        ('Tle D', 'Tle D'), ('Tle C', 'Tle C'),
     )
     uuid = models.UUIDField(
         db_index=True,
         default=uuid.uuid4,
         editable=False,
-        verbose_name='Cours ID'
+        verbose_name='Subject ID'
     )
     instructor = models.ForeignKey(
-        mdl.Teacher,
-        models.SET_NULL,
-        null=True,
-        related_name='courses_created_by',
-        verbose_name='instructeur'
+        to=mdl.Teacher,
+        on_delete=models.CASCADE,
+        related_name='course_created',
+        verbose_name='instructor'
     )
-    student = models.ManyToManyField(
-        mdl.Student,
-        related_name='student_courses_enrolled',
-        verbose_name='student joined course',
+    students = models.ManyToManyField(
+        to=mdl.Student,
+        verbose_name='Student joined',
+        related_name='student_enrolled',
         blank=True
     )
-    parent_or_tutor = models.ManyToManyField(
-        mdl.ParentOrTutor,
-        related_name='parent_or_tutor_courses_enrolled',
-        verbose_name='parent or tutor joined course',
-        blank=True
+    title = models.CharField(
+        verbose_name='Subject title',
+        max_length=60,
+        help_text='ajouter un titre de 60 caractères.'
     )
-    course_language = models.CharField(
+    subtitle = models.CharField(
+        verbose_name='Subject sub-title',
+        max_length=200,
+        blank=True, null=True,
+        help_text='ajouter un sous-titre de 200 caractères.'
+    )
+    price = models.PositiveIntegerField(
+        default=1500,
+        verbose_name='course price',
+        help_text='add course price'
+    )
+    sale_price = models.PositiveIntegerField(
+        default=0, blank=True, null=True,
+        verbose_name='course sale price',
+        help_text='add course sale price'
+    )
+    language = models.CharField(
         max_length=3,
         default="FR",
         choices=LANGUAGE_CHOICES,
         verbose_name='course language',
         help_text='language of course'
     )
-    course_category = models.CharField(
+    category = models.CharField(
         max_length=4,
         default="FRAN",
-        choices=COURSES_CATEGORY,
-        verbose_name='courses category',
-        help_text='Aidez les gens à trouver\
-        vos cours en choisissant des catégories\
-        qui représentent votre cours.'
+        choices=SUBJECT_CATEGORY,
+        verbose_name='course category',
+        help_text='définir la catégorie qui représentent votre cours.'
     )
-    course_title = models.CharField(
-        verbose_name='Course title',
+    level = models.CharField(
+        max_length=6,
+        default="6ième",
+        choices=SUBJECT_LEVEL,
+        verbose_name='course level',
+        help_text='le niveau qui représentent votre cours.'
+    )
+    description = models.TextField(
+        verbose_name='subject description',
+        blank=True, null=True,
+        help_text="subject description. Who user learn ?"
+    )
+    resume = models.TextField(
+        verbose_name='subject resume',
+        blank=True, null=True,
+        help_text='subject resume.'
+    )
+    image = models.ImageField(
+        verbose_name='subject cover',
+        upload_to=func_utils.upload_image_path,
+        blank=True, null=True,
+        help_text='upload subject cover'
+    )
+    slug = models.SlugField(
+        verbose_name='link of subject',
+        help_text='link of subject',
+        blank=True, unique=True,
+    )
+    free = models.BooleanField(
+        verbose_name='subject is free ?',
+        default=False,
+        help_text='this subject is free ?'
+    )
+    published = models.BooleanField(
+        verbose_name='subject published ?',
+        default=False,
+        help_text='this course is published ?'
+    )
+    created_at = models.DateField(
+        verbose_name='created at',
+        auto_now_add=True, auto_now=False
+    )
+    update_at = models.DateTimeField(
+        verbose_name='updated at',
+        auto_now=True, auto_now_add=False
+    )
+
+    objects = SubjectManager()
+
+
+    class Meta:
+        db_table = 'subject_db'
+        ordering = ['-created_at']
+        get_latest_by = ['-created_at']
+        verbose_name_plural = 'subject'
+        indexes = [
+            models.Index(fields=['id', 'uuid'], name='id_index_course'),
+        ]
+
+    def __str__(self):
+        return f"{self.title}"
+
+    @mark_safe
+    @admin.display(description='course description')
+    def course_description(self):
+        return self.description
+
+    @admin.display(description='course publish')
+    def publish_now(self):
+        return not datetime.date.today() > self.created_at
+
+    # chapters in course
+    @admin.display(description='chapters in course', empty_value='???')
+    def subject_courses(self):
+        chapters = Course.objects.filter(subject=self).order_by('order')
+        return chapters
+
+    @admin.display(description='courses number', empty_value='???')
+    def count_subjects_course(self):
+        count_courses = self.subject_courses().count()
+        return count_courses
+
+    # lessons in chapter
+    @admin.display(description='lessons in chapiter', empty_value='???')
+    def get_lessons(self):
+        lessons = CourseChapter.objects.filter(course__in=self.subject_courses())
+        return lessons
+
+    @admin.display(description='total lessons', empty_value='???')
+    def get_lessons_count(self):
+        count_lessons = self.get_lessons().count()
+        return count_lessons
+
+    @admin.display(description='total students', empty_value='???')
+    def count_students(self):
+        total_students = self.students.count()
+        return total_students
+
+    def get_absolute_url(self):
+        kwargs = {'slug': str(self.slug)}
+        return reverse('courses:course_detail', kwargs=kwargs)
+
+    def get_subject_list_url(self):
+        return reverse(
+            'subject:list_subject_url',
+            kwargs={'username': str(self.instructor.get_first_name())}
+        )
+
+    def get_subject_update_url(self):
+        return reverse(
+            'subject:update_subject_url',
+            kwargs={
+                'username': str(self.instructor.get_first_name()),
+                'slug': str(self.slug)
+            }
+        )
+
+    def get_subject_delete_url(self):
+        return reverse(
+            'subject:delete_subject_url',
+            kwargs={
+                'username': str(self.instructor.get_first_name()),
+                'slug': str(self.slug)
+            }
+        )
+
+    def get_subject_course_list_url(self):
+        return reverse(
+            'course:list_course_url',
+            kwargs={
+                'username': str(self.instructor.get_first_name()),
+                'slug': str(self.slug)
+            }
+        )
+
+    def get_subject_chapiter_create_url(self):
+        return reverse(
+            'course:create_course_url',
+            kwargs={
+                'username': str(self.instructor.get_first_name()),
+                'slug': str(self.slug)
+            }
+        )
+
+
+class Course(models.Model):
+    uuid = models.UUIDField(
+        db_index=True,
+        default=uuid.uuid4,
+        editable=False,
+        verbose_name='Cours ID'
+    )
+    subject = models.ForeignKey(
+        to=Subject,
+        on_delete=models.CASCADE,
+        related_name="subjects",
+        verbose_name='subject'
+    )
+    order = func_utils.CustomFields(
+        blank=True,
+        verbose_name='chapiter number',
+        for_fields=['subject']
+    )
+    title = models.CharField(
+        verbose_name='chapter title',
         max_length=60,
         help_text='Rédigez un titre de cours de 60 caractères.'
     )
-    course_brief = models.TextField(
-        verbose_name='Brief course',
-        help_text='Un bref résumé de votre cours.'
-    )
-    course_fee = models.PositiveIntegerField(
-        verbose_name='course fee',
-        help_text='add course fee'
+    description = models.TextField(
+        max_length=180,
+        verbose_name='chapiter description',
+        blank=True, null=True,
+        help_text='chapiter description'
     )
     slug = models.SlugField(
-        verbose_name='link of course',
-        help_text='link of course',
+        verbose_name='link this chapiter',
+        help_text='link this chapiter',
         blank=True, unique=True,
     )
-    published = models.BooleanField(
-        verbose_name='course published',
-        default=False,
+    created_at = models.DateField(
+        verbose_name='date created of courses',
+        auto_now_add=True, auto_now=False
     )
-    published_date = models.DateField(
-        verbose_name='published date',
-        auto_now_add=False,
-        blank=True, null=True
-    )
-    date_created = models.DateField(
-        verbose_name='date add of courses',
-        auto_now_add=True
+    update_at = models.DateTimeField(
+        verbose_name='date updated of courses',
+        auto_now=True, auto_now_add=False
     )
 
     class Meta:
         db_table = 'course_db'
-        ordering = ['-date_created']
-        get_latest_by = ['-date_created']
+        ordering = ['order']
+        get_latest_by = ['created_at', 'update_at']
         verbose_name_plural = 'courses'
+        indexes = [
+            models.Index(fields=['id', 'uuid'], name='id_index_chapter'),
+        ]
 
     def __str__(self):
-        return '{}'.format(self.course_brief)
+        return f"{self.title}"
 
     def get_absolute_url(self):
         return reverse(
-            'course:cours_detail',
+            'lessons:chapiter_detail',
             kwargs={
-                'slug': str(self.slug),
-                'pk': str(self.uuid)
+                'slug': str(self.subject.slug),
+                'chapiter_slug': str(self.slug),
+                'pk': str(self.pk)
             }
         )
 
-    def get_course_delete_url(self):
+    def get_course_list_url(self):
         return reverse(
-            'boards:course_delete',
+            'course:list_course_url',
             kwargs={
-                'slug': str(self.slug),
-                'pk': str(self.uuid)
+                'username': str(self.subject.instructor.get_first_name()),
+                'slug': str(self.subject.slug)
             }
         )
 
-    def get_course_update_url(self):
+    def get_chapiter_update_url(self):
         return reverse(
-            'boards:course_update',
+            'course:update_course_url',
             kwargs={
-                'slug': str(self.slug),
-                'pk': str(self.uuid)
+                'username': str(self.subject.instructor.get_first_name()),
+                'slug': str(self.subject.slug),
+                'pk': str(self.pk)
             }
         )
 
+    def get_chapiter_delete_url(self):
+        return reverse(
+            'course:delete_course_url',
+            kwargs={
+                'username': str(self.subject.instructor.get_first_name()),
+                'slug': str(self.subject.slug),
+                'pk': str(self.pk)
+            }
+        )
 
+    def get_chapiter_lesson_list_url(self):
+        return reverse(
+            'course_chapter:chapter_list_url',
+            kwargs={
+                'username': str(self.subject.instructor.get_first_name()),
+                'slug': str(self.subject.slug),
+                'pk': str(self.pk)
+            }
+        )
+
+    def get_chapiter_lesson_create_url(self):
+        return reverse(
+            'course_chapter:chapter_create_url',
+            kwargs={
+                'username': str(self.subject.instructor.get_first_name()),
+                'slug': str(self.subject.slug),
+                'pk': str(self.pk)
+            }
+        )
+
+    @mark_safe
+    @admin.display(description='course description')
+    def course_description(self):
+        return self.description
+
+    # chapitres dans un cours
+    def course_lessons(self):
+        lessons = CourseChapter.objects.filter(course=self)
+        return lessons
+
+    @admin.display(description='lessons', empty_value='???')
+    def count_lessons_course(self):
+        lessons_count = f"{self.course_lessons().count()}"
+        return lessons_count
+
+
+# Course Chapter : Modules
 class CourseChapter(models.Model):
     course = models.ForeignKey(
-        Course, models.SET_NULL, null=True,
+        to=Course,
+        on_delete=models.CASCADE,
+        related_name='chapiter',
         verbose_name='course'
     )
-    chapter_title = models.CharField(
-        verbose_name='chapter title',
+    slug = models.SlugField(
+        verbose_name='link of lesson',
+        help_text='link of lesson',
+        blank=True,
+    )
+    title = models.CharField(
+        verbose_name='lesson title',
         max_length=200,
-        help_text='add chapter title'
+        help_text='add lesson title'
     )
     chapter_desc = models.TextField(
-        blank=True,
-        verbose_name='chapter description',
-        help_text='add chapter description'
+        verbose_name='lesson description',
+        blank=True, null=True,
+        help_text='add lesson description'
     )
-    chapter_order = func_utils.CustomFields(
+    order = func_utils.CustomFields(
         blank=True,
-        verbose_name='chapter number',
-        for_fields=['chapter_title']
+        verbose_name='lesson number',
+        for_fields=['course']
+    )
+    access = models.BooleanField(
+        default=True,
+        verbose_name="lesson is access ?"
+    )
+    movie = models.URLField(verbose_name="url movie", help_text="add movies url", blank=True)
+    document = models.FileField(
+        upload_to=func_utils.save_chapiter_content_file,
+        verbose_name="document", help_text='upload file', blank=True
+    )
+    created_at = models.DateField(
+        verbose_name='date created',
+        auto_now_add=True, auto_now=False,
+    )
+    update_at = models.DateTimeField(
+        verbose_name='date updated',
+        auto_now=True, auto_now_add=False
     )
 
     class Meta:
-        ordering = ['chapter_order']
+        ordering = ['order']
         db_table = 'course_chapter_db'
-        verbose_name_plural = 'course chapiter'
+        verbose_name_plural = 'lessons'
+        indexes = [
+            models.Index(fields=['id'], name='id_index_lesson'),
+        ]
 
     def __str__(self):
-        return "{0}-{1}".format(self.chapter_order, self.chapter_title)
+        return f"{self.title}"
 
-
-class CourseChapterContent(models.Model):
-    chapter_content = models.ForeignKey(
-        CourseChapter,
-        models.CASCADE,
-        verbose_name='course chapter',
-        related_name='course_chapter_content',
-    )
-    chapter_type_content = models.ForeignKey(
-        ContentType, models.CASCADE,
-        limit_choices_to={
-            'model__in': (
-                'text', 'video',
-                'image', 'file'
-            )
-        }
-    )
-    chapter_id = models.PositiveIntegerField()
-    chapter_item = GenericForeignKey('chapter_type_content', 'chapter_id')
-    chapter_content_order = func_utils.CustomFields(
-        blank=True,
-        verbose_name='chapter number',
-        for_fields=['course_chapter']
-    )
-
-    class Meta:
-        db_table = 'course_chapter_content_db'
-        ordering = ['chapter_content_order']
-        verbose_name_plural = 'course chapter content'
-
-
-class ChapterTypeContent(models.Model):
-    instructeur = models.ForeignKey(
-        mdl.Teacher, models.CASCADE,
-        related_name='%(class)s_related'
-    )
-    content_type_title = models.CharField(
-        verbose_name='content title', max_length=250,
-        help_text='define content type title'
-    )
-    date_created = models.DateTimeField(verbose_name='date created', auto_now_add=True)
-    date_updated = models.DateTimeField(verbose_name='date updated', auto_now=True)
-
-    class Meta:
-        abstract = True
-
-    def __str__(self):
-        return "{0}".format(self.content_type_title)
-
-    def render_content(self):
-        content = 'course/content/{0}.html'.format(self._meta.model_name)
-        ctx = {'item': self}
-        return render_to_string(content, ctx)
-
-
-class TextContent(ChapterTypeContent):
-    content = models.TextField(verbose_name='content description')
-
-    def __str__(self):
-        truncated_ctn = Truncator(self.content)
-        truncated_ctn_chars = truncated_ctn.chars(30)
-        return "{0} {1}".format(self.get_fullname(), truncated_ctn_chars)
-
-    def get_description_as_markdown(self):
-        markdown_render = md.markdown(
-            self.content or u'',
-            extensions=['markdown.extensions.fenced_code']
+    def get_absolute_url(self):
+        return reverse(
+            'lessons:chapiter_lesson_detail',
+            kwargs={
+                'slug': str(self.course.subject.slug),
+                'chapiter_slug': str(self.course.slug),
+                'pk': str(self.course.pk),
+                'lesson_slug': str(self.slug)
+            }
         )
-        return markdown_render
+
+    def get_lesson_list_url(self):
+        return reverse(
+            'course_chapter:chapter_list_url',
+            kwargs={
+                'username': str(self.course.subject.instructor.get_first_name()),
+                'slug': str(self.course.slug),
+                'pk': str(self.course.pk)
+            }
+        )
+
+    def get_lesson_update_url(self):
+        return reverse(
+            'course_chapter:chapter_update_url',
+            kwargs={
+                'username': str(self.course.subject.instructor.get_first_name()),
+                'slug': str(self.course.subject.slug),
+                'pk': str(self.course.pk),
+                'lesson_pk': int(self.pk)
+            }
+        )
 
 
-class File(ContentType):
-    doc = models.FileField(
-        verbose_name='upload file', upload_to='file/', help_text='upload file'
-    )
+@receiver([models.signals.pre_save], sender=Course)
+@receiver([models.signals.pre_save], sender=Subject)
+@receiver([models.signals.pre_save], sender=CourseChapter)
+def subject_pre_save_receiver(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = func_utils.unique_slug_generator(instance)
 
-
-class Image(ContentType):
-    img = models.ImageField(
-        verbose_name='upload image', upload_to='img/', help_text='upload image'
-    )
-
-
-class Movie(ContentType):
-    movie_url = models.URLField(verbose_name='add movies url')
+@receiver([models.signals.post_save], sender=Course)
+def delete_old_image(sender, instance, *args, **kwargs):
+    if hasattr(instance, '_current_image'):
+        if instance._current_image != instance.image.path:
+            instance._current_image.delete(save=False)

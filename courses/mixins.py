@@ -1,51 +1,29 @@
 # courses.mixins.py
 
-from django.urls import reverse_lazy
-from django.contrib.auth import mixins
-
-from courses.models import Course
+from django.db.models import Q
 
 
-class InstructorMixin:
+class CourseSearchMixin(object):
+    def get_queryset(self, **kwargs):
+        queryset = super(CourseSearchMixin, self).get_queryset(**kwargs)
+        query = self.request.GET.get('q', None)
+        if query:
+            lookups = (
+                Q(title__icontains=query)
+                | Q(language__icontains=query)
+                | Q(category__icontains=query)
+                | Q(level__icontains=query)
+                | Q(resume__icontains=query)
+                | Q(description__icontains=query)
+            )
+            return queryset.filter(lookups).distinct()
+        else:
+            return self.none()
+        return queryset
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        queryset_filter = queryset.filter(instructor=self.request.user)
-        return queryset_filter
-
-
-class InstructorMixinEdit:
-
-    def form_valid(self, form):
-        form.instance.instructor = self.request.user
-        return super().form_valid(form)
-
-
-class InstructorCourseMixin(InstructorMixin, mixins.LoginRequiredMixin):
-    model = Course
-    fields = [
-        'course_language', 'course_title', 'course_category',
-        'course_brief', 'course_fee'
-    ]
-    # success_url = reverse_lazy('courses:teacher_list_cours_url')
-    success_url = None
-
-
-class InstructorCourseEditMixin(InstructorCourseMixin, InstructorMixinEdit):
-    template_name = 'dashboard/courses/teacher_add_course.html'
-
-
-class StudentMixin:
-
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        queryset_filter = queryset.filter(student=self.request.user)
-        return queryset_filter
-
-
-class ParentOrTutorMixin:
-
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        queryset_filter = queryset.filter(parent_or_tutor=self.request.user)
-        return queryset_filter
+    def get_context_data(self, **kwargs):
+        query = self.request.GET.get('q', None)
+        if query:
+            kwargs['page_title'] = f'Recherche pour "{query}"'
+        return super(CourseSearchMixin, self).get_context_data(**kwargs)
+        
