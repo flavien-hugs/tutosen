@@ -1,0 +1,194 @@
+{% extends "dashboard/_base.html" %}
+
+{% load widget_tweaks %}
+
+{% block dashboard_subheader %}
+    {% url 'subject:list_subject_url' request.user.get_first_name as subject_list_url %}
+    
+    <div class="mb-2 mb-lg-0">
+        <h1 class="mb-1 h2 font-weight-bold">
+            {{ page_title|capfirst }}
+        </h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ user.get_userdetail_url }}">Dashboard</a>
+                </li>
+
+                <li class="breadcrumb-item">
+                    <a href="{{ subject_list_url }}">courses</a>
+                </li>
+
+                <li class="breadcrumb-item active" aria-current="page">
+                    {{ page_title|lower|safe }}
+                </li>
+            </ol>
+        </nav>
+    </div>
+    <div>
+        <a href="{{ subject_list_url }}" class="btn btn-outline-white">
+        Back to All Courses</a>
+    </div>
+{% endblock dashboard_subheader %}
+
+{% block teacher_content %}
+    <div class="row justify-content-center rounded-lg">
+        <div class="{% if request.resolver_match.url_name == 'update_subject_url' %}col-xl-9 col-lg-8{% else %}col-xl-12 col-lg-12 col-12{% endif %}">
+            <div class="card border-0 mb-4">
+                <div class="card-header">
+                    <h4 class="mb-0">{{ page_title|capfirst }}</h4>
+                </div>
+
+                <div class="card-body">
+                    <form class="form-row" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger" role="alert">
+                                {% for error in form.non_field_errors %}
+                                    <p {% if forloop.last %} class="mb-0" {% endif %}>
+                                        {{ error }}
+                                    </p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        <div class="form-group col-12 col-md-4">
+                            {{ form.language|add_label_class:"form-label" }}
+                            {% render_field form.language|attr:"autofocus"|add_error_class:"is-invalid" placeholder=form.language.label %}
+                            <small>{{ form.language.help_text }}</small>
+                        </div>
+
+                        <div class="form-group col-12 col-md-4">
+                            {{ form.category|add_label_class:"form-label" }}
+                            {% render_field form.category|add_error_class:"is-invalid" placeholder=form.category.label %}
+                            <small>{{ form.category.help_text }}</small>
+                        </div>
+
+                        <div class="form-group col-12 col-md-4">
+                            {{ form.level|add_label_class:"form-label" }}
+                            {% render_field form.level|add_error_class:"is-invalid" placeholder=form.level.label %}
+                            <small>{{ form.level.help_text }}</small>
+                        </div>
+
+                        <div class="form-group col-12 col-md-6">
+                            {{ form.price|add_label_class:"form-label" }}
+                            {% render_field form.price|add_error_class:"is-invalid" placeholder=form.price.label %}
+                            <small>{{ form.price.help_text }}</small>
+                        </div>
+
+                        <div class="form-group col-12 col-md-6">
+                            {{ form.sale_price|add_label_class:"form-label" }}
+                            {% render_field form.sale_price|add_error_class:"is-invalid" placeholder=form.sale_price.label %}
+                            <small>{{ form.sale_price.help_text }}</small>
+                        </div>
+
+                        <div class="form-group col-12">
+                            {{ form.title|add_label_class:"form-label" }}
+                            {% render_field form.title|add_error_class:"is-invalid" placeholder=form.title.label %}
+                            <small>{{ form.title.help_text }}</small>
+                        </div>
+
+                        <div class="form-group col-12">
+                            {{ form.subtitle|add_label_class:"form-label" }}
+                            {% render_field form.subtitle|add_error_class:"is-invalid" placeholder=form.subtitle.label %}
+                            <small>{{ form.subtitle.help_text }}</small>
+                        </div>
+
+                        <div class="form-group col-12 col-md-6">
+                            {{ form.description|add_label_class:"form-label" }}
+                            {% render_field form.description|add_error_class:"is-invalid" placeholder=form.description.label %}
+                            <small>{{ form.description.help_text }}</small>
+                        </div>
+
+                        <div class="form-group col-12 col-md-6 mb-2">
+                            {{ form.resume|add_label_class:"form-label" }}
+                            {% render_field form.resume|add_error_class:"is-invalid" placeholder=form.resume.label %}
+                            <small>{{ form.resume.help_text }}</small>
+                        </div>
+
+                        <div class="form-group col-6">  
+                            <div class="custom-file-container" data-upload-id="courseCoverImg" id="courseCoverImg">
+                                {{ form.image|add_label_class:"custom-file-container__image-clear" }}
+                                {% render_field form.image|attr:"type:file" %}
+
+                                <small class="mt-3 d-block">
+                                    Upload your course image here. It must meet
+                                    our course image quality standards to be accepted.
+                                    Important guidelines: 750x440 pixels; .jpg, .jpeg,.
+                                    gif, or .png. no text on the image.
+                                </small>
+
+                                {% if object.image %}
+                                    <div class="custom-file-container__image-preview custom-file-container__image-preview--active" style="background-image:url({{ object.image.url }})"></div>
+                                {% else %}
+                                    <div class="custom-file-container__image-preview"></div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group col-12">
+                            <div class="custom-control custom-switch">
+                                {% render_field form.free|attr:"type:checkbox" placeholder=form.free.help_text %}
+                                {{ form.free|add_label_class:"custom-control-label ms-3" }}
+                            </div>
+                        </div>
+
+                        <div class="form-group col-12 mb-4">
+                            <div class="custom-control custom-switch">
+                                {% render_field form.published|attr:"type:checkbox" placeholder=form.published.help_text %}
+                                {{ form.published|add_label_class:"custom-control-label ms-3" }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-12">
+                            <button type="submit" class="btn btn-md btn-primary mb-3 mb-lg-0">
+                                Valider
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        {% if request.resolver_match.url_name == 'update_subject_url' %}
+            <div class="col-xl-3 col-lg-4 col-md-12 col-12">
+                <div class="card mt-4 mt-lg-0 mb-4">
+                    <div class="card-header d-lg-flex">
+                        <h4 class="mb-0">Course Info</h4>
+                    </div>
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <span>
+                            Course ID
+                            <span class="badge {% if object.published %}badge-success{% else %}badge-danger{% endif %}">
+                                {% if object.published %}Published{% else %}Unpublished{% endif %}
+                            </span>
+                        </span>
+                        <h5>{{ object.uuid }}</h5>
+                    </li>
+
+                    <li class="list-group-item">
+                        <span>Created at</span>
+                        <h5>{{ object.created_at|date }}</h5>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header d-lg-flex">
+                    <h4 class="mb-0">Actions</h4>
+                </div>
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>Delete</span>
+                        <a href="{{ object.get_course_delete_url }}">
+                            <i class="fe fe-trash text-danger font-size-md"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+{% endblock teacher_content %}

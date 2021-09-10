@@ -1,0 +1,119 @@
+{% extends "dashboard/_base.html" %}
+{% load widget_tweaks %}
+
+{% block dashboard_subheader %}
+    {% url "course:list_course_url" request.user.get_first_name as list_course_url %}
+
+    <div class="mb-2 mb-lg-0">
+        <h1 class="mb-1 h2 font-weight-bold">
+            {{ page_title|capfirst }}
+        </h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ user.get_userdetail_url }}">Dashboard</a>
+                </li>
+
+                <li class="breadcrumb-item">
+                    <a href="{{ lesson.subject.get_subject_list_url }}">
+                        {{ lesson.subject.title|lower|safe }}
+                    </a>
+                </li>
+
+                <li class="breadcrumb-item" aria-current="page">
+                    <a href="{{ lesson.get_chapiter_lesson_list_url }}">
+                        {{ lesson.title|lower|safe }}
+                    </a>
+                </li>
+
+                <li class="breadcrumb-item active" aria-current="page">
+                    {{ page_title|lower|safe }}
+                </li>
+            </ol>
+        </nav>
+    </div>
+
+    <div>
+        <a href="{{ lesson.get_chapiter_lesson_list_url }}" class="btn btn-outline-white">
+        Back to lessons</a>
+    </div>
+{% endblock dashboard_subheader %}
+
+{% block teacher_content %}
+    <div class="row justify-content-center rounded-lg">
+        <div class="{% if request.resolver_match.url_name == 'chapter_update_url' %}col-xl-9 col-lg-8{% else %}col-xl-8 col-lg-8{% endif %}">
+            <div class="card mb-3">
+                
+                <div class="card-header border-bottom px-4 py-3">
+                    <h4 class="mb-0">{{ page_title|safe }}</h4>
+                </div>
+
+                <div class="card-body">
+                    <form method="post" action="." enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        {% if formset.non_field_errors %}
+                            <div class="alert alert-danger" role="alert">
+                                {% for error in formset.non_field_errors %}
+                                    <p {% if forloop.last %}class="mb-0"{% endif %}>
+                                        {{ error }}
+                                    </p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        {% for form in formset %}
+                            {{ form.as_p }}
+                        {% endfor %}
+                        {{ formset.management_form }}
+                        <button class="btn btn-md btn-primary mb-3 mb-lg-0">Valider</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        {% if request.resolver_match.url_name == 'chapter_update_url' %}
+            <div class="col-xl-3 col-lg-4 col-md-12 col-12">
+                <div class="card mt-4 mt-lg-0 mb-4">
+                    <div class="card-header d-lg-flex">
+                        <h4 class="mb-0">Course Info</h4>
+                    </div>
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <span>Course ID</span>
+                        <h5>{{ lesson.uuid }}</h5>
+                    </li>
+
+                    <li class="list-group-item">
+                        <span>Created at</span>
+                        <h5>{{ lesson.created_at|date }}</h5>
+                    </li>
+
+                    <li class="list-group-item">
+                        <span>Last update</span>
+                        <h5>{{ lesson.update_at|timesince }}</h5>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="card-header d-lg-flex">
+                    <h4 class="mb-0">Revision History</h4>
+                </div>
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="mb-0">{{ object.update_at|date }}</h5>
+                            <span>{{ lesson.subject.instructor }}</span>
+                        </div>
+                        <div>
+                            <span class="badge badge-success badge-pill">Published</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+{% endblock teacher_content %}

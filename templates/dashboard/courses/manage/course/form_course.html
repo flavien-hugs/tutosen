@@ -1,0 +1,144 @@
+{% extends "dashboard/_base.html" %}
+
+{% load widget_tweaks %}
+
+{% block dashboard_subheader %}
+    
+    <div class="mb-2 mb-lg-0">
+        <h1 class="mb-1 h2 font-weight-bold">
+            {{ page_title|capfirst }}
+        </h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ user.get_userdetail_url }}">Dashboard</a>
+                </li>
+
+                <li class="breadcrumb-item">
+                    <a href="{{ chapiter.get_subject_list_url }}">
+                        {{ chapiter.title|lower|safe }}
+                    </a>
+                </li>
+
+                <li class="breadcrumb-item">
+                    <a href="{{ chapiter.get_subject_course_list_url }}">chapiter</a>
+                </li>
+
+                <li class="breadcrumb-item active" aria-current="page">
+                    {{ page_title|capfirst|safe }}
+                </li>
+            </ol>
+        </nav>
+    </div>
+    <div>
+        <a href="{{ chapiter.get_subject_course_list_url }}" class="btn btn-outline-white">
+            Back to all chapiter
+        </a>
+    </div>
+{% endblock dashboard_subheader %}
+
+{% block teacher_content %}
+    <div class="row justify-content-center rounded-lg">
+        <div class="{% if request.resolver_match.url_name == 'update_course_url' %}col-xl-9 col-lg-8{% else %}col-xl-8 col-lg-8{% endif %} col-12">
+            
+            <form method="post" action=".">
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {% for error in form.non_field_errors %}
+                            <p {% if forloop.last %} class="mb-0" {% endif %}>
+                                {{ error }}
+                            </p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <div class="card mb-3">
+                    <div class="card-header border-bottom px-4 py-3">
+                        <h4 class="mb-0">{{ page_title|safe }}</h4>
+                    </div>
+
+                    <div class="card-body">
+                        {% for form in form %}
+                            <div class="form-group">
+                                {{ form }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {{ form.management_form }}
+                <button class="btn btn-primary">Valider</button>
+            </form>
+        </div>
+
+        {% if request.resolver_match.url_name == 'update_course_url' %}
+            <div class="col-xl-3 col-lg-4 col-md-12 col-12">
+                <div class="card mt-4 mt-lg-0 mb-4">
+                    <div class="card-header d-lg-flex">
+                        <h4 class="mb-0">Course Info</h4>
+                    </div>
+
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <span>Course ID</span>
+                            <h5>{{ object.uuid }}</h5>
+                        </li>
+
+                        <li class="list-group-item">
+                            <span>Created at</span>
+                            <h5>{{ object.created_at|date }}</h5>
+                        </li>
+
+                        <li class="list-group-item">
+                            <span>First published at</span>
+                            <h5>{{ object.published_date|date }}</h5>
+                        </li>
+
+                        <li class="list-group-item">
+                            <span>Last update</span>
+                            <h5>{{ object.update_at|date }}</h5>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header d-lg-flex">
+                        <h4 class="mb-0">Actions</h4>
+                    </div>
+
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>Delete</span>
+                            <form method="post" action="{{ object.get_chapiter_delete_url }}">
+                                {% csrf_token %}
+                                <button class="dropdown-item">
+                                    <i class="fe fe-trash text-danger font-size-md">
+                                    </i>
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="card-header d-lg-flex">
+                        <h4 class="mb-0">Revision History</h4>
+                    </div>
+
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="mb-0">{{ object.update_at|date }}</h5>
+                                <span>{{ object.instructor }}</span>
+                            </div>
+                            <div>
+                                <span class="badge badge-success badge-pill">Published</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock teacher_content %}

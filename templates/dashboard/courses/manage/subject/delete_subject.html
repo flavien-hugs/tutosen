@@ -1,6 +1,9 @@
 {% extends "dashboard/_base.html" %}
+{% load widget_tweaks %}
 
 {% block dashboard_subheader %}
+    {% url 'subject:list_subject_url' user.get_first_name as subject_list_url %}
+    
     <div class="mb-2 mb-lg-0">
         <h1 class="mb-1 h2 font-weight-bold">
             {{ page_title|capfirst }}
@@ -8,27 +11,27 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="{{ request.user.get_userdetail_url }}">Dashboard</a>
+                    <a href="{{ user.get_userdetail_url }}">Dashboard</a>
                 </li>
 
                 <li class="breadcrumb-item">
-                    <a href="{{ request.user.get_userupdate_url }}">Parameters</a>
+                    <a href="{{ subject_list_url }}">courses</a>
                 </li>
-                
+
                 <li class="breadcrumb-item active" aria-current="page">
-                    {{ page_title|capfirst }}
+                    {{ page_title|lower|safe }}
                 </li>
             </ol>
         </nav>
     </div>
 {% endblock dashboard_subheader %}
 
-
 {% block teacher_content %}
-
+    {% url 'subject:list_subject_url' user.get_first_name as subject_list_url %}
+    
     <div class="card">
         <div class="card-header">
-            <h3 class="mb-0">Suppression de votre compte</h3>
+            <h3 class="mb-0">Remove this course</h3>
             <p class="mb-0">Supprimer ou fermer définitivement votre compte.</p>
         </div>
 
@@ -46,10 +49,10 @@
                 <div>
                     <button type="submit" class="btn btn-danger font-weight-bold">
                         <i class="fe fe-trash mr-1"></i>
-                        Supprimer mon compte
+                        Remove this course
                     </button>
 
-                    <a href="{{ request.user.get_userupdate_url }}" class="btn btn-light">
+                    <a href="{{ subject_list_url }}" class="btn btn-light">
                     Annuler</a>
                 </div>
             </form>

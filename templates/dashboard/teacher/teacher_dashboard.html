@@ -1,10 +1,13 @@
 {% extends "dashboard/_base.html" %}
 
+{% load boards_tags %}
+
 {% block teacher_content %}
-    
     {% ifequal request.user.type 'TEACHER'  %}
+        {% url 'subject:list_subject_url' user.get_first_name as subject_list_url %}
+        
         <div class="row">
-            <div class="col-lg-4 col-md-12 col-12">
+            <div class="col-xl-3 col-lg-3 col-md-12 col-12">
                 <div class="card mb-4">                                
                     <div class="card-body p-4">
                         <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
@@ -30,22 +33,22 @@
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-12 col-12">
+            <div class="col-xl-3 col-lg-3 col-12">
                 <div class="card mb-4">
                     <div class="card-body p-4">
                         <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
                             <div>
                                 <span class="font-size-xs text-uppercase font-weight-semi-bold">
-                                Étudiants Inscrits</span>
+                                Course{{ subjects.count|pluralize }}</span>
                             </div>
 
                             <div>
-                                <span class="fe fe-users font-size-lg text-primary"></span>
+                                <span class="fe fe-book-open font-size-lg text-primary"></span>
                             </div>
                         </div>
 
                         <h2 class="mt-4 font-weight-bold mb-1 d-flex align-items-center h1 lh-1">
-                            100
+                            {{ subjects.count }}
                         </h2>
 
                         <span class="text-success font-weight-semi-bold">
@@ -56,7 +59,33 @@
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-12 col-12">
+            <div class="col-xl-3 col-lg-3 col-md-12 col-12">
+                <div class="card mb-4">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
+                            <div>
+                                <span class="font-size-xs text-uppercase font-weight-semi-bold">
+                                Évaluation des cours</span>
+                            </div>
+
+                            <div>
+                                <span class="fe fe-book-open font-size-lg text-primary"></span>
+                            </div>
+                        </div>
+
+                        <h2 class="mt-4 font-weight-bold mb-1 d-flex align-items-center h1 lh-1">
+                            4.80
+                        </h2>
+
+                        <span class="text-success font-weight-semi-bold">
+                            <i class="fe fe-trending-up mr-1"></i>
+                            +2.5 points obtenus
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-3 col-md-12 col-12">
                 <div class="card mb-4">
                     <div class="card-body p-4">
                         <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
@@ -107,53 +136,27 @@
             </div>
         </div>
 
-        <div class="card mb-4">
-            <div class="card-header border-bottom-0">
-                <h3 class="h4 mb-0">Cours les plus vendus</h3>
-            </div>
+        {% if subjects %}
+            <div class="row">
+                <div class="col-xl-4 col-lg-6 col-md-12 col-12 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header d-flex align-items-center justify-content-between card-header-height">
+                            <h4 class="mb-0">Recent Course{{ subjects.count|pluralize }}</h4>
+                            <a href="{{ subject_list_url }}" class="btn btn-outline-white btn-sm">View all</a>
+                        </div>
 
-            <div class="table-responsive border-0">
-                <table class="table mb-0">
-                    <thead>
-                        <tr>
-                            <th scope="col" class="border-0">COURS</th>
-                            <th scope="col" class="border-0">VENTES</th>
-                            <th scope="col" class="border-0">MONTANT</th>
-                            <th scope="col" class="border-0"></th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr>
-                            <td class="align-middle border-top-0">
-                                <a href="#">
-                                    <div class="d-lg-flex align-items-center">
-                                        <img src="{{ STATIC_PREFIX }}img/cours/course-laravel.jpg" alt="" class="rounded img-4by3-lg" />
-                                        <h5 class="mb-0 ml-lg-3 mt-2 mt-lg-0 text-primary-hover">
-                                            Construire des API évolutives avec GraphQL
-                                        </h5>
-                                    </div>
-                                </a>
-                            </td>
-                            <td class="align-middle border-top-0">34</td>
-                            <td class="align-middle border-top-0">30 000 Fr</td>
-                            <td class="text-muted align-middle border-top-0">
-                                <span class="dropdown">
-                                    <a class="text-muted text-decoration-none" href="#!" role="button" id="courseDropdown1"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fe fe-more-vertical"></i></a>
-                                    <span class="dropdown-menu" aria-labelledby="courseDropdown1">
-                                        <span class="dropdown-header">Modifier</span>
-                                        <a class="dropdown-item" href="#!"><i class="fe fe-edit dropdown-item-icon"></i>Éditer</a>
-                                        <a class="dropdown-item" href="#!"><i class="fe fe-trash dropdown-item-icon"></i>Supprimer</a>
-                                    </span>
-                                </span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                {% include "dashboard/courses/snippet/snippet_subject_list.html" %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        {% endif %}
     {% endifequal %}
 
+    {% ifequal request.user.type 'STUDENT' %}
+        {{ subject_list }}
+    {% endifequal %}
 {% endblock teacher_content %}

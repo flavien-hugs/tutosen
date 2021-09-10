@@ -1,8 +1,8 @@
 {% extends "dashboard/_base.html" %}
 {% load widget_tweaks boards_tags %}
 
+
 {% block dashboard_subheader %}
-    
     <div class="mb-2 mb-lg-0">
         <h1 class="mb-1 h2 font-weight-bold">
             {{ page_title|capfirst }}
@@ -16,7 +16,7 @@
                 <li class="breadcrumb-item">
                     <a href="{{ request.user.get_userupdate_url }}">Parameters</a>
                 </li>
-                
+
                 <li class="breadcrumb-item active" aria-current="page">
                     {{ page_title|capfirst }}
                 </li>
@@ -26,192 +26,187 @@
 
     <div>
         <a href="{{ request.user.get_userdelete_url }}" class="btn btn-danger text-truncate font-weight-bold text-uppercase">
-            <i class="fe fe-trash font-weight-bold mr-2"></i> Delete your account
+            <i class="fe fe-trash font-weight-bold mr-2"></i>
+            Delete your account
         </a>
     </div>
 {% endblock dashboard_subheader %}
 
+
 {% block teacher_content %}
-    {% url "boards:user_update" request.user.uuid as user_update_url %}
 
-    <form enctype="multipart/form-data" data-url="{{ user_update_url }}" id="personal-form-update" class="row" method="POST">
-        {% csrf_token %}
+<form enctype="multipart/form-data" id="personal-form-update" class="row" method="POST">
+    {% csrf_token %}
 
-        <div class="row">
-            <section class="col-xl-6 col-lg-6 col-md-12 col-12">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h3 class="mb-0">Informations personnelles</h3>
-                        <p class="mb-0">
-                            Modifiez vos informations personnelles.
-                        </p>
+    <div class="row">
+        <section class="col-xl-6 col-lg-6 col-md-12 col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 class="mb-0">Informations personnelles</h3>
+                    <p class="mb-0">
+                        Modifiez vos informations personnelles.
+                    </p>
+                </div>
+
+                <div class="card-body">
+                    <div class="d-lg-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center mb-4 mb-lg-0">
+                            {% if user.avatar %}
+                                <img class="avatar-xl rounded-circle" src="{{ user.avatar.url }}" alt="{{ avatar.first_name|slugify }}">
+                            {% else %}
+                                {{ user.email|gravatar:80 }}
+                            {% endif %}
+
+                            <div class="ml-3">
+                                <h4 class="mb-0">{{ user.get_civility_display|capfirst|safe }}</h4>
+                                <p class="mb-0">
+                                   {{ user.first_name|title|safe }}
+                                </p>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="card-body">
-                        <div class="d-lg-flex align-items-center justify-content-between">
-                            <div class="d-flex align-items-center mb-4 mb-lg-0">
-                                {% if avatar.img.url %}
-                                <img src="{{ avatar.img.url }}" alt="{{ avatar.first_name }}">
-                                {% else %}
-                                {{ email|gravatar:80 }}
-                                {% endif %}
+                    <hr class="my-5"/>
 
-                                <div class="ml-3">
-                                    <h4 class="mb-0">Votre avatar</h4>
-                                    <p class="mb-0">
-                                        PNG ou JPG ne dépassant pas 800px de largeur et de hauteur.
-                                    </p>
-                                </div>
+                    <div class="form-row">
+                        <div class="form-group col-12 mb-4">
+                            {{ form.first_name|add_label_class:"form-label" }}
+                            <div class="input-group">
+                                {% render_field form.civility|add_error_class:"is-invalid" class+="custom-select w-25" %}
+                                {% render_field form.first_name|add_error_class:"is-invalid" class+="form-control w-75" placeholder=form.first_name.label %}
                             </div>
                         </div>
 
-                        <hr class="my-5"/>
+                        <div class="form-group col-12 mb-4">
+                            {{ form.last_name|add_label_class:"form-label" }}
+                            {% render_field form.last_name|add_error_class:"is-invalid" class+="form-control" placeholder=form.last_name.label %}
+                        </div>
 
-                        <div class="form-row">
-                            <div class="form-group col-12 mb-4">
-                                {{ form.first_name|add_label_class:"form-label" }}
-                                <div class="input-group">
-                                    {% render_field form.civility|add_error_class:"is-invalid" class+="custom-select w-25" %}
-                                    {% render_field form.first_name|add_error_class:"is-invalid" class+="form-control w-75" placeholder=form.first_name.label %}
-                                </div>
+                        <div class="form-group col-12 mb-4">
+                            {{ form.statut|add_label_class:"form-label" }} {% render_field form.statut|add_error_class:"is-invalid" class+="form-control" placeholder=form.statut.label %} {{ form.statut.help_text }}
+                        </div>
+
+                        <div class="form-group col-12 mb-4">
+                            <label class="form-label" for="{{ form.username.id_for_label }}">Pseudo :</label> {% render_field form.username|add_error_class:"is-invalid" class+="form-control" placeholder="Entrer votre pseudo" %}
+                        </div>
+
+                        <div class="form-group col-12 mb-4">
+                            {{ form.brief_desc|add_label_class:"form-label" }} {% render_field form.brief_desc|add_error_class:"is-invalid" class+="form-control" placeholder="Ajouter une description à votre profile" %}
+                            {{ form.brief_desc.help_text }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 class="mb-0">Avatar &amp; Cover</h3>
+                    <p class="mb-0">Add your Avatar and Cover</p>
+                </div>
+
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="form-group col-12 mb-4">
+                            {{ form.avatar|add_label_class:"form-label" }}
+                            {% render_field form.avatar class+="form-control" placeholder="Account avatar" %}
+                        </div>
+                        <div class="form-group col-12 mb-4">
+                            {{ form.cover|add_label_class:"form-label" }}
+                            {% render_field form.cover class+="form-control" placeholder="Account cover" %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="col-xl-6 col-lg-6 col-md-12 col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 class="mb-0">Adresse</h3>
+                    <p class="mb-0">
+                        Modifiez votre adresse.
+                    </p>
+                </div>
+
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="form-group col-12 mb-4">
+                            {{ form.phone_number|add_label_class:"form-label" }}
+                            {% render_field form.phone_number|add_error_class:"is-invalid" class+="form-control" placeholder="Téléphone mobile" %}
+                        </div>
+
+                        <div class="form-group col-12 mb-4">
+                            {{ form.state|add_label_class:"form-label" }} {% render_field form.state|add_error_class:"is-invalid" class+="form-control" placeholder="Ville de résidence" %}
+                        </div>
+
+                        <div class="form-group col-12 mb-4">
+                            {{ form.country|add_label_class:"form-label" }}
+                            <div class="input-group">
+                                {% render_field form.country|add_error_class:"is-invalid" class+="custom-select" %}
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                            <div class="form-group col-12 mb-4">
-                                {{ form.last_name|add_label_class:"form-label" }}
-                                {% render_field form.last_name|add_error_class:"is-invalid" class+="form-control" placeholder=form.last_name.label %}
-                            </div>
+            <div class="card mb-4">
+                <div class="card-header d-flex align-items-center justify-content-between">
+                    <h3 class="mb-0">
+                        Comptes réseaux sociaux <br>
+                        <small class="small text-muted">
+                            Mettre à jour compte réseaux social.
+                        </small>
+                    </h3>
 
-                            <div class="form-group col-12 mb-4">
-                                {{ form.statut|add_label_class:"form-label" }}
-                                {% render_field form.statut|add_error_class:"is-invalid" class+="form-control" placeholder=form.statut.label %}
-                                {{ form.statut.help_text }}
-                            </div>
+                    <div>
+                        <i class="mdi mdi-facebook text-primary mdi-24px align-middle mr-2"></i>
+                        <i class="mdi mdi-twitter text-primary mdi-24px align-middle mr-2"></i>
+                        <i class="mdi mdi-linkedin text-primary mdi-24px align-middle"></i>
+                    </div>
+                </div>
 
-                            <div class="form-group col-12 mb-4">
-                                <label class="form-label" for="{{ form.username.id_for_label }}">Pseudo :</label>
-                                {% render_field form.username|add_error_class:"is-invalid" class+="form-control" placeholder="Entrer votre pseudo" %}
-                            </div>
-
-                            <div class="form-group col-12 mb-4">
-                                {{ form.brief_desc|add_label_class:"form-label" }}
-                                {% render_field form.brief_desc|add_error_class:"is-invalid" class+="form-control" placeholder="Ajouter une description à votre profile" %}
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="form-group col-12 mb-4">
+                            <label for="{{ form.facebook.id_for_label }}" class="form-label">
+                                Facebook <br>
                                 <small class="text-muted">
-                                {{ form.brief_desc.help_text }}
-                                Si vous ne connaissez pas la syntaxe markdown,
-                                suivez cette formation <a target="_blank" nofollow href="https://www.markdowntutorial.com/fr/">
-                                ici</a>.</small>
+                                    Ajoutez votre nom d'utilisateur Facebook
+                                </small>
+                            </label> {% render_field form.facebook|add_error_class:"is-invalid" class+="form-control" placeholder="Ex.: flavien-hugs" %}
+                        </div>
+
+                        <div class="form-group col-12 mb-4">
+                            <label for="{{ form.twitter.id_for_label }}" class="form-label">
+                                Nom d'utilisateur sur Twitter <br>
+                                <small class="text-muted">
+                                    Entrer votre nom d'utilisateur Twitter
+                                </small>
+                            </label>
+                            {% render_field form.twitter|add_error_class:"is-invalid" class+="form-control" placeholder="Nom de profil Twitter" %}
+                        </div>
+
+                        <div class="form-group col-12 mb-4">
+                            <label for="{{ form.linkedin.id_for_label }}" class="form-label">
+                                URL du profil LinkedIn <br>
+                                <small class="text-muted">
+                                    Ajoutez l'URL de votre profil linkedin.
+                                </small>
+                            </label>
+                            <div class="input-group">
+                                {% render_field form.linkedin|add_error_class:"is-invalid" class+="form-control" placeholder="https://www.linkedin.com/in/flavein.hugs" %}
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
+    </div>
 
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h3 class="mb-0">Cover</h3>
-                        <p class="mb-0">Modifiez votre Cover.</p>
-                    </div>
-                                
-                    <div class="card-body">
-                        <div class="form-row">
-                            <div class="form-group col-12 mb-4">
-                                {{ form.cover|add_label_class:"form-label" }}
-                                {% render_field form.cover class+="form-control" placeholder="Account cover" %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="col-xl-6 col-lg-6 col-md-12 col-12">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h3 class="mb-0">Adresse</h3>
-                        <p class="mb-0">
-                            Modifiez votre adresse.
-                        </p>
-                    </div>
-
-                    <div class="card-body">
-                        <div class="form-row">
-                            <div class="form-group col-12 mb-4">
-                                {{ form.phone_number|add_label_class:"form-label" }}
-                                {% render_field form.phone_number|add_error_class:"is-invalid" class+="form-control" placeholder="Téléphone mobile" %}
-                            </div>
-
-                            <div class="form-group col-12 mb-4">
-                                {{ form.state|add_label_class:"form-label" }}
-                                {% render_field form.state|add_error_class:"is-invalid" class+="form-control" placeholder="Ville de résidence" %}
-                            </div>
-
-                            <div class="form-group col-12 mb-4">
-                                {{ form.country|add_label_class:"form-label" }}
-                                <div class="input-group">
-                                    {% render_field form.country|add_error_class:"is-invalid" class+="custom-select" %}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card mb-4">
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                        <h3 class="mb-0">
-                            Comptes réseaux sociaux <br>
-                            <small class="small text-muted">
-                                Mettre à jour compte réseaux social.
-                            </small>
-                        </h3>
-                
-                        <div>
-                            <i class="mdi mdi-facebook text-primary mdi-24px align-middle mr-2"></i>
-                            <i class="mdi mdi-twitter text-primary mdi-24px align-middle mr-2"></i>
-                            <i class="mdi mdi-linkedin text-primary mdi-24px align-middle"></i>
-                        </div>
-                    </div>
-                
-                    <div class="card-body">
-                        <div class="form-row">
-                            <div class="form-group col-12 mb-4">
-                                <label for="{{ form.facebook.id_for_label }}" class="form-label">
-                                    Facebook <br>
-                                    <small class="text-muted">
-                                        Ajoutez votre nom d'utilisateur Facebook
-                                    </small>
-                                </label>
-                                {% render_field form.facebook|add_error_class:"is-invalid" class+="form-control" placeholder="Ex.: flavien-hugs" %}
-                            </div>
-                
-                            <div class="form-group col-12 mb-4">
-                                <label for="{{ form.twitter.id_for_label }}" class="form-label">
-                                    Nom d'utilisateur sur Twitter <br>
-                                    <small class="text-muted">
-                                        Entrer votre nom d'utilisateur Twitter
-                                    </small>
-                                </label>
-                                {% render_field form.twitter|add_error_class:"is-invalid" class+="form-control" placeholder="Nom de profil Twitter" %}
-                            </div>
-                
-                            <div class="form-group col-12 mb-4">
-                                <label for="{{ form.linkedin.id_for_label }}" class="form-label">
-                                    URL du profil LinkedIn <br>
-                                    <small class="text-muted">
-                                        Ajoutez l'URL de votre profil linkedin.
-                                    </small>
-                                </label>
-                                <div class="input-group">
-                                    {% render_field form.linkedin|add_error_class:"is-invalid" class+="form-control" placeholder="https://www.linkedin.com/in/flavein.hugs-ba004b78" %}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-
-        <div class="col-12">
-            <button class="btn btn-primary text-uppercase" type="submit">
-                Enregistrer
-            </button>
-        </div>
-    </form>
+    <div class="col-12">
+        <button class="btn btn-primary text-uppercase" type="submit">
+            Enregistrer
+        </button>
+    </div>
+</form>
 {% endblock teacher_content %}

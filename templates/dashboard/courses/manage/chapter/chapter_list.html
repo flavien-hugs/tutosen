@@ -1,0 +1,116 @@
+{% extends "dashboard/_base.html" %}
+{% load widget_tweaks %}
+
+{% block dashboard_subheader %}
+
+    <div class="mb-2 mb-lg-0">
+        <h1 class="mb-1 h2 font-weight-bold">
+            {{ page_title|capfirst|safe }}
+        </h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ user.get_userdetail_url }}">Dashboard</a>
+                </li>
+
+                <li class="breadcrumb-item">
+                    <a href="{{ lesson.subject.get_subject_list_url }}">
+                        {{ lesson.subject.title|lower|safe }}
+                    </a>
+                </li>
+
+                <li class="breadcrumb-item">
+                    <a href="{{ lesson.get_course_list_url }}">
+                        {{ lesson|lower|safe }}
+                    </a>
+                </li>
+
+                <li class="breadcrumb-item" aria-current="page">
+                    lessons
+                </li>
+            </ol>
+        </nav>
+    </div>
+    <div>
+        <a href="{{ lesson.get_chapiter_lesson_create_url }}" class="btn btn-primary">
+            {{ empty_subject_label }}
+        </a>
+    </div>
+{% endblock dashboard_subheader %}
+
+{% block teacher_content %}
+    {% url 'course:add_course_url' request.user.get_first_name as add_course_url %}
+
+    {% with lessons=lesson.course_lessons.all %}
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-12">
+                <div class="card mrounded-lg">
+                    {% if lessons %}
+                        <div class="p-4 row">
+                            <form class="d-flex align-items-center col-12 col-md-8 col-lg-3">
+                                <span class="position-absolute pl-3 search-icon">
+                                    <i class="fe fe-search"></i>
+                                </span>
+                                <input type="search" class="form-control shadow-none pl-6" placeholder="Search chapter">
+                            </form>
+                        </div>
+
+                        <div class="table-responsive border-0 overflow-y-hidden">
+                            <table class="table mb-0 text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th class="border-0">chapter n°</th>
+                                        <th class="border-0">chapter title</th>
+                                        <th class="border-0">resource</th>
+                                        <th class="border-0">date created</th>
+                                        <th class="border-0">Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {% for lesson in lessons %}
+                                        <tr>
+                                            <td class="align-middle border-top-0">
+                                                
+                                                <a href="{{ lesson.get_lesson_update_url }}" class="text-inherit">
+                                                    <h5 class="mb-0 text-primary-hover">
+                                                        Lesson {{ lesson.order|add:1 }}
+                                                    </h5>
+                                                </a>
+                                            </td>
+
+                                            <td class="align-middle border-top-0">
+                                                <a href="{{ lesson.get_lesson_update_url }}" class="text-inherit">
+                                                    <h5 class="mb-0 text-primary-hover">
+                                                        {{ lesson.title|capfirst|safe }}
+                                                    </h5>
+                                                </a>
+                                            </td>
+
+                                            <td class="align-middle border-top-0">
+                                                <i class="fe fe-image text-primary font-size-md"></i>
+                                            </td>
+
+                                            <td class="align-middle border-top-0">
+                                                {{ lesson.created_at|timesince }}
+                                            </td>
+
+                                            <td class="text-muted border-top-0">
+                                                <a href="{{ lesson.get_lesson_update_url }}">
+                                                    <i class="fe fe-edit dropdown-item-icon"></i>
+                                                    Edit
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        {% include "dashboard/courses/snippet/empty_object.html" %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endwith %}
+{% endblock teacher_content %}

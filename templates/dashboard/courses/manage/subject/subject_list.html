@@ -1,0 +1,164 @@
+{% extends "dashboard/_base.html" %}
+
+{% load widget_tweaks boards_tags %}
+
+{% block dashboard_subheader %}
+    {% url 'subject:create_subject_url' request.user.get_first_name as subject_create_url %}
+
+    <div class="mb-2 mb-lg-0">
+        <h1 class="mb-1 h2 font-weight-bold">{{ page_title|capfirst|safe }}</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ request.user.get_userdetail_url }}">Dashboard</a>
+                </li>
+
+                <li class="breadcrumb-item">
+                    course
+                </li>
+
+                <li class="breadcrumb-item active" aria-current="page">
+                    {{ page_title|lower|safe }}
+                </li>
+            </ol>
+        </nav>
+    </div>
+
+    <div>
+        <a href="{{ subject_create_url }}" class="btn btn-primary">
+            {{ empty_subject_label }}
+        </a>
+    </div>
+{% endblock dashboard_subheader %}
+
+{% block teacher_content %}
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-12">
+            <div class="card rounded-lg">
+                {% if subject_list %}
+                    <div class="p-4 row">
+                        <form class="d-flex align-items-center col-12 col-md-8 col-lg-3">
+                            <span class="position-absolute pl-3 search-icon">
+                                <i class="fe fe-search"></i>
+                            </span>
+                            <input type="search" class="form-control shadow-none pl-6" placeholder="Search course">
+                        </form>
+                    </div>
+
+                    <div class="table-responsive border-0 overflow-y-hidden">
+                        <table class="table mb-0 text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="border-0">Cours</th>
+                                    <th scope="col" class="border-0">Catégories</th>
+                                    <th scope="col" class="border-0">Étudiants</th>
+                                    <th scope="col" class="border-0">Notation</th>
+                                    <th scope="col" class="border-0">Statut</th>
+                                    <th scope="col" class="border-0">Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {% for subject in subject_list %}
+                                    <tr>
+                                        <td class="border-top-0">
+                                            <div class="d-lg-flex">
+                                                <div>
+                                                    <a href="{{ course.get_subject_course_list_url }}">
+                                                        <img src="
+                                                        {% if subject.image %}
+                                                            {{ subject.image.url }}
+                                                        {% else %}
+                                                            {{ STATIC_PREFIX }}img/cours/empty.jpg
+                                                        {% endif %}" alt="{{ subject.title }}" class="rounded img-4by3-lg">
+                                                    </a>
+                                                </div>
+
+                                                <div class="ml-lg-3 mt-2 mt-lg-0">
+                                                    <h4 class="mb-1 h5">
+                                                        <a href="{{ subject.get_subject_course_list_url }}" class="text-inherit">
+                                                            {{ subject.title|capfirst|safe }}
+                                                        </a>
+                                                    </h4>
+                                                    <ul class="list-inline font-size-xs mb-0">
+                                                        <li class="list-inline-item">
+                                                            <i class="fa fa-bookmark mr-1"></i>
+                                                            {{ subject.subject_courses.count }}
+                                                            chapter{{ subject.subject_courses.count|pluralize:' ,s' }}
+                                                        </li>
+
+                                                        <li class="list-inline-item">
+                                                            <i class="far fa-clock mr-1"></i>
+                                                            {{ subject.created_at|date }}
+                                                        </li>
+
+                                                        <li class="list-inline-item">
+                                                            <i class="fe fe-bar-chart mr-1"></i>
+                                                            {{ subject.get_level_display|safe }}
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td class="border-top-0">
+                                            {{ subject.get_category_display|safe }}
+                                        </td>
+
+                                        <td class="border-top-0">11,200</td>
+
+                                        <td class="border-top-0">
+                                            <span class="text-warning">
+                                                4.5<i class="mdi mdi-star"></i>
+                                            </span>
+                                            (3,250)
+                                        </td>
+
+                                        <td class="border-top-0">
+                                            {% if subject.published %}
+                                                <span class="badge badge-success">
+                                                    Published
+                                                </span>
+                                            {% else %}
+                                                <span class="badge badge-danger">
+                                                    Not published
+                                                </span>
+                                            {% endif %}
+                                        </td>
+
+                                        <td class="text-muted border-top-0">
+                                            <span class="dropdown">
+                                                <a class="text-muted text-decoration-none" href="#!" role="button" id="courseDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fe fe-more-vertical"></i>
+                                                    <i class="fe fe-edit"></i>
+                                                    <i class="fe fe-trash"></i>
+                                                </a>
+
+                                                <span class="dropdown-menu" aria-labelledby="courseDropdown">
+                                                    <a class="dropdown-item" href="{{ subject.get_subject_update_url }}">
+                                                        <i class="fe fe-edit dropdown-item-icon"></i>
+                                                        Edit
+                                                    </a>
+
+                                                    <form method="post" action="{{ subject.get_subject_delete_url }}">
+                                                       {% csrf_token %}
+                                                        <button class="dropdown-item">
+                                                            <i class="fe fe-trash dropdown-item-icon">
+                                                            </i> Remove
+                                                        </button>
+                                                    </form>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    {% include "dashboard/courses/snippet/empty_object.html" %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock teacher_content %}
