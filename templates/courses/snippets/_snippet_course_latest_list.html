@@ -1,0 +1,25 @@
+{% if latest_course %}
+    <div class="pt-lg-4 pb-lg-3 pt-4 pb-6">
+        <div class="container">
+            <div class="row d-lg-flex align-items-center mb-4">
+                <div class="col">
+                    <h2 class="mb-0">Latest courses</h2>
+                    <p class="mb-0">Allez au bout de vos passions dès aujourd'hui</p>
+                </div>
+
+                <div class="col-auto">
+                    <a href="#" class="btn btn-outline-primary btn-sm font-weight-bold btn-sm text-uppercase">
+                        voir tout 
+                        <i class="mdi mdi-arrow-right-bold ml-2"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="row">
+                {% for course in latest_course %}
+                    {% include "courses/snippets/_snippet_course_card.html" with object=course %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endif %}

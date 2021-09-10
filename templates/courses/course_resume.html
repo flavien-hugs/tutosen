@@ -1,0 +1,111 @@
+{% extends "index.html" %}
+
+{% block head_title %}
+    {{ page_title|capfirst }}
+{% endblock head_title %}
+
+{% block page_content %}
+    <div class="py-5 course-container bg-light">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-10">
+                    <div class="tab-content content" id="course-tabContent">
+                        {% for lesson in lessons %}
+                            <div class="tab-pane fade {% if lesson.course.order == course.order %}active show{% endif %}" id="course-{{ lesson.order }}" role="tabpanel" aria-labelledby="course-{{ lesson.order }}-tab">
+                                <div class="d-flex align-items-center justify-content-between mb-4">
+                                    <div>
+                                        <h3 class="mb-0 text-truncate-line-2">
+                                            {{ lesson.title|safe }}
+                                        </h3>
+                                    </div>
+
+                                    <div>
+                                        <span class="dropdown">
+                                            <a href="#!" class="mr-2 text-muted" id="dropdownInfo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fe fe-help-circle"></i>
+                                            </a>
+                                            <span class="dropdown-menu dropdown-menu-lg p-3 dropdown-menu-right" aria-labelledby="dropdownInfo">
+                                                {{ lesson.chapter_desc|safe }}
+                                            </span>
+                                        </span>
+
+                                        <span class="dropdown">
+                                            <a class="text-muted text-decoration-none" href="#!" role="button" id="shareDropdown1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fe fe-more-vertical"></i>
+                                            </a>
+                                            <span class="dropdown-menu dropdown-menu-right" aria-labelledby="shareDropdown1">
+                                                <span class="dropdown-header">Share</span>
+                                                <a class="dropdown-item" href="#!">
+                                                    <i class="fab fa-facebook dropdown-item-icon"></i>
+                                                    Facebook
+                                                </a>
+                                                <a class="dropdown-item" href="#!">
+                                                    <i class="fab fa-twitter dropdown-item-icon"></i>
+                                                    Twitter
+                                                </a>
+                                                <a class="dropdown-item" href="#!">
+                                                    <i class="fab fa-linkedin dropdown-item-icon"></i>
+                                                    LinkedIn
+                                                </a>
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/PkZNo7MFNFg">
+                                    </iframe>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- sidebar resume -->
+        <div class="card course-sidebar" id="courseAccordion">
+            <ul class="list-group list-group-flush course-list">
+                <li class="list-group-item">
+                  <h4>Content of courses</h4>
+                </li>
+                
+                {% for subject in courses %}
+                    <li class="list-group-item">
+                        <a class="d-flex align-items-center text-inherit text-decoration-none h4 mb-0" data-toggle="collapse" href="#course{{ subject.pk }}" role="button" aria-expanded="true" aria-controls="course{{ subject.pk }}">
+                            <div class="mr-auto">
+                                {{ subject.title|capfirst|safe }}
+                            </div>
+
+                            <span class="chevron-arrow ml-4">
+                                <i class="fe fe-chevron-down font-size-md"></i>
+                            </span>
+                        </a>
+
+                        <div class="collapse {% if forloop.counter == 1 %}show{% endif %}" id="course{{ subject.pk }}" data-parent="#courseAccordion">
+                            <div class="py-4 nav" id="course-tab{{ subject.pk }}" role="tablist" aria-orientation="vertical" style="display:inherit;">
+                                {% with lessons=subject.course_lessons.all %}
+                                    {% for lesson in lessons %}
+                                        <a class="mb-2 d-flex justify-content-between align-items-center text-decoration-none text-inherit {% if not lesson.access %}disableClick{% endif %}" id="course-{{ lesson.order }}-tab" data-toggle="pill" href="#course-{{ lesson.order }}" role="tab" aria-controls="course-{{ lesson.order }}">
+                                            <div class="text-truncate">
+                                                <span class="icon-shape bg-light icon-sm rounded-circle mr-2
+                                                    {% if lesson.access %}text-primary{% else %}text-secondary {% endif %}">
+                                                    <i class="{% if lesson.access %}mdi mdi-play{% else %}fe fe-lock{% endif %} font-size-xs"></i>
+                                                </span>
+                                                <span>{{ lesson.title|capfirst|safe }}</span>
+                                            </div>
+                                        </a>
+                                    {% endfor %}
+                                {% endwith %}
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>   
+        </div>
+    </div>
+{% endblock page_content %}
+
+{% block footer %}
+
+{% endblock footer %}

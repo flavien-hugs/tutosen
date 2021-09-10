@@ -1,0 +1,15 @@
+{% if similar_courses %}
+    <div class="pt-12 pb-3">
+        <div class="row d-md-flex align-items-center mb-4">
+            <div class="col-12">
+                <h2 class="mb-0">Courses similaires</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            {% for course in similar_courses %}
+                {% include "courses/snippets/_snippet_course_card.html" with object=course %}
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
