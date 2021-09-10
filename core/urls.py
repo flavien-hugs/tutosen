@@ -7,6 +7,11 @@ from django.shortcuts import render
 from django.urls import path, include
 from django.conf.urls.static import static
 
+from courses.mixins import CourseSearchMixin
+from accounts.mixins import TeacherSearchMixin
+
+from courses.models import Subject
+
 
 admin.site.site_header = "TUTOSEN"
 admin.site.site_title = "TUTOSEN"
@@ -28,21 +33,27 @@ def handler500(request, template_name='500.html'):
     return render(request, template_name, context, status=500)
 
 
-urlpatterns = [
-    path('', generic.TemplateView.as_view(template_name='index.html'), name='home'),
+class HomeView(generic.TemplateView):
+    template_name = 'index.html'
 
-    path('me/', include('boards.urls', namespace='boards')),
-    path('courses/', include('courses.urls', namespace='courses')),
+home_view = HomeView.as_view()
+
+
+urlpatterns = [
+    path(route='', view=home_view, name='home'),
+    path('me/', include('boards.urls')),
+    path('course/', include('courses.urls')),
     path('pages/', include('pages.urls', namespace='pages')),
     path('jet/', include('jet.urls', 'jet')),
     path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
-    path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('summernote/', include('django_summernote.urls')),
     path(settings.ADMIN_URL, admin.site.urls),
-    path('', include('accounts.urls', namespace='accounts')),
+    path('', include('accounts.urls')),
     path('accounts/', include('allauth.urls')),
 
     path('api/v1/', include('api.urls')),
     path('api-auth/', include('rest_framework.urls')),
+    path('robots.txt', generic.TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
 ]
 
 handler404 = handler404
@@ -50,7 +61,6 @@ handler403 = handler403
 handler500 = handler500
 
 if settings.DEBUG:
-    import debug_toolbar
 
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
@@ -59,8 +69,4 @@ if settings.DEBUG:
         path('404/', handler404, {'exception': Exception("Page non trouvée !")}),
         path('403/', handler403, {'exception': Exception("Permission non accordée !")}),
         path('500/', handler500),
-    ]
-
-    urlpatterns += [
-        path('__debug__/', include(debug_toolbar.urls)),
     ]

@@ -5,14 +5,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
-__author__ = 'Flavien-hugs <flavienhgs@pm.me>'
-__version__ = 'V.0.0.1'
-__copyright__ = '© 2021 unsta'
-
 import os
-import logging
+import logging.config
 from pathlib import Path
-import psycopg2.extensions
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,8 +20,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-TEMPLATE_DEBUG = os.environ.get('DEBUG')
+DEBUG = str(os.environ.get('DEBUG'))
+TEMPLATE_DEBUG = DEBUG
 
 META_KEYWORDS = ''
 DEFAULT_CHARSET = 'UTF-8'
@@ -63,15 +58,11 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     'jet.dashboard',
     'jet',
-    'ckeditor',
-    'ckeditor_uploader',
+    'django_summernote',
     'django.contrib.admin',
 
     'allauth',
     'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.facebook',
 
     # 'taggit',
     "widget_tweaks",
@@ -80,13 +71,12 @@ THIRD_PARTY_APPS = [
 
     'rest_framework',
     'corsheaders',
-
-    'debug_toolbar',
 ]
 
 LOCALS_APPS = [
     'accounts.apps.AccountsConfig',
     'boards.apps.BoardsConfig',
+
     'courses.apps.CoursesConfig',
     'pages.apps.PagesConfig',
 
@@ -113,9 +103,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     "django.middleware.common.BrokenLinkEmailsMiddleware",
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    # 'core.middleware.metric_middleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -186,16 +173,13 @@ if os.environ.get('GITHUB_WORKFLOW'):
 else:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': os.environ.get('DATABASE_NAME'),
-            'USER': os.environ.get('DATABASE_USER'),
-            'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
-            'HOST': os.environ.get('DATABASE_HOST'),
-            'PORT': os.environ.get('DATABASE_PORT'),
-            'ATOMIC_REQUESTS': True,
-            'OPTIONS': {
-                'isolation_level': psycopg2.extensions.ISOLATION_LEVEL_SERIALIZABLE,
-            },
+            'ENGINE': f"django.db.backends.{os.environ.get('DATABASE_ENGINE', 'postgresql')}",
+            'NAME': os.environ.get('DATABASE_NAME', 'tutosen'),
+            'USER': os.environ.get('DATABASE_USER', 'tutosen'),
+            'PASSWORD': os.environ.get('DATABASE_PASSWORD', 'tutosen'),
+            'HOST': os.environ.get('DATABASE_HOST', 'localhost'),
+            'PORT': os.environ.get('DATABASE_PORT', 5432),
+            'ATOMIC_REQUESTS': True
         }
     }
 
@@ -235,7 +219,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
 TIME_ZONE = 'UTC'
-LANGUAGE_CODE = 'fr-fr'
+LANGUAGE_CODE = 'fr'
 USE_I18N = USE_L10N = USE_TZ = True
 DATE_INPUT_FORMATS = ('%d/%m/%Y', '%Y-%m-%d')
 
@@ -280,8 +264,10 @@ LOGOUT_URL = 'home'
 LOGIN_URL = 'account_login'
 ACCOUNT_LOGOUT_REDIRECT = 'home'
 
+ACCOUNT_ADAPTER = "accounts.adapter.CustomAccountAdapter"
+
 # https://docs.djangoproject.com/fr/dev/ref/settings/#login-redirect-url
-LOGIN_REDIRECT_URL = 'boards:user_detail'
+LOGIN_REDIRECT_URL = ACCOUNT_ADAPTER
 
 # Configuration django-allauth
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
@@ -301,15 +287,13 @@ ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 86400
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_PRESERVE_USERNAME_CASING = False
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
-ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 ACCOUNT_PASSWORD_INPUT_RENDER_VALUE = True
 ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
 ACCOUNT_USER_MODEL_USERNAME_FIELD = 'username'
-ACCOUNT_EMAIL_SUBJECT_PREFIX = "TuoSen <no-reply@tutosen.com>"
+ACCOUNT_EMAIL_SUBJECT_PREFIX = f"{SITE_NAME} <no-reply@tutosen.com>"
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = LOGIN_URL
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = LOGIN_REDIRECT_URL
-
-ACCOUNT_ADAPTER = "accounts.adapter.CustomAccountAdapter"
 
 # Control the forms that django-allauth uses
 
@@ -321,8 +305,7 @@ ACCOUNT_FORMS = {
     # "reset_password": "allauth.account.forms.ResetPasswordForm",
     # "reset_password_from_key": "allauth.account.forms.ResetPasswordKeyForm",
     # "disconnect": "allauth.socialaccount.forms.DisconnectForm",
-    # Use our custom signup form
-    "signup": "accounts.forms.CustomSignupForm",
+    "signup": "accounts.forms.CustomSignupForm", # Use our custom signup form
 }
 
 EMAIL_PORT = 587
@@ -341,49 +324,6 @@ EMAIL_BACKEND = os.environ.get(
     'EMAIL_BACKEND',
     default='django.core.mail.backends.smtp.EmailBackend',
 )
-
-# Social Account Settings
-SOCIALACCOUNT_PROVIDERS = {
-    'facebook': {
-        'METHOD': 'oauth2',
-        'SCOPE': ['email', 'public_profile', 'user_friends', 'publish_stream'],
-        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
-        'INIT_PARAMS': {'cookie': True},
-        'FIELDS': [
-            'id',
-            'email',
-            'name',
-            'first_name',
-            'last_name',
-            'verified',
-            'locale',
-            'timezone',
-            'link',
-            'gender',
-            'updated_time',
-        ],
-        'EXCHANGE_TOKEN': True,
-        'LOCALE_FUNC': lambda request: 'fr_FR',
-        'VERIFIED_EMAIL': False,
-        'VERSION': 'v7.0',
-    },
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email'
-        ],
-        'AUTH_PARAMS': {'access_type': 'online'}
-    }
-}
-
-# facebook
-
-SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('FACEBOOK_KEY')
-SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('FACEBOOK_SECRET')
-
-SOCIALACCOUNT_QUERY_EMAIL = True
-SOCIALACCOUNT_EMAIL_REQUIRED = True
-SOCIALACCOUNT_STORE_TOKENS = False
 
 # Activez le backend de stockage WhiteNoise qui se charge de compresser
 # les fichiers statiques et de créer des noms uniques pour chaque version
@@ -434,146 +374,54 @@ JET_THEMES = [
 JET_SIDE_MENU_COMPACT = True
 JET_CHANGE_FORM_SIBLING_LINKS = True
 
-# https://docs.djangoproject.com/en/dev/ref/settings/#logging
-# See https://docs.djangoproject.com/en/dev/topics/logging for
-# more details on how to customize your logging configuration.
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    "filters": {
-        "require_debug_false": {
-            "()": "django.utils.log.RequireDebugFalse"
-        }
-    },
-    "formatters": {
-        "verbose": {
-            "format": "%(levelname)s %(asctime)s %(module)s "
-            "%(process)d %(thread)d %(message)s"
-        }
-    },
-    "handlers": {
-        "mail_admins": {
-            "level": "ERROR",
-            "filters": ["require_debug_false"],
-            "class": "django.utils.log.AdminEmailHandler",
-        },
-        "console": {
-            "level": "DEBUG",
-            "class": "logging.StreamHandler",
-            "formatter": "verbose",
-        },
-    },
-    "root": {"level": "INFO", "handlers": ["console"]},
-    "loggers": {
-        "django.request": {
-            "handlers": ["mail_admins"],
-            "level": "ERROR",
-            "propagate": True,
-        },
-        "django.security.DisallowedHost": {
-            "level": "ERROR",
-            "handlers": ["console", "mail_admins"],
-            "propagate": True,
-        },
-    },
-}
-
 PHONENUMBER_DEFAULT_REGION = "CI"
 PHONENUMBER_DB_FORMAT = "INTERNATIONAL"
 
-# https://pypi.org/project/django-ckeditor/
-CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
-CKEDITOR_UPLOAD_PATH = "uploads/"
+# Summernote configuration
+# https://github.com/summernote/django-summernote
 
-CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar_Custom': [
-            {
-                'name': 'document',
-                'items': [
-                    'Source', '-', 'Save', 'NewPage', 'Preview',
-                    'Print', '-', 'Templates'
-                ]
-            },
-            {
-                'name': 'clipboard',
-                'items': [
-                    'Cut', 'Copy', 'Paste', 'PasteText',
-                    'PasteFromWord', '-', 'Undo', 'Redo'
-                ]
-            },
-            {
-                'name': 'editing',
-                'items': ['Find', 'Replace', '-', 'SelectAll']},
-            {
-                'name': 'forms',
-                'items': [
-                    'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea',
-                    'Select', 'Button', 'ImageButton', 'HiddenField'
-                ]
-            },
-            '/',
-            {
-                'name': 'basicstyles',
-                'items': [
-                    'Bold', 'Italic', 'Underline', 'Strike', 'Subscript',
-                    'Superscript', '-', 'RemoveFormat'
-                ]
-            },
-            {
-                'name': 'paragraph',
-                'items': [
-                    'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-                    'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter',
-                    'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
-                ]
-            },
-            {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
-            {
-                'name': 'insert',
-                'items': [
-                    'Image', 'Youtube', 'Flash', 'Table', 'HorizontalRule', 'Smiley',
-                    'SpecialChar', 'PageBreak', 'Iframe'
-                ]
-            },
-            '/',
-            {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
-            {'name': 'colors', 'items': ['TextColor', 'BGColor']},
-            {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
-            {'name': 'about', 'items': ['CodeSnippet']},
-            {'name': 'about', 'items': ['About']},
-            '/',
-            {'name': 'yourcustomtools', 'items': [
-                'Preview',
-                'Maximize',
-            ]},
+# Show summernote with Bootstrap4
+SUMMERNOTE_THEME = 'bs4'
+
+SUMMERNOTE_CONFIG = {
+    # Using SummernoteWidget - iframe mode, default
+    'iframe': True,
+
+    'summernote': {
+        # As an example, using Summernote Air-mode
+        'airMode': False,
+
+        # Change editor size
+        'width': '100%',
+        'height': '300',
+
+        # Toolbar customization
+        # https://summernote.org/deep-dive/#custom-toolbar-popover
+        'toolbar': [
+            ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript']],
+            ['fontname', ['fontname']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link']],
         ],
-        'toolbar': 'Custom',
-        'toolbarGroups': [{'name': 'document', 'groups': ['mode', 'document', 'doctools']}],
-        'height': 400,
-        'filebrowserWindowHeight': 725,
-        'filebrowserWindowWidth': 940,
-        'toolbarCanCollapse': True,
-        'mathJaxLib': '//cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
-        'tabSpaces': 4,
-        'extraPlugins': ','.join([
-            'uploadimage',
-            'div',
-            'autolink',
-            'autoembed',
-            'embedsemantic',
-            'autogrow',
-            'devtools',
-            'widget',
-            'lineutils',
-            'clipboard',
-            'dialog',
-            'dialogui',
-            'elementspath',
-            'codesnippet',
-        ]),
-    }
+
+        # Set to `True` to return attachment paths in absolute URIs.
+        'attachment_absolute_uri': True,
+
+        # Require users to be authenticated for uploading attachments.
+        'attachment_require_authentication': True,
+
+        # Set custom storage class for attachments.
+        'attachment_storage_class': 'utils.function_utils.upload_image_path',
+
+        'codemirror': {
+            'mode': 'htmlmixed',
+            'lineNumbers': 'true',
+            # You have to include theme file in 'css' or 'css_for_inplace' before using it.
+            'theme': 'monokai',
+        },
+    },
 }
 
 # config django-debug-toolbar
