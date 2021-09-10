@@ -33,7 +33,11 @@
         <a class="rounded-circle" href="#!" role="button" id="dropdownUserProfile"
         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <div class="avatar avatar-md avatar-indicators avatar-online">
-                {{ email|gravatar:80 }}
+                {% if request.user.avatar %}
+                    <img src="{{ request.user.avatar.url }}" class="rounded-circle avatar-xs" alt="{{ request.user|slugify }}"/>
+                {% else %}
+                    {{ request.user.email|gravatar:80 }}
+                {% endif %}
             </div>
         </a>
 
@@ -41,8 +45,13 @@
             <div class="dropdown-item">
                 <div class="d-flex">
                     <div class="avatar avatar-md avatar-indicators avatar-online">
-                        {{ email|gravatar:80 }}
+                        {% if request.user.avatar %}
+                            <img src="{{ request.user.avatar.url }}" class="rounded-circle avatar-xs" alt="{{ request.user|slugify }}"/>
+                        {% else %}
+                            {{ request.user.email|gravatar:80 }}
+                        {% endif %}
                     </div>
+                    
                     <div class="ml-3 lh-1">
                         <h5 class="mb-1">
                             {% if request.user.first_name or request.user.last_name %}
@@ -63,13 +72,6 @@
                     <a class="dropdown-item" href="{{ request.user.get_userdetail_url }}">
                         <i class="fe fe-user mr-2"></i>
                         Mon Profile
-                    </a>
-                </li>
-
-                <li>
-                    <a class="dropdown-item" href="#">
-                        <i class="fe fe-star mr-2"></i>
-                        Souscription
                     </a>
                 </li>
 

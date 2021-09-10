@@ -3,82 +3,81 @@
 {% url "home" as home %}
 {% url "pages:about_us" as about_us %}
 {% url "pages:page_cgu" as page_cgu %}
+{% url "pages:contact" as contact_url %}
 {% url "pages:page_support" as page_support %}
 
-<style>
-    .footer {
-        background: #212529;
-    }
-</style>
+<footer class="pt-lg-6 pt-5 footer bg-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-12">
+                <div class="mb-4">
+                    <img src="{{ STATIC_PREFIX }}img/logo_tutosen.png" alt="{{ title }}">
+                    
+                    <div class="mt-4">
+                        <p>Geek is feature-rich components and beautifully Bootstrap UIKit for developers, built with bootstrap responsive framework.</p>
 
-<footer class="footer w-100 py-4 flex-shrink-0">
-	<div class="container py-4">
-        <div class="row py-2">
-            <div class="col-lg-3 col-md-6">
-                <h5 class="h1 text-white">{{ title|upper }}.</h5>
-
-                <!-- <p class="py-1">
-                    {% include "includes/snippets/_snippet_social_link.html" %}
-                </p>  -->
-
-                <p class="small text-white font-weight-bold mb-0">
-                    &copy; <script>document.write(new Date().getFullYear()); </script>
-                     <a class="text-white" href="{{ home }}">{{ title|upper }}</a>
-                </p>
-            </div>
-
-            <div class="col-lg-3 col-md-6">
-                <h5 class="mb-3 text-white font-weight-bold">
-                Vous avez besoin d'aide ?</h5>
-                
-                <ul class="list-unstyled">
-                    <li>
-                        <a class="text-white" href="mailto:{{ addr_email }}">
-                            <i class="mdi mdi-email"></i>
-                            {{  addr_email }}
-                        </a>
-                    </li>
-                    <li>
-                        <a class="text-white" href="tel://{{ addr_contact }}">
-                            <i class="mdi mdi-phone"></i>
-                            {{  addr_contact }}
-                        </a>
-                    </li>
-                    <li>
-                        <a class="text-white" href="{{ page_support }}">
-                            <i class="mdi mdi-alert-circle-outline"></i>
-                            F.A.Q
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="col-lg-3 col-md-6">
-                <h5 class="mb-3 text-white font-weight-bold">
-                Informations utiles</h5>
-                <ul class="list-unstyled">
-                    <li><a class="text-white" href="{{ about_us }}">Qui sommes-nous ?</a></li>
-                    <li><a class="text-white" href="#">Mentions Légales</a></li>
-                    <li><a class="text-white" href="{{ page_cgu }}">CGU</a></li>
-                    <li><a class="text-white" href="#">Notre Équipe</a></li>
-                    <li><a class="text-white" href="#">On recrute !</a></li>
-                    <li><a class="text-white" href="#">Devenir partenaires</a></li>
-                </ul>
-            </div>
-
-            <div class="col-lg-3 col-md-6">
-                <h5 class="mb-3 text-white">Newsletter</h5>
-                <p class="small text-white">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                sed do eiusmod tempor incididunt.</p>
-                <form action="#">
-                    <div class="input-group mb-3">
-                        <input class="form-control" type="email" placeholder="Votre adresse email" aria-label="Votre adresse email" aria-describedby="button-addon2">
-                        <button class="btn btn-primary" id="button-addon2" type="button">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
+                        <div class="fs-4 mt-4">
+                            <a href="#" class="mdi mdi-facebook text-muted me-2"></a>
+                            <a href="#" class="mdi mdi-twitter text-muted me-2"></a>
+                            <a href="#" class="mdi mdi-instagram text-muted "></a>
+                        </div>
                     </div>
-                </form>
+                </div>
+            </div>
+            
+            <div class="offset-lg-1 col-lg-2 col-md-3 col-6">
+                <div class="mb-4">
+                    <h3 class="fw-bold mb-3">Company</h3>
+                    <ul class="list-unstyled nav nav-footer flex-column nav-x-0">
+                        <li><a href="{{ about_us }}" class="nav-link">About</a></li>
+                        <li><a href="#" class="nav-link">Pricing</a></li>
+                        <li><a href="#" class="nav-link">Blog</a></li>
+                        <li><a href="#" class="nav-link">Careers</a></li>
+                        <li><a href="{{ contact_url }}" class="nav-link">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-3 col-6">
+                <div class="mb-4">
+                    <h3 class="fw-bold mb-3">Support</h3>
+                    <ul class="list-unstyled nav nav-footer flex-column nav-x-0">
+                        <li><a href="{{ page_support }}" class="nav-link">Help and Support</a></li>
+                        <li><a href="#" class="nav-link">Become Instructor</a></li>
+                        <li><a href="#" class="nav-link">Get the app</a></li>
+                        <li><a href="#" class="nav-link">FAQ’s</a></li>
+                        <li><a href="#" class="nav-link">Tutorial</a></li>
+                    </ul>
+
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-12">
+                <div class="mb-4">
+                    <h3 class="fw-bold mb-3">Get in touch</h3>
+                    <p>339 McDermott Points Hettingerhaven, NV 15283</p>
+                    <p class="mb-1">Email: <a href="mailto:{{ addr_email }}">{{ addr_email }}</a></p>
+                    <p>Phone: <span class="text-dark fw-semi-bold">{{ addr_contact }}</span></p>
+
+                </div>
+            </div>
+        </div>
+        
+        <div class="row align-items-center g-0 border-top py-2 mt-6">
+            <div class="col-lg-4 col-md-5 col-12">
+                <span>
+                    &copy; <script>document.write(new Date().getFullYear()); </script>
+                    <a class="font-weight-bold" href="{{ home }}">{{ title }}</a> All Rights Reserved.
+                </span>
+            </div>
+
+            <div class="col-12 col-md-7 col-lg-8 d-md-flex justify-content-end">
+                <nav class="nav nav-footer">
+                    <a class="nav-link ps-0" href="#">Privacy Policy</a>
+                    <a class="nav-link px-2 px-md-3" href="#">Cookie Notice </a>
+                    <a class="nav-link d-none d-lg-block" href="#">Do Not Sell My Personal Information </a>
+                    <a class="nav-link" href="{{ page_cgu }}">Terms of Use</a>
+                </nav>
             </div>
         </div>
     </div>
