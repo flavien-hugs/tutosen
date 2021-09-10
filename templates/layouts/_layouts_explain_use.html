@@ -1,0 +1,39 @@
+{% comment %} layout for recommend {% endcomment %}
+
+{% url 'courses:courses_list_url' as courses_list_url %}
+{% url 'courses:courses_detail_url' as courses_detail_url %}
+
+<div class="pt-lg-3 pb-lg-3 pt-2 pb-6">
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-12">
+				<div class="card mb-4 shadow-lg card-hover">
+					<div class="row no-gutters">
+						<div class="col-lg-8 col-md-12 col-12 bg-cover img-left-rounded"
+						style="background-image: url({{ STATIC_PREFIX }}img/blogpost-2.jpg);">
+							<img src="{{ STATIC_PREFIX }}img/blogpost-2.jpg" class="img-fluid d-lg-none invisible" alt="">
+						</div>
+
+						<div class="col-lg-4 col-md-12 col-12">
+							<div class="card-body">
+								<a href="#!" class="font-size-sm mb-3 font-weight-semi-bold d-block">
+									Comment ça marche ?
+								</a>
+								<h1 class="mb-4">
+									<span class="text-inherit">
+										Trouver votre instructeur parmis les meilleurs.
+									</span>
+								</h1>
+
+								<p>
+									Choisissez parmi l'un de nos tuteurs recommandés et testés ou 
+									utilisez la fonctionnalité de recherche pour choisir un tuteur à votre goût.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
