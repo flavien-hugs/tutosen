@@ -1,0 +1,1154 @@
+[
+{
+    "model": "courses.coursechapter",
+    "pk": 26,
+    "fields": {
+        "course": 13,
+        "slug": "introduction",
+        "title": "Introduction",
+        "chapter_desc": "<p>Introduction<br></p>",
+        "order": 0,
+        "access": true,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:06:05.607Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 27,
+    "fields": {
+        "course": 13,
+        "slug": "installing-development-software",
+        "title": "Installing development software",
+        "chapter_desc": "<p>Installing development software<br></p>",
+        "order": 1,
+        "access": true,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:06:40.641Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 28,
+    "fields": {
+        "course": 13,
+        "slug": "hello-world-project-from-github",
+        "title": "Hello world project from github",
+        "chapter_desc": "<p>Hello world project from github<br></p>",
+        "order": 2,
+        "access": true,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:06:59.292Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 29,
+    "fields": {
+        "course": 13,
+        "slug": "our-simple-website",
+        "title": "Our simple website",
+        "chapter_desc": "<p>Our simple website<br></p>",
+        "order": 3,
+        "access": true,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:07:11.133Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 30,
+    "fields": {
+        "course": 14,
+        "slug": "introduction-319223",
+        "title": "Introduction",
+        "chapter_desc": "<p>Introduction<br></p>",
+        "order": 0,
+        "access": true,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:07:51.926Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 31,
+    "fields": {
+        "course": 14,
+        "slug": "adding-javascript-code-to-a-web-page",
+        "title": "Adding JavaScript code to a web page",
+        "chapter_desc": "<p>Adding JavaScript code to a web page<br></p>",
+        "order": 1,
+        "access": true,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:08:04.574Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 32,
+    "fields": {
+        "course": 14,
+        "slug": "working-with-javascript-files",
+        "title": "Working with JavaScript Files",
+        "chapter_desc": "<p>Working with JavaScript Files<br></p>",
+        "order": 2,
+        "access": true,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:08:31.220Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 33,
+    "fields": {
+        "course": 14,
+        "slug": "formatting-code",
+        "title": "Formatting Code",
+        "chapter_desc": "<p>Working with JavaScript Files<br></p>",
+        "order": 3,
+        "access": true,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:08:48.234Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 34,
+    "fields": {
+        "course": 14,
+        "slug": "case-sensitivity",
+        "title": "Case Sensitivity",
+        "chapter_desc": "<p>Case Sensitivity<br></p>",
+        "order": 4,
+        "access": true,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:16:59.951Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 35,
+    "fields": {
+        "course": 14,
+        "slug": "detecting-and-fixing-errors",
+        "title": "Detecting and Fixing Errors",
+        "chapter_desc": "<p>Detecting and Fixing Errors<br></p>",
+        "order": 5,
+        "access": true,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:09:43.302Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 36,
+    "fields": {
+        "course": 14,
+        "slug": "commenting-code",
+        "title": "Commenting Code",
+        "chapter_desc": "<p>Commenting Code<br></p>",
+        "order": 6,
+        "access": true,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:10:33.363Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 37,
+    "fields": {
+        "course": 14,
+        "slug": "summary",
+        "title": "Summary",
+        "chapter_desc": "<p>Summary<br></p>",
+        "order": 7,
+        "access": true,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:10:42.917Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 38,
+    "fields": {
+        "course": 15,
+        "slug": "introduction-408623",
+        "title": "Introduction",
+        "chapter_desc": "<p>Introduction<br></p>",
+        "order": 0,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:12:20.072Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 39,
+    "fields": {
+        "course": 15,
+        "slug": "what-is-a-variables",
+        "title": "What is a variables ?",
+        "chapter_desc": "<p>What is a variables ?<br></p>",
+        "order": 1,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:12:43.554Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 40,
+    "fields": {
+        "course": 15,
+        "slug": "declaring-variables",
+        "title": "Declaring Variables",
+        "chapter_desc": "<p>Declaring Variables<br></p>",
+        "order": 2,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:13:35.072Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 41,
+    "fields": {
+        "course": 15,
+        "slug": "using-let-to-declare-variables",
+        "title": "Using let to declare variables",
+        "chapter_desc": "<p>Using let to declare variables<br></p>",
+        "order": 3,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:13:35.074Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 42,
+    "fields": {
+        "course": 15,
+        "slug": "naming-variables",
+        "title": "Naming Variables",
+        "chapter_desc": "<p>Naming Variables<br></p>",
+        "order": 4,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:14:14.193Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 43,
+    "fields": {
+        "course": 15,
+        "slug": "common-errors-using-variables",
+        "title": "Common errors using variables",
+        "chapter_desc": "<p>Common errors using variables<br></p>",
+        "order": 5,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:14:14.195Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 44,
+    "fields": {
+        "course": 15,
+        "slug": "changing-variables-values",
+        "title": "Changing variables values",
+        "chapter_desc": "<p>Changing variables values<br></p>",
+        "order": 6,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:15:58.685Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 45,
+    "fields": {
+        "course": 15,
+        "slug": "constants",
+        "title": "Constants",
+        "chapter_desc": "<p>Constants<br></p>",
+        "order": 7,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:14:47.122Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 46,
+    "fields": {
+        "course": 15,
+        "slug": "the-var-keywords",
+        "title": "The var keywords",
+        "chapter_desc": "<p>The var keywords<br></p>",
+        "order": 8,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:15:22.294Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 47,
+    "fields": {
+        "course": 15,
+        "slug": "summary-443656",
+        "title": "Summary",
+        "chapter_desc": "<p>Summary<br></p>",
+        "order": 9,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:15:22.296Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 48,
+    "fields": {
+        "course": 16,
+        "slug": "introduction-474494",
+        "title": "Introduction",
+        "chapter_desc": "<p>Introduction<br></p>",
+        "order": 0,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:19:50.504Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 49,
+    "fields": {
+        "course": 16,
+        "slug": "numbers",
+        "title": "Numbers",
+        "chapter_desc": "<p>Numbers<br></p>",
+        "order": 1,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:19:50.508Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 50,
+    "fields": {
+        "course": 16,
+        "slug": "operator-precedence",
+        "title": "Operator Precedence",
+        "chapter_desc": "<p>Operator Precedence<br></p>",
+        "order": 2,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:22:51.719Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 51,
+    "fields": {
+        "course": 16,
+        "slug": "number-precision",
+        "title": "Number precision",
+        "chapter_desc": "<p>Number precision<br></p>",
+        "order": 3,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:22:51.722Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 52,
+    "fields": {
+        "course": 16,
+        "slug": "negative-numbers",
+        "title": "Negative numbers",
+        "chapter_desc": "<p>Negative numbers<br></p>",
+        "order": 4,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:22:51.724Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 53,
+    "fields": {
+        "course": 16,
+        "slug": "strings",
+        "title": "Strings",
+        "chapter_desc": "<p>Strings<br></p>",
+        "order": 5,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:22:51.726Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 54,
+    "fields": {
+        "course": 16,
+        "slug": "manipulating-strings",
+        "title": "Manipulating strings",
+        "chapter_desc": "<p>Manipulating strings<br></p>",
+        "order": 6,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:22:51.728Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 55,
+    "fields": {
+        "course": 17,
+        "slug": "introduction-387755",
+        "title": "Introduction",
+        "chapter_desc": "<p>Introduction<br></p>",
+        "order": 0,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:36:39.690Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 56,
+    "fields": {
+        "course": 17,
+        "slug": "clip-watched",
+        "title": "Clip Watched",
+        "chapter_desc": "<p>Clip Watched<br></p>",
+        "order": 1,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:36:39.693Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 57,
+    "fields": {
+        "course": 17,
+        "slug": "conditionals-using-if",
+        "title": "Conditionals Using if()",
+        "chapter_desc": "<p>Conditionals Using if()<br></p>",
+        "order": 2,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:36:39.695Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 58,
+    "fields": {
+        "course": 17,
+        "slug": "truthy-and-falsy",
+        "title": "Truthy and Falsy",
+        "chapter_desc": "<p>Truthy and Falsy<br></p>",
+        "order": 3,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:36:39.697Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 59,
+    "fields": {
+        "course": 17,
+        "slug": "if-else",
+        "title": "if ... else",
+        "chapter_desc": "<p>if ... else<br></p>",
+        "order": 4,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:36:39.699Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 60,
+    "fields": {
+        "course": 17,
+        "slug": "comparing-and",
+        "title": "Comparing === and ==",
+        "chapter_desc": "<p>Comparing === and ==<br></p>",
+        "order": 5,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:38:31.283Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 61,
+    "fields": {
+        "course": 17,
+        "slug": "the-ternary-operator",
+        "title": "The Ternary operator",
+        "chapter_desc": "<p>The Ternary operator<br></p>",
+        "order": 6,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:38:31.285Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 62,
+    "fields": {
+        "course": 17,
+        "slug": "block-scope-using-let",
+        "title": "Block scope using let",
+        "chapter_desc": "<p>Block scope using let<br></p>",
+        "order": 7,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:38:31.287Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 63,
+    "fields": {
+        "course": 17,
+        "slug": "looping-with-for",
+        "title": "Looping with for()",
+        "chapter_desc": "<p>Looping with for()<br></p>",
+        "order": 8,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:38:31.289Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 64,
+    "fields": {
+        "course": 17,
+        "slug": "looping-with-do-while",
+        "title": "Looping with do ... while()",
+        "chapter_desc": "<p>Looping with do ... while()<br></p>",
+        "order": 9,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:38:31.291Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 65,
+    "fields": {
+        "course": 17,
+        "slug": "summary-493226",
+        "title": "Summary",
+        "chapter_desc": "<p>Summary<br></p>",
+        "order": 10,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:39:54.209Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 66,
+    "fields": {
+        "course": 18,
+        "slug": "introduction-427545",
+        "title": "Introduction",
+        "chapter_desc": "<p>Introduction<br></p>",
+        "order": 0,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:40:49.112Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 67,
+    "fields": {
+        "course": 18,
+        "slug": "function-basics",
+        "title": "Function basics",
+        "chapter_desc": "<p>Function basics<br></p>",
+        "order": 1,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:41:05.738Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 68,
+    "fields": {
+        "course": 18,
+        "slug": "function-expressions",
+        "title": "Function expressions",
+        "chapter_desc": "<p>Function expressions<br></p>",
+        "order": 2,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:41:23.903Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 69,
+    "fields": {
+        "course": 18,
+        "slug": "passing-information-to-functions",
+        "title": "Passing information to functions",
+        "chapter_desc": "<p>Passing information to functions<br></p>",
+        "order": 3,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:41:43.918Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 70,
+    "fields": {
+        "course": 18,
+        "slug": "function-return-values",
+        "title": "Function return Values",
+        "chapter_desc": "<p>Function return Values<br></p>",
+        "order": 4,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:41:59.767Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 71,
+    "fields": {
+        "course": 18,
+        "slug": "function-scope",
+        "title": "Function scope",
+        "chapter_desc": "<p>Function scope<br></p>",
+        "order": 5,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:42:15.234Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 72,
+    "fields": {
+        "course": 18,
+        "slug": "using-functions-to-modify-web-pages",
+        "title": "Using functions to modify web pages",
+        "chapter_desc": "<p>Using functions to modify web pages<br></p>",
+        "order": 6,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:42:38.216Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 73,
+    "fields": {
+        "course": 18,
+        "slug": "summary-405890",
+        "title": "Summary",
+        "chapter_desc": "<p>Summary<br></p>",
+        "order": 7,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:42:50.587Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 74,
+    "fields": {
+        "course": 19,
+        "slug": "introduction-440189",
+        "title": "Introduction",
+        "chapter_desc": "<p>Introduction<br></p>",
+        "order": 0,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:43:25.904Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 75,
+    "fields": {
+        "course": 19,
+        "slug": "object-properties",
+        "title": "Object Properties",
+        "chapter_desc": "<p>Object Properties<br></p>",
+        "order": 1,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:53:38.853Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 76,
+    "fields": {
+        "course": 19,
+        "slug": "object-methods",
+        "title": "Object Methods",
+        "chapter_desc": "<p>Object Methods<br></p>",
+        "order": 2,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:53:38.854Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 77,
+    "fields": {
+        "course": 19,
+        "slug": "passing-objects-to-functions",
+        "title": "Passing objects to functions",
+        "chapter_desc": "<p>Passing objects to functions<br></p>",
+        "order": 3,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:53:38.856Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 78,
+    "fields": {
+        "course": 19,
+        "slug": "standard-built-in-objects",
+        "title": "Standard built-in objects",
+        "chapter_desc": "<p>Standard built-in objects<br></p>",
+        "order": 4,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:54:43.031Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 79,
+    "fields": {
+        "course": 19,
+        "slug": "the-document-object-model-dom",
+        "title": "The document object model (DOM)",
+        "chapter_desc": "<p>The document object model (DOM)<br></p>",
+        "order": 5,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:54:43.033Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 80,
+    "fields": {
+        "course": 19,
+        "slug": "styling-dom-elements",
+        "title": "Styling DOM elements",
+        "chapter_desc": "<p>Styling DOM elements<br></p>",
+        "order": 6,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:54:43.035Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 81,
+    "fields": {
+        "course": 19,
+        "slug": "detecting-button-clicks",
+        "title": "Detecting button clicks",
+        "chapter_desc": "<p>Detecting button clicks<br></p>",
+        "order": 7,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:55:45.593Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 82,
+    "fields": {
+        "course": 19,
+        "slug": "showing-and-hidind-dom-elements",
+        "title": "Showing and hidind DOM elements",
+        "chapter_desc": "<p>Showing and hidind DOM elements<br></p>",
+        "order": 8,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:55:45.595Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 83,
+    "fields": {
+        "course": 19,
+        "slug": "summary-371794",
+        "title": "Summary",
+        "chapter_desc": "<p>Summary<br></p>",
+        "order": 9,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:55:45.598Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 84,
+    "fields": {
+        "course": 20,
+        "slug": "creating-and-initializing-arrays",
+        "title": "Creating and Initializing Arrays",
+        "chapter_desc": "<p>Creating and Initializing Arrays<br></p>",
+        "order": 0,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:57:10.345Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 85,
+    "fields": {
+        "course": 20,
+        "slug": "accessing-array-items",
+        "title": "Accessing Array Items",
+        "chapter_desc": "<p>Accessing Array Items<br></p>",
+        "order": 1,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:57:10.347Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 86,
+    "fields": {
+        "course": 20,
+        "slug": "manipulating-arrays",
+        "title": "Manipulating Arrays",
+        "chapter_desc": "<p>Manipulating Arrays <br></p>",
+        "order": 2,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:57:29.884Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 87,
+    "fields": {
+        "course": 20,
+        "slug": "slice-and-splice",
+        "title": "slice() and splice()",
+        "chapter_desc": "<p>slice() and splice() <br></p>",
+        "order": 3,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:57:29.885Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 88,
+    "fields": {
+        "course": 20,
+        "slug": "array-searching-and-looping",
+        "title": "Array Searching and Looping",
+        "chapter_desc": "<p>&nbsp;Array Searching and Looping<br></p>",
+        "order": 4,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:57:49.341Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 89,
+    "fields": {
+        "course": 20,
+        "slug": "arrays-in-the-dom",
+        "title": "Arrays in the DOM",
+        "chapter_desc": "<p>Arrays in the DOM<br></p>",
+        "order": 5,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:57:49.343Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 90,
+    "fields": {
+        "course": 20,
+        "slug": "summary-343354",
+        "title": "Summary",
+        "chapter_desc": "&nbsp;Summary<br>",
+        "order": 6,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:58:25.021Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 91,
+    "fields": {
+        "course": 21,
+        "slug": "introduction-407627",
+        "title": "Introduction",
+        "chapter_desc": "<p>&nbsp;Introduction<br></p>",
+        "order": 0,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:59:02.542Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 92,
+    "fields": {
+        "course": 21,
+        "slug": "global-scope",
+        "title": "Global Scope",
+        "chapter_desc": "<p>Global Scope<br></p>",
+        "order": 1,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:59:13.171Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 93,
+    "fields": {
+        "course": 21,
+        "slug": "clip-watched-321809",
+        "title": "Clip Watched",
+        "chapter_desc": "<p>Clip Watched <br></p>",
+        "order": 2,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:59:21.403Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 94,
+    "fields": {
+        "course": 21,
+        "slug": "function-scope-426348",
+        "title": "Function Scope",
+        "chapter_desc": "<p>Function Scope <br></p>",
+        "order": 3,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:59:32.930Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 95,
+    "fields": {
+        "course": 21,
+        "slug": "var-and-hoisting",
+        "title": "Var and Hoisting",
+        "chapter_desc": "<p>Var and Hoisting<br></p>",
+        "order": 4,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:59:42.530Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 96,
+    "fields": {
+        "course": 21,
+        "slug": "undeclared-variables-and-strict-mode",
+        "title": "Undeclared Variables and Strict Mode",
+        "chapter_desc": "<p>Undeclared Variables and Strict Mode<br></p>",
+        "order": 5,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:59:51.305Z"
+    }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 97,
+    "fields": {
+        "course": 21,
+        "slug": "summary-350122",
+        "title": "Summary",
+        "chapter_desc": "<p>&nbsp;Summary<br></p>",
+        "order": 6,
+        "access": false,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:59:59.679Z"
+    }
+}
+]

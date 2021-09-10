@@ -1,0 +1,76 @@
+[
+{
+    "model": "courses.subject",
+    "pk": 12,
+    "fields": {
+        "uuid": "c8745a7b-9b9d-4548-a77b-3f280180312d",
+        "instructor": 1,
+        "title": "Getting Started with JavaScript",
+        "subtitle": "JavaScript is the popular programming language which powers web pages and web applications. This course will get you started coding in JavaScript.",
+        "price": 1500,
+        "sale_price": 0,
+        "language": "FR",
+        "category": "MATH",
+        "level": "5ième",
+        "description": "<div class=\"mb-4\">\r\n                                        <h3 class=\"mb-2\">Course Descriptions</h3>\r\n                                        <p>\r\n                                            If you’re learning to \r\nprogram for the first time, or if you’re coming from a different \r\nlanguage, this course, JavaScript: Getting Started, will give you the \r\nbasics for coding in JavaScript. First, you'll discover the types of \r\napplications that can be\r\n                                            built with JavaScript, and \r\nthe platforms they’ll run on.\r\n                                        </p>\r\n                                        <p>\r\n                                            Next, you’ll explore the \r\nbasics of the language, giving plenty of examples. Lastly, you’ll put \r\nyour JavaScript knowledge to work and modify a modern, responsive web \r\npage. When you’re finished with this course, you’ll have the skills and \r\nknowledge in JavaScript\r\n                                            to create simple programs, \r\ncreate simple web applications, and modify web pages</p><h4 class=\"mb-3\">What you’ll learn</h4><p>Maecenas viverra condimentum nulla molestie condimentum. Nunc ex \r\nlibero, feugiat quis lectus vel, ornare euismod ligula. Aenean sit amet \r\narcu nulla.</p>\r\n                                    <p>Duis facilisis ex a urna blandit \r\nultricies. Nullam sagittis ligula non eros semper, nec mattis odio \r\nullamcorper. Phasellus feugiat sit amet leo eget consectetur.</p><p>\r\n                                        </p>\r\n                                    </div>",
+        "resume": "<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae \r\nesse velit eos sunt ab inventore est tenetur blanditiis? Voluptas eius \r\nmolestiae ad itaque tempora nobis minima eveniet aperiam molestias, \r\nmaiores natus expedita dolores ea non possimus\r\n                                                                magnam \r\ncorrupt i quas rem unde quo enim porro culpa! Quaerat veritatis veniam \r\ncorrupti iusto.\r\n                                                            </p>",
+        "image": "image/course/93126333.jpg",
+        "slug": "getting-started-with-javascript",
+        "free": false,
+        "published": true,
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-10T14:17:40.757Z",
+        "students": [
+            2
+        ]
+    }
+},
+{
+    "model": "courses.subject",
+    "pk": 17,
+    "fields": {
+        "uuid": "0853f6d3-90ff-4ca4-a6cd-6eea5882cc19",
+        "instructor": 1,
+        "title": "The Python Course: build web application",
+        "subtitle": "The Python Course: build web application",
+        "price": 1500,
+        "sale_price": 0,
+        "language": "FR",
+        "category": "FRAN",
+        "level": "6ième",
+        "description": "<h4 class=\"mb-2 text-truncate-line-2 \"><a class=\"text-inherit\">The\r\n                          Python Course: build web application</a></h4>",
+        "resume": "<h4 class=\"mb-2 text-truncate-line-2 \"><a class=\"text-inherit\">The\r\n                          Python Course: build web application</a></h4>",
+        "image": "image/course/01913539.jpg",
+        "slug": "the-python-course-build-web-application",
+        "free": false,
+        "published": true,
+        "created_at": "2021-09-10",
+        "update_at": "2021-09-10T19:45:26.743Z",
+        "students": []
+    }
+},
+{
+    "model": "courses.subject",
+    "pk": 20,
+    "fields": {
+        "uuid": "fbe799e0-26c1-4db3-8116-bcdf1d9cf573",
+        "instructor": 1,
+        "title": "Gatsby JS: build blog with GraphQL and React",
+        "subtitle": "Gatsby JS: build blog with GraphQL and React",
+        "price": 1500,
+        "sale_price": 0,
+        "language": "FR",
+        "category": "FRAN",
+        "level": "6ième",
+        "description": "<h4 class=\"mb-2 text-truncate-line-2 \"><a class=\"text-inherit\">Gatsby\r\n                          JS: build blog with GraphQL and\r\n                          React</a></h4>",
+        "resume": "<h4 class=\"mb-2 text-truncate-line-2 \"><a class=\"text-inherit\">Gatsby\r\n                          JS: build blog with GraphQL and\r\n                          React</a></h4>",
+        "image": "image/course/67732840.jpg",
+        "slug": "gatsby-js-build-blog-with-graphql-and-react",
+        "free": false,
+        "published": true,
+        "created_at": "2021-09-10",
+        "update_at": "2021-09-10T19:52:01.379Z",
+        "students": []
+    }
+}
+]

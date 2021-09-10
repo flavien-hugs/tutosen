@@ -1,0 +1,142 @@
+[
+{
+    "model": "courses.course",
+    "pk": 13,
+    "fields": {
+        "uuid": "1b2f371f-4b65-4189-b7bc-204824b9fe76",
+        "subject": 12,
+        "order": 0,
+        "title": "Introduction to JavaScript",
+        "description": "Introduction au JavaScript<br>",
+        "slug": "introduction-to-javascript",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T14:58:08.004Z"
+    }
+},
+{
+    "model": "courses.course",
+    "pk": 14,
+    "fields": {
+        "uuid": "08f249ff-b85a-42cc-9feb-c864a873e769",
+        "subject": 12,
+        "order": 1,
+        "title": "JavaScript Beginning",
+        "description": "<p>JavaScript Beginning<br></p>",
+        "slug": "javascript-beginning",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:01:41.716Z"
+    }
+},
+{
+    "model": "courses.course",
+    "pk": 15,
+    "fields": {
+        "uuid": "1f3b5636-4e36-4b28-a2c1-ac6546a26c64",
+        "subject": 12,
+        "order": 2,
+        "title": "Variables and Constants",
+        "description": "Variables and Constants<br>",
+        "slug": "variables-and-constants",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:02:35.339Z"
+    }
+},
+{
+    "model": "courses.course",
+    "pk": 16,
+    "fields": {
+        "uuid": "f178c2db-6dd1-4fb7-8fee-ac077412403e",
+        "subject": 12,
+        "order": 3,
+        "title": "Types and Operators",
+        "description": "Types ans Operators<br>",
+        "slug": "types-and-operators",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:03:05.487Z"
+    }
+},
+{
+    "model": "courses.course",
+    "pk": 17,
+    "fields": {
+        "uuid": "2a6de51a-faa0-4c5a-b1f9-c5490a2abd5e",
+        "subject": 12,
+        "order": 4,
+        "title": "Program Flow",
+        "description": "Program Flow<br>",
+        "slug": "program-flow",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:31:57.853Z"
+    }
+},
+{
+    "model": "courses.course",
+    "pk": 18,
+    "fields": {
+        "uuid": "95995710-2575-43c4-9459-87beb27b1a12",
+        "subject": 12,
+        "order": 5,
+        "title": "Functions",
+        "description": "<p>Functions<br></p>",
+        "slug": "functions",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:32:39.819Z"
+    }
+},
+{
+    "model": "courses.course",
+    "pk": 19,
+    "fields": {
+        "uuid": "0e404852-a97e-42e8-99fd-923e36da809c",
+        "subject": 12,
+        "order": 6,
+        "title": "Objects and ORM",
+        "description": "<p>Objects and ORM<br></p>",
+        "slug": "objects-and-orm",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:04:07.199Z"
+    }
+},
+{
+    "model": "courses.course",
+    "pk": 20,
+    "fields": {
+        "uuid": "bec58824-763c-4c44-80e7-2915d20df677",
+        "subject": 12,
+        "order": 7,
+        "title": "Arrays",
+        "description": "<p>Arrays<br></p>",
+        "slug": "arrays",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:04:29.092Z"
+    }
+},
+{
+    "model": "courses.course",
+    "pk": 21,
+    "fields": {
+        "uuid": "b4e0e1dd-5acc-4a7f-8140-21868e7d2d20",
+        "subject": 12,
+        "order": 8,
+        "title": "Scope and Hoisting",
+        "description": "<p>Scope and Hoisting<br></p>",
+        "slug": "scope-and-hoisting",
+        "created_at": "2021-09-09",
+        "update_at": "2021-09-09T15:04:57.830Z"
+    }
+},
+{
+    "model": "courses.course",
+    "pk": 33,
+    "fields": {
+        "uuid": "b43e2d07-52d6-4acf-87f4-107b2a200824",
+        "subject": 17,
+        "order": 0,
+        "title": "Introduction",
+        "description": "<p>Introduction to python<br></p>",
+        "slug": "introduction",
+        "created_at": "2021-09-10",
+        "update_at": "2021-09-10T20:05:24.594Z"
+    }
+}
+]
