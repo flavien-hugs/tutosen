@@ -7,7 +7,7 @@ include .env
 
 .PHONY: help
 help: ## Show this help
-	@egrep -h '\s##\s' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
+	@egrep -h '\s##\s' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
 update: ## Do apt ugrade and autoremove
 	sudo apt update && sudo apt upgrade -y
@@ -57,7 +57,7 @@ run: ## Run the Django server
 start: install migrate run ## Install requirements, apply migrations, then start development server
 
 createsuperuser: ## Run the Django server
-	$(MANAGE) createsuperuser --username='tutosen' --email='flavienhugs@pm.me
+	$(MANAGE) createsuperuser --username="tutosen" --email="flavienhgs@gmail.com"
 
 collectstatic: ## Run collectstatic
 	$(MANAGE) collectstatic --no-input
@@ -65,6 +65,9 @@ collectstatic: ## Run collectstatic
 dumpdata:
 	$(MANAGE) dumpdata --indent=4 --format=json accounts.user > __backups__/users.json
 	$(MANAGE) dumpdata --indent=4 --format=json sites.site > __backups__/sites.json
+	$(MANAGE) dumpdata --indent=4 --format=json courses.subject > __backups__/subjects.json
+	$(MANAGE) dumpdata --indent=4 --format=json courses.course > __backups__/courses.json
+	$(MANAGE) dumpdata --indent=4 --format=json courses.coursechapter > __backups__/lessons.json
 
 loaddata:
 	$(MANAGE) loaddata __backups__/users.json
