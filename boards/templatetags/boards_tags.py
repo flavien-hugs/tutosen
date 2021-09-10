@@ -5,6 +5,8 @@ from django import template
 from urllib.parse import urlencode
 from django.utils.safestring import mark_safe
 
+from courses.models import Subject
+
 register = template.Library()
 
 
@@ -22,8 +24,8 @@ def gravatar_url(email, size=80):
 @register.filter
 def gravatar(email, size=80):
     url = gravatar_url(email, size)
-    return mark_safe('<img src="{0}" width="{1}" height="{2}" class="avatar-xl \
-        rounded-circle"/>'.format(url, size, size))
+    return mark_safe(f'<img src="{url}" width="{size}" height="{size}" class="avatar-xs \
+        rounded-circle"/>')
 
 
 @register.simple_tag(takes_context=True)
