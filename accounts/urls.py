@@ -1,13 +1,29 @@
 # accounts.urls.py
 
-from django.urls import path
+from django.urls import path, include
 
-from accounts import views
+from accounts.views import teachers
 
 
-app_name = 'accounts'
 urlpatterns = [
-    path(route="find/instructor/", view=views.teacher_list_view, name='teacher_list_view'),
-    path(route='instructor/<uuid>/profile/', view=views.teacher_detail_view, name='teacher_detail_view'),
-    path(route='check_validate_data', view=views.check_validate_data, name='check_validate_data')
+    path('', include(([
+        path(
+            route="find/instructor/",
+            view=teachers.teacher_list_view,
+            name='teacher_list_view'
+        ),
+
+        path(
+            route='instructor/<uuid>/profile/',
+            view=teachers.teacher_profile_detail_view,
+            name='teacher_detail_view'
+
+        ),
+
+        path(
+            route='check_validate_data',
+            view=teachers.check_validate_data,
+            name='check_validate_data'
+        )
+    ], 'accounts'), namespace='accounts')),
 ]

@@ -25,14 +25,20 @@ class CustomAccountAdapter(DefaultAccountAdapter):
         )
 
     def get_login_redirect_url(self, request):
-        if request.user.is_authenticated:
-            path = "/me/{uuid}/detail/"
-            return path.format(uuid=request.user.uuid)
+        if request.user.is_authenticated and request.user.type == 'TEACHER':
+            path = "/me/u/{username}/dashboard/t/"
+            return path.format(username=request.user.get_first_name())
+        else:
+            path = "/me/u/{username}/dashboard/s/"
+            return path.format(username=request.user.get_first_name())
 
     def get_signup_redirect_url(self, request):
-        if request.user.is_authenticated:
-            path = "/me/{uuid}/detail/"
-            return path.format(uuid=request.user.uuid)
+        if request.user.is_authenticated and request.user.type == 'TEACHER':
+            path = "/me/u/{username}/dashboard/t/"
+            return path.format(username=request.user.get_first_name())
+        else:
+            path = "/me/u/{username}/dashboard/s/"
+            return path.format(username=request.user.get_first_name())
 
     def get_logout_redirect_url(self, request):
         path = "/"

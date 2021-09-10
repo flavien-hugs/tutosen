@@ -56,8 +56,8 @@ class TeacherAdmin(BaseUserAdmin):
 
     list_display = [
         "colored_type", "get_fullname", "email",
-        "country", "show_user_url", "date_joined",
-        "is_active",
+        "country", "account_verified", "show_user_url",
+        "date_joined", "is_active",
     ]
     list_display_links = [
         'email',

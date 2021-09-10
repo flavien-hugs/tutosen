@@ -5,34 +5,38 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model, forms
 
 from accounts.models import Teacher
+
 from allauth.account.forms import SignupForm
 
-CustomUser = get_user_model()
+from django_summernote.widgets import SummernoteWidget
+
+from django_countries.fields import CountryField
+from django_countries.widgets import CountrySelectWidget
 
 
 class UserChangeForm(forms.UserChangeForm):
 
     class Meta(forms.UserChangeForm.Meta):
-        model = CustomUser
+        model = get_user_model()
 
 
 class UserCreationForm(forms.UserCreationForm):
 
     error_message = forms.UserCreationForm.error_messages.update(
         {
-            "duplicate_email": "Cette addresse est déjà utilisé par un autre utilisateur."
+            "duplicate_email": "Cette adresse est déjà utilisé par un autre utilisateur."
         }
     )
 
     class Meta(forms.UserCreationForm.Meta):
-        model = CustomUser
+        model = get_user_model()
 
     def clean_email(self):
         email = self.cleaned_data["email"]
 
         try:
-            CustomUser.objects.get(email=email)
-        except CustomUser.DoesNotExist:
+            get_user_model().objects.get(email=email)
+        except get_user_model().DoesNotExist:
             return email
 
         raise ValidationError(self.error_messages["duplicate_email"])
@@ -42,7 +46,7 @@ class UserCreationForm(forms.UserCreationForm):
 class CustomSignupForm(SignupForm):
 
     civility = d_forms.TypedChoiceField(
-        label="Civilité", choices=CustomUser.CIVILITY_CHOICES,
+        label="Civilité", choices=get_user_model().CIVILITY_CHOICES,
         initial='1', coerce=str, required=True,
     )
     first_name = d_forms.CharField(label="Votre nom de famille", max_length=100)
@@ -77,6 +81,13 @@ class CustomSignupForm(SignupForm):
 class UserUpdateForm(d_forms.ModelForm):
     required_css_class = 'required'
 
+    country = CountryField(blank_label='Select country').formfield(
+        widget=CountrySelectWidget(attrs={
+            'class': 'custom-select d-block w-100',
+            'required': False
+        }
+    ))
+
     class Meta:
         model = Teacher
         fields = [
@@ -102,3 +113,5 @@ class UserUpdateForm(d_forms.ModelForm):
             'cover',
             'brief_desc',
         ]
+        
+        widgets = {'brief_desc': SummernoteWidget()}

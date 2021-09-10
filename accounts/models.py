@@ -7,11 +7,10 @@ import datetime
 from django.db import models
 from django.urls import reverse
 from django.contrib import admin
-from django.db.models import Index
 from django.dispatch import receiver
 from django.utils.text import Truncator
 from django.utils.html import format_html
-from django.db.models.signals import pre_save
+from django.utils.safestring import mark_safe
 from django.db.models.functions import Lower, Upper
 from django.contrib.auth.models import AbstractUser
 
@@ -20,6 +19,7 @@ from allauth.account.models import EmailAddress
 from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
 
+from utils import func_utils
 from accounts import managers
 
 
@@ -56,11 +56,6 @@ class User(AbstractUser):
         choices=Types.choices,
         default=base_type
     )
-    avatar = models.ImageField(
-        verbose_name='photo de profile',
-        upload_to='image/',
-        null=True, blank=True
-    )
     statut = models.CharField(
         max_length=150,
         verbose_name='statut',
@@ -82,16 +77,20 @@ class User(AbstractUser):
         max_length=120,
         blank=True, null=True
     )
-    cover = models.ImageField(
-        verbose_name="instructor cover",
-        upload_to='instructor/cover/',
-        blank=True
-    )
     country = CountryField(
         blank_label='sélection un pays',
         verbose_name='pays de résidence',
-        multiple=False,
-        blank=True
+        multiple=False, blank=True
+    )
+    avatar = models.ImageField(
+        verbose_name='user avatar',
+        null=True, blank=True,
+        upload_to=func_utils.save_user_avatar_file
+    )
+    cover = models.ImageField(
+        verbose_name="user cover",
+        blank=True, null=True,
+        upload_to=func_utils.save_user_cover_file
     )
     facebook = models.CharField(
         verbose_name='compte facebook',
@@ -109,24 +108,14 @@ class User(AbstractUser):
         blank=True,
         null=True
     )
-    # num_of_reviews
-    # num_of_chapters
-    # average_review_rating
-    # num_of_published_courses
 
     class Meta:
         db_table = 'user_profile'
         ordering = ('-date_joined', '-last_login')
         get_latest_by = ('-date_joined', '-last_login')
         verbose_name_plural = 'Utilisateurs'
-
         indexes = [
-            Index(
-                Lower('first_name'),
-                Upper('last_name').desc(),
-                name='first_last_name_idx'
-            ),
-            models.Index(fields=['id', 'uuid'], name='id_index'),
+            models.Index(fields=['id', 'uuid'], name='id_index_user'),
         ]
 
     def _get_unique_username(self):
@@ -137,7 +126,7 @@ class User(AbstractUser):
         self.username = username
 
         if User.objects.filter(username=username).exists():
-            username = "{email}".format(email=self.email)
+            username = self.email
         return username
 
     def save(self, *args, **kwargs):
@@ -145,13 +134,14 @@ class User(AbstractUser):
             self.type = self.base_type
 
         if self.username:
-            self.username = "{username}".format(username=self._get_unique_username())
+            self.username = self._get_unique_username()
         return super().save(*args, **kwargs)
 
     def __str__(self):
-        return "{0}".format(self.get_fullname())
+        return f"{self.get_fullname()}"
 
-    @admin.display(ordering='type')
+    @mark_safe
+    @admin.display(ordering='type', empty_value='???', description='statut')
     def colored_type(self):
         if self.type == 'TEACHER':
             color = "754ff6"
@@ -160,42 +150,33 @@ class User(AbstractUser):
         else:
             color = "19cb98"
         render_color = format_html(
-            "<span style='color:#fff; background-color:#{0};\
+            f"<span style='color:#fff; background-color:#{color};\
             display:inline-block; font-weight:500; write-space:nowrap;\
             line-height:1;border-radius:.20rem; padding:.33rem .5rem;\
-            text-align:center;vertical-align:baseline;'>{1}</span>".format(
-                color, self.get_type_display())
+            text-align:center;vertical-align:baseline;'>{self.get_type_display()}</span>"
         )
         return render_color
-    colored_type.allow_tags = True
-    colored_type.short_description = "STATUT"
 
-    # def get_teachers_courses(self):
-    #     # liste des cours de l'instructeur
-    #     # return teacher_list_courses
-
-    # def get_local_today(self):
-    #     # recupere la date de l'User conneceté
-    #     # en cours
-    #     return datetime.timezone.localedate()
-
+    @admin.display(description="nom & prénom")
     def get_fullname(self):
-        return '{0} {1} {2}'.format(
-            self.get_civility_display(),
-            self.first_name,
-            self.last_name
-        )
-    get_fullname.short_description = 'Nom & prénom'
+        return f"{self.get_civility_display()} {self.first_name} {self.last_name}"
 
+    @admin.display(description="speudo")
     def get_speudonyme(self):
-        return '@{0}'.format(self.username.lower())
-    get_speudonyme.short_description = 'Speudo'
+        return f"@{self.username.lower()}"
 
+    @admin.display(description="user description")
     def get_description(self):
         truncated_desc = Truncator(str(self.brief_desc))
         truncated_desc_chars = truncated_desc.chars(30)
         return truncated_desc_chars
-    get_description.short_description = 'User description'
+
+    @admin.display(description="account verified")
+    def account_verified(self):
+        result = EmailAddress.objects.filter(email=self.email)
+        if len(result):
+            return result[0].verified
+        return False
 
     def get_description_as_markdown(self):
         markdown_render = md.markdown(
@@ -204,26 +185,54 @@ class User(AbstractUser):
         )
         return markdown_render
 
+    def get_first_name(self):
+        return f"{self.first_name}".replace(' ', '.').lower()
+
     def get_userdetail_url(self):
-        return reverse('boards:user_detail', kwargs={'pk': str(self.uuid)})
+        path = ""
+        if self.type == 'TEACHER':
+            path = reverse(
+                'boards:teacher_detail',
+                kwargs={'username': str(self.get_first_name())}
+            )
+        elif self.type == 'STUDENT':
+            path = reverse(
+                'boards:student_detail',
+                kwargs={'username': str(self.get_first_name())}
+            )
+        return path
 
     def get_userupdate_url(self):
-        return reverse('boards:user_update', kwargs={'pk': str(self.uuid)})
+        return reverse(
+            'boards:teacher_update',
+            kwargs={'username': str(self.get_first_name())}
+        )
 
     def get_userdelete_url(self):
-        return reverse('boards:user_delete', kwargs={'pk': str(self.uuid)})
+        return reverse(
+            'boards:teacher_delete',
+            kwargs={'username': str(self.get_first_name())}
+        )
 
     def get_teacher_detail_url(self):
         return reverse(
-            'accounts:teacher_detail_view', kwargs={'uuid': str(self.uuid)}
+            'accounts:teacher_detail_view',
+            kwargs={'uuid': self.uuid}
         )
 
-    def account_verified(self):
-        if self.user.is_authenticated:
-            result = EmailAddress.objects.filter(email=self.email)
-            if len(result):
-                return result[0].verified
-            return False
+    def get_teacher_courses(self):
+        from courses.models import Subject
+        courses = Subject.objects.get_courses_published().filter(published=True)
+        return courses
+
+    def get_teacher_courses_count(self):
+        number_of_courses = self.get_teacher_courses().count()
+        return number_of_courses
+
+    # def get_local_today(self):
+    #     # recupere la date de l'User conneceté
+    #     # en cours
+    #     return datetime.timezone.localedate()
 
 
 class Teacher(User):
@@ -291,6 +300,17 @@ class ParentOrTutor(User):
         verbose_name_plural = 'Etudiant(e)'
 
 
-@receiver(pre_save, sender=User)
+@receiver([models.signals.post_save], sender=Student)
+@receiver([models.signals.post_save], sender=Teacher)
+@receiver([models.signals.post_save], sender=ParentOrTutor)
 def user_post_save_receiver(sender, instance, **kwargs):
     User.objects.filter(username=instance)
+
+
+@receiver([models.signals.post_save], sender=Student)
+@receiver([models.signals.post_save], sender=Teacher)
+@receiver([models.signals.post_save], sender=ParentOrTutor)
+def delete_old_image(sender, instance, *args, **kwargs):
+    if hasattr(instance, '_current_cover_file'):
+        if instance._current_cover_file != instance.cover.path:
+            instance._current_cover_file.delete(save=False)
