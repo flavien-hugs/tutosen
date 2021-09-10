@@ -26,60 +26,8 @@
                 </div> -->
 
                 {% if teacher_list %}      
-                    {% for object in teacher_list %}
-                        <div id="search-content" class="col-lg-6 col-md-6 col-12">
-                            <div class="card  mb-4 ">
-                                <div class="card-body">
-                                    <div class="d-lg-flex">
-                                        <div class="position-relative">
-                                            {{ email|gravatar:80 }}
-                                        </div>
-
-                                        <div class="ml-lg-4">
-                                            <h4 class="mb-0">
-                                                {{ object.get_fullname }}
-                                            </h4>
-
-                                            <p class="mb-0 font-size-xs">
-                                                {% if object.statut %}
-                                                    {{ object.statut|safe }}
-                                                {% else %}
-                                                    <span class="text-warning font-weight-bold">
-                                                        Statut non-défini.
-                                                    </span>
-                                                {% endif %}
-                                            </p>
-
-                                            <p class="font-size-xs mb-1 text-warning">
-                                                <span>4.5</span>
-                                                <span class="mdi mdi-star text-warning mr-2"></span>
-                                                Instructor Rating
-                                            </p>
-
-                                            <p class="font-size-xs text-muted">
-                                                <span class="mr-2">
-                                                    <span class="text-dark font-weight-medium">42</span>
-                                                    Cours
-                                                </span>
-                                                <span class="mr-2">
-                                                    <span class="text-dark font-weight-medium">
-                                                        1,10,124
-                                                    </span> Étudiants
-                                                </span>
-                                            </p>
-
-                                            <p>
-                                                {{ object.get_description_as_markdown|safe }}
-                                            </p>
-
-                                            <a href="{{ object.get_teacher_detail_url }}" class="btn btn-link btn-sm font-weight-bold text-uppercase">
-                                                Voir le profile
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    {% for teacher in teacher_list %}
+                        {% include "account/teacher/snippet/_snippet_teacher_card.html" with object=teacher %}
                     {% endfor %}
                     {% include "includes/snippets/_snippet_paginate.html" %}
                 {% else %}

@@ -28,12 +28,12 @@
         </span>
     </div>
 
-    <form method="POST" action="{{ account_login }}" class="needs-validation" novalidate>
+    <form method="post" action="{{ account_login }}" class="needs-validation" novalidate>
         {% csrf_token %}
 
         <div class="form-group">
             {{ form.login|add_label_class:"form-label" }}
-            {% render_field form.login|attr:"autofocus"|add_error_class:"is-invalid" class+="form-control" placeholder=form.login.label %}
+            {% render_field form.login|attr:"autofocus"|add_error_class:"is-invalid" class+="form-control shadow-none" placeholder=form.login.label %}
         </div>
 
         <div class="form-group">

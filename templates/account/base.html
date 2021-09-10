@@ -2,30 +2,20 @@
 
 {% block head_title %} {% endblock head_title %}
 
-{% comment %} base account template {% endcomment %}
-
 {% block page_content %}
 
-    <div class="container-fluid">
-        <div class="row justify-content-center min-vh-100">
-            <div class="col-lg-6 col-md-10 p-12 mb-md-0">
-                <div class="p-8">
-                    {% block message %}
+    <div class="container d-flex flex-column">
+        <div class="row align-items-center justify-content-center no-gutters min-vh-100">
+            <div class="col-xl-6 col-lg-8 col-md-8 py-8 py-xl-0">
+                {% block message %}
                     
-                    {% endblock message %}
+                {% endblock message %}
+                <div class="card shadow">
                     
-                    {% block account_content_body %}
-                    {% endblock account_content_body %}
-                </div>
-            </div>
-
-            <div class="col-lg-6 bg-primary d-none d-xl-inline-block img-right" style="background-image: url('{{ STATIC_PREFIX }}img/blogpost-1.jpg')">
-                <div class="p-12">
-                    <p class="text-white text-justify p-10">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut quo molestias, a,
-                        cumque excepturi, suscipit earum sapiente nam praesentium
-                        id debitis facilis! Est, fugiat voluptas blanditiis ad molestiae harum aliquam.
-                    </p>
+                    <div class="card-body p-6">
+                        {% block account_content_body %}
+                        {% endblock account_content_body %}
+                    </div>
                 </div>
             </div>
         </div>

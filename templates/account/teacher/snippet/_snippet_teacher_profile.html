@@ -1,18 +1,23 @@
-{% comment %} teacher profile detail {% endcomment %}
+{% load boards_tags %}
 
 <div class="card">
     <div class="card-body">
         <div class="d-flex align-items-center">
             <div class="position-relative">
-                <img src="{{ STATIC_PREFIX }}img/avatar-1.jpg" alt="" class="rounded-circle avatar-xl"/>
+                {% if object.instructor.avatar %}
+                    <img class="avatar-xl rounded-circle" src="{{ object.instructor.avatar.url }}" alt="user-{{ object.instructor.first_name|slugify }}">
+                    {% else %}
+                        {{ object.instructor.email|gravatar:80 }}
+                {% endif %}
+                
                 <a href="{{ teacher_profile_url }}" class="position-absolute mt-2 ml-n3" data-toggle="tooltip" data-placement="top" title="Compte vérifié">
-                    <img src="{{ STATIC_PREFIX }}img/checked-mark.svg" alt="" height="30" width="30"/>
+                    <img src="{{ STATIC_PREFIX }}img/checked-mark.svg" alt="{{ object.instructor.first_name|slugify }}" height="30" width="30"/>
                 </a>
             </div>
 
             <div class="ml-4">
-                <h4 class="mb-0">Flavien HUGS</h4>
-                <p class="mb-1 font-size-xs">Developpeur Frontend &amp; backend, Designer</p>
+                <h4 class="mb-0">{{ object.instructor.first_name|safe }}</h4>
+                <p class="mb-1 font-size-xs">{{ object.instructor.statut|capfirst|striptags|safe }}</p>
                 <span class="font-size-xs">
                     <span class="text-warning">4.5</span>
                     <span class="mdi mdi-star text-warning mr-2"></span>
@@ -31,8 +36,8 @@
 
             <div class="col border-left">
                 <div class="pr-1 pl-3 py-3">
-                    <h5 class="mb-0">32</h5>
-                    <span>Cours</span>
+                    <h5 class="mb-0">{{ object.instructor.get_teacher_courses_count }}</h5>
+                    <span>Course{{ object.instructor.get_teacher_courses_count|pluralize }}</span>
                 </div>
             </div>
 
@@ -44,11 +49,11 @@
             </div>
         </div>
 
-        <p>Je suis un developpeur d'innovation spécialisé en Python basé en Côte d'Ivoire.
-            En tant que résident créatif freelance, j'ai exploré la ville du futur et 
-        comment les nouvelles technologies.</p>
+        <p>
+            {{ object.instructor.brief_desc|striptags|safe }}
+        </p>
 
-        <a href="{{ teacher_profile_url }}" class="btn btn-outline-white btn-sm">
-        Afficher les détails</a>
+        <a href="{{ object.instructor.get_teacher_detail_url }}" class="btn btn-outline-white btn-sm">
+        Voir le profile</a>
     </div>
 </div>

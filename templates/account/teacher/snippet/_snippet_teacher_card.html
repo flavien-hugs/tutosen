@@ -1,0 +1,49 @@
+<div id="search-content" class="col-xl-3 col-lg-4 col-md-6 col-12 {% if forloop.last %}d-lg-none d-xl-block{% endif %}">
+    <div class="card card-hover h-100 mb-4">
+        <div class="card-img-top">
+            <a href="{{ object.get_teacher_detail_url }}">
+                {% if object.avatar %}
+                <img src="{{ object.avatar.url }}" class="rounded-top-md img-fluid" alt="{{ object.fullname|slugify }}"/>
+                {% else %}
+                <img src="{{ STATIC_PREFIX }}img/empty.jpg" class="rounded-top-md img-fluid" alt="{{ object.fullname|slugify }}"/>
+                {% endif %}
+            </a>
+        </div>
+
+        <div class="card-body">
+            <h3 class="mb-0">
+                <a href="{{ object.get_teacher_detail_url }}" class="text-inherit">
+                    {{ object.first_name|title|safe }}
+                </a>
+            </h3>
+            <p class="mb-0 font-size-xs text-muted">
+                {{ object.statut|capfirst|safe }}
+            </p>
+
+            <div class="lh-1 d-flex justify-content-between">
+                <div>
+                    <span class="fs-6">
+                        <i class="mdi mdi-star text-warning"></i>
+                        <span class="text-warning">4.5</span>
+                    </span>
+                </div>
+
+                <div>
+                    <span class="fs-6 text-muted">
+                        <span class="text-dark">9,692</span>
+                        Students
+                    </span>
+                </div>
+
+                <div>
+                    <span class="fs-6 text-muted">
+                        <span class="text-dark">
+                            {{ object.get_teacher_courses_count }}
+                        </span>
+                        Course{{ object.get_teacher_courses_count|pluralize }}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

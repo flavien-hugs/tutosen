@@ -1,13 +1,69 @@
 {% extends "index.html" %}
+{% load boards_tags %}
 
-{% block head_title %} {{ page_title|capfirst }} {% endblock head_title %}
+{% block head_title %}{{ page_title|capfirst }}{% endblock head_title %}
 
 {% block page_content %}
 
     {% url 'courses:courses_detail_url' as courses_detail_url %}
-    {% include "courses/snippets/_snippet_courses_header.html" %}
 
-    {% comment %} intructor content info {% endcomment %}
+    <div class="py-20" style="background:url({% if teacher.cover %}
+        {{ teacher.cover.url }} {% else %}
+        {{ STATIC_PREFIX }}/img/profile-bg.jpg {% endif %}) no-repeat; background-position:center;">
+    </div>
+
+    <div class="card p-lg-2 pt-2 pt-lg-0 rounded-0 border-0">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8 col-md-8 col-12">
+                    <div class="d-flex align-items-center">
+                        <div class="position-relative mt-n9">
+                            {% if teacher.avatar %}
+                                <img class="avatar-xl rounded-circle" src="{{ teacher.avatar.url }}" alt="user-{{ teacher.first_name|slugify }}">
+                                {% else %}
+                                    {{ teacher.email|gravatar:80 }}
+                            {% endif %}
+                        </div>
+
+                        <div class="ml-3">
+                            <div class="d-flex align-items-center">
+                                <h3 class="mb-0 font-weight-bold mr-2">
+                                    {% if teacher.get_fullname %}
+                                        {{ teacher.get_fullname|safe|capfirst }}
+                                    {% else %}
+                                        {{ teacher.first_name|safe|capfirst }}
+                                    {% endif %}
+                                </h3>
+                            </div>
+                            <span class="font-size-xs">
+                                {{ teacher.statut|safe }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-12">
+                    <div class="font-size-md mt-4 mt-lg-0 pb-2 pb-lg-0 d-lg-flex justify-content-end">
+                        <a {% if teacher_object.facebook %} target="_blank" href="{{ teacher.facebook }}"
+                            {% else %} href="{{ request.build_absolute_uri }}#"
+                            {% endif %} class="mdi mdi-facebook text-muted mr-2">
+                        </a>
+                        
+                        <a {% if teacher_object.twitter %} target="_blank" href="{{ teacher.twitter }}"
+                            {% else %} href="{{ request.build_absolute_uri }}#"
+                            {% endif %} class="mdi mdi-twitter text-muted mr-2">
+                        </a>
+                        
+                        <a {% if teacher_object.linkedin %} target="_blank" href="{{ teacher.linkedin }}"
+                            {% else %} href="{{ request.build_absolute_uri }}#"
+                            {% endif %} class="mdi mdi-linkedin text-muted mr-2">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="py-5 py-md-5">
         <div class="container">
             <div class="row">
@@ -15,9 +71,7 @@
                     <div class="card border-0 mb-4">
                         <div class="card-body">
                             <h4>Qui suis-je ?</h4>
-                            <p>
-                                {{ teacher_object.get_description_as_markdown|safe }}
-                            </p>
+                            <p>{{ teacher.get_description_as_markdown|safe }}</p>
                             <p>
                                 <a href="#" class="text-capitalise font-weight-bold">
                                 Visiter mon blog</a>
@@ -29,8 +83,12 @@
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between border-bottom pb-3 mb-3">
                                 <div>
-                                    <h4 class="mb-0 font-weight-bold">32</h4>
-                                    <p class="font-size-xs mb-0">Cours</p>
+                                    <h4 class="mb-0 font-weight-bold">
+                                        {{ teacher.get_teacher_courses.count }}
+                                    </h4>
+                                    <p class="font-size-xs mb-0">
+                                        Cours publié{{ teacher.get_teacher_courses.count|pluralize }}
+                                    </p>
                                 </div>
                                 <div>
                                     <span><i class="fe fe-file-text font-size-lg"></i></span>
@@ -64,108 +122,69 @@
                     <div class="card border-0">
                         <div class="card-header">
                             <h4 class="mb-0">
-                                Mes Cours <span class="text-muted font-size-xs">(12)</span>
+                                Mes cours publié{{ teacher.get_teacher_courses.count|pluralize }}
+                                <span class="text-muted font-size-xs">
+                                    ({{ teacher.get_teacher_courses.count }})
+                                </span>
                             </h4>
                         </div>
 
                         <div class="card-body">
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item px-0 pb-3 pt-0">
-                                    <article class="d-flex align-items-center justify-content-between">
-                                        <a href="{{ courses_detail_url }}">
-                                            <div class="d-lg-flex align-items-center">
-                                                <div>
-                                                    <img src="{{ STATIC_PREFIX }}img/cours/course-wordpress.jpg" alt="" class="rounded img-4by3-lg" />
+                                {% for course in teacher.get_teacher_courses %}
+                                    <li class="list-group-item px-0 pb-3 pt-0">
+                                        <article class="d-flex align-items-center justify-content-between">
+                                            <a href="{{ course.get_absolute_url }}">
+                                                <div class="d-lg-flex align-items-center">
+                                                    <div>
+                                                        <img src="{% if course.image %}
+                                                            {{ course.image.url }}
+                                                                {% else %}
+                                                            {{ STATIC_PREFIX }}img/cours/empty.jpg
+                                                                {% endif %}" alt="{{ course.title|slugify }}"
+                                                            class="rounded img-4by3-lg"/>
+                                                    </div>
+
+                                                    <div class="ml-lg-3 mt-2 mt-lg-0">
+                                                        <h4 class="text-primary-hover">
+                                                            {{ course.title|capfirst|safe }}
+
+                                                            {% if course.publish_now %}
+                                                                <span class="badge badge-light-success text-success">
+                                                                Nouveau</span>
+                                                            {% endif %}
+                                                        </h4>
+
+                                                        <ul class="list-inline font-size-xs mb-0 text-inherit">
+                                                            <li class="list-inline-item">
+                                                                <i class="far fa-clock mr-1"></i>
+                                                                {{ course.created_at|date }}
+                                                            </li>
+
+                                                            <li class="list-inline-item">
+                                                                <i class="fe fe-bar-chart mr-1"></i>
+                                                                {{ course.get_level_display|safe }}
+                                                            </li>
+                                                            <li class="list-inline-item">
+                                                                <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                                <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                                <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                                <i class="mdi mdi-star mr-n1 text-warning"></i>
+                                                                <i class="mdi mdi-star text-warning"></i>
+                                                                <span class="text-warning">4.5</span>
+                                                                <span class="text-muted">(1,345)</span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
+                                            </a>
 
-                                                <div class="ml-lg-3 mt-2 mt-lg-0">
-                                                    <h4 class="text-primary-hover">
-                                                        Créer un site web avec WordPress
-                                                        <span class="badge badge-light-success text-success">
-                                                        Nouveau</span>
-                                                    </h4>
-
-                                                    <ul class="list-inline font-size-xs mb-0 text-inherit">
-                                                        <li class="list-inline-item">
-                                                            <i class="far fa-clock mr-1"></i>3h 30m
-                                                        </li>
-
-                                                        <li class="list-inline-item">
-                                                            <svg class="mt-n1" width="16" height="16" viewBox="0 0 16 16" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <rect x="3" y="8" width="2" height="6" rx="1" fill="#754FFE"></rect>
-                                                                <rect x="7" y="5" width="2" height="9" rx="1" fill="#DBD8E9"></rect>
-                                                                <rect x="11" y="2" width="2" height="12" rx="1" fill="#DBD8E9"></rect>
-                                                            </svg>
-                                                            Débutant
-                                                        </li>
-                                                        <li class="list-inline-item">
-                                                            <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                            <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                            <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                            <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                            <i class="mdi mdi-star text-warning"></i>
-                                                            <span class="text-warning">4.5</span>
-                                                            <span class="text-muted">(1,345)</span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
+                                            <div>
+                                                {% include "includes/snippets/_snippet_share_link.html" %}
                                             </div>
-                                        </a>
-
-                                        <div>
-                                            {% include "includes/snippets/_snippet_share_link.html" %}
-                                        </div>
-                                    </article>
-                                </li>
-
-                                <li class="list-group-item px-0 py-3">
-                                    <article class="d-flex align-items-center justify-content-between">
-                                        <a href="{{ courses_detail_url }}">
-                                            <div class="d-lg-flex align-items-center">
-                                                <div>
-                                                    <img src="{{ STATIC_PREFIX }}img/cours/course-javascript.jpg" alt="" class="rounded img-4by3-lg" />
-                                                </div>
-
-                                                <div class="ml-lg-3 mt-2 mt-lg-0">
-                                                    <h4 class="text-primary-hover">
-                                                        Principes de base du JavaScript
-                                                    </h4>
-
-                                                    <ul class="list-inline font-size-xs mb-0 text-inherit">
-                                                        <li class="list-inline-item">
-                                                            <i class="far fa-clock mr-1"></i>1h 20m
-                                                        </li>
-
-                                                        <li class="list-inline-item">
-                                                            <svg class="mt-n1" width="16" height="16" viewBox="0 0 16 16" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <rect x="3" y="8" width="2" height="6" rx="1" fill="#754FFE"></rect>
-                                                                <rect x="7" y="5" width="2" height="9" rx="1" fill="#754FFE"></rect>
-                                                                <rect x="11" y="2" width="2" height="12" rx="1" fill="#754FFE"></rect>
-                                                            </svg>
-                                                            Avancée
-                                                        </li>
-
-                                                        <li class="list-inline-item">
-                                                            <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                            <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                            <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                            <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                            <i class="mdi mdi-star text-light"></i>
-                                                            <span class="text-warning">4</span>
-                                                            <span class="text-muted">(1,000)</span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </a>
-
-                                        <div>
-                                            {% include "includes/snippets/_snippet_share_link.html" %}
-                                        </div>
-                                    </article>
-                                </li>
+                                        </article>
+                                    </li>
+                                {% endfor %}
                             </ul>
                         </div>
                     </div>
