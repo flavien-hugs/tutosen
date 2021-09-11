@@ -5,7 +5,6 @@ name = "pypi"
 
 [packages]
 django = "*"
-python-decouple = "*"
 pillow = "*"
 argon2-cffi = "*"
 whitenoise = {extras = ["brotli"], version = "*"}
@@ -19,13 +18,13 @@ django-allauth = "*"
 django-widget-tweaks = "*"
 babel = "*"
 django-countries = "*"
-django-ckeditor = "*"
 psycopg2-binary = "*"
 markdown = "*"
 djangorestframework = "*"
 django-filter = "*"
 django-cors-headers = "*"
 django-taggit = "*"
+django-summernote = "*"
 
 [dev-packages]
 flake8 = "*"
