@@ -4,13 +4,10 @@ from django.db import models
 from django.utils.text import Truncator
 from django.utils.html import mark_safe
 
-from ckeditor_uploader.fields import RichTextUploadingField
-
-
 class AboutUs(models.Model):
-    content = RichTextUploadingField(
+    content = models.TextField(
         verbose_name='description',
-        help_text="Description de l\'Entreprise: Activité, Mission, Objectif, etc"
+        help_text="Description de l'Entreprise: Activité, Mission, Objectif, etc"
     )
 
     class Meta:
@@ -23,7 +20,7 @@ class AboutUs(models.Model):
 
 
 class PageCGU(models.Model):
-    content = RichTextUploadingField(
+    content = models.TextField(
         verbose_name='description de la CGU',
         help_text="Description de la Condition Générale d'Utilisation du site."
     )
@@ -38,7 +35,7 @@ class PageCGU(models.Model):
 
 
 class PageSupport(models.Model):
-    content = RichTextUploadingField(
+    content = models.TextField(
         verbose_name='description support',
         help_text="Description des questions"
     )
