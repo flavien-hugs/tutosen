@@ -8,6 +8,11 @@
     <div class="container d-flex flex-column">
         <div class="row align-items-center justify-content-center no-gutters min-vh-100">
             <div class="offset-lg-1 col-lg-4 col-md-12 col-12 text-center text-lg-left">
+                <div class="py-2">
+                    <a href="{{ home_url }}">
+                        <img src="{{ STATIC_PREFIX }}img/logo_tutosen.png" alt="{{ title }}">
+                    </a>
+                </div>
                 <h1 class="display-1 mb-3">Oops!</h1>
                 <h3>Désolé, nous n'avons pas pu trouver la page que vous cherchiez.</h3>
                 <p class="mb-4 small">Code d'erreur: 404. Page non trouvée.</p>
@@ -17,7 +22,7 @@
             </div>
 
             <div class="offset-lg-1 col-lg-6 col-md-12 col-12">
-                <img src="{{ STATIC_PREFIX }}img/404-error-img.svg" alt="" class="w-100"/>
+                <img src="{{ STATIC_PREFIX }}img/error.svg" alt="{{ page_title }}" class="w-100"/>
             </div>
         </div>
     </div>
