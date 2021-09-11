@@ -7,7 +7,7 @@ def tutosen_context_processor(request):
     return {
         'title': settings.SITE_NAME,
         'addr_email': 'support@tutosen.com',
-        'addr_contact': '01 51 57 13 96',
+        'addr_contact': '(225) 077 772 848',
         'site_description': settings.SITE_DESCRIPTION,
         'site_keywords': settings.META_KEYWORDS,
         'request': request,

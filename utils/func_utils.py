@@ -9,59 +9,67 @@ from django.utils.text import slugify
 from django.core.exceptions import ObjectDoesNotExist
 
 
-def random_string_generator(size=8, carac=string.ascii_lowercase + string.digits):
+def random_string_generator(size=6, carac=string.digits):
     return ''.join(random.choice(carac) for _ in range(size))
-
-
-def unique_key_generator(instance):
-    size = random.randint(20, 45)
-    key = random_string_generator(size=size)
-    Klass = instance.__class__
-    qsx = Klass.objects.filter(key=key).exists()
-    if qsx:
-        return unique_slug_generator(instance)
-    return key
-
 
 def unique_slug_generator(instance, new_slug=None):
     if new_slug is not None:
         slug = new_slug
     else:
-        slug = slugify(instance.cours_name)
+        slug = slugify(instance.title)
 
     Klass = instance.__class__
     qs_exists = Klass.objects.filter(slug=slug).exists()
 
     if qs_exists:
-        new_slug = "{slug}-{randstr}".format(
-            slug=slug,
-            randstr=random_string_generator(size=8)
-        )
+        rand_key = random.randint(300_000, 500_000)
+        new_slug = f"{slug}-{rand_key}"
         return unique_slug_generator(instance, new_slug=new_slug)
     return slug
-
 
 def get_filename_ext(filepath):
     base_name = os.path.basename(filepath)
     name, ext = os.path.splitext(base_name)
     return name, ext
 
-
 def upload_image_path(instance, filename):
     new_filename = random_string_generator(8)
     name, ext = get_filename_ext(filename)
-    final_filename = "{new_filename}{ext}".format(
-        new_filename=new_filename, ext=ext
-    )
+    final_filename = f"{new_filename}{ext}"
+    return f"image/course/{final_filename}"
 
-    return "image/{final_filename}".format(final_filename=final_filename)
+def save_user_avatar_file(instance, filename):
+    upload_to = 'image/'
+    ext = filename.split('.')[-1]
+    if instance.avatar:
+        filename =  f"user_avatar/user_{instance.first_name.lower()}.{instance.uuid}.{ext}"
+
+    return os.path.join(upload_to, filename)
+
+def save_user_cover_file(instance, filename):
+    upload_to = 'image/'
+    ext = filename.split('.')[-1]
+    if instance.cover:
+        filename = f"user_cover/user_{instance.first_name.lower()}.{instance.uuid}.{ext}"
+
+    return os.path.join(upload_to, filename)
+
+def save_chapiter_content_file(instance, filename):
+    upload_to = 'image/'
+    ext = filename.split('.')[-1]
+    if instance.course.id:
+        filename = f"chapiter_files/chapiter_{instance.course.slug}/{instance.course.slug}.{ext}"
+        if os.path.exists(filename):
+            new_name = str(instance.course.slug) + str('1')
+            filename =  f"chapiter_files/chapiter_{instance.course.slug}/{new_name}.{ext}"
+    return os.path.join(upload_to, filename)
 
 
 class CustomFields(models.PositiveIntegerField):
 
     def __init__(self, for_fields=None, *args, **kwargs):
         self.for_fields = for_fields
-        super(CustomFields, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def pre_save(self, model_instance, add):
         if getattr(model_instance, self.attname) is None:
@@ -71,10 +79,10 @@ class CustomFields(models.PositiveIntegerField):
                     query = {field: getattr(model_instance, field) for field in self.for_fields}
                     queryset = queryset.filter(**query)
                 last_item = queryset.latest(self.attname)
-                value = last_item.ordre + 1
+                value = last_item.order + 1
             except ObjectDoesNotExist:
                 value = 0
             setattr(model_instance, self.attname, value)
             return value
         else:
-            return super(CustomFields, self).pre_save(model_instance, add)
+            return super().pre_save(model_instance, add)
