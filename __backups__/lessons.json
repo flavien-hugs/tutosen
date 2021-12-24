@@ -1150,5 +1150,21 @@
         "created_at": "2021-09-09",
         "update_at": "2021-09-09T15:59:59.679Z"
     }
+},
+{
+    "model": "courses.coursechapter",
+    "pk": 99,
+    "fields": {
+        "course": 34,
+        "slug": "les-verbe-irreguliers",
+        "title": "les verbe irréguliers",
+        "chapter_desc": "<p>les verbe irréguliers<br></p>",
+        "order": 0,
+        "access": true,
+        "movie": "",
+        "document": "",
+        "created_at": "2021-09-12",
+        "update_at": "2021-09-12T18:49:18.086Z"
+    }
 }
 ]
