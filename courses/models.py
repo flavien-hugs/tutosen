@@ -18,6 +18,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 import markdown as md
 from utils import func_utils
 from accounts import models as mdl
+# from comment.models import Comment
 
 from courses.managers import SubjectManager
 
@@ -145,7 +146,7 @@ class Subject(models.Model):
 
 
     class Meta:
-        db_table = 'subject_db'
+        db_table = 'db_courses'
         ordering = ['-created_at']
         get_latest_by = ['-created_at']
         verbose_name_plural = 'subject'
@@ -160,6 +161,11 @@ class Subject(models.Model):
     @admin.display(description='course description')
     def course_description(self):
         return self.description
+
+    @admin.display(boolean=True, ordering='created_at', description='published recently ?')
+    def was_published_recently(self):
+        now = timezone.now()
+        return now - datetime.timedelta(days=1) <= self.created_at <= now
 
     @admin.display(description='course publish')
     def publish_now(self):
@@ -192,6 +198,42 @@ class Subject(models.Model):
         total_students = self.students.count()
         return total_students
 
+    @admin.display(description='comment for course', empty_value='???')
+    def get_comments(self):
+        from comment.models import Comment
+        comments = Comment.objects.filter(course=self)
+        return comments
+
+    @admin.display(description='number for course', empty_value='???')
+    def get_comments_count(self):
+        comments_count = self.get_comments().aggregate(count=models.Count('id'))
+        counter = 0
+        if comments_count["count"] is not None:
+            counter = int(comments_count["count"])
+        return counter
+
+    # calcul de la moyenne des note de commentaire
+    @admin.display(description="comment rating")
+    def feedback_avarege(self):
+        feedback = self.get_comments().aggregate(rating=models.Avg('rate'))
+        average = 0
+        if feedback["rating"] is not None:
+            average = "%.1f" % float(feedback["rating"])
+        return average
+
+    def feeback_average_percent(self):
+        percent = "%.0f" % (float(self.feedback_avarege()) * 10)
+        return percent
+
+    def get_absolute_url(self):
+        return reverse(
+            "feedback:detail_feedback_url",
+            kwargs={
+                'link': str(self.course.instructor.link),
+                "course_slug": self.course.slug
+            }
+        )
+
     def get_absolute_url(self):
         kwargs = {'slug': str(self.slug)}
         return reverse('courses:course_detail', kwargs=kwargs)
@@ -199,14 +241,14 @@ class Subject(models.Model):
     def get_subject_list_url(self):
         return reverse(
             'subject:list_subject_url',
-            kwargs={'username': str(self.instructor.get_first_name())}
+            kwargs={'link': str(self.instructor.link)}
         )
 
     def get_subject_update_url(self):
         return reverse(
             'subject:update_subject_url',
             kwargs={
-                'username': str(self.instructor.get_first_name()),
+                'link': str(self.instructor.link),
                 'slug': str(self.slug)
             }
         )
@@ -215,7 +257,7 @@ class Subject(models.Model):
         return reverse(
             'subject:delete_subject_url',
             kwargs={
-                'username': str(self.instructor.get_first_name()),
+                'link': str(self.instructor.link),
                 'slug': str(self.slug)
             }
         )
@@ -224,7 +266,7 @@ class Subject(models.Model):
         return reverse(
             'course:list_course_url',
             kwargs={
-                'username': str(self.instructor.get_first_name()),
+                'link': str(self.instructor.link),
                 'slug': str(self.slug)
             }
         )
@@ -233,11 +275,19 @@ class Subject(models.Model):
         return reverse(
             'course:create_course_url',
             kwargs={
-                'username': str(self.instructor.get_first_name()),
+                'link': str(self.instructor.link),
                 'slug': str(self.slug)
             }
         )
 
+    def get_comment_detail_url(self):
+        return reverse(
+            "feedback:detail_feedback_url",
+            kwargs={
+                "link": self.instructor.link,
+                "slug": self.slug
+            }
+        )
 
 class Course(models.Model):
     uuid = models.UUIDField(
@@ -283,8 +333,8 @@ class Course(models.Model):
     )
 
     class Meta:
-        db_table = 'course_db'
         ordering = ['order']
+        db_table = 'db_chapiters'
         get_latest_by = ['created_at', 'update_at']
         verbose_name_plural = 'courses'
         indexes = [
@@ -292,7 +342,7 @@ class Course(models.Model):
         ]
 
     def __str__(self):
-        return f"{self.title}"
+        return self.title
 
     def get_absolute_url(self):
         return reverse(
@@ -308,7 +358,7 @@ class Course(models.Model):
         return reverse(
             'course:list_course_url',
             kwargs={
-                'username': str(self.subject.instructor.get_first_name()),
+                'link': str(self.subject.instructor.link),
                 'slug': str(self.subject.slug)
             }
         )
@@ -317,7 +367,7 @@ class Course(models.Model):
         return reverse(
             'course:update_course_url',
             kwargs={
-                'username': str(self.subject.instructor.get_first_name()),
+                'link': str(self.subject.instructor.link),
                 'slug': str(self.subject.slug),
                 'pk': str(self.pk)
             }
@@ -327,7 +377,7 @@ class Course(models.Model):
         return reverse(
             'course:delete_course_url',
             kwargs={
-                'username': str(self.subject.instructor.get_first_name()),
+                'link': str(self.subject.instructor.link),
                 'slug': str(self.subject.slug),
                 'pk': str(self.pk)
             }
@@ -337,7 +387,7 @@ class Course(models.Model):
         return reverse(
             'course_chapter:chapter_list_url',
             kwargs={
-                'username': str(self.subject.instructor.get_first_name()),
+                'link': str(self.subject.instructor.link),
                 'slug': str(self.subject.slug),
                 'pk': str(self.pk)
             }
@@ -347,7 +397,7 @@ class Course(models.Model):
         return reverse(
             'course_chapter:chapter_create_url',
             kwargs={
-                'username': str(self.subject.instructor.get_first_name()),
+                'link': str(self.subject.instructor.link),
                 'slug': str(self.subject.slug),
                 'pk': str(self.pk)
             }
@@ -417,7 +467,7 @@ class CourseChapter(models.Model):
 
     class Meta:
         ordering = ['order']
-        db_table = 'course_chapter_db'
+        db_table = 'db_lessons'
         verbose_name_plural = 'lessons'
         indexes = [
             models.Index(fields=['id'], name='id_index_lesson'),
@@ -441,7 +491,7 @@ class CourseChapter(models.Model):
         return reverse(
             'course_chapter:chapter_list_url',
             kwargs={
-                'username': str(self.course.subject.instructor.get_first_name()),
+                'link': str(self.course.subject.instructor.link),
                 'slug': str(self.course.slug),
                 'pk': str(self.course.pk)
             }
@@ -451,7 +501,7 @@ class CourseChapter(models.Model):
         return reverse(
             'course_chapter:chapter_update_url',
             kwargs={
-                'username': str(self.course.subject.instructor.get_first_name()),
+                'link': str(self.course.subject.instructor.link),
                 'slug': str(self.course.subject.slug),
                 'pk': str(self.course.pk),
                 'lesson_pk': int(self.pk)

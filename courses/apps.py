@@ -13,6 +13,3 @@ class CoursesConfig(AppConfig):
     def ready(self):
         courses = self.get_model('Course')
         pre_save.connect(receiver, sender=courses)
-
-
-    

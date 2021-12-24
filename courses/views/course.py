@@ -2,22 +2,28 @@
 
 import random
 
+from django.views import generic
 from django.urls import reverse_lazy
-from django.views import generic as mxs
 from django.shortcuts import get_object_or_404
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
-from courses import models, mixins, forms
+from comment.forms import CommentForm
+from courses import models, filters, mixins, forms
 
 
-class CourseListView(mixins.CourseSearchMixin, mxs.ListView):
-    paginate_by = 20
-    model = models.Subject
+class CourseListView(
+    mixins.CourseSearchMixin,
+    mixins.CourseFilterMixin,
+    generic.ListView
+):
+    paginate_by = 25
+    queryset = models.Subject
     context_object_name = "object_course_list"
     template_name = 'courses/course_list.html'
 
     def get_queryset(self):
-        return models.Subject.objects.get_courses_published()
+        return models.Subject.objects.get_courses_published()[0:10]
 
     def head(self, *args, **kwargs):
         last_course = self.get_queryset().latest('created_at')
@@ -28,18 +34,26 @@ class CourseListView(mixins.CourseSearchMixin, mxs.ListView):
         )
         return response
 
+    def get_context_data(self, **kwargs):
+        filter = filters.CourseFilter(
+            self.request.GET, queryset=self.get_queryset()
+        )
+        kwargs['object_course_list'] = filter.qs
+        return super(CourseListView, self).get_context_data(**kwargs)
+
 
 course_list_view = CourseListView.as_view(
     extra_context={'page_title': 'tous les cours'}
 )
 
 
-class CourseDetailView(mxs.DetailView):
+class CourseDetailView(generic.DetailView, generic.FormView):
     slug_field = "slug"
     slug_url_kwarg = "slug"
     model = models.Subject
     context_object_name = 'course'
     template_name = 'courses/course_detail.html'
+    form_class = CommentForm
 
     def get_context_data(self, **kwargs):
         context = super(CourseDetailView, self).get_context_data(**kwargs)
@@ -50,13 +64,20 @@ class CourseDetailView(mxs.DetailView):
         course = get_object_or_404(self.model, slug=self.object.slug)
 
         if (
-            user.is_authenticated
+            self.request.user.is_authenticated
+            and user.type == "STUDENT"
+        ):
+            if 'comment_form' not in context:
+                context['comment_form'] = self.form_class(request=self.request)
+
+        if (
+            self.request.user.is_authenticated
             and context.get('course') in user.course_created.all()
         ):  
             button_context = "you dont enrolled this course"
             button_text_enrolled = "disableClick"
         elif (
-            user.is_authenticated and user.type == "TEACHER"
+            self.request.user.is_authenticated and user.type == "TEACHER"
         ):
             button_context = "you dont enrolled this course"
             button_text_enrolled = "disableClick"
@@ -76,11 +97,32 @@ class CourseDetailView(mxs.DetailView):
         context['page_title'] = f'{self.object.title}'
         return context
 
+    def get_success_url(self):
+        self.object = self.get_object()
+        return self.object.get_absolute_url()
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.form_class()
+
+        if form.is_valid():
+            print("comment form is returned")
+            return self.form_valid(form)
+
+    def form_valid(self, form):
+        self.object = self.get_object()
+        comment = form.save(commit=False)
+        comment.author = self.request.user
+        comment.course = self.object
+        comment.course_id = self.object.id
+        comment.save()
+        return HttpResponseRedirect(self.get_success_url())
+
 
 course_detail_view = CourseDetailView.as_view()
 
 
-class LessonDetailView(mxs.DetailView):
+class LessonDetailView(generic.DetailView):
     model = models.Course
     context_object_name = 'course'
     template_name = 'courses/course_resume.html'

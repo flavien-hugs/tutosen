@@ -14,7 +14,7 @@ from courses import mixins, models, forms
 
 
 class ChapterListView(auth_mxs.LoginRequiredMixin, mxs.DetailView):
-    paginate_by = 20
+    paginate_by = 10
     model = models.Course
     context_object_name = 'chapiters'
     template_name = 'dashboard/courses/manage/chapter/chapter_list.html'

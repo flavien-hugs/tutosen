@@ -2,6 +2,7 @@
 
 from django.db.models import Q
 
+from courses import filters
 
 class CourseSearchMixin(object):
     def get_queryset(self, **kwargs):
@@ -17,8 +18,6 @@ class CourseSearchMixin(object):
                 | Q(description__icontains=query)
             )
             return queryset.filter(lookups).distinct()
-        else:
-            return self.none()
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -26,4 +25,15 @@ class CourseSearchMixin(object):
         if query:
             kwargs['page_title'] = f'Recherche pour "{query}"'
         return super(CourseSearchMixin, self).get_context_data(**kwargs)
+
+
+class CourseFilterMixin(object):
+    
+    def get_context_data(self, **kwargs):
         
+        filter_course = filters.CourseFilter(
+            self.request.GET, queryset=self.get_queryset()
+        )
+        
+        kwargs['filter_course'] = filter_course
+        return super(CourseFilterMixin, self).get_context_data(**kwargs)
