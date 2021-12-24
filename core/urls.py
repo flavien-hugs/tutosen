@@ -42,7 +42,8 @@ home_view = HomeView.as_view()
 urlpatterns = [
     path(route='', view=home_view, name='home'),
     path('me/', include('boards.urls')),
-    path('course/', include('courses.urls')),
+    path('courses/', include('courses.urls')),
+    path('blog/', include('blog.urls', namespace="blog")),
     path('pages/', include('pages.urls', namespace='pages')),
     path('jet/', include('jet.urls', 'jet')),
     path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
