@@ -1,0 +1,85 @@
+{% extends "dashboard/_base.html" %}
+
+{% load widget_tweaks boards_tags %}
+
+{% block dashboard_subheader %}
+<div class="mb-2 mb-lg-0">
+    <h1 class="mb-1 h2 font-weight-bold">
+        {{ page_title|safe }}
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ user.get_userdetail_url }}">Dashboard</a>
+            </li>
+            
+            <li class="breadcrumb-item active" aria-current="page">
+                {{ page_title|lower|safe }}
+            </li>
+        </ol>
+    </nav>
+</div>
+{% endblock dashboard_subheader %}
+
+{% block teacher_content %}
+    <div class="row justify-content-center">
+        <div class="col-lg-12 col-md-12 col-12">
+            <div class="card mb-4">
+                <div class="card-header d-lg-flex align-items-center justify-content-between">
+                    <div class="mb-3 mb-lg-0">
+                        <h3 class="mb-0">Commentaire</h3>
+                        <span>You have full control to manage your own account setting.</span>
+                    </div>
+                    <div>
+                        <a href="#!" class="btn btn-outline-primary btn-sm">Export To CSV...</a>
+                    </div>
+                </div>
+    
+                <div class="card-body">
+                    <form class="form-row mb-4">
+                        <div class="col-xl-7 col-lg-6 col-md-4 col-12 mb-2 mb-lg-0">
+                            <select class="selectpicker" data-width="100%">
+                                <option value="">ALL</option>
+                                <option value="How to easily create a website">
+                                    How to easily create a website
+                                </option>
+                                <option value="Grunt: The JavaScript Task...">
+                                    Grunt: The JavaScript Task...
+                                </option>
+                                <option value="Vue js: The JavaScript Task...">
+                                    Vue js: The JavaScript Task...
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-xl-2 col-lg-2 col-md-4 col-12 mb-2 mb-lg-0">
+                            <select class="selectpicker" data-width="100%">
+                                <option value="">Rating</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-4 col-12 mb-2 mb-lg-0">
+                            <select class="selectpicker" data-width="100%">
+                                <option value="">Sort</option>
+                                <option value="Newest">Newest</option>
+                                <option value="Oldest">Oldest</option>
+                            </select>
+                        </div>
+                    </form>
+    
+                    <ul class="list-group list-group-flush">
+                        {% if course_list %}
+                            {% for course in course_list %}
+                                {% include "dashboard/courses/feedback/snippet/_snippet_feedback_card.html" with object=course %}
+                            {% endfor %}
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            {% include "includes/snippets/_snippet_paginate.html" %}
+        </div>
+    </div>
+{% endblock teacher_content %}

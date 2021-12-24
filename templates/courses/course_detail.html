@@ -1,5 +1,6 @@
 {% extends "index.html" %}
-{% load coursetags %}
+{% load static coursetags comment_tags %}
+{% get_static_prefix as STATIC_PREFIX %}
 
 {% block head_title %}{{ page_title|capfirst }}{% endblock head_title %}
 
@@ -20,8 +21,7 @@
                         </p>
 
                         <div class="d-flex align-items-center">
-                            <a href="#!" class="text-white text-decoration-none" data-toggle="tooltip" data-placement="top" title="Add to
-                            Bookmarks">
+                            <a href="#!" class="text-white text-decoration-none" data-toggle="tooltip" data-placement="top" title="Add to Bookmarks">
                                 <i class="fe fe-bookmark text-white-50 mr-2"></i>
                                 Bookmark
                             </a>
@@ -73,7 +73,7 @@
 
                                     <li class="nav-item">
                                         <a class="nav-link" id="review-tab" data-toggle="pill" href="#review" role="tab" 
-                                        aria-controls="review" aria-selected="false">Comment</a>
+                                        aria-controls="review" aria-selected="false">Avis</a>
                                     </li>
 
                                     <li class="nav-item">
@@ -101,7 +101,7 @@
                                                             </span>
                                                         </a>
 
-                                                        <div class="collapse {% if forloop.counter == 1 %}show{% endif %}" id="chapiter{{ chapiter.order }}" data-parent="#courseAccordion">
+                                                        <div class="collapse {% if forloop.first %}show{% endif %}" id="chapiter{{ chapiter.order }}" data-parent="#courseAccordion">
                                                             {% with lessons=chapiter.course_lessons.all %}
                                                                 <div class="pt-3 pb-2">
                                                                     {% for lesson in lessons %}
@@ -161,142 +161,7 @@
                                     {{ course.description|safe }}
                                 </div>
 
-                                <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
-                                    <div class="mb-3">
-                                        <h3 class="mb-4">Comment les étudiants ont évalué ce cours</h3>
-                                        <div class="row align-items-center">
-                                            <div class="col-auto text-center">
-                                                <h3 class="display-2 font-weight-bold">4.5</h3>
-                                                <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                <i class="mdi mdi-star mr-n1-half text-warning"></i>
-                                                <p class="mb-0 font-size-xs">(Based on 27 reviews)</p>
-                                            </div>
-
-                                            <div class="col pt-3 order-3 order-md-2">
-                                                <div class="progress mb-3" style="height: 6px;">
-                                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 90%;" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-
-                                                <div class="progress mb-3" style="height: 6px;">
-                                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 80%;" aria-valuenow="80"
-                                                    aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-
-                                                <div class="progress mb-3" style="height: 6px;">
-                                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 70%;" aria-valuenow="70"
-                                                    aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-
-                                                <div class="progress mb-3" style="height: 6px;">
-                                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 60%;" aria-valuenow="60"
-                                                    aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-
-                                                <div class="progress mb-0" style="height: 6px;">
-                                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 50%;" aria-valuenow="50"
-                                                    aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-auto col-6 order-2 order-md-3">
-                                                <div>
-                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                    <span class="ml-1">53%</span>
-                                                </div>
-
-                                                <div>
-                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                    <i class="mdi mdi-star mr-n1 text-light"></i>
-                                                    <span class="ml-1">36%</span>
-                                                </div>
-                                                
-                                                <div>
-                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                    <i class="mdi mdi-star mr-n1 text-light"></i>
-                                                    <i class="mdi mdi-star mr-n1 text-light"></i>
-                                                    <span class="ml-1">9%</span>
-                                                </div>
-
-                                                <div>
-                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                    <i class="mdi mdi-star mr-n1 text-light"></i>
-                                                    <i class="mdi mdi-star mr-n1 text-light"></i>
-                                                    <i class="mdi mdi-star mr-n1 text-light"></i>
-                                                    <span class="ml-1">3%</span>
-                                                </div>
-                                                
-                                                <div>
-                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                    <i class="mdi mdi-star mr-n1 text-light"></i>
-                                                    <i class="mdi mdi-star mr-n1 text-light"></i>
-                                                    <i class="mdi mdi-star mr-n1 text-light"></i>
-                                                    <i class="mdi mdi-star mr-n1 text-light"></i>
-                                                    <span class="ml-1">2%</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <hr class="my-5"/>
-
-                                    <div class="mb-3">
-                                        <div class="d-lg-flex align-items-center justify-content-between mb-5">
-                                            <div class="mb-3 mb-lg-0">
-                                                <h3 class="mb-0">Commentaires</h3>
-                                            </div>
-                                            
-                                            <div>
-                                                <form class="form-inline">
-                                                    <div class="d-flex align-items-center mr-2">
-                                                        <span class="position-absolute pl-3">
-                                                            <i class="fe fe-search"></i>
-                                                        </span>
-                                                        <input type="search" class="form-control pl-6" placeholder="Search Review"/>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-
-                                        <div class="media border-bottom pb-4 mb-4">
-                                            <img src="{{ STATIC_PREFIX }}img/avatar-1.jpg" alt="" class="rounded-circle avatar-lg"/>
-                                            <div class="media-body ml-3">
-                                                <h4 class="mb-1">
-                                                    Hugs F.
-                                                    <span class="ml-1 font-size-xs text-muted">2 jours maintent</span>
-                                                </h4>
-
-                                                <div class="font-size-xs mb-2">
-                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                    <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                </div>
-                                                <p>Lectures were at a really good pace and I never felt lost. The instructor was well informed 
-                                                and allowed me to learn and navigate Figma easily.</p>
-                                            
-                                                <div class="d-lg-flex">
-                                                    <p class="mb-0">Cet avis a-t-il été utile ?</p>
-                                                    <a href="#!" class="btn btn-xs btn-primary ml-lg-3">Oui</a>
-                                                    <a href="#!" class="btn btn-xs btn-outline-white ml-1">Non</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                {% include "courses/snippets/_snippet_feedback.html" with course=course %}
 
                                 <div class="tab-pane fade" id="faq" role="tabpanel" aria-labelledby="faq-tab">
                                     <div>
@@ -355,9 +220,7 @@
                 <div class="col-lg-4 col-md-12 col-12 mt-lg-n22">
                     <div class="card mb-3 mb-4">
                         <div class="p-1">
-                            <div class="d-flex justify-content-center position-relative rounded-top py-12 border-white border bg-cover" style="background-image: url(
-                                {% if course.image %}{{ course.image.url }}{% else %}
-                                    {{ STATIC_PREFIX }}img/cours/course-javascript.jpg{% endif %});">
+                            <div class="d-flex justify-content-center position-relative rounded-top py-12 border-white border bg-cover" style="background-image:url('{% if course.image %}{{ course.image.url }}{% else %}{{ STATIC_PREFIX }}img/cours/empty.jpg{% endif %}')">
                             </div>
                         </div>
 

@@ -1,14 +1,15 @@
 {% comment %} bootstrap CSS {% endcomment %}
 
-{% load static %}{% get_static_prefix as STATIC_PREFIX %}
+{% load static compress %}
+{% get_static_prefix as STATIC_PREFIX %}
 
-<link href="{{ STATIC_PREFIX }}fonts/feather/feather.css" rel="stylesheet"/>
-<link href="{{ STATIC_PREFIX }}css/libs/dragula.min.css" rel="stylesheet"/>
-<link href="{{ STATIC_PREFIX }}css/libs/materialdesignicons.min.css" rel="stylesheet"/>
-<link href="{{ STATIC_PREFIX }}css/libs/prism.css" rel="stylesheet"/>
-<link href="{{ STATIC_PREFIX }}css/libs/dropzone.css" rel="stylesheet"/>
-<link href="{{ STATIC_PREFIX }}css/libs/magnific-popup.css" rel="stylesheet"/>
-<link href="{{ STATIC_PREFIX }}css/libs/bootstrap-select.min.css" rel="stylesheet"/>
-<link href="{{ STATIC_PREFIX }}css/libs/tagify.css" rel="stylesheet">
+{% compress css %}
+<link type="text/css" href="{{ STATIC_PREFIX }}fonts/feather/feather.css" rel="stylesheet"/>
+<link type="text/css" href="{{ STATIC_PREFIX }}css/libs/materialdesignicons.min.css" rel="stylesheet"/>
+<link type="text/css" href="{{ STATIC_PREFIX }}css/libs/magnific-popup.css" rel="stylesheet"/>
+<link type="text/css" href="{{ STATIC_PREFIX }}css/libs/bootstrap-select.min.css" rel="stylesheet"/>
+<link type="text/css" href="{{ STATIC_PREFIX }}css/libs/tagify.css" rel="stylesheet">
 
-<link rel="stylesheet" href="{{ STATIC_PREFIX }}css/theme.min.css"/>
+<link type="text/css" rel="stylesheet" href="{{ STATIC_PREFIX }}css/theme.min.css"/>
+
+{% endcompress css %}

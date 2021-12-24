@@ -1,11 +1,12 @@
 {% load static boards_tags %}
+{% get_static_prefix as STATIC_PREFIX %}
 
-<div class="col-lg-3 col-md-6 col-12">
-    <div class="card h-100 mb-4 card-hover">
+<article class="{% if request.resolver_match.url_name == 'search' or request.resolver_match.url_name == 'course_list' %}col-lg-4{% else %}col-lg-3{% endif %} col-md-6 col-12 mb-4">
+    <div class="card card-hover h-100">
         <a href="{{ object.get_absolute_url }}" class="card-img-top">
             <img src="{% if object.image %} {{ object.image.url }}
-                {% else %} {{ STATIC_PREFIX }}img/cours/empty.jpg{% endif %}"
-                alt="{{ object.image.url|slugify }}" class="card-img-top rounded-top"/>
+                {% else %}{{ STATIC_PREFIX }}img/cours/empty.jpg{% endif %}"
+                alt="{{ object.title|slugify }}" class="card-img-top rounded-top"/>
         </a>
 
         <div class="card-body">
@@ -22,10 +23,17 @@
 
             <ul class="mb-3 list-inline">
                 <li class="list-inline-item">
-                    <i class="far fa-clock mr-1"></i>
-                    3h 56m
-                </li>
+                    <span class="text-dark font-weight-bold">
+                        £{{ object.price|safe }}
+                    </span>
 
+                    {% if object.sale_price %}
+                        <del class="text-muted">
+                            £{{ object.sale_price|safe }}
+                        </del>
+                    {% endif %}
+                </li>
+                
                 <li class="list-inline-item">
                     <i class="fe fe-bar-chart mr-1"></i>
                     {{ object.get_level_display|capfirst|safe }}
@@ -43,15 +51,6 @@
                 <span class="text-warning">4.5</span>
                 <span class="font-size-xs text-muted">(7,700)</span>
             </div>
-
-            <div class="lh-1 mt-3">
-                <span class="text-dark fw-bold">
-                    £{{ object.price|safe }}
-                </span>
-                <del class="fs-6 text-muted">
-                    £{{ object.price|safe }}
-                </del>
-            </div>
         </div>
 
         <div class="card-footer">
@@ -65,18 +64,20 @@
                 </div>
 
                 <div class="col ml-2">
-                    <span class="small font-weight-bold">
-                        {{ object.instructor.get_civility_display|safe }}
-                        {{ object.instructor.first_name|capfirst|upper|safe }}
-                    </span>
+                    <a class="text-inherit" href="{{ course.instructor.get_teacher_detail_url }}">
+                        <span class="small font-weight-bold">
+                            {{ object.instructor.get_civility_display|safe }}
+                            {{ object.instructor.first_name|capfirst|upper|safe }}
+                        </span>
+                    </a>
                 </div>
 
                 <div class="col-auto">
-                    <a href="#!" class="text-muted bookmark" data-toggle="tooltip" data-placement="top" title="Add to Bookmarks" data-original-title="Add to Bookmarks">
-                        <i class="fe fe-bookmark"></i>
+                    <a href="#!" class="text-muted" data-toggle="tooltip" data-placement="top" title="{{ course.instructor.statut|striptags|safe }}">
+                        <i class="fe fe-info"></i>
                     </a>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</article>

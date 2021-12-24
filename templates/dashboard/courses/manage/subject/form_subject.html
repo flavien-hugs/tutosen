@@ -106,24 +106,19 @@
                             <small>{{ form.resume.help_text }}</small>
                         </div>
 
-                        <div class="form-group col-6">  
-                            <div class="custom-file-container" data-upload-id="courseCoverImg" id="courseCoverImg">
-                                {{ form.image|add_label_class:"custom-file-container__image-clear" }}
-                                {% render_field form.image|attr:"type:file" %}
-
+                        <div class="form-group col-12 col-md-6 mb-2">
+                            {{ form.image|add_label_class:"form-label" }}
+                            {% render_field form.image|attr:"type:file" %}
+                            {% if object.image %}
+                                <img class="img-fluid my-3" src="{{ object.image.url }}" alt="{{ object.image.title }}">
+                            {% else %}
                                 <small class="mt-3 d-block">
                                     Upload your course image here. It must meet
                                     our course image quality standards to be accepted.
                                     Important guidelines: 750x440 pixels; .jpg, .jpeg,.
                                     gif, or .png. no text on the image.
                                 </small>
-
-                                {% if object.image %}
-                                    <div class="custom-file-container__image-preview custom-file-container__image-preview--active" style="background-image:url({{ object.image.url }})"></div>
-                                {% else %}
-                                    <div class="custom-file-container__image-preview"></div>
-                                {% endif %}
-                            </div>
+                            {% endif %}
                         </div>
 
                         <div class="form-group col-12">
@@ -157,37 +152,38 @@
                         <h4 class="mb-0">Course Info</h4>
                     </div>
 
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <span>
-                            Course ID
-                            <span class="badge {% if object.published %}badge-success{% else %}badge-danger{% endif %}">
-                                {% if object.published %}Published{% else %}Unpublished{% endif %}
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <span>
+                                Course ID
+                                <span class="badge {% if object.published %}badge-success{% else %}badge-danger{% endif %}">
+                                    {% if object.published %}Published{% else %}Unpublished{% endif %}
+                                </span>
                             </span>
-                        </span>
-                        <h5>{{ object.uuid }}</h5>
-                    </li>
+                            <h5>{{ object.uuid }}</h5>
+                        </li>
 
-                    <li class="list-group-item">
-                        <span>Created at</span>
-                        <h5>{{ object.created_at|date }}</h5>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="card mb-4">
-                <div class="card-header d-lg-flex">
-                    <h4 class="mb-0">Actions</h4>
+                        <li class="list-group-item">
+                            <span>Created at</span>
+                            <h5>{{ object.created_at|date }}</h5>
+                        </li>
+                    </ul>
                 </div>
 
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span>Delete</span>
-                        <a href="{{ object.get_subject_delete_url }}">
-                            <i class="fe fe-trash text-danger font-size-md"></i>
-                        </a>
-                    </li>
-                </ul>
+                <div class="card mb-4">
+                    <div class="card-header d-lg-flex">
+                        <h4 class="mb-0">Actions</h4>
+                    </div>
+
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>Delete</span>
+                            <a href="{{ object.get_subject_delete_url }}">
+                                <i class="fe fe-trash text-danger font-size-md"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         {% endif %}
     </div>

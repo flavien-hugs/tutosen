@@ -1,6 +1,8 @@
-{% extends "_base.html" %}
+{% extends "index.html" %}
 
-{% load accounts_tags coursetags %}
+{% load widget_tweaks accounts_tags coursetags %}
+
+{% block head_title %} {{ page_title|capfirst }} {% endblock head_title %}
 
 {% block navigation %}
 {% endblock navigation %}
@@ -11,8 +13,8 @@
 
 	<div class="container-fluid">
 		<div class="row align-items-center min-vh-100">
-			<div class="col-lg-6 col-md-12 col-12">
-				<div class="px-xl-20 px-md-8 px-4 py-8 py-lg-0">
+			<div class="col-lg-5 col-md-12 col-12">
+				<div class="px-xl-10 px-md-8 px-4 py-8 py-lg-0">
 					<div class="d-flex justify-content-between mb-7 align-items-center">
 						<a href="{{ home_ul }}">
 							<img src="{{ STATIC_PREFIX }}img/logo_tutosen.png" alt="{{ title }}">
@@ -54,77 +56,69 @@
 							<a href="#!" class="text-muted me-3">
 								<i class="fab fa-twitter fs-3"></i>
 							</a>
-							
-							<a href="#!" class="text-muted">
-								<i class="fab fa-github fs-3"></i>
-							</a>
 						</div>
 					</div>
 				</div>
 			</div>
 			
-			<div class="col-lg-6 d-lg-flex align-items-center w-lg-50 min-vh-lg-100 bg-cover top-0 right-0" >
-				<div class="px-4 px-xl-20 py-8 py-lg-0">
+			<div class="col-lg-7 d-lg-flex align-items-center w-lg-50 min-vh-lg-100 bg-cover top-0 right-0">
+				<div class="px-xl-10 px-4 py-8 py-lg-0">
+					{% include "account/snippets/_snippet_message.html" %}
 					<div id="form">
-						<form class="row">
+						<form method="post" class="row">
+							{% csrf_token %}
 							<div class="mb-3 col-12 col-md-6">
-								<label class="form-label"for="fname">
-									First Name:<span class="text-danger">*</span>
+								<label class="form-label" for="{{ form.first_name.id_for_label }}">
+									{{ form.first_name.label }}
+									<span class="text-danger">*</span>
 								</label>
-
-								<input class="form-control" type="text" name="last name" id="fname" placeholder="First Name" required />
+								{% render_field form.first_name|attr:"autofocus" placeholder=form.first_name.help_text %}
 							</div>
 
 							<div class="mb-3 col-12 col-md-6">
-								<label class="form-label"for="lname">
-									Last Name: <span class="text-danger">*</span>
+								<label class="form-label" for="{{ form.last_name.id_for_label }}">
+									{{ form.last_name.label }}
+									<span class="text-danger">*</span>
 								</label>
-
-								<input class="form-control" type="text" name="last name" id="lname" placeholder="Last Name" required />
+								{% render_field form.last_name placeholder=form.last_name.help_text %}
 							</div>
 
 							<div class="mb-3 col-12 col-md-6">
-								<label class="form-label"for="email">
-									Email: <span class="text-danger">*</span>
+								<label class="form-label" for="{{ form.email.id_for_label }}">
+									{{ form.email.label }}
+									<span class="text-danger">*</span>
 								</label>
-
-								<input class="form-control" type="email" name="email" id="email" placeholder="Email" required/>
+								{% render_field form.email placeholder=form.email.help_text %}
 							</div>
 
 							<div class="mb-3 col-12 col-md-6">
-								<label class="form-label"for="phone">
-									Phone Number: 
+								<label class="form-label"for="{{ form.phone.id_for_label }}">
+									{{ form.phone.label }}
 									<span class="text-danger">*</span>
 								</label>
 
-								<input class="form-control" type="text" name="phone" id="phone" placeholder="Phone" required/>
+								{% render_field form.phone placeholder=form.phone.help_text %}
 							</div>
 							
 							<div class="mb-3 col-12">
-								<label class="text-dark form-label"for="frustration">
-									Contact Reason:
+								<label class="text-dark form-label"for="{{ form.reason.id_for_label }}">
+									{{ form.reason.label }}
 									<span class="text-danger">*</span>
 								</label>
 
-								<select class="selectpicker" data-width="100%">
-									<option selected>Select</option>
-									<option value="1">Design</option>
-									<option value="2">Development</option>
-									<option value="3">Other</option>
-								</select>
+								{% render_field form.reason placeholder=form.reason.help_text %}
 							</div>
 							
 							<div class="mb-3 col-12">
-								<label class="text-dark form-label"for="messages">
-								Message:</label>
+								<label class="text-dark form-label"for="{{ form.message.id_for_label }}">
+								{{ form.message.label }}</label>
 								
-								<textarea class="form-control" id="messages" rows="3" placeholder="Messages">
-								</textarea>
+								{% render_field form.message placeholder=form.message.help_text %}
 							</div>
 							
-							<div class=" col-12">
+							<div class="col-12 mb-3">
 								<button type="submit" class="btn btn-primary btn-block">
-									Submit
+									Envoyer
 								</button>
 							</div>
 						</form>

@@ -1,0 +1,41 @@
+{% load widget_tweaks %}
+
+<div class="py-10">
+	<div class="text-center mb-6">
+		<h2 class="display-4 font-weight-bold">Newsletter</h2>
+		<p class="mb-0 lead">
+			Inscrivez-vous à notre lettre d'information et
+			obtenez les derniers articles dans votre boite mail.
+		</p>
+	</div>
+
+	<form method="POST" class="form-row px-md-20">
+		<div class="form-group col pl-0">
+			{% csrf_token %}
+			{% render_field form.email|add_error_class:"is-invalid" placeholder="votreemail@exemple.com" %}
+		</div>
+		<div class="form-group col-auto pl-0">
+			<button class="btn btn-primary text-capitalize" type="submit">
+				<i class="fe fe-send mr 1"></i>
+				abonnement
+			</button>
+		</div>
+	</form>
+</div>
+
+<!-- soumission du formulaire via ajax -->
+<script type="text/javascript">
+	$(document).ready(function () {
+		$("button").prop("disabled", true);
+	    
+		$("#id_email").focusout("input", function(e) {
+			e.preventDefault();
+
+			if ($(this).val().length > 0) {
+	            $("button").prop("disabled", false);
+	        } else {
+	        	$("button").prop("disabled", true);
+	        }
+		});
+	});
+</script>

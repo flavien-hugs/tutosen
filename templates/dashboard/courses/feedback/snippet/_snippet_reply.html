@@ -1,0 +1,32 @@
+<li class="list-group-item border-0 px-0">
+	<div class="media {% if not forloop.last %}mb-4{% endif %}">
+		<img src="{% if feedback.author.avatar %}{{ feedback.author.avatar.url }}{% else %}{{ STATIC_PREFIX }}img/cours/empty.jpg{% endif %}"
+		alt="{{ feedback.author|slugify }}" class="rounded-circle avatar-lg">
+
+		<div class="ml-3 mt-2 media-body">
+			<div class="d-flex align-items-center justify-content-between">
+				<div>
+					<h4 class="mb-0">
+						{{ feedback.author|capfirst }}
+					</h4>
+					<span class="text-muted font-size-xs">
+						<i class="mdi mdi-clock mr-1"></i>
+						il y a {{ feedback.date_added|timesince }}
+					</span>
+				</div>
+			</div>
+
+			<div class="mt-2">
+				<p class="text-muted">
+					{{ feedback.comment|linebreaks|striptags }}
+				</p>
+
+				<p class="mt-2">
+					<a class="btn btn-link btn-sm shadow-none" data-toggle="collapse" href="#collapse" role="button" aria-expanded="false" aria-controls="collapseE">
+						<i class="fas fa-reply mr-1"></i> répondre
+					</a>
+				</p>
+			</div>
+		</div>
+	</div>
+</li>

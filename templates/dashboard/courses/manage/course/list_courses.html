@@ -3,7 +3,6 @@
 {% load widget_tweaks boards_tags %}
 
 {% block dashboard_subheader %}
-
     <div class="mb-2 mb-lg-0">
         <h1 class="mb-1 h2 font-weight-bold">
             {{ page_title|safe }}
@@ -117,6 +116,10 @@
                                     {% endfor %}
                                 </tbody>
                             </table>
+                        </div>
+
+                        <div class="card-footer border-top-0">
+                            {% include "includes/snippets/_snippet_paginate.html" %}
                         </div>
                     {% else %}
                         {% include "dashboard/courses/snippet/empty_object.html" %}

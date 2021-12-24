@@ -3,7 +3,7 @@
 {% load widget_tweaks boards_tags %}
 
 {% block dashboard_subheader %}
-    {% url 'subject:create_subject_url' request.user.link as subject_create_url %}
+    {% url 'blogs:create_post_url' request.user.get_first_name as post_create_url %}
 
     <div class="mb-2 mb-lg-0">
         <h1 class="mb-1 h2 font-weight-bold">{{ page_title|capfirst|safe }}</h1>
@@ -11,10 +11,6 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ request.user.get_userdetail_url }}">Dashboard</a>
-                </li>
-
-                <li class="breadcrumb-item">
-                    course
                 </li>
 
                 <li class="breadcrumb-item active" aria-current="page">
@@ -25,16 +21,18 @@
     </div>
 
     <div>
-        <a href="{{ subject_create_url }}" class="btn btn-primary">
-            {{ empty_subject_label }}
+        <a href="{{ post_create_url }}" class="btn btn-primary">
+           Create post
         </a>
     </div>
 {% endblock dashboard_subheader %}
 
 {% block teacher_content %}
+    {% include "dashboard/blog/_post_navbar.html" %}
+    
     <div class="row">
         <div class="col-lg-12 col-md-12 col-12">
-            {% if subject_list %}
+            {% if post_list %}
                 <div class="card rounded-lg mb-3">
                     <div class="p-4 row">
                         <form class="d-flex align-items-center col-12 col-md-8 col-lg-3">
@@ -49,61 +47,38 @@
                         <table class="table mb-0 text-nowrap">
                             <thead>
                                 <tr>
-                                    <th scope="col" class="border-0">Cours</th>
-                                    <th scope="col" class="border-0">Catégories</th>
-                                    <th scope="col" class="border-0">Étudiants</th>
-                                    <th scope="col" class="border-0">Notation</th>
+                                    <th scope="col" class="border-0">Article</th>
                                     <th scope="col" class="border-0">Statut</th>
                                     <th scope="col" class="border-0">Action</th>
                                 </tr>
                             </thead>
 
                             <tbody>
-                                {% for subject in subject_list %}
+                                {% for post in post_list %}
                                     <tr>
                                         <td class="border-top-0">
                                             <div class="d-lg-flex">
                                                 <div>
-                                                    <a href="{{ subject.get_subject_course_list_url }}">
+                                                    <a href="{{ post.get_post_update }}">
                                                         <img src="
-                                                        {% if subject.image %}
-                                                            {{ subject.image.url }}
+                                                        {% if post.image %}
+                                                            {{ post.image.url }}
                                                         {% else %}
                                                             {{ STATIC_PREFIX }}img/cours/empty.jpg
-                                                        {% endif %}" alt="{{ subject.title }}" class="rounded img-4by3-lg">
+                                                        {% endif %}" alt="{{ post.title }}" class="rounded img-4by3-lg">
                                                     </a>
                                                 </div>
 
                                                 <div class="ml-lg-3 mt-2 mt-lg-0">
                                                     <h4 class="mb-1 h5">
-                                                        <a href="{{ subject.get_subject_course_list_url }}" class="text-inherit">
-                                                            {{ subject.title|capfirst|safe }}
+                                                        <a href="{{ post.get_post_update }}" class="text-inherit">
+                                                            {{ post.title|capfirst|safe }}
                                                         </a>
                                                     </h4>
                                                     <ul class="list-inline font-size-xs mb-0">
                                                         <li class="list-inline-item">
-                                                            <a href="{{ subject.get_subject_course_list_url }}">
-                                                                <i class="fa fa-bookmark mr-1"></i>
-                                                                {{ subject.subject_courses.count }}
-                                                                chapter{{ subject.subject_courses.count|pluralize }}
-                                                            </a>
-                                                        </li>
-
-                                                        <li class="list-inline-item">
-                                                            <a href="{{ subject.get_comment_detail_url }}">
-                                                                <i class="mdi mdi-comment-text mr-1"></i>
-                                                                {{ subject.get_comments_count }} comment{{ subject.get_comments_count|pluralize }}
-                                                            </a>
-                                                        </li>
-
-                                                        <li class="list-inline-item">
-                                                            <i class="fe fe-bar-chart mr-1"></i>
-                                                            {{ subject.get_level_display|safe }}
-                                                        </li>
-
-                                                        <li class="list-inline-item">
                                                             <i class="fe fe-clock mr-1"></i>
-                                                            {{ subject.created_at|timesince }}
+                                                            {{ post.created_at|timesince }}
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -111,20 +86,7 @@
                                         </td>
 
                                         <td class="border-top-0">
-                                            {{ subject.get_category_display|safe }}
-                                        </td>
-
-                                        <td class="border-top-0">11,200</td>
-
-                                        <td class="border-top-0">
-                                            <span class="text-warning">
-                                                4.5<i class="mdi mdi-star"></i>
-                                            </span>
-                                            (3,250)
-                                        </td>
-
-                                        <td class="border-top-0">
-                                            {% if subject.published %}
+                                            {% if post.published %}
                                                 <span class="badge badge-success">
                                                     Published
                                                 </span>
@@ -144,12 +106,12 @@
                                                 </a>
 
                                                 <span class="dropdown-menu" aria-labelledby="courseDropdown">
-                                                    <a class="dropdown-item" href="{{ subject.get_subject_update_url }}">
+                                                    <a class="dropdown-item" href="{{ post.get_post_update }}">
                                                         <i class="fe fe-edit dropdown-item-icon"></i>
                                                         Edit
                                                     </a>
 
-                                                    <form method="post" action="{{ subject.get_subject_delete_url }}">
+                                                    <form method="post" action="{{ post.get_post_delete }}">
                                                        {% csrf_token %}
                                                         <button class="dropdown-item">
                                                             <i class="fe fe-trash dropdown-item-icon">

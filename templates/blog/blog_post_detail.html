@@ -1,0 +1,77 @@
+{% extends "index.html" %}
+
+{% block head_title %}{{ page_title|capfirst }}{% endblock head_title %}
+
+{% block page_content %}
+	<div class="py-4 py-lg-8 pb-14 ">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-xl-8 col-lg-8 col-md-12 col-12 mb-2">
+					<div class="text-center mb-4">
+						<a href="#!" class="font-size-sm font-weight-semi-bold d-block mb-4 text-primary">Courses</a>
+						
+						<h1 class="display-3 font-weight-bold mb-4">{{ post.title|capfirst|safe }}</h1>
+						<span class="mb-3 d-inline-block">{{ post.get_readtime }}</span>
+					</div>
+
+					<div class="d-flex justify-content-between align-items-center mb-5">
+						<div class="d-flex align-items-center">
+							<img src="{{ post.author.avatar.url }}" alt="{{ post.author.get_fullname }}" class="rounded-circle avatar-md">
+							<div class="ml-2 lh-1">
+								<h5 class="mb-1">{{ post.author.get_fullname }}</h5>
+								<span class="text-primary">{{ post.author.brief_desc|striptags|capfirst|safe }}</span>
+							</div>
+						</div>
+						<div>
+							<span class="mr-2 text-muted">Share</span>
+							<a href="#!" class="mr-2 text-muted"><i class="fab fa-facebook"></i></a>
+							<a href="#!" class="mr-2 text-muted"><i class="fab fa-twitter"></i></a>
+							<a href="#!" class="mr-2 text-muted "><i class="fab fa-linkedin"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-xl-10 col-lg-10 col-md-12 col-12 mb-6">
+					<img src="{{ post.image.url }}" alt="{{ post.title|slugify }}" class="img-fluid rounded-lg">
+				</div>
+			</div>
+
+			<div class="row justify-content-center">
+				<div class="col-xl-8 col-lg-8 col-md-12 col-12 mb-2">
+					<div>
+						<div class="mb-">
+							<p class="lead text-dark">
+								{{ post.subtitle|striptags|safe }}
+							</p>
+						</div>
+						{{ post.body|safe }}
+					</div>
+
+					<hr class="mt-8 mb-5">
+					
+					<div class="d-flex justify-content-between align-items-center mb-5">
+						<div class="d-flex align-items-center">
+							<img src="{{ post.author.avatar.url }}" alt="{{ post.author.get_fullname }}" class="rounded-circle avatar-md">
+							<div class="ml-2 lh-1">
+								<h5 class="mb-1">{{ post.author.get_fullname|capfirst }}</h5>
+								<span class="text-primary">{{ post.author.brief_desc|striptags|capfirst|safe }}</span>
+							</div>
+						</div>
+						<div>
+							<span class="mr-2 text-muted">Share</span>
+							<a href="#!" class="mr-2 text-muted"><i class="fab fa-facebook"></i></a>
+							<a href="#!" class="mr-2 text-muted"><i class="fab fa-twitter"></i></a>
+							<a href="#!" class="mr-2 text-muted "><i class="fab fa-linkedin"></i></a>
+						</div>
+					</div>
+
+					{% include "pages/ps-newsletters.html" %}
+				</div>
+			</div>
+		</div>
+
+		<!-- container related post -->  
+		
+	</div>
+{% endblock page_content %}

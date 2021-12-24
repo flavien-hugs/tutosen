@@ -1,223 +1,104 @@
-{% comment %} sidebar for courses list {% endcomment %}
-
 <div class="col-xl-3 col-lg-3 col-md-4 col-12 mb-4 mb-lg-0">
 	<div class="card">
 		<div class="card-header">
 			<h4 class="mb-0">Filtrer</h4>
 		</div>
-
-		<div class="card-body border-top">
-			<span class="dropdown-header px-0 mb-2"> Categorie Informatique</span>
-			<div class="custom-control custom-checkbox mb-1">
-				<input type="checkbox" class="custom-control-input" id="reactCheck" checked>
-				<label class="custom-control-label" for="reactCheck">React</label>
+		<form method="get">
+			<div class="card-body border-top">
+				<span class="dropdown-header px-0 mb-2">
+					{{ filter_course.form.category.label }}
+				</span>
+				{% for category in filter_course.form.category %}
+					<div class="custom-control custom-checkbox mb-1">						
+						{{ category.tag }}
+						<label class="custom-control-label" for="{{ category.id_for_label }}">
+							{{ category.choice_label|capfirst }}
+						</label>
+					</div>
+				{% endfor %}
+				<input class="btn btn-sm btn-dark-primary btn-block mt-3" value="search" type="submit" />
 			</div>
 
-			<div class="custom-control custom-checkbox mb-1">
-				<input type="checkbox" class="custom-control-input" id="javascriptCheck">
-				<label class="custom-control-label" for="javascriptCheck">Javascript</label>
+			<div class="card-body border-top">
+				<span class="dropdown-header px-0 mb-2">
+					{{ filter_course.form.level.label }}
+				</span>
+				{% for level in filter_course.form.level %}
+					<div class="custom-control custom-checkbox mb-1">
+						{{ level.tag }}
+						<label class="custom-control-label" for="{{ level.id_for_label }}">
+							{{ level.choice_label }}
+						</label>
+					</div>
+				{% endfor %}
+				<input class="btn btn-sm btn-dark-primary btn-block mt-3" value="search" type="submit" />
 			</div>
-
-			<div class="custom-control custom-checkbox mb-1">
-				<input type="checkbox" class="custom-control-input" id="angularCheck">
-				<label class="custom-control-label" for="angularCheck">Angular</label>
+		
+			<div class="card-body border-top">
+				<span class="dropdown-header px-0 mb-2">
+					{{ filter_course.form.language.label }}
+				</span>
+				{% for langue in filter_course.form.language %}
+					<div class="custom-control custom-checkbox mb-1">
+						{{ langue.tag }}
+						<label class="custom-control-label" for="{{ langue.id_for_label }}">
+							{{ langue.choice_label }}
+						</label>
+					</div>
+				{% endfor %}
+				<input class="btn btn-sm btn-dark-primary btn-block mt-3" value="search" type="submit" />
 			</div>
-
-			<div class="custom-control custom-checkbox mb-1">
-				<input type="checkbox" class="custom-control-input" id="nodeCheck">
-				<label class="custom-control-label" for="nodeCheck">Node</label>
-			</div>
-
-			<div class="custom-control custom-checkbox mb-1">
-				<input type="checkbox" class="custom-control-input" id="angularJSCheck">
-				<label class="custom-control-label" for="angularJSCheck">Angular JS</label>
-			</div>
-
-			<div class="custom-control custom-checkbox mb-1">
-				<input type="checkbox" class="custom-control-input" id="gatsbyCheck">
-				<label class="custom-control-label" for="gatsbyCheck">GatsBy</label>
-			</div>
-
-			<div class="custom-control custom-checkbox mb-1">
-				<input type="checkbox" class="custom-control-input" id="graphQlCheck">
-				<label class="custom-control-label" for="graphQlCheck">GraphQL</label>
-			</div>
-
-			<div class="custom-control custom-checkbox mb-1">
-				<input type="checkbox" class="custom-control-input" id="vueJsCheck">
-				<label class="custom-control-label" for="vueJsCheck">VueJs</label>
-			</div>
-
-			<div class="custom-control custom-checkbox mb-1">
-				<input type="checkbox" class="custom-control-input" id="bootstrapCheck">
-				<label class="custom-control-label" for="bootstrapCheck">Bootstrap</label>
-			</div>
-
-			<div class="custom-control custom-checkbox mb-1">
-				<input type="checkbox" class="custom-control-input" id="figmaCheck">
-				<label class="custom-control-label" for="figmaCheck">Figma</label>
-			</div>
-
-			<div class="custom-control custom-checkbox mb-1">
-				<input type="checkbox" class="custom-control-input" id="sketchCheck">
-				<label class="custom-control-label" for="sketchCheck">Sketch</label>
-			</div>
-
-			<div class="custom-control custom-checkbox mb-1">
-				<input type="checkbox" class="custom-control-input" id="HTML5Check">
-				<label class="custom-control-label" for="HTML5Check">HTML5</label>
-			</div>
-		</div>
-
-		<div class="card-body border-top">
-			<span class="dropdown-header px-0 mb-2"> Categorie Cuisine</span>
-			<div class="custom-control custom-checkbox mb-1">
-				<input type="checkbox" class="custom-control-input" id="reactCheck" checked>
-				<label class="custom-control-label" for="reactCheck">Anglais</label>
-			</div>
-
-			<div class="custom-control custom-checkbox mb-1">
-				<input type="checkbox" class="custom-control-input" id="javascriptCheck">
-				<label class="custom-control-label" for="javascriptCheck">Allemand</label>
-			</div>
-
-			<div class="custom-control custom-checkbox mb-1">
-				<input type="checkbox" class="custom-control-input" id="angularCheck">
-				<label class="custom-control-label" for="angularCheck">Chinois</label>
-			</div>
-
-			<div class="custom-control custom-checkbox mb-1">
-				<input type="checkbox" class="custom-control-input" id="nodeCheck">
-				<label class="custom-control-label" for="nodeCheck">Français</label>
-			</div>
-
-			<div class="custom-control custom-checkbox mb-1">
-				<input type="checkbox" class="custom-control-input" id="angularJSCheck">
-				<label class="custom-control-label" for="angularJSCheck">Espagnol</label>
-			</div>
-
-			<div class="custom-control custom-checkbox mb-1">
-				<input type="checkbox" class="custom-control-input" id="gatsbyCheck">
-				<label class="custom-control-label" for="gatsbyCheck">Italian</label>
-			</div>
-
-			<div class="custom-control custom-checkbox mb-1">
-				<input type="checkbox" class="custom-control-input" id="graphQlCheck">
-				<label class="custom-control-label" for="graphQlCheck">Russe</label>
-			</div>
-		</div>
-
-		<div class="card-body border-top">
-			<span class="dropdown-header px-0 mb-2"> Categorie Langue</span>
-			<div class="custom-control custom-checkbox mb-1">
-				<input type="checkbox" class="custom-control-input" id="reactCheck" checked>
-				<label class="custom-control-label" for="reactCheck">Anglais</label>
-			</div>
-
-			<div class="custom-control custom-checkbox mb-1">
-				<input type="checkbox" class="custom-control-input" id="javascriptCheck">
-				<label class="custom-control-label" for="javascriptCheck">Allemand</label>
-			</div>
-
-			<div class="custom-control custom-checkbox mb-1">
-				<input type="checkbox" class="custom-control-input" id="angularCheck">
-				<label class="custom-control-label" for="angularCheck">Chinois</label>
-			</div>
-
-			<div class="custom-control custom-checkbox mb-1">
-				<input type="checkbox" class="custom-control-input" id="nodeCheck">
-				<label class="custom-control-label" for="nodeCheck">Français</label>
-			</div>
-
-			<div class="custom-control custom-checkbox mb-1">
-				<input type="checkbox" class="custom-control-input" id="angularJSCheck">
-				<label class="custom-control-label" for="angularJSCheck">Espagnol</label>
-			</div>
-
-			<div class="custom-control custom-checkbox mb-1">
-				<input type="checkbox" class="custom-control-input" id="gatsbyCheck">
-				<label class="custom-control-label" for="gatsbyCheck">Italian</label>
-			</div>
-
-			<div class="custom-control custom-checkbox mb-1">
-				<input type="checkbox" class="custom-control-input" id="graphQlCheck">
-				<label class="custom-control-label" for="graphQlCheck">Russe</label>
-			</div>
-		</div>
-
-		<div class="card-body border-top">
-			<span class="dropdown-header px-0 mb-2">Évaluation</span>
-			<div class="custom-control custom-radio mb-1">
-				<input type="radio" class="custom-control-input" id="starRadio1" name="customRadio">
-				<label class="custom-control-label" for="starRadio1">
-					<i class="mdi mdi-star mr-n1 text-warning"></i>
-					<i class="mdi mdi-star mr-n1 text-warning"></i>
-					<i class="mdi mdi-star mr-n1 text-warning"></i>
-					<i class="mdi mdi-star mr-n1 text-warning"></i>
-					<i class="mdi mdi-star text-warning "></i>
-					<span class="font-size-xs">4.5 & UP</span>
-				</label>
-			</div>
-
-			<div class="custom-control custom-radio mb-1">
-				<input type="radio" class="custom-control-input" id="starRadio2" name="customRadio" checked>
-				<label class="custom-control-label" for="starRadio2">
-					<i class="mdi mdi-star mr-n1 text-warning"></i>
-					<i class="mdi mdi-star mr-n1 text-warning"></i>
-					<i class="mdi mdi-star mr-n1 text-warning"></i>
-					<i class="mdi mdi-star mr-n1 text-warning"></i>
-					<i class="mdi mdi-star text-warning "></i>
-					<span class="font-size-xs">4.0 & UP</span>
-				</label>
-			</div>
-
-			<div class="custom-control custom-radio mb-1">
-				<input type="radio" class="custom-control-input" id="starRadio3" name="customRadio">
-				<label class="custom-control-label" for="starRadio3">
-					<i class="mdi mdi-star mr-n1 text-warning"></i>
-					<i class="mdi mdi-star mr-n1 text-warning"></i>
-					<i class="mdi mdi-star mr-n1 text-warning"></i>
-					<i class="mdi mdi-star mr-n1 text-warning"></i>
-					<i class="mdi mdi-star text-warning "></i>
-					<span class="font-size-xs">3.5 & UP</span>
-				</label>
-			</div>
-
-			<div class="custom-control custom-radio mb-1">
-				<input type="radio" class="custom-control-input" id="starRadio4" name="customRadio">
-				<label class="custom-control-label" for="starRadio4">
-					<i class="mdi mdi-star mr-n1 text-warning"></i>
-					<i class="mdi mdi-star mr-n1 text-warning"></i>
-					<i class="mdi mdi-star mr-n1 text-warning"></i>
-					<i class="mdi mdi-star mr-n1 text-warning"></i>
-					<i class="mdi mdi-star text-warning "></i>
-					<span class="font-size-xs">3.0 & UP</span>
-				</label>
-			</div>
-		</div>
-
-		<div class="card-body border-top">
-			<span class="dropdown-header px-0 mb-2">Niveau de compétence</span>
-
-			<div class="custom-control custom-checkbox mb-1">
-				<input type="checkbox" class="custom-control-input" id="allTwoCheck">
-				<label class="custom-control-label" for="allTwoCheck">Tous les niveaux</label>
-			</div>
-
-			<div class="custom-control custom-checkbox mb-1">
-				<input type="checkbox" class="custom-control-input" id="beginnerTwoCheck" checked>
-				<label class="custom-control-label" for="beginnerTwoCheck">Débutant</label>
-			</div>
+		
+			<div class="card-body border-top">
+				<span class="dropdown-header px-0 mb-2">Évaluation</span>
+				<div class="custom-control custom-radio mb-1">
+					<input type="radio" class="custom-control-input" id="starRadio1" name="customRadio">
+					<label class="custom-control-label" for="starRadio1">
+						<i class="mdi mdi-star mr-n1 text-warning"></i>
+						<i class="mdi mdi-star mr-n1 text-warning"></i>
+						<i class="mdi mdi-star mr-n1 text-warning"></i>
+						<i class="mdi mdi-star mr-n1 text-warning"></i>
+						<i class="mdi mdi-star text-warning "></i>
+						<span class="font-size-xs">4.5 & UP</span>
+					</label>
+				</div>
 			
-			<div class="custom-control custom-checkbox mb-1">
-				<input type="checkbox" class="custom-control-input" id="intermediateCheck">
-				<label class="custom-control-label" for="intermediateCheck">Intermediaire</label>
-			</div>
+				<div class="custom-control custom-radio mb-1">
+					<input type="radio" class="custom-control-input" id="starRadio2" name="customRadio" checked>
+					<label class="custom-control-label" for="starRadio2">
+						<i class="mdi mdi-star mr-n1 text-warning"></i>
+						<i class="mdi mdi-star mr-n1 text-warning"></i>
+						<i class="mdi mdi-star mr-n1 text-warning"></i>
+						<i class="mdi mdi-star mr-n1 text-warning"></i>
+						<i class="mdi mdi-star text-warning "></i>
+						<span class="font-size-xs">4.0 & UP</span>
+					</label>
+				</div>
 			
-			<div class="custom-control custom-checkbox mb-1">
-				<input type="checkbox" class="custom-control-input" id="AdvancedTwoCheck">
-				<label class="custom-control-label" for="AdvancedTwoCheck">Avancé</label>
+				<div class="custom-control custom-radio mb-1">
+					<input type="radio" class="custom-control-input" id="starRadio3" name="customRadio">
+					<label class="custom-control-label" for="starRadio3">
+						<i class="mdi mdi-star mr-n1 text-warning"></i>
+						<i class="mdi mdi-star mr-n1 text-warning"></i>
+						<i class="mdi mdi-star mr-n1 text-warning"></i>
+						<i class="mdi mdi-star mr-n1 text-warning"></i>
+						<i class="mdi mdi-star text-warning "></i>
+						<span class="font-size-xs">3.5 & UP</span>
+					</label>
+				</div>
+			
+				<div class="custom-control custom-radio mb-1">
+					<input type="radio" class="custom-control-input" id="starRadio4" name="customRadio">
+					<label class="custom-control-label" for="starRadio4">
+						<i class="mdi mdi-star mr-n1 text-warning"></i>
+						<i class="mdi mdi-star mr-n1 text-warning"></i>
+						<i class="mdi mdi-star mr-n1 text-warning"></i>
+						<i class="mdi mdi-star mr-n1 text-warning"></i>
+						<i class="mdi mdi-star text-warning "></i>
+						<span class="font-size-xs">3.0 & UP</span>
+					</label>
+				</div>
 			</div>
-		</div>
+		</form>
 	</div>
 </div>

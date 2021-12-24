@@ -1,6 +1,6 @@
 {% extends "account/base.html" %}
 {% load widget_tweaks %}
-{% block head_title %} Se connecter {% endblock head_title %}
+{% block head_title %} Se connecter {{ super }} {% endblock head_title %}
 
 {% comment %} page de connexion {% endcomment %}
 
@@ -64,5 +64,24 @@
 {% block ajax_javascript %}
     <!-- soumission du formulaire via ajax -->
     <script type="text/javascript">
+        $(document).ready(function () {
+
+            // Initially disable the button
+            $("button").prop("disabled", true);
+            
+            // When the value of the text area changes...
+            $("#id_password").focusout("input", function(e) {
+                e.preventDefault();
+                
+                // If there's at least one character...
+                if ($(this).val().length > 0) {
+                    // Enable the button.
+                    $("button").prop("disabled", false);
+                } else {
+                    // Else, disable the button.
+                    $("button").prop("disabled", true);
+                }
+            });
+        });
     </script>        
 {% endblock ajax_javascript %}

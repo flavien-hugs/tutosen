@@ -1,6 +1,5 @@
 {% comment %} header navigation {% endcomment %}
 
-
 {% url "courses:search" as search_list %}
 {% url 'account_login' as account_login %}
 {% url 'account_signup' as account_signup %}
@@ -21,6 +20,12 @@
 				instructors
 			</a>
 		</li>
+
+		<li class="d-inline-block nav-item">
+			<a href="#" class="nav-link text-uppercase font-weight-bold">
+				careers
+			</a>
+		</li>
 	</ul>
 
 	<ul class="navbar-nav navbar-right-wrap ml-auto d-none d-lg-block">
@@ -36,14 +41,3 @@
 		{% include "includes/snippets/_snippet_navigation.html" %}
 	</ul>
 </div>
-
-<script>
-	$(function() {
-		var course = [
-			{% for course in object_course_list %}
-            	"{{ course.title }}",
-        	{% endfor %}
-    	];
-	    $("#result").autocomplete({source: course});
-  	});
-</script>

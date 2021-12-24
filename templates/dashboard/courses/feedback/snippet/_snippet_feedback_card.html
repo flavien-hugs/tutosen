@@ -1,0 +1,28 @@
+<li class="list-group-item px-2">
+    <div class="media {% if not forloop.last %}py-4{% endif %}">
+        <a href="{{ object.get_comment_detail_url }}">
+            <img src="{% if object.image %}{{ object.image.url }}{% else %}{{ STATIC_PREFIX }}img/cours/empty.jpg{% endif %}" alt="{{ object.title|slugify }}" class="rounded avatar-lg">
+        </a>
+
+        <div class="ml-3 mt-2 media-body">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <h4 class="mb-0">
+                        <a href="{{ object.get_comment_detail_url }}">
+                            Comment on "{{ object.title|safe }}"
+                        </a>
+                    </h4>
+                    <span class="text-muted font-size-xs mr-3">
+                        <i class="mdi mdi-comment-text mr-1"></i>
+                        {{ object.get_comments_count }} comment{{ object.get_comments_count|pluralize }}
+                    </span>
+
+                    <span class="text-primary font-size-xs">
+                        <i class="fas fa-reply-all mr-1"></i>
+                        <a href="{{ object.get_comment_detail_url }}">Répondre</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</li>

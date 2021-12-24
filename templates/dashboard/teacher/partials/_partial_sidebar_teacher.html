@@ -2,13 +2,15 @@
 
 {% load boards_tags %}
 {% url "home" as home_url %}
-{% url "subject:list_subject_url" request.user.get_first_name as subject_list_url %}
+{% url "blogs:post_url" link=request.user.link as post_list_url %}
 {% url "course:teacher_profil_privacy_url" as teacher_privacy_url %}
+{% url 'feedback:list_feedback_url' link=request.user.link as feedback_list %}
+{% url "subject:list_subject_url" link=request.user.link as subject_list_url %}
 
 <nav class="navbar-vertical navbar">
     <div class="nav-scroller">
         <a class="navbar-brand" href="{{ home_url }}">
-            <img src="{{ STATIC_PREFIX }}img/logo_inverse_tutosen.svg" alt="{{ title }}" />
+            <img src="{{ STATIC_PREFIX }}img/logo_inverse_tutosen.svg" alt="{{ title }}">
         </a>
 
         <ul class="navbar-nav flex-column" id="sideNavbar">
@@ -46,8 +48,8 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                Courses Feedback
+                            <a class="nav-link {% active_link 'list_feedback_url' %}" href="{{ feedback_list }}">
+                                Courses Feedbacks
                             </a>
                         </li>
                     </ul>
@@ -55,7 +57,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link " href="{{ subject_list_url }}" data-toggle="collapse" data-target="#navStudent" aria-expanded="false"
+                <a class="nav-link" href="{{ subject_list_url }}" data-toggle="collapse" data-target="#navStudent" aria-expanded="false"
                     aria-controls="navStudent">
                     <i class="nav-icon fe fe-users mr-2"></i>
                     Students
@@ -66,45 +68,13 @@
                         <li class="nav-item">
                             <a class="nav-link {% active_link 'subject_list_url' %}"
                                 href="{{ subject_list_url }}">
-                                Students
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
                                 Students enrolled
                             </a>
                         </li>
-                    </ul>
-                </div>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link " href="#!" data-toggle="collapse" data-target="#navBlog" aria-expanded="false"
-                    aria-controls="navBlog">
-                    <i class="nav-icon fe fe-book-open mr-2"></i>
-                    Blog
-                </a>
-
-                <div id="navBlog" class="collapse" data-parent="#sideNavbar">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link {% active_link 'subject_list_url' %}"
-                                href="{{ subject_list_url }}">
-                                Articles
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link {% active_link 'subject_list_url' %}"
-                                href="{{ subject_list_url }}">
-                                New Article
-                            </a>
-                        </li>
 
                         <li class="nav-item">
                             <a class="nav-link" href="#">
-                                Feedback
+                                Students Feedback
                             </a>
                         </li>
                     </ul>
@@ -116,23 +86,21 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#!" data-toggle="collapse" data-target="#navSiteVendor" aria-expanded="false"
-                    aria-controls="navSiteVendor">
+                <div class="navbar-heading">Apps</div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {% active_link 'post_url' %}" href="{{ post_list_url }}">
+                    <i class="nav-icon fe fe-book-open mr-2"></i>
+                    Blog
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#!">
                     <i class="nav-icon fe fe-shopping-bag mr-2"></i>
                     Store
                 </a>
-
-                <div id="navSiteVendor" class="collapse" data-parent="#sideNavbar">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Orders</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Earnings</a>
-                        </li>
-                    </ul>
-                </div>
             </li>
 
             <li class="nav-item">

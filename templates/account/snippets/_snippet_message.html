@@ -12,8 +12,8 @@
 
 {% if form.errors %}
     <div id="message" class="alert alert-warning pt-3" role="alert">
-        {% for error in form.non_field_errors %}
-            {{ error }}
+        {% for error in form.errors %}
+            {{ error}}
         {% endfor %}
     </div>
 {% endif %}

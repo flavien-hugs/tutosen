@@ -3,160 +3,170 @@
 {% load boards_tags %}
 
 {% block teacher_content %}
-    {% ifequal request.user.type 'TEACHER'  %}
-        {% url 'subject:list_subject_url' user.get_first_name as subject_list_url %}
-        
-        <div class="row">
-            <div class="col-xl-3 col-lg-3 col-md-12 col-12">
-                <div class="card mb-4">                                
-                    <div class="card-body p-4">
-                        <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
-                            <div>
-                                <span class="font-size-xs text-uppercase font-weight-semi-bold">
-                                Revenue</span>
-                            </div>
+    {% url 'subject:list_subject_url' user.get_first_name as subject_list_url %}
 
-                            <div>
-                                <span class="fe fe-shopping-bag font-size-lg text-primary"></span>
-                            </div>
+    <div class="row">
+        <div class="col-xl-3 col-lg-3 col-md-12 col-12">
+            <div class="card mb-4">                                
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
+                        <div>
+                            <span class="font-size-xs text-uppercase font-weight-semi-bold">
+                            Revenue</span>
                         </div>
 
-                        <h2 class="mt-4 font-weight-bold mb-1 d-flex align-items-center h1 lh-1">
-                            50 000 Fr
-                        </h2>
-
-                        <span class="text-success font-weight-semi-bold">
-                            <i class="fe fe-trending-up mr-1"></i>
-                            +20 000 Fr gains du mois
-                        </span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-xl-3 col-lg-3 col-12">
-                <div class="card mb-4">
-                    <div class="card-body p-4">
-                        <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
-                            <div>
-                                <span class="font-size-xs text-uppercase font-weight-semi-bold">
-                                Course{{ subjects.count|pluralize }}</span>
-                            </div>
-
-                            <div>
-                                <span class="fe fe-book-open font-size-lg text-primary"></span>
-                            </div>
+                        <div>
+                            <span class="fe fe-dollar-sign font-size-lg text-primary"></span>
                         </div>
-
-                        <h2 class="mt-4 font-weight-bold mb-1 d-flex align-items-center h1 lh-1">
-                            {{ subjects.count }}
-                        </h2>
-
-                        <span class="text-success font-weight-semi-bold">
-                            <i class="fe fe-trending-up mr-1"></i>
-                            +5 inscrits ce mois-ci
-                        </span>
                     </div>
-                </div>
-            </div>
 
-            <div class="col-xl-3 col-lg-3 col-md-12 col-12">
-                <div class="card mb-4">
-                    <div class="card-body p-4">
-                        <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
-                            <div>
-                                <span class="font-size-xs text-uppercase font-weight-semi-bold">
-                                Évaluation des cours</span>
-                            </div>
+                    <h2 class="mt-4 font-weight-bold mb-1 d-flex align-items-center h1 lh-1">
+                        50 000 Fr
+                    </h2>
 
-                            <div>
-                                <span class="fe fe-book-open font-size-lg text-primary"></span>
-                            </div>
-                        </div>
-
-                        <h2 class="mt-4 font-weight-bold mb-1 d-flex align-items-center h1 lh-1">
-                            4.80
-                        </h2>
-
-                        <span class="text-success font-weight-semi-bold">
-                            <i class="fe fe-trending-up mr-1"></i>
-                            +2.5 points obtenus
-                        </span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-xl-3 col-lg-3 col-md-12 col-12">
-                <div class="card mb-4">
-                    <div class="card-body p-4">
-                        <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
-                            <div>
-                                <span class="font-size-xs text-uppercase font-weight-semi-bold">
-                                Évaluation des cours</span>
-                            </div>
-
-                            <div>
-                                <span class="fe fe-book-open font-size-lg text-primary"></span>
-                            </div>
-                        </div>
-
-                        <h2 class="mt-4 font-weight-bold mb-1 d-flex align-items-center h1 lh-1">
-                            4.80
-                        </h2>
-
-                        <span class="text-success font-weight-semi-bold">
-                            <i class="fe fe-trending-up mr-1"></i>
-                            +2.5 points obtenus
-                        </span>
-                    </div>
+                    <span class="text-success font-weight-semi-bold">
+                        <i class="fe fe-trending-up mr-1"></i>
+                        +20 000 Fr gains du mois
+                    </span>
                 </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-lg-6 col-md-12 col-12">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h3 class="h4 mb-0">Revenu mensuel</h3>
-                    </div>
-                    <div class="card-body">
-                        <div id="earning" class="apex-charts"></div>
-                    </div>
-                </div>
-            </div>
+        <div class="col-xl-3 col-lg-3 col-12">
+            <div class="card mb-4">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
+                        <div>
+                            <span class="font-size-xs text-uppercase font-weight-semi-bold">
+                            Course{{ object.get_teacher_courses_count|pluralize }}</span>
+                        </div>
 
-            <div class="col-lg-6 col-md-12 col-12">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h3 class="h4 mb-0">Commandes mensuelles</h3>
+                        <div>
+                            <span class="fe fe-book-open font-size-lg text-primary"></span>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <div id="orderColumn" class="apex-charts"></div>
-                    </div>
+
+                    <h2 class="mt-4 font-weight-bold mb-1 d-flex align-items-center h1 lh-1">
+                        {{ object.get_teacher_courses_count }}
+                    </h2>
+
+                    <span class="text-success font-weight-semi-bold">
+                        <i class="fe fe-trending-up mr-1"></i>
+                        +5 inscrits ce mois-ci
+                    </span>
                 </div>
             </div>
         </div>
 
-        {% if subjects %}
-            <div class="row">
-                <div class="col-xl-4 col-lg-6 col-md-12 col-12 mb-4">
-                    <div class="card h-100">
-                        <div class="card-header d-flex align-items-center justify-content-between card-header-height">
-                            <h4 class="mb-0">Recent Course{{ subjects.count|pluralize }}</h4>
-                            <a href="{{ subject_list_url }}" class="btn btn-outline-white btn-sm">View all</a>
+        <div class="col-xl-3 col-lg-3 col-md-12 col-12">
+            <div class="card mb-4">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
+                        <div>
+                            <span class="font-size-xs text-uppercase font-weight-semi-bold">
+                            Students enrolled</span>
                         </div>
 
-                        <div class="card-body">
-                            <ul class="list-group list-group-flush">
-                                {% include "dashboard/courses/snippet/snippet_subject_list.html" %}
-                            </ul>
+                        <div>
+                            <span class="fe fe-users font-size-lg text-primary"></span>
                         </div>
+                    </div>
+
+                    <h2 class="mt-4 font-weight-bold mb-1 d-flex align-items-center h1 lh-1">
+                        4.80
+                    </h2>
+
+                    <span class="text-success font-weight-semi-bold">
+                        <i class="fe fe-trending-up mr-1"></i>
+                        +2.5 points obtenus
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-3 col-md-12 col-12">
+            <div class="card mb-4">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3 lh-1">
+                        <div>
+                            <span class="font-size-xs text-uppercase font-weight-semi-bold">
+                            Évaluation des cours</span>
+                        </div>
+
+                        <div>
+                            <span class="fe fe-star font-size-lg text-primary"></span>
+                        </div>
+                    </div>
+
+                    <h2 class="mt-4 font-weight-bold mb-1 d-flex align-items-center h1 lh-1">
+                        4.80
+                    </h2>
+
+                    <span class="text-success font-weight-semi-bold">
+                        <i class="fe fe-trending-up mr-1"></i>
+                        +2.5 points obtenus
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-4 col-lg-12 col-md-12 col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 class="h4 mb-0">Revenu mensuel</h3>
+                </div>
+                <div class="card-body">
+                    <div id="earningTwo" class="apex-charts"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-lg-12 col-md-12 col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 class="h4 mb-0">Commandes mensuelles</h3>
+                </div>
+                <div class="card-body">
+                    <div id="orderColumn" class="apex-charts"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-lg-12 col-md-12 col-12">
+            <div class="card mb-4">
+                <div class="card-header align-items-center card-header-height  d-flex justify-content-between align-items-center">
+                    <div><h4 class="mb-0">User data</h4></div>
+                </div>
+
+                <div class="card-body">
+                    <div id="traffic" class="apex-charts d-flex justify-content-center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if subjects %}
+        <div class="row">
+            <div class="col-xl-4 col-lg-6 col-md-12 col-12 mb-4">
+                <div class="card h-100">
+                    <div class="card-header d-flex align-items-center justify-content-between card-header-height">
+                        <h4 class="mb-0">Recent Course{{ subjects.count|pluralize }}</h4>
+                        <a href="{{ subject_list_url }}" class="btn btn-outline-white btn-sm">View all</a>
+                    </div>
+
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            {% include "dashboard/courses/snippet/snippet_subject_list.html" %}
+                        </ul>
                     </div>
                 </div>
             </div>
-        {% endif %}
-    {% endifequal %}
-
-    {% ifequal request.user.type 'STUDENT' %}
-        {{ subject_list }}
-    {% endifequal %}
+        </div>
+    {% endif %}
 {% endblock teacher_content %}
+
+{% block ajax_javascript %}
+    <script type="text/javascript" src="{{ STATIC_PREFIX }}js/stats.js"></script>
+{% endblock ajax_javascript %}

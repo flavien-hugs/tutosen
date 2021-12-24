@@ -1,0 +1,42 @@
+{% if request.resolver_match.url_name == 'teacher_blog_url' or request.resolver_match.url_name == 'post_list' %}
+	<article class="{% if request.resolver_match.url_name == 'teacher_blog_url' %}col-xl-3 {% else %}col-xl-4 col-lg-4 {% endif %}col-md-6 col-12">
+		<div class="card mb-4 shadow-lg card-hover h-100">
+			<a href="{{ object.get_absolute_url }}" class="card-img-top">
+				<img src="{% if object.image %}{{ object.image.url }}{% else %}{{ STATIC_PREFIX }}img/cours/empty.jpg{% endif %}" class="card-img-top rounded-top" alt="{{ object }}">
+			</a>
+			
+			<div class="card-body">
+				<h3 class="h4 mb-2 text-truncate-line-2">
+					<a href="{{ object.get_absolute_url }}" class="text-inherit">
+						{{ object.title|capfirst|safe }}
+					</a>
+				</h3>
+
+				<p>{{ object.body|striptags|truncatewords:8 }}</p>
+
+				<a href="{{ object.get_absolute_url }}" class="text-inherit text-primary font-weight-bolder">
+				Read more ...</a>
+
+				{% if not request.resolver_match.url_name == 'teacher_blog_url' %}
+					<div class="row align-items-center no-gutters mt-4">
+						<div class="col-auto">
+							<img src="{{ object.author.avatar.url }}" alt="{{ object.author.link }}" class="rounded-circle avatar-xs mr-2">
+						</div>
+						<div class="col lh-1">
+							<h5 class="mb-1">{{ object.author.get_fullname }}</h5>
+							<p class="font-size-xs mb-0">
+								<i class="fe fe-clock mr-1"></i>
+								{{ object.created_at|date }}
+							</p>
+						</div>
+						<div class="col-auto">
+		                    <p class="font-size-xs mb-0">{{ object.get_readtime }}</p>
+		                </div>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</article>
+{% elif request.resolver_match.url_name == 'teacher_course_url' %}
+    {% include "courses/snippets/_snippet_course_card.html" %}
+{% endif %}

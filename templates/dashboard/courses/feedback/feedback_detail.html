@@ -1,0 +1,89 @@
+{% extends "dashboard/_base.html" %}
+
+{% block dashboard_subheader %}
+
+{% url 'feedback:list_feedback_url' link=request.user.link as feedback_list %}
+
+<div class="mb-2 mb-lg-0">
+    <h1 class="mb-1 h2 font-weight-bold">
+        {{ page_title|safe }}
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ user.get_userdetail_url }}">Dashboard</a>
+            </li>
+
+            <li class="breadcrumb-item">
+                <a href="{{ feedback_list }}">feedbacks</a>
+            </li>
+
+            <li class="breadcrumb-item active" aria-current="page">
+                {{ page_title|lower|safe }}
+            </li>
+        </ol>
+    </nav>
+</div>
+{% endblock dashboard_subheader %}
+
+{% block teacher_content %}
+    <div class="row justify-content-center">
+        <div class="col-xl-4 col-lg-4 col-md-12 col-12">
+            <div class="card mt-4 mt-lg-0 mb-4">
+                <img src="{% if comment.image %} {{ comment.image.url }}
+                    {% else %}{{ STATIC_PREFIX }}img/cours/empty.jpg{% endif %}"
+                    alt="{{ comment.title|slugify }}"/>
+        
+                <div class="card-body">
+                    <span class="font-size-sm font-weight-semi-bold d-block mb-3 text-primary"> 
+                        <i class="fe fe-bookmark"></i>
+                        {{ comment.get_category_display|capfirst|safe }}
+                    </span>
+
+                    <h4 class="mb-2 text-truncate-line-2 ">
+                        {{ comment.title|capfirst }}
+                    </h4>
+                    
+                    <ul class="mb-3 list-inline">
+                        <li class="list-inline-item">
+                            <i class="far fa-clock mr-1"></i>
+                            {{ comment.created_at|timesince }}
+                        </li>
+                        <li class="list-inline-item">
+                            <i class="fa fa-chart-bar mr-1"></i>
+                            {{ comment.get_level_display }}
+                        </li>
+                        <li class="list-inline-item">
+                            <i class="far fa-star mr-1"></i>
+                            {{ comment.feedback_avarege }}
+                            ({{ comment.get_comments_count }})
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-8 col-md-8 col-12">
+            <div class="card mb-4">
+                <div class="card-header d-lg-flex align-items-center justify-content-between">
+                    <div class="mb-3 mb-lg-0">
+                        <h3 class="mb-0">{{ page_title|capfirst|safe }}</h3>
+                    </div>
+                </div>
+    
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        {% for feedback in feedbacks %}
+                            {% include "dashboard/courses/feedback/snippet/_snippet_feedback.html" with feedback=feedback %}
+                        {% empty %}
+                            <div class="py-5">
+                                <p class="text-center font-weight-bold">
+                                Aucun commentaire sur ce cours pour l'instant.</p>
+                            </div>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock teacher_content %}
