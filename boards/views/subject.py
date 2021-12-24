@@ -10,7 +10,7 @@ from boards.forms import SubjectForm
 
 
 class SubjectListView(mixins.TeacherSubjectMixin, generic.ListView):
-    paginate_by = 20
+    paginate_by = 10
     model = models.Subject
     context_object_name = "subject_list"
     template_name = 'dashboard/courses/manage/subject/subject_list.html'

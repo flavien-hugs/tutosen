@@ -12,7 +12,7 @@ from accounts import mixins
 
 
 class CourseListView(generic.DetailView):
-    paginate_by = 20
+    paginate_by = 10
     model = models.Subject
     context_object_name = "courses"
     template_name = 'dashboard/courses/manage/course/list_courses.html'

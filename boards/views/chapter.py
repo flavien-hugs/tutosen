@@ -11,7 +11,7 @@ from accounts import mixins
 
 
 class ChapterListView(generic.DetailView):
-    paginate_by = 20
+    paginate_by = 10
     model = models.Course
     context_object_name = 'lesson'
     template_name = 'dashboard/courses/manage/chapter/chapter_list.html'
