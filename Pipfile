@@ -25,6 +25,8 @@ django-filter = "*"
 django-cors-headers = "*"
 django-taggit = "*"
 django-summernote = "*"
+django-compressor = "*"
+readtime = "*"
 
 [dev-packages]
 flake8 = "*"
