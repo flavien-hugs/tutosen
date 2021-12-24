@@ -38,19 +38,19 @@ def upload_image_path(instance, filename):
     final_filename = f"{new_filename}{ext}"
     return f"image/course/{final_filename}"
 
-def save_user_avatar_file(instance, filename):
-    upload_to = 'image/'
+def save_avatar_file(instance, filename):
+    upload_to = 'image/users/'
     ext = filename.split('.')[-1]
     if instance.avatar:
-        filename =  f"user_avatar/user_{instance.first_name.lower()}.{instance.uuid}.{ext}"
+        filename =  f"avatar_{instance.link}.{ext}"
 
     return os.path.join(upload_to, filename)
 
-def save_user_cover_file(instance, filename):
-    upload_to = 'image/'
+def save_cover_file(instance, filename):
+    upload_to = 'image/users/'
     ext = filename.split('.')[-1]
     if instance.cover:
-        filename = f"user_cover/user_{instance.first_name.lower()}.{instance.uuid}.{ext}"
+        filename =  f"cover_{instance.link}.{ext}"
 
     return os.path.join(upload_to, filename)
 
@@ -62,6 +62,15 @@ def save_chapiter_content_file(instance, filename):
         if os.path.exists(filename):
             new_name = str(instance.course.slug) + str('1')
             filename =  f"chapiter_files/chapiter_{instance.course.slug}/{new_name}.{ext}"
+    return os.path.join(upload_to, filename)
+
+
+def save_post_cover_file(instance, filename):
+    upload_to = 'image/post/'
+    ext = filename.split('.')[-1]
+    if instance.image:
+        filename =  f"article_{instance.slug}.{ext}"
+
     return os.path.join(upload_to, filename)
 
 
