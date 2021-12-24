@@ -73,4 +73,5 @@ media/
 .idea/
 tests/*
 */migrations/*
+staticfiles
 tutosen.egg-info/*
