@@ -1,0 +1,19 @@
+- Create the PostgreSQL Database and User
+
+1 - Log into an interactive Postgres session by typing:
+    sudo -u postgres psql
+
+2 - Create database your project
+    CREATE DATABASE database_name;
+
+3 - Create a database user for our project. Make sure to select a secure password:
+    CREATE USER database_username WITH PASSWORD 'password';
+
+4 - Configuration database optimization
+    ALTER ROLE database_username SET client_encoding TO 'utf8';
+    ALTER ROLE database_username SET default_transaction_isolation TO 'read committed';
+    ALTER ROLE database_username SET timezone TO 'UTC';
+
+5 - Give our new user access to administer our new database:
+    GRANT ALL PRIVILEGES ON DATABASE database_name TO database_username;
+
