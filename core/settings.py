@@ -5,9 +5,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+import re
 import os
 import logging.config
 from pathlib import Path
+from django.contrib.messages import constants as messages
+from django.core.management.utils import get_random_secret_key
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -17,18 +20,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY', get_random_secret_key())
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = str(os.environ.get('DEBUG'))
+DEBUG = str(os.getenv("DEBUG", "True"))
 TEMPLATE_DEBUG = DEBUG
 
 META_KEYWORDS = ''
 DEFAULT_CHARSET = 'UTF-8'
 SITE_DESCRIPTION = "Apprendre, Comprendre, Innover & Partager"
-DEFAULT_CONTENT_TYPE = 'text/html'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.getenv(
+    "DJANGO_ALLOWED_HOSTS",
+    "127.0.0.1, localhost"
+).split(",")
+
 APPEND_SLASH = True
 SITE_NAME = 'tutosen'
 THOUSAND_SEPARATOR = ' '
@@ -41,7 +47,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 # Application definition
 
-DJANGO_APPS = [
+INSTALLED_APPS = [
     'django.contrib.auth',
 
     'django.contrib.contenttypes',
@@ -64,10 +70,12 @@ THIRD_PARTY_APPS = [
     'allauth',
     'allauth.account',
 
-    # 'taggit',
-    "widget_tweaks",
+    'taggit',
+    'widget_tweaks',
+    'django_filters',
     'phonenumber_field',
     'phonenumbers',
+    'compressor',
 
     'rest_framework',
     'corsheaders',
@@ -78,12 +86,14 @@ LOCALS_APPS = [
     'boards.apps.BoardsConfig',
 
     'courses.apps.CoursesConfig',
+    'blog.apps.BlogConfig',
+    'comment.apps.CommentConfig',
     'pages.apps.PagesConfig',
 
     'api.apps.ApiConfig',
 ]
 
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCALS_APPS
+INSTALLED_APPS += THIRD_PARTY_APPS + LOCALS_APPS
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
 
@@ -103,6 +113,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     "django.middleware.common.BrokenLinkEmailsMiddleware",
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'django.middleware.gzip.GZipMiddleware',
+
+    # 'django.middleware.http.ConditionalGetMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -139,12 +153,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-# https://docs.djangoproject.com/en/dev/ref/settings/#form-renderer
-# FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
-
-# https://docs.djangoproject.com/en/dev/ref/settings/#fixture-dirs
-# FIXTURE_DIRS = (str(BASE_DIR / "fixtures"),)
-
 # https://docs.djangoproject.com/en/dev/ref/settings/#session-cookie-httponly
 SESSION_COOKIE_HTTPONLY = True
 
@@ -155,7 +163,7 @@ CSRF_COOKIE_HTTPONLY = True
 SECURE_BROWSER_XSS_FILTER = True
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#x-frame-options
-X_FRAME_OPTIONS = "SAMEORIGINE"
+X_FRAME_OPTIONS = "SAMEORIGIN"
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -163,11 +171,12 @@ if os.environ.get('GITHUB_WORKFLOW'):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'github-actions',
+            'NAME': 'github_actions',
             'USER': 'postgres',
             'PASSWORD': 'postgress',
             'HOST': 'localhost',
-            'PORT': '5432'
+            'PORT': 5432,
+            'ATOMIC_REQUESTS': True
         }
     }
 else:
@@ -216,7 +225,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
-# https://docs.djangoproject.com/en/3.1/topics/i18n/
+# See: https://docs.djangoproject.com/en/3.2/ref/settings/#language-code
+# See: https://docs.djangoproject.com/en/3.2/ref/settings/#use-i18n
+# See: https://docs.djangoproject.com/en/3.2/ref/settings/#use-l10n
+# See: https://docs.djangoproject.com/en/3.2/ref/settings/#use-tz
 
 TIME_ZONE = 'UTC'
 LANGUAGE_CODE = 'fr'
@@ -226,12 +238,13 @@ DATE_INPUT_FORMATS = ('%d/%m/%Y', '%Y-%m-%d')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
+# See: https://docs.djangoproject.com/en/3.2/ref/settings/#static-root
 
 MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
 MEDIA_ROOT = BASE_DIR / 'media'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [BASE_DIR / 'static']
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 # staticfiles finders
 # See: https://docs.djangoproject.com/en/3.1/ref/contrib/staticfiles/#staticfiles-finders
@@ -239,6 +252,9 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+
+    # django compressor staticfiles
+    'compressor.finders.CompressorFinder',
 ]
 
 # AUTHENTICATION CONFIGURATION
@@ -335,35 +351,22 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
+
+# https://docs.djangoproject.com/fr/3.2/ref/settings/#message-tags
+# Messages built-in framework
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-secondary',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+}
+
 # Configuration django-jet
 # https://jet.readthedocs.io/en/latest/config_file.html
 
 JET_THEMES = [
-    {
-        'theme': 'default',
-        'color': '#47bac1',
-        'title': 'Default'
-    },
-    {
-        'theme': 'green',
-        'color': '#44b78b',
-        'title': 'Green'
-    },
-    {
-        'theme': 'light-green',
-        'color': '#2faa60',
-        'title': 'Light Green'
-    },
-    {
-        'theme': 'light-violet',
-        'color': '#a464c4',
-        'title': 'Light Violet'
-    },
-    {
-        'theme': 'light-blue',
-        'color': '#5EADDE',
-        'title': 'Light Blue'
-    },
     {
         'theme': 'light-gray',
         'color': '#222',
@@ -375,7 +378,7 @@ JET_SIDE_MENU_COMPACT = True
 JET_CHANGE_FORM_SIBLING_LINKS = True
 
 PHONENUMBER_DEFAULT_REGION = "CI"
-PHONENUMBER_DB_FORMAT = "INTERNATIONAL"
+PHONENUMBER_DB_FORMAT = "NATIONAL"
 
 # Summernote configuration
 # https://github.com/summernote/django-summernote
@@ -398,12 +401,13 @@ SUMMERNOTE_CONFIG = {
         # Toolbar customization
         # https://summernote.org/deep-dive/#custom-toolbar-popover
         'toolbar': [
-            ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript']],
+            ['font', ['bold', 'italic', 'underline', 'clear', 'strikethrough', 'superscript', 'subscript']],
             ['fontname', ['fontname']],
             ['color', ['color']],
             ['para', ['ul', 'ol', 'paragraph']],
             ['table', ['table']],
-            ['insert', ['link']],
+            ['insert', ['link', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']],
         ],
 
         # Set to `True` to return attachment paths in absolute URIs.
@@ -451,3 +455,31 @@ CORS_ORIGIN_WHITELIST = (
     'htpp://localhost:8002',
     'https://tutosen.unsta.net'
 )
+
+# https://django-taggit.readthedocs.io/en/latest/getting_started.html
+
+TAGGIT_CASE_INSENSITIVE = True
+
+# Django-compressor config
+# https://django-compressor.readthedocs.io/en/stable/settings/#settings
+
+COMPRESS_ENABLED = True
+COMPRESS_STORAGE = "compressor.storage.GzipCompressorFileStorage"
+
+# https://docs.djangoproject.com/fr/3.2/ref/settings/#ignorable-404-urls
+
+IGNORABLE_404_URLS = [
+    re.compile(r'^/cpc/'),
+    re.compile(r'^/cpanel/'),
+    re.compile(r'^/favicon\.ico$'),
+    re.compile(r'^/robots\.txt$'),
+    re.compile(r'\.(cgi|php|pl)$'),
+    re.compile(r'^/apple-touch-icon.*\.png$'),
+]
+
+DISALLOWED_USER_AGENTS = [
+    re.compile(r'^NaverBot.*'),
+    re.compile(r'^EmailSiphon.*'),
+    re.compile(r'^SiteSucker.*'),
+    re.compile(r'^sohu-search'),
+]
