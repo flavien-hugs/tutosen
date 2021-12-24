@@ -1,6 +1,6 @@
 {% load boards_tags %}
 
-<div class="card">
+<article class="card">
     <div class="card-body">
         <div class="d-flex align-items-center">
             <div class="position-relative">
@@ -29,8 +29,8 @@
         <div class="border-top row mt-3 border-bottom mb-3 no-gutters">
             <div class="col">
                 <div class="pr-1 pl-2 py-3">
-                    <h5 class="mb-0">11,604</h5>
-                    <span>Étudiants</span>
+                    <h5 class="mb-0">{{ object.instructor.get_posts_count }}</h5>
+                    <span>Article{{ object.instructor.get_posts_count|pluralize }}</span>
                 </div>
             </div>
 
@@ -56,4 +56,4 @@
         <a href="{{ object.instructor.get_teacher_detail_url }}" class="btn btn-outline-white btn-sm">
         Voir le profile</a>
     </div>
-</div>
+</article>

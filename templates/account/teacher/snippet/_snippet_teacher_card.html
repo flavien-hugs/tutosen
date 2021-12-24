@@ -1,49 +1,43 @@
-<div id="search-content" class="col-xl-3 col-lg-4 col-md-6 col-12 {% if forloop.last %}d-lg-none d-xl-block{% endif %}">
+<article id="search-content" class="col-xl-3 col-lg-4 col-md-6 col-12 {% if forloop.last %}d-lg-none d-xl-block{% endif %}">
     <div class="card card-hover h-100 mb-4">
         <div class="card-img-top">
             <a href="{{ object.get_teacher_detail_url }}">
-                {% if object.avatar %}
-                <img src="{{ object.avatar.url }}" class="rounded-top-md img-fluid" alt="{{ object.fullname|slugify }}"/>
-                {% else %}
-                <img src="{{ STATIC_PREFIX }}img/empty.jpg" class="rounded-top-md img-fluid" alt="{{ object.fullname|slugify }}"/>
-                {% endif %}
+                <img src="{% if object.avatar %}{{ object.avatar.url }}{% else %}{{ STATIC_PREFIX }}img/empty.jpg{% endif %}" class="img-fluid w-100" alt="{{ object.fullname|slugify }}"/>
             </a>
         </div>
 
         <div class="card-body">
             <h3 class="mb-0">
                 <a href="{{ object.get_teacher_detail_url }}" class="text-inherit">
-                    {{ object.first_name|title|safe }}
+                    {{ object.first_name|title|safe }} {{ object.last_name|title|safe }}
                 </a>
             </h3>
             <p class="mb-0 font-size-xs text-muted">
                 {{ object.statut|capfirst|safe }}
             </p>
 
-            <div class="lh-1 d-flex justify-content-between">
+            <div class="lh-1 d-flex justify-content-between mt-3">
                 <div>
-                    <span class="fs-6">
+                    <span class="font-weight-bold">
                         <i class="mdi mdi-star text-warning"></i>
                         <span class="text-warning">4.5</span>
                     </span>
                 </div>
 
                 <div>
-                    <span class="fs-6 text-muted">
-                        <span class="text-dark">9,692</span>
-                        Students
+                    <span class="font-weight-bold text-gray-dark">
+                        <span>{{ object.get_posts_count }}</span>
+                        Article{{ object.get_posts_count|pluralize }}
                     </span>
                 </div>
 
                 <div>
-                    <span class="fs-6 text-muted">
-                        <span class="text-dark">
-                            {{ object.get_teacher_courses_count }}
-                        </span>
+                    <span class="font-weight-bold text-gray-dark">
+                        <span>{{ object.get_teacher_courses_count }}</span>
                         Course{{ object.get_teacher_courses_count|pluralize }}
                     </span>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</article>

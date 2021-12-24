@@ -25,14 +25,12 @@
                     </div>
                 </div> -->
 
-                {% if teacher_list %}      
-                    {% for teacher in teacher_list %}
-                        {% include "account/teacher/snippet/_snippet_teacher_card.html" with object=teacher %}
-                    {% endfor %}
-                    {% include "includes/snippets/_snippet_paginate.html" %}
-                {% else %}
-                    
-                {% endif %}
+                {% for teacher in teacher_list %}
+                    {% include "account/teacher/snippet/_snippet_teacher_card.html" with object=teacher %}
+                {% empty %}
+                    <p class="text-center display-3">Aucun instructeur disponible.</p>
+                {% endfor %}
+                {% include "includes/snippets/_snippet_paginate.html" %}
             </div>
         </div>
     </div>

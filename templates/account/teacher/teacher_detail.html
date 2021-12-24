@@ -1,5 +1,6 @@
 {% extends "index.html" %}
-{% load boards_tags %}
+{% load static boards_tags %}
+{% get_static_prefix as STATIC_PREFIX %}
 
 {% block head_title %}{{ page_title|capfirst }}{% endblock head_title %}
 
@@ -8,8 +9,7 @@
     {% url 'courses:courses_detail_url' as courses_detail_url %}
 
     <div class="py-20" style="background:url({% if teacher.cover %}
-        {{ teacher.cover.url }} {% else %}
-        {{ STATIC_PREFIX }}/img/profile-bg.jpg {% endif %}) no-repeat; background-position:center;">
+        {{ teacher.cover.url }}{% else %}{{ STATIC_PREFIX }}img/profile-bg.jpg{% endif %}) no-repeat; background-position:center;">
     </div>
 
     <div class="card p-lg-2 pt-2 pt-lg-0 rounded-0 border-0">
@@ -72,10 +72,6 @@
                         <div class="card-body">
                             <h4>Qui suis-je ?</h4>
                             <p>{{ teacher.get_description_as_markdown|safe }}</p>
-                            <p>
-                                <a href="#" class="text-capitalise font-weight-bold">
-                                Visiter mon blog</a>
-                            </p>
                         </div>
                     </div>
 
@@ -84,14 +80,28 @@
                             <div class="d-flex align-items-center justify-content-between border-bottom pb-3 mb-3">
                                 <div>
                                     <h4 class="mb-0 font-weight-bold">
-                                        {{ teacher.get_teacher_courses.count }}
+                                        {{ teacher.get_teacher_courses_count }}
                                     </h4>
                                     <p class="font-size-xs mb-0">
-                                        Cours publié{{ teacher.get_teacher_courses.count|pluralize }}
+                                        Cours publié{{ teacher.get_teacher_courses_count|pluralize }}
                                     </p>
                                 </div>
                                 <div>
-                                    <span><i class="fe fe-file-text font-size-lg"></i></span>
+                                    <span><i class="fe fe-book-open font-size-lg"></i></span>
+                                </div>
+                            </div>
+
+                            <div class="d-flex align-items-center justify-content-between border-bottom pb-3 mb-3">
+                                <div>
+                                    <h4 class="mb-0 font-weight-bold">
+                                        {{ teacher.get_posts_count }}
+                                    </h4>
+                                    <p class="font-size-xs mb-0">
+                                        Article{{ teacher.get_posts_count|pluralize }} publié{{ teacher.get_posts_count|pluralize }}
+                                    </p>
+                                </div>
+                                <div>
+                                    <span><i class="mdi mdi-text-box-multiple font-size-lg"></i></span>
                                 </div>
                             </div>
                             
@@ -120,70 +130,57 @@
 
                 <div class="col-lg-9 col-md-8 col-12">
                     <div class="card border-0">
-                        <div class="card-header">
-                            <h4 class="mb-0">
-                                Mes cours publié{{ teacher.get_teacher_courses.count|pluralize }}
-                                <span class="text-muted font-size-xs">
-                                    ({{ teacher.get_teacher_courses.count }})
-                                </span>
-                            </h4>
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <div>
+                                <h4 class="mb-0">
+                                    Mes cours publiés
+                                    <span class="text-muted font-size-xs">
+                                        ({{ teacher.get_teacher_courses_count }})
+                                    </span>
+                                </h4>
+                            </div>
+
+                            <div>
+                                <a href="{{ teacher.get_teacher_course_url }}" class="font-weight-bold">
+                                Voir tous les cours</a>
+                            </div>
                         </div>
 
                         <div class="card-body">
                             <ul class="list-group list-group-flush">
-                                {% for course in teacher.get_teacher_courses %}
-                                    <li class="list-group-item px-0 pb-3 pt-0">
-                                        <article class="d-flex align-items-center justify-content-between">
-                                            <a href="{{ course.get_absolute_url }}">
-                                                <div class="d-lg-flex align-items-center">
-                                                    <div>
-                                                        <img src="{% if course.image %}
-                                                            {{ course.image.url }}
-                                                                {% else %}
-                                                            {{ STATIC_PREFIX }}img/cours/empty.jpg
-                                                                {% endif %}" alt="{{ course.title|slugify }}"
-                                                            class="rounded img-4by3-lg"/>
-                                                    </div>
+                                {% for course in teacher.get_teacher_courses|slice:'0:5' %}
+                                    {% include "account/teacher/snippet/_snippet_item_list.html" with object=course %}
+                                {% empty %}
+                                    <p class="text-center display-3">Aucun cours disponible.</p>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
 
-                                                    <div class="ml-lg-3 mt-2 mt-lg-0">
-                                                        <h4 class="text-primary-hover">
-                                                            {{ course.title|capfirst|safe }}
+                    <div class="card border-0 mt-4">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <div>
+                                <h4 class="mb-0">
+                                    Mes articles publiés
+                                    <span class="text-muted font-size-xs">
+                                        ({{ teacher.get_posts_count }})
+                                    </span>
+                                </h4>
+                            </div>
 
-                                                            {% if course.publish_now %}
-                                                                <span class="badge badge-light-success text-success">
-                                                                Nouveau</span>
-                                                            {% endif %}
-                                                        </h4>
+                            <div>
+                                <a href="{{ teacher.get_teacher_post_url }}" class="font-weight-bold">
+                                    Voir tous les articles
+                                </a>
+                            </div>
+                        </div>
 
-                                                        <ul class="list-inline font-size-xs mb-0 text-inherit">
-                                                            <li class="list-inline-item">
-                                                                <i class="far fa-clock mr-1"></i>
-                                                                {{ course.created_at|date }}
-                                                            </li>
-
-                                                            <li class="list-inline-item">
-                                                                <i class="fe fe-bar-chart mr-1"></i>
-                                                                {{ course.get_level_display|safe }}
-                                                            </li>
-                                                            <li class="list-inline-item">
-                                                                <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                                <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                                <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                                <i class="mdi mdi-star mr-n1 text-warning"></i>
-                                                                <i class="mdi mdi-star text-warning"></i>
-                                                                <span class="text-warning">4.5</span>
-                                                                <span class="text-muted">(1,345)</span>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </a>
-
-                                            <div>
-                                                {% include "includes/snippets/_snippet_share_link.html" %}
-                                            </div>
-                                        </article>
-                                    </li>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                {% for post in teacher.get_posts|slice:'0:5' %}
+                                    {% include "account/teacher/snippet/_snippet_item_list.html" with object=post %}
+                                {% empty %}
+                                    <p class="text-center display-3">Aucun article disponible.</p>
                                 {% endfor %}
                             </ul>
                         </div>
@@ -192,5 +189,4 @@
             </div>
         </div>
     </div>
-    
 {% endblock page_content %}
