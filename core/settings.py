@@ -182,7 +182,7 @@ if os.environ.get('GITHUB_WORKFLOW'):
 else:
     DATABASES = {
         'default': {
-            'ENGINE': f"django.db.backends.{os.environ.get('DATABASE_ENGINE', 'postgresql')}",
+            'ENGINE': "django.db.backends.postgresql",
             'NAME': os.environ.get('DATABASE_NAME', 'tutosen'),
             'USER': os.environ.get('DATABASE_USER', 'tutosen'),
             'PASSWORD': os.environ.get('DATABASE_PASSWORD', 'tutosen'),

@@ -16,7 +16,7 @@ from pages.forms import NewslettersForm
 
 class BlogPostListView(generic.ListView):
     paginate_by = 14
-    queryset = get_list_or_404(models.Post, published=True)
+    queryset = models.Post.objects.filter(published=True)
     context_object_name = "post_list"
     template_name = "blog/blog_post_list.html"
 

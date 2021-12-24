@@ -53,10 +53,9 @@ class Comment(models.Model):
     )
 
     class Meta:
-        db_table = 'db_comment'
         verbose_name_plural = 'comments'
         indexes = [
-            models.Index(fields=['id', 'uuid'], name='id_index_review'),
+            models.Index(fields=['id', 'uuid']),
         ]
 
     def __str__(self):

@@ -114,12 +114,11 @@ class User(AbstractUser):
     )
 
     class Meta:
-        db_table = 'db_accounts'
         ordering = ('-date_joined', '-last_login')
         get_latest_by = ('-date_joined', '-last_login')
         verbose_name_plural = 'Utilisateurs'
         indexes = [
-            models.Index(fields=['id', 'uuid'], name='id_index_user'),
+            models.Index(fields=['id', 'uuid']),
         ]
 
     def _get_unique_username(self):

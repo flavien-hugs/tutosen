@@ -16,7 +16,6 @@ class AboutUs(models.Model):
     )
 
     class Meta:
-        db_table = 'aboutus_db'
         verbose_name_plural = 'About Us'
 
     def __str__(self):
@@ -91,7 +90,6 @@ class Contact(models.Model):
     )
 
     class Meta:
-        db_table = 'contact_db'
         ordering = ['-date_added']
         verbose_name_plural = 'Contact'
 
@@ -119,7 +117,6 @@ class Newsletters(models.Model):
     )
 
     class Meta:
-        db_table = 'newsletters_db'
         ordering = ['-date_joinded']
         verbose_name_plural = 'Newsletters'
         indexes = [

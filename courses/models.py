@@ -146,12 +146,11 @@ class Subject(models.Model):
 
 
     class Meta:
-        db_table = 'db_courses'
         ordering = ['-created_at']
         get_latest_by = ['-created_at']
         verbose_name_plural = 'subject'
         indexes = [
-            models.Index(fields=['id', 'uuid'], name='id_index_course'),
+            models.Index(fields=['id', 'uuid']),
         ]
 
     def __str__(self):
@@ -334,11 +333,10 @@ class Course(models.Model):
 
     class Meta:
         ordering = ['order']
-        db_table = 'db_chapiters'
         get_latest_by = ['created_at', 'update_at']
         verbose_name_plural = 'courses'
         indexes = [
-            models.Index(fields=['id', 'uuid'], name='id_index_chapter'),
+            models.Index(fields=['id', 'uuid']),
         ]
 
     def __str__(self):
@@ -467,10 +465,9 @@ class CourseChapter(models.Model):
 
     class Meta:
         ordering = ['order']
-        db_table = 'db_lessons'
         verbose_name_plural = 'lessons'
         indexes = [
-            models.Index(fields=['id'], name='id_index_lesson'),
+            models.Index(fields=['id']),
         ]
 
     def __str__(self):
