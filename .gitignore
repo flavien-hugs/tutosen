@@ -57,7 +57,6 @@ local_settings.py
 db.sqlite3
 
 # Environments
-.env
 .venv
 env/
 venv/
@@ -75,3 +74,4 @@ tests/*
 staticfiles
 __backups__/*.json
 tutosen.egg-info/*
+.env.config
