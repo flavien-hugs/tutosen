@@ -14,10 +14,21 @@ urlpatterns = [
         ),
 
         path(
-            route='instructor/<uuid>/profile/',
+            route='instructor/p/<link>/',
             view=teachers.teacher_profile_detail_view,
             name='teacher_detail_view'
+        ),
 
+        path(
+            route='instructor/p/<link>/course/',
+            view=teachers.teacher_course_view,
+            name='teacher_course_url'
+        ),
+
+        path(
+            route='instructor/p/<link>/blog/',
+            view=teachers.teacher_blog_view,
+            name='teacher_blog_url'
         ),
 
         path(

@@ -1,17 +1,17 @@
 # accounts.models.py
 
 import uuid
-import time
-import datetime
+import phonenumbers
 
 from django.db import models
 from django.urls import reverse
 from django.contrib import admin
+from django.utils import timezone
 from django.dispatch import receiver
 from django.utils.text import Truncator
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
-from django.db.models.functions import Lower, Upper
+from django.template.defaultfilters import slugify
 from django.contrib.auth.models import AbstractUser
 
 import markdown as md
@@ -51,7 +51,7 @@ class User(AbstractUser):
         verbose_name='civilité',
     )
     type = models.CharField(
-        verbose_name='statut',
+        verbose_name='user type',
         max_length=50,
         choices=Types.choices,
         default=base_type
@@ -85,12 +85,16 @@ class User(AbstractUser):
     avatar = models.ImageField(
         verbose_name='user avatar',
         null=True, blank=True,
-        upload_to=func_utils.save_user_avatar_file
+        upload_to=func_utils.save_avatar_file
     )
     cover = models.ImageField(
         verbose_name="user cover",
         blank=True, null=True,
-        upload_to=func_utils.save_user_cover_file
+        upload_to=func_utils.save_cover_file
+    )
+    link = models.CharField(
+        verbose_name='user profil link',
+        max_length=50, blank=True, null=True
     )
     facebook = models.CharField(
         verbose_name='compte facebook',
@@ -110,7 +114,7 @@ class User(AbstractUser):
     )
 
     class Meta:
-        db_table = 'user_profile'
+        db_table = 'db_accounts'
         ordering = ('-date_joined', '-last_login')
         get_latest_by = ('-date_joined', '-last_login')
         verbose_name_plural = 'Utilisateurs'
@@ -130,15 +134,22 @@ class User(AbstractUser):
         return username
 
     def save(self, *args, **kwargs):
-        if not self.pk:
+        if not self.link:
+            self.link = slugify(self.first_name)
+
+        if not self.type:
             self.type = self.base_type
 
-        if self.username:
+        if not self.username:
             self.username = self._get_unique_username()
-        return super().save(*args, **kwargs)
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.get_fullname()}"
+
+    def formatted_phone(self, country=None):
+        return phonenumbers.parse(self.phone_number, country)
 
     @mark_safe
     @admin.display(ordering='type', empty_value='???', description='statut')
@@ -159,7 +170,7 @@ class User(AbstractUser):
 
     @admin.display(description="nom & prénom")
     def get_fullname(self):
-        return f"{self.get_civility_display()} {self.first_name} {self.last_name}"
+        return f"{self.first_name} {self.last_name}"
 
     @admin.display(description="speudo")
     def get_speudonyme(self):
@@ -186,59 +197,100 @@ class User(AbstractUser):
         return markdown_render
 
     def get_first_name(self):
-        return f"{self.first_name}".replace(' ', '.').lower()
+        return f"{self.first_name}".replace(' ', '-').lower()
 
     def get_userdetail_url(self):
         path = ""
         if self.type == 'TEACHER':
             path = reverse(
                 'boards:teacher_detail',
-                kwargs={'username': str(self.get_first_name())}
+                kwargs={'link': str(self.link)}
             )
         elif self.type == 'STUDENT':
             path = reverse(
                 'boards:student_detail',
-                kwargs={'username': str(self.get_first_name())}
+                kwargs={'link': str(self.link)}
             )
         return path
 
     def get_userupdate_url(self):
         return reverse(
             'boards:teacher_update',
-            kwargs={'username': str(self.get_first_name())}
+            kwargs={'link': str(self.link)}
         )
 
     def get_userdelete_url(self):
         return reverse(
             'boards:teacher_delete',
-            kwargs={'username': str(self.get_first_name())}
+            kwargs={'link': str(self.link)}
         )
 
     def get_teacher_detail_url(self):
         return reverse(
             'accounts:teacher_detail_view',
-            kwargs={'uuid': self.uuid}
+            kwargs={'link': self.link}
+        )
+
+    def get_teacher_course_url(self):
+        return reverse(
+            'accounts:teacher_course_url',
+            kwargs={'link': self.link}
+        )
+
+    def get_teacher_post_url(self):
+        return reverse(
+            'accounts:teacher_blog_url',
+            kwargs={'link': self.link}
         )
 
     def get_teacher_courses(self):
         from courses.models import Subject
-        courses = Subject.objects.get_courses_published().filter(published=True)
+        courses = Subject.objects.get_courses_published().filter(
+            instructor=self
+        )
         return courses
 
+    @admin.display(description="numbers of course")
     def get_teacher_courses_count(self):
-        number_of_courses = self.get_teacher_courses().count()
-        return number_of_courses
+        number_of_courses = self.get_teacher_courses().aggregate(count=models.Count('id'))
+        counter = 0
+        if number_of_courses["count"] is not None:
+            counter = int(number_of_courses["count"])
+        return counter
 
-    # def get_local_today(self):
-    #     # recupere la date de l'User conneceté
-    #     # en cours
-    #     return datetime.timezone.localedate()
+    @admin.display(description='posts', empty_value='???')
+    def get_posts(self):
+        from blog.models import Post
+        posts = Post.objects.published().filter(author=self)
+        return posts
+
+    def get_posts_last_count(self):
+        posts_count_last = self.get_posts().filter(
+            created_at__lte=timezone.now()
+        ).aggregate(count=models.Count('id'))
+        counter = 0
+        if posts_count_last["count"] is not None:
+            counter = int(posts_count_last["count"])
+        return counter
+
+    @admin.display(description='number of posts', empty_value='???')
+    def get_posts_count(self):
+        posts_count = self.get_posts().aggregate(count=models.Count('id'))
+        counter = 0
+        if posts_count["count"] is not None:
+            counter = int(posts_count["count"])
+        return counter
+
+    def get_local_today(self):
+        # recupere la date de l'User conneceté en cours
+        return timezone.now()
 
 
 class Teacher(User):
     base_type = User.Types.TEACHER
 
     EMAIL_FIELD = 'email'
+    USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['email']
 
     objects = managers.TeacherManager()
@@ -247,7 +299,7 @@ class Teacher(User):
         proxy = True
         ordering = ('-date_joined', '-last_login')
         get_latest_by = ('-date_joined', '-last_login')
-        verbose_name_plural = 'Enseignant(e) ou professionnel(le)'
+        verbose_name_plural = 'instructeurs'
 
     def email_name(self):
         email_address = self.email.split('@')[0]
@@ -255,7 +307,7 @@ class Teacher(User):
 
     def sign_in(self, request):
         request.session['email'] = self
-        self.date_joined = datetime.datetime.now()
+        self.date_joined = timezone.now()
         self.save()
 
     def sign_out(self):
@@ -281,7 +333,7 @@ class Student(User):
         proxy = True
         ordering = ('-date_joined', '-last_login')
         get_latest_by = ('-date_joined', '-last_login')
-        verbose_name_plural = 'Etudiant(e)'
+        verbose_name_plural = 'Etudiants(es)'
 
 
 class ParentOrTutor(User):
@@ -297,7 +349,7 @@ class ParentOrTutor(User):
         proxy = True
         ordering = ('-date_joined', '-last_login')
         get_latest_by = ('-date_joined', '-last_login')
-        verbose_name_plural = 'Etudiant(e)'
+        verbose_name_plural = 'tuteurs/trices'
 
 
 @receiver([models.signals.post_save], sender=Student)

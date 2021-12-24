@@ -5,8 +5,10 @@ from django.urls import reverse_lazy
 from django.contrib.auth import get_user_model
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.list import MultipleObjectMixin
 from django.contrib.messages.views import SuccessMessageMixin
 
+from blog.models import Post
 from courses.models import Subject
 
 from accounts import models, forms, mixins
@@ -25,8 +27,17 @@ def check_validate_data_view(request):
 check_validate_data = check_validate_data_view
 
 
-class TeacherDashboardDetailView(mixins.GetTeacher, generic.DetailView):  
+class TeacherDashboardDetailView(
+    LoginRequiredMixin,
+    mixins.GetUser,
+    generic.DetailView
+):
+    """
+    Provide a detail of Teacher object
+    """
 
+    slug_field = "link"
+    slug_url_kwarg = "link"
     model = models.Teacher
     template_name = 'dashboard/teacher/teacher_dashboard.html'
 
@@ -42,13 +53,19 @@ teacher_detail_view = TeacherDashboardDetailView.as_view(
 
 
 class TeacherProfileUpdateView(
+    LoginRequiredMixin,
     SuccessMessageMixin,
-    mixins.GetTeacher,
     mixins.TeacherUpdateMixin,
     generic.UpdateView
-):
+):  
+    
+    """
+    Provide a update of Teacher object
+    """
+    
+    slug_field = "link"
+    slug_url_kwarg = "link"
     model = get_user_model()
-
     form_class = forms.UserUpdateForm
     success_message = "Account successfully update !"
     template_name = 'dashboard/teacher/partials/_partial_update_form.html'
@@ -59,13 +76,20 @@ teacher_update_view = TeacherProfileUpdateView.as_view(
 
 
 class TeacherProfileDeleteView(
+    LoginRequiredMixin,
     SuccessMessageMixin,
-    mixins.GetTeacher,
     generic.DeleteView
-):
+):  
+
+    """
+    Provide a delete of Teacher object
+    """
+
+    slug_field = "link"
+    slug_url_kwarg = "link"
+    model = get_user_model()
     success_url = reverse_lazy("home")
     success_message = "Account successfully deleted !"
-    queryset = get_user_model().objects.all()
     template_name = 'dashboard/teacher/partials/_partial_delete_form.html'
 
     def delete(self, request, *args, **kwargs):
@@ -78,7 +102,10 @@ teacher_delete_view = TeacherProfileDeleteView.as_view(
 
 
 class TeacherProfileListView(mixins.TeacherSearchMixin, generic.ListView):
-    paginate_by = 150
+    """
+    Provide a list of Teacher object
+    """
+    paginate_by = 25
     context_object_name = 'teacher_list'
     queryset = models.Teacher.objects.order_by('-date_joined')
     template_name = 'account/teacher/teacher_list.html'
@@ -90,8 +117,11 @@ teacher_list_view = TeacherProfileListView.as_view(
 
 
 class TeacherProfileDetailView(generic.DetailView):
-    slug_field = "uuid"
-    slug_url_kwarg = "uuid"
+    """
+    Provide a detail of Teacher object
+    """
+    slug_field = "link"
+    slug_url_kwarg = "link"
     model = models.Teacher
     context_object_name = 'teacher'
     template_name='account/teacher/teacher_detail.html'
@@ -103,3 +133,53 @@ class TeacherProfileDetailView(generic.DetailView):
 
 
 teacher_profile_detail_view = TeacherProfileDetailView.as_view()
+
+
+class TeacherCourseListView(MultipleObjectMixin, generic.DetailView):
+    """
+    Provide a course of Teacher object
+    """
+    paginate_by = 20
+    slug_field = "link"
+    slug_url_kwarg = "link"
+    model = models.Teacher
+    template_name='account/teacher/teacher_post_list.html'
+
+    def get_context_data(self, **kwargs):
+        teacher = self.get_object()
+        page_title = f'post list for "{teacher.get_fullname()}"'
+        object_list = Subject.objects.get_courses_published().filter(instructor=self.get_object())
+        return super(TeacherCourseListView, self).get_context_data(
+            teacher=teacher,
+            page_title=page_title,
+            object_list=object_list,
+            **kwargs
+        )
+
+
+teacher_course_view = TeacherCourseListView.as_view()
+
+
+class TeacherPostListView(MultipleObjectMixin, generic.DetailView):
+    """
+    Provide a blog of Teacher object
+    """
+    paginate_by = 20
+    slug_field = "link"
+    slug_url_kwarg = "link"
+    model = models.Teacher
+    template_name='account/teacher/teacher_post_list.html'
+
+    def get_context_data(self, **kwargs):
+        teacher = self.get_object()
+        page_title = f'post list for "{teacher.get_fullname()}"'
+        object_list = Post.objects.published().filter(author=self.get_object())
+        return super(TeacherPostListView, self).get_context_data(
+            teacher=teacher,
+            page_title=page_title,
+            object_list=object_list,
+            **kwargs
+        )
+
+
+teacher_blog_view = TeacherPostListView.as_view()

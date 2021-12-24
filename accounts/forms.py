@@ -13,6 +13,9 @@ from django_summernote.widgets import SummernoteWidget
 from django_countries.fields import CountryField
 from django_countries.widgets import CountrySelectWidget
 
+from phonenumber_field.formfields import PhoneNumberField
+from phonenumber_field.widgets import PhonePrefixSelect, PhoneNumberInternationalFallbackWidget
+
 
 class UserChangeForm(forms.UserChangeForm):
 
@@ -33,12 +36,10 @@ class UserCreationForm(forms.UserCreationForm):
 
     def clean_email(self):
         email = self.cleaned_data["email"]
-
         try:
             get_user_model().objects.get(email=email)
         except get_user_model().DoesNotExist:
             return email
-
         raise ValidationError(self.error_messages["duplicate_email"])
 
 
@@ -61,6 +62,15 @@ class CustomSignupForm(SignupForm):
         ],
         required=True,
     )
+    phone_number_prefix = PhoneNumberField(
+        widget=PhonePrefixSelect(),
+        region='CI'
+    )
+    phone_number = PhoneNumberField(
+        label='Téléphone',
+        required=True
+    )
+
     privacy = d_forms.BooleanField(required=True)
 
     def __init__(self, *args, **kwargs):
@@ -74,6 +84,7 @@ class CustomSignupForm(SignupForm):
         user.civility = self.cleaned_data['civility']
         user.last_name = self.cleaned_data['last_name']
         user.first_name = self.cleaned_data['first_name']
+        user.phone_number = self.cleaned_data['phone_number']
 
         user.save()
 

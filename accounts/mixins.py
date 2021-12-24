@@ -12,29 +12,26 @@ from courses.models import Subject, Course
 from boards.forms import SubjectForm, CourseForm, CourseFormSet
 
 
-class GetUser(LoginRequiredMixin):
+class GetUser(UserPassesTestMixin, object):
 
     login_url = 'account_login'
-    
+
     def get_object(self):
 
         current_user = get_user_model().objects.get(
-            uuid=self.request.user.uuid
+            pk=self.request.user.pk
         )
         current_user.last_accessed = timezone.now()
         current_user.save()
         return current_user
 
-
-class GetTeacher(UserPassesTestMixin, GetUser):
-    
     def test_func(self):
         obj = self.get_object()
         print(obj.type) # return TEACHER
         return obj.type == "TEACHER"
 
 
-class TeacherMixin(object):
+class TeacherMixin(LoginRequiredMixin, object):
     def get_queryset(self):
         queryset = super(TeacherMixin, self).get_queryset()
         return queryset.filter(instructor=self.request.user)
@@ -122,7 +119,7 @@ class TeacherUpdateMixin(object):
         return self.object.get_userupdate_url()
 
 
-class GetStudent(UserPassesTestMixin, GetUser):
+class GetStudent(UserPassesTestMixin, object):
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -135,7 +132,7 @@ class GetStudent(UserPassesTestMixin, GetUser):
         return obj.type == "STUDENT"
     
 
-class ParentOrTutorMixin(UserPassesTestMixin, GetUser):
+class ParentOrTutorMixin(UserPassesTestMixin, object):
     
     def get_queryset(self):
         queryset = super().get_queryset()
