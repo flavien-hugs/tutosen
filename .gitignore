@@ -72,6 +72,6 @@ logs/
 media/
 .idea/
 tests/*
-*/migrations/*
 staticfiles
+__backups__/*.json
 tutosen.egg-info/*
