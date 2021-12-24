@@ -61,12 +61,11 @@ class Post(models.Model):
     objects = BlogPostManager()
 
     class Meta:
-        db_table = 'db_blog'
         ordering = ["-created_at"]
         get_latest_by = ['-created_at']
         verbose_name_plural = 'blog'
         indexes = [
-            models.Index(fields=['id', 'uuid'], name='id_index_blog'),
+            models.Index(fields=['id', 'uuid']),
         ]
 
     def __str__(self):
