@@ -3,11 +3,10 @@
 from django.views import View
 from django.views import generic
 from django.urls import reverse
-from django.shortcuts import render
 from django.contrib.messages import views
 from django.http import HttpResponseRedirect
-from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render, redirect, get_object_or_404
 
 from comment import models, forms
 from courses.models import Subject
