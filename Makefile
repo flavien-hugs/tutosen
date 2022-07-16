@@ -3,8 +3,6 @@ BIN := $(VENV)/bin
 SHELL := /bin/bash
 MANAGE := python manage.py
 
-include .env
-
 .PHONY: help
 help: ## Show this help
 	@egrep -h '\s##\s' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
@@ -33,7 +31,7 @@ install: venv ## Install or update dependencies
 	pipenv install
 
 freeze: ## Pin current dependencies
-	pipenv lock -r > requirements.txt
+	pipenv run pip freeze > requirements.txt
 
 migrate: ## Make and run migrations
 	$(MANAGE) makemigrations
@@ -65,14 +63,14 @@ collectstatic: ## Run collectstatic
 changepassword: ## Change password superuser
 	$(MANAGE) changepassword tutosen
 
-dumpdata: ## dump data 
+dumpdata: ## dump data
 	$(MANAGE) dumpdata --indent=4 --natural-foreign --natural-primary -e contenttypes --format=json accounts.user > __backups__/users.json
 	$(MANAGE) dumpdata --indent=4 --format=json sites.site > __backups__/sites.json
 	$(MANAGE) dumpdata --indent=4 --natural-foreign --natural-primary -e contenttypes  --format=json courses.subject > __backups__/subjects.json
 	$(MANAGE) dumpdata --indent=4 --natural-foreign --natural-primary -e contenttypes  --format=json courses.course > __backups__/courses.json
 	$(MANAGE) dumpdata --indent=4 --natural-foreign --natural-primary -e contenttypes  --format=json courses.coursechapter > __backups__/lessons.json
 
-loaddata: ## load data 
+loaddata: ## load data
 	$(MANAGE) loaddata __backups__/users.json
 	$(MANAGE) loaddata __backups__/sites.json
 	$(MANAGE) loaddata __backups__/subjects.json
