@@ -27,6 +27,7 @@ django-taggit = "*"
 django-summernote = "*"
 django-compressor = "*"
 readtime = "*"
+python-dotenv = "*"
 
 [dev-packages]
 flake8 = "*"
