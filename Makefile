@@ -7,20 +7,6 @@ MANAGE := python manage.py
 help: ## Show this help
 	@egrep -h '\s##\s' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
-update: ## Do apt ugrade and autoremove
-	sudo apt update && sudo apt upgrade -y
-	sudo apt autoremove -y
-
-.PHONY: ga-env
-ga-env: ## Make a new virtual environment
-	python3 -m venv $(VENV)
-	source $(BIN)/activate
-	python3 -m pip install --upgrade pip
-
-.PHONY: ga-install
-ga-install: ## Make venv and install requerements
-	$(BIN)/pip install --upgrade -r requirements.txt
-
 .PHONY: venv
 venv: ## Make a new virtual environment
 	pip3 install pipenv
@@ -37,31 +23,16 @@ migrate: ## Make and run migrations
 	$(MANAGE) makemigrations
 	$(MANAGE) migrate
 
-db-up: ## Pull and start the Docker Postgres container in the background
-	docker pull postgres
-	docker-compose up -d
-
-db-shell: ## Access the Postgres Docker database interactively with psql. Pass in DBNAME=<name>.
-	docker exec -it container_name psql -d $(DBNAME)
-
-.PHONY: test
-test: ## Run tests
-	$(MANAGE) test honoma --verbosity=0 --parallel --failfast
-
-.PHONY: run
-run: ## Run the Django server
-	$(MANAGE) runserver
-
 start: install migrate run ## Install requirements, apply migrations, then start development server
 
 createsuperuser: ## Run the Django server
-	$(MANAGE) createsuperuser --username="tutosen" --email="flavienhgs@gmail.com"
+	$(MANAGE) createsuperuser --email="unste.inc@pm.me"
+
+changepassword: ## Change password superuser
+	$(MANAGE) changepassword unste.inc@pm.me
 
 collectstatic: ## Run collectstatic
 	$(MANAGE) collectstatic --noinput
-
-changepassword: ## Change password superuser
-	$(MANAGE) changepassword tutosen
 
 dumpdata: ## dump data
 	$(MANAGE) dumpdata --indent=4 --natural-foreign --natural-primary -e contenttypes --format=json accounts.user > __backups__/users.json
