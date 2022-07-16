@@ -17,10 +17,6 @@ ALLOWED_HOSTS = [
 prod_db = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(prod_db)
 
-# APPLICATION DEFINITION
-
-INSTALLED_APPS += ['whitenoise.runserver_nostatic']
-
 # https://docs.djangoproject.com/fr/3.0/ref/settings/
 # Let's Encrypt ssl/tls https
 
@@ -38,77 +34,3 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 CSRF_USE_SESSIONS = True
 CSRF_COOKIE_SECURE = True
-
-# https://docs.djangoproject.com/en/dev/ref/settings/#logging
-# See https://docs.djangoproject.com/en/dev/topics/logging for
-# more details on how to customize your logging configuration.
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    "filters": {
-        "require_debug_false": {
-            "()": "django.utils.log.RequireDebugFalse"
-        }
-    },
-    "formatters": {
-        "verbose": {
-            "format": "%(levelname)s %(asctime)s %(module)s "
-            "%(process)d %(thread)d %(message)s"
-        }
-    },
-    "handlers": {
-        "mail_admins": {
-            "level": "ERROR",
-            "filters": ["require_debug_false"],
-            "class": "django.utils.log.AdminEmailHandler",
-        },
-        "console": {
-            "level": "DEBUG",
-            "class": "logging.StreamHandler",
-            "formatter": "verbose",
-        },
-    },
-    "root": {"level": "INFO", "handlers": ["console"]},
-    "loggers": {
-        "django.request": {
-            "handlers": ["mail_admins"],
-            "level": "ERROR",
-            "propagate": True,
-        },
-        "django.security.DisallowedHost": {
-            "level": "ERROR",
-            "handlers": ["console", "mail_admins"],
-            "propagate": True,
-        },
-    },
-}
-
-if DEBUG:
-    # Clear prev config
-    LOGGING_CONFIG = None
-
-    # Get loglevel from env
-    LOGLEVEL = os.getenv('DJANGO_LOGLEVEL', 'info').upper()
-
-    logging.config.dictConfig({
-        'version': 1,
-        'disable_existing_loggers': False,
-        'formatters': {
-            'console': {
-                'format': '%(asctime)s %(levelname)s [%(name)s:%(lineno)s] %(module)s %(process)d %(thread)d %(message)s',
-            },
-        },
-        'handlers': {
-            'console': {
-                'class': 'logging.StreamHandler',
-                'formatter': 'console',
-            },
-        },
-        'loggers': {
-            '': {
-                'level': LOGLEVEL,
-                'handlers': ['console', ],
-            },
-        },
-    })
