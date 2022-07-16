@@ -26,7 +26,7 @@ migrate: ## Make and run migrations
 start: install migrate run ## Install requirements, apply migrations, then start development server
 
 createsuperuser: ## Run the Django server
-	$(MANAGE) createsuperuser --email="unste.inc@pm.me"
+	$(MANAGE) createsuperuser --email="unsta.inc@pm.me"
 
 changepassword: ## Change password superuser
 	$(MANAGE) changepassword unste.inc@pm.me
