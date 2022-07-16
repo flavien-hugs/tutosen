@@ -39,10 +39,6 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 CSRF_USE_SESSIONS = True
 CSRF_COOKIE_SECURE = True
 
-# https://warehouse.python.org/project/whitenoise/
-
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
 # https://docs.djangoproject.com/en/dev/ref/settings/#logging
 # See https://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
