@@ -4,20 +4,21 @@
 {% url 'account_login' as account_login %}
 {% url 'account_signup' as account_signup %}
 {% url 'account_logout' as account_logout %}
+{% url 'courses:course_list' as course_list_url %}
 {% url 'accounts:teacher_list_view' as teacher_list_view %}
 
 <div class="collapse navbar-collapse" id="navbar-default">
 
 	<ul class="navbar-nav navbar-left-wrap mt-3 mt-lg-0">
 		<li class="d-inline-block nav-item">
-			<a href="/course/" class="nav-link text-uppercase font-weight-bold">
+			<a href="{{ course_list_url }}" class="nav-link text-uppercase font-weight-bold">
 				courses
 			</a>
 		</li>
 
 		<li class="d-inline-block nav-item">
 			<a href="{{ teacher_list_view }}" class="nav-link text-uppercase font-weight-bold">
-				instructors
+				instructeurs
 			</a>
 		</li>
 
