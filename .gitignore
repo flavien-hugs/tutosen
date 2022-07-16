@@ -52,11 +52,12 @@ coverage.xml
 *.pot
 
 # Django stuff:
-*.log
 local_settings.py
 db.sqlite3
 
 # Environments
+.env
+.ENV
 .venv
 env/
 venv/
@@ -64,14 +65,16 @@ ENV/
 env.bak/
 venv.bak/
 .vscode
-
-*.lock
+logs/*
+Pipfile.lock
 *.sqlite3
-logs/
+*.lock
+logs/*.log
 media/
-.idea/
-tests/*
+local/
+.idea
 staticfiles
-__backups__/*.json
-tutosen.egg-info/*
-.env.config
+debug
+*/migrations/*.py
+db_backup/*.dump
+data/*.json
