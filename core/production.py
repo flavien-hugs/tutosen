@@ -8,8 +8,8 @@ DEBUG = TEMPLATE_DEBUG = False
 
 # https://docs.djangoproject.com/en/3.0/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = [
-    'tutosen.unsta.net',
-    '*.unsta.net'
+    'school.herokuapp.com',
+    '*.herokuapp.com'
 ]
 
 # APPLICATION DEFINITION
@@ -26,6 +26,7 @@ X_FRAME_OPTIONS = "DENY"
 SECURE_SSL_REDIRECT = True
 SECURE_HSTS_SECONDS = 86400
 SECURE_HSTS_PRELOAD = True
+SESSION_COOKIE_HTTPONLY = True
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True

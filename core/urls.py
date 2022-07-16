@@ -6,16 +6,22 @@ from django.views import generic
 from django.shortcuts import render
 from django.urls import path, include
 from django.conf.urls.static import static
-
-from courses.mixins import CourseSearchMixin
-from accounts.mixins import TeacherSearchMixin
+from django.contrib.sites.models import Site
+from django.contrib.auth.models import Group
 
 from courses.models import Subject
+from courses.mixins import CourseSearchMixin
+from accounts.mixins import TeacherSearchMixin
+from django_summernote.models import Attachment
+
+admin.site.unregister(Site)
+admin.site.unregister(Group)
+admin.site.unregister(Attachment)
 
 
-admin.site.site_header = "TUTOSEN"
-admin.site.site_title = "TUTOSEN"
-admin.site.index_title = "WELCOME TO TUTOSEN"
+admin.site.site_header = "Unsta Inc School"
+admin.site.site_title = admin.site.site_header
+admin.site.index_title = f"WELCOME TO {admin.site.site_header} Dashboard"
 
 
 def handler404(request, exception, template_name='404.html'):
