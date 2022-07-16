@@ -57,12 +57,12 @@ class TeacherProfileUpdateView(
     SuccessMessageMixin,
     mixins.TeacherUpdateMixin,
     generic.UpdateView
-):  
-    
+):
+
     """
     Provide a update of Teacher object
     """
-    
+
     slug_field = "link"
     slug_url_kwarg = "link"
     model = get_user_model()
@@ -79,7 +79,7 @@ class TeacherProfileDeleteView(
     LoginRequiredMixin,
     SuccessMessageMixin,
     generic.DeleteView
-):  
+):
 
     """
     Provide a delete of Teacher object
@@ -107,7 +107,7 @@ class TeacherProfileListView(mixins.TeacherSearchMixin, generic.ListView):
     """
     paginate_by = 25
     context_object_name = 'teacher_list'
-    queryset = models.Teacher.objects.order_by('-date_joined')
+    queryset = models.Teacher.objects.order_by('-date_joined').exclude(is_superuser=True)
     template_name = 'account/teacher/teacher_list.html'
 
 

@@ -123,12 +123,11 @@ class GetStudent(UserPassesTestMixin, object):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        queryset_filter = queryset.filter(student=self.request.user)
-        return queryset_filter
+        return queryset.filter(pk=self.request.user.pk)
 
     def test_func(self):
         obj = self.get_object()
-        print(obj.type) # return STUDENT
+        print(obj.type)
         return obj.type == "STUDENT"
     
 

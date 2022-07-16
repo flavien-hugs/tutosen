@@ -13,6 +13,8 @@ from courses import models, mixins, forms
 class StudentDashboardDetailView(GetStudent, generic.DetailView):
 
     model = Student
+    slug_field = "link"
+    slug_url_kwarg = "link"
     login_url = reverse_lazy('account_login')
     template_name = 'dashboard/student/student_dashboard.html'
 

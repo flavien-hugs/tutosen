@@ -1,6 +1,8 @@
 # accounts.models.py
 
 import uuid
+import random
+import string
 import phonenumbers
 
 from django.db import models
@@ -11,7 +13,6 @@ from django.dispatch import receiver
 from django.utils.text import Truncator
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
-from django.template.defaultfilters import slugify
 from django.contrib.auth.models import AbstractUser
 
 import markdown as md
@@ -21,6 +22,10 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 from utils import func_utils
 from accounts import managers
+
+
+def random_digits_generator():
+    return "".join(random.choices(string.digits, k=5))
 
 
 class User(AbstractUser):
@@ -37,6 +42,8 @@ class User(AbstractUser):
         ('Mme', 'Mme'),
         ('Mlle', 'Mlle'),
     )
+
+    username = None
 
     uuid = models.UUIDField(
         db_index=True,
@@ -55,6 +62,11 @@ class User(AbstractUser):
         max_length=50,
         choices=Types.choices,
         default=base_type
+    )
+    email = models.EmailField(
+        default="adresseemail@gmail.com",
+        max_length=80, unique=True,
+        verbose_name='adresse email',
     )
     statut = models.CharField(
         max_length=150,
@@ -92,10 +104,11 @@ class User(AbstractUser):
         blank=True, null=True,
         upload_to=func_utils.save_cover_file
     )
-    link = models.CharField(
-        verbose_name='user profil link',
-        max_length=50, blank=True, null=True
+    link = models.SlugField(
+        unique=True, editable=False,
+        max_length=225, blank=True, null=True
     )
+
     facebook = models.CharField(
         verbose_name='compte facebook',
         max_length=250,
@@ -113,34 +126,27 @@ class User(AbstractUser):
         null=True
     )
 
+    objects = managers.UserManager()
+    teachers = managers.TeacherManager()
+    students = managers.StudentManager()
+    tutors = managers.ParentOrTutorManager()
+
+    USERNAME_FIELD = 'email'
+    EMAIL_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
     class Meta:
         ordering = ('-date_joined', '-last_login')
         get_latest_by = ('-date_joined', '-last_login')
         verbose_name_plural = 'Utilisateurs'
-        indexes = [
-            models.Index(fields=['id', 'uuid']),
-        ]
-
-    def _get_unique_username(self):
-        if self.username:
-            username = str(self.username)
-        else:
-            username = str(self.email)
-        self.username = username
-
-        if User.objects.filter(username=username).exists():
-            username = self.email
-        return username
+        indexes = [models.Index(fields=['id', 'uuid'])]
 
     def save(self, *args, **kwargs):
         if not self.link:
-            self.link = slugify(self.first_name)
+            self.link = random_digits_generator()
 
         if not self.type:
             self.type = self.base_type
-
-        if not self.username:
-            self.username = self._get_unique_username()
 
         super().save(*args, **kwargs)
 
@@ -291,12 +297,6 @@ class User(AbstractUser):
 class Teacher(User):
     base_type = User.Types.TEACHER
 
-    EMAIL_FIELD = 'email'
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['email']
-
-    objects = managers.TeacherManager()
-
     class Meta:
         proxy = True
         ordering = ('-date_joined', '-last_login')
@@ -326,11 +326,6 @@ class Teacher(User):
 class Student(User):
     base_type = User.Types.STUDENT
 
-    EMAIL_FIELD = 'email'
-    REQUIRED_FIELDS = ['email']
-
-    objects = managers.StudentManager()
-
     class Meta:
         proxy = True
         ordering = ('-date_joined', '-last_login')
@@ -340,12 +335,6 @@ class Student(User):
 
 class ParentOrTutor(User):
     base_type = User.Types.PARENT_OR_TUTOR
-
-    EMAIL_FIELD = 'email'
-    USERNAME_FIELD = 'first_name'
-    REQUIRED_FIELDS = ['email']
-
-    objects = managers.ParentOrTutorManager()
 
     class Meta:
         proxy = True
@@ -358,13 +347,17 @@ class ParentOrTutor(User):
 @receiver([models.signals.post_save], sender=Teacher)
 @receiver([models.signals.post_save], sender=ParentOrTutor)
 def user_post_save_receiver(sender, instance, **kwargs):
-    User.objects.filter(username=instance)
+    User.objects.filter(email=instance)
 
 
 @receiver([models.signals.post_save], sender=Student)
 @receiver([models.signals.post_save], sender=Teacher)
 @receiver([models.signals.post_save], sender=ParentOrTutor)
 def delete_old_image(sender, instance, *args, **kwargs):
-    if hasattr(instance, '_current_cover_file'):
-        if instance._current_cover_file != instance.cover.path:
-            instance._current_cover_file.delete(save=False)
+    if instance.pk:
+        try:
+            old_image = User.objects.get(pk=instance.pk).cover
+            if old_image and old_image.url != instance.cover.url:
+                old_image.delete(save=False)
+        except:
+            pass

@@ -4,24 +4,20 @@ from typing import Set
 from django.urls import reverse
 from django.contrib import admin
 from django.utils.html import format_html
-from django.contrib.auth.models import Group
-from django.contrib.auth import get_user_model
-from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 
-from accounts.forms import UserChangeForm, UserCreationForm
+from accounts.models import Teacher, Student, ParentOrTutor
 
 
-@admin.register(get_user_model())
-class TeacherAdmin(UserAdmin):
+class CustomUserAdmin(admin.ModelAdmin):
     form = UserChangeForm
-    model = get_user_model()
     add_form = UserCreationForm
     date_hierarchy = 'date_joined'
 
     fieldsets = (
         (
             'Information personnelle',
-            {'fields': ("type", ("email", 'username'), ('civility', 'first_name', 'last_name'),)}
+            {'fields': ("type", "email", ('civility', 'first_name', 'last_name'),)}
         ),
         (
             'Adresse', {
@@ -56,18 +52,18 @@ class TeacherAdmin(UserAdmin):
     )
 
     list_display = [
-        "colored_type", "uppercase_name",
+        "colored_type", "email",  "uppercase_name",
         "country", "get_teacher_courses_count", "account_verified",
         "show_user_url", "date_joined", "is_active",
     ]
     list_display_links = [
+        "email",
         'uppercase_name',
     ]
     list_editable = (
         "is_active",
     )
     list_filter = (
-        "type",
         "date_joined",
         "is_active",
     )
@@ -85,10 +81,9 @@ class TeacherAdmin(UserAdmin):
         form = super().get_form(request, obj, **kwargs)
         is_superuser = request.user.is_superuser
         disabled_fields = set()
-        
+
         if not is_superuser:
             disabled_fields |= {
-                'username',
                 'is_superuser',
                 'user_permissions',
             }
@@ -126,4 +121,31 @@ class TeacherAdmin(UserAdmin):
             return format_html(url)
 
 
-# admin.site.unregister(Group)
+@admin.register(Teacher)
+class TeacherAdmin(CustomUserAdmin):
+    model = Teacher
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        teachers = qs.filter(type='TEACHER')
+        return  teachers
+
+
+@admin.register(Student)
+class TeacherAdmin(CustomUserAdmin):
+    model = Student
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        teachers = qs.filter(type='STUDENT')
+        return  teachers
+
+
+@admin.register(ParentOrTutor)
+class TeacherAdmin(CustomUserAdmin):
+    model = ParentOrTutor
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        teachers = qs.filter(type='PARENT_OR_TUTOR')
+        return  teachers

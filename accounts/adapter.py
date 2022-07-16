@@ -10,7 +10,6 @@ class CustomAccountAdapter(DefaultAccountAdapter):
     def save_user(self, request, user, form, commit=False):
         data = form.cleaned_data
         user.email = data['email']
-        user.username = data['first_name']
 
         if 'password1' in data:
             user.set_password(data['password1'])
