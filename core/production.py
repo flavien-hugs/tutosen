@@ -15,9 +15,6 @@ ALLOWED_HOSTS = [
 
 INSTALLED_APPS += ['whitenoise.runserver_nostatic']
 
-# 'django.middleware.security.SecurityMiddleware',
-MIDDLEWARE += ['whitenoise.middleware.WhiteNoiseMiddleware']
-
 # https://docs.djangoproject.com/fr/3.0/ref/settings/
 # Let's Encrypt ssl/tls https
 
@@ -36,10 +33,6 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 CSRF_USE_SESSIONS = True
 CSRF_COOKIE_SECURE = True
-
-# https://warehouse.python.org/project/whitenoise/
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#logging
 # See https://docs.djangoproject.com/en/dev/topics/logging for

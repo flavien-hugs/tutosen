@@ -31,6 +31,7 @@ DEBUG = os.environ.get('DEBUG')
 TEMPLATE_DEBUG = DEBUG
 
 META_KEYWORDS = ''
+APPEND_SLASH = True
 DEFAULT_CHARSET = 'UTF-8'
 SITE_DESCRIPTION = "Apprendre, Comprendre, Innover & Partager"
 
@@ -39,6 +40,7 @@ ALLOWED_HOSTS = []
 SITE_NAME = 'unsta, inc school'
 THOUSAND_SEPARATOR = ' '
 USE_THOUSAND_SEPARATOR = True
+DEFAULT_CONTENT_TYPE = 'text/html'
 
 SITE_ID = 3
 ADMIN_URL = 'shc-unsta/'
@@ -298,8 +300,8 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = SERVER_EMAIL = 'no-reply@unstainc.com'
 
-WHITENOISE_KEEP_ONLY_HASHED_FILES = True
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# WHITENOISE_KEEP_ONLY_HASHED_FILES = True
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # django/core/serializers/json.Serializer pour avoir la fonction de `dumps`.
 
