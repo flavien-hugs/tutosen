@@ -44,7 +44,6 @@ DEFAULT_CONTENT_TYPE = 'text/html'
 
 SITE_ID = 3
 ADMIN_URL = 'shc-unsta/'
-
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 # Application definition
@@ -124,10 +123,6 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'core.urls'
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#templates
-# https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-TEMPLATES-BACKEND
-# https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
-# https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
-# https://docs.djangoproject.com/en/dev/ref/templates/api/#loader-types
 
 TEMPLATE_DIR = str(BASE_DIR / 'templates')
 TEMPLATES = [
@@ -300,8 +295,8 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = SERVER_EMAIL = 'no-reply@unstainc.com'
 
-# WHITENOISE_KEEP_ONLY_HASHED_FILES = True
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+WHITENOISE_KEEP_ONLY_HASHED_FILES = True
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # django/core/serializers/json.Serializer pour avoir la fonction de `dumps`.
 
