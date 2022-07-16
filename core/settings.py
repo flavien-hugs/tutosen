@@ -36,7 +36,6 @@ SITE_DESCRIPTION = "Apprendre, Comprendre, Innover & Partager"
 
 ALLOWED_HOSTS = []
 
-APPEND_SLASH = True
 SITE_NAME = 'unsta, inc school'
 THOUSAND_SEPARATOR = ' '
 USE_THOUSAND_SEPARATOR = True
