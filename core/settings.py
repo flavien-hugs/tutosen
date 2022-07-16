@@ -34,9 +34,7 @@ META_KEYWORDS = ''
 DEFAULT_CHARSET = 'UTF-8'
 SITE_DESCRIPTION = "Apprendre, Comprendre, Innover & Partager"
 
-ALLOWED_HOSTS = os.getenv(
-    "127.0.0.1, localhost"
-).split(",")
+ALLOWED_HOSTS = []
 
 APPEND_SLASH = True
 SITE_NAME = 'unsta, inc school'
@@ -174,19 +172,6 @@ if os.environ.get('GITHUB_WORKFLOW'):
             'PASSWORD': 'postgres',
             'HOST': '127.0.0.1',
             'PORT': 5432,
-            'ATOMIC_REQUESTS': True
-        }
-    }
-
-if not DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': env.get('DATABASE_NAME'),
-            'USER': env.get('DATABASE_USER'),
-            'PASSWORD': env.get('DATABASE_PASSWORD'),
-            'HOST': env.get('DATABASE_HOST'),
-            'PORT': env.get('DATABASE_PORT'),
             'ATOMIC_REQUESTS': True
         }
     }
