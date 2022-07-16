@@ -21,8 +21,6 @@ DATABASES['default'].update(prod_db)
 
 INSTALLED_APPS += ['whitenoise.runserver_nostatic']
 
-MIDDLEWARE += ["whitenoise.middleware.WhiteNoiseMiddleware"]
-
 # https://docs.djangoproject.com/fr/3.0/ref/settings/
 # Let's Encrypt ssl/tls https
 
@@ -43,7 +41,7 @@ CSRF_COOKIE_SECURE = True
 
 # https://warehouse.python.org/project/whitenoise/
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#logging
 # See https://docs.djangoproject.com/en/dev/topics/logging for
