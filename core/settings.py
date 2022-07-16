@@ -35,7 +35,6 @@ DEFAULT_CHARSET = 'UTF-8'
 SITE_DESCRIPTION = "Apprendre, Comprendre, Innover & Partager"
 
 ALLOWED_HOSTS = os.getenv(
-    "DJANGO_ALLOWED_HOSTS",
     "127.0.0.1, localhost"
 ).split(",")
 

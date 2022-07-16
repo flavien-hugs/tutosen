@@ -8,7 +8,7 @@ DEBUG = TEMPLATE_DEBUG = False
 
 # https://docs.djangoproject.com/en/3.0/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = [
-    'school.herokuapp.com',
+    'unstaschool.herokuapp.com',
     '*.herokuapp.com'
 ]
 
