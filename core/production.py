@@ -21,6 +21,8 @@ DATABASES['default'].update(prod_db)
 
 INSTALLED_APPS += ['whitenoise.runserver_nostatic']
 
+MIDDLEWARE += ["whitenoise.middleware.WhiteNoiseMiddleware"]
+
 # https://docs.djangoproject.com/fr/3.0/ref/settings/
 # Let's Encrypt ssl/tls https
 
