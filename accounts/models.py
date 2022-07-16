@@ -160,10 +160,13 @@ class User(AbstractUser):
         else:
             color = "19cb98"
         render_color = format_html(
-            f"<span style='color:#fff; background-color:#{color};\
+            f"""
+            <span style='color:#fff; background-color:#{color};\
             display:inline-block; font-weight:500; write-space:nowrap;\
             line-height:1;border-radius:.20rem; padding:.33rem .5rem;\
-            text-align:center;vertical-align:baseline;'>{self.get_type_display()}</span>"
+            text-align:center;vertical-align:baseline;text-transform:uppercase;'>
+            {self.get_type_display()}
+            </span>"""
         )
         return render_color
 

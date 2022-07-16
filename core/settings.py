@@ -127,10 +127,11 @@ ROOT_URLCONF = 'core.urls'
 # https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
 # https://docs.djangoproject.com/en/dev/ref/templates/api/#loader-types
 
+TEMPLATE_DIR = str(BASE_DIR / 'templates')
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [str(BASE_DIR / 'templates')],
+        'DIRS': [TEMPLATE_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -179,7 +180,8 @@ if os.environ.get('GITHUB_WORKFLOW'):
             'ATOMIC_REQUESTS': True
         }
     }
-else:
+
+if not DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': "django.db.backends.postgresql",
@@ -191,6 +193,13 @@ else:
             'ATOMIC_REQUESTS': True
         }
     }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': str(BASE_DIR / 'db.sqlite3')
+    }
+}
 
 # password hashers
 # https://docs.djangoproject.com/en/dev/ref/settings/#password-hashers
@@ -252,21 +261,12 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-
-    # django compressor staticfiles
     'compressor.finders.CompressorFinder',
 ]
 
 # AUTHENTICATION CONFIGURATION
 AUTHENTICATION_BACKENDS = [
-    # Nécessaire pour se connecter par nom
-    # d'utilisateur dans l'admin Django, indépendamment de `allauth`
-
     'django.contrib.auth.backends.ModelBackend',
-
-    # méthodes d'authentification spécifiques à` allauth`,
-    # comme la connexion par e-mail
-
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
@@ -314,14 +314,7 @@ ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = LOGIN_REDIRECT_URL
 # Control the forms that django-allauth uses
 
 ACCOUNT_FORMS = {
-    # "login": "allauth.account.forms.LoginForm",
-    # "add_email": "allauth.account.forms.AddEmailForm",
-    # "change_password": "allauth.account.forms.ChangePasswordForm",
-    # "set_password": "allauth.account.forms.SetPasswordForm",
-    # "reset_password": "allauth.account.forms.ResetPasswordForm",
-    # "reset_password_from_key": "allauth.account.forms.ResetPasswordKeyForm",
-    # "disconnect": "allauth.socialaccount.forms.DisconnectForm",
-    "signup": "accounts.forms.CustomSignupForm", # Use our custom signup form
+    "signup": "accounts.forms.CustomSignupForm",
 }
 
 EMAIL_PORT = 587
@@ -460,12 +453,6 @@ CORS_ORIGIN_WHITELIST = (
 
 TAGGIT_CASE_INSENSITIVE = True
 
-# Django-compressor config
-# https://django-compressor.readthedocs.io/en/stable/settings/#settings
-
-COMPRESS_ENABLED = True
-COMPRESS_STORAGE = "compressor.storage.GzipCompressorFileStorage"
-
 # https://docs.djangoproject.com/fr/3.2/ref/settings/#ignorable-404-urls
 
 IGNORABLE_404_URLS = [
@@ -483,3 +470,26 @@ DISALLOWED_USER_AGENTS = [
     re.compile(r'^SiteSucker.*'),
     re.compile(r'^sohu-search'),
 ]
+
+
+# Django-compressor config
+# https://django-compressor.readthedocs.io/en/stable/settings/#settings
+
+COMPRESS_ENABLED = True
+COMPRESS_URL = STATIC_URL
+COMPRESS_OUTPUT_DIR = "cache"
+COMPRESS_STORAGE = "compressor.storage.GzipCompressorFileStorage"
+COMPRESS_CSS_FILTERS = [
+    "compressor.filters.css_default.CssAbsoluteFilter",
+    "compressor.filters.cssmin.CSSMinFilter",
+]
+COMPRESS_JS_FILTERS = ["compressor.filters.jsmin.JSMinFilter"]
+COMPRESS_REBUILD_TIMEOUT = 5400
+COMPRESS_PRECOMPILERS = (
+    ("text/less", "/usr/local/bin/lessc {infile} {outfile}"),
+    ("text/x-sass", "/usr/local/bin/sass {infile} {outfile}"),
+    ("text/x-scss", "/usr/local/bin/sass {infile} {outfile}"),
+)
+COMPRESS_OFFLINE_CONTEXT = {
+    "STATIC_URL": "STATIC_URL",
+}
