@@ -5,7 +5,7 @@ import dj_database_url
 
 
 # SECURITY WARNING: don't run with debug turned on in production
-DEBUG = TEMPLATE_DEBUG = False
+DEBUG = TEMPLATE_DEBUG = True
 
 # https://docs.djangoproject.com/en/3.0/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = [
