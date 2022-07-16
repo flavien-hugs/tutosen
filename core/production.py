@@ -3,7 +3,7 @@
 from core.settings import *
 
 # SECURITY WARNING: don't run with debug turned on in production
-PREPEND_WWW = True
+PREPEND_WWW = False
 DEBUG = TEMPLATE_DEBUG = False
 
 # https://docs.djangoproject.com/en/3.0/ref/settings/#allowed-hosts
