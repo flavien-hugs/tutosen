@@ -1,5 +1,3 @@
-{% comment %} navigation file {% endcomment %}
-
 {% url 'home' as home_url %}
 
 <nav class="navbar navbar-expand-lg navbar-default sticky-top">
@@ -8,10 +6,8 @@
 			<img src="{{ STATIC_PREFIX }}img/logo_tutosen.png" alt="{{ title }}"/>
 		</a>
 
-		{% comment %} Mobile view nav wrap {% endcomment %}
 		{% include "includes/_partials_mobile_navigation.html" %}
 
-		{% comment %} desktop view nav wrap {% endcomment %}
 		{% include "includes/_partials_desktop_navigation.html" %}
 	</div>
 </nav>
