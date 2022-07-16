@@ -28,6 +28,7 @@ django-summernote = "*"
 django-compressor = "*"
 readtime = "*"
 python-dotenv = "*"
+dj-database-url = "*"
 
 [dev-packages]
 flake8 = "*"

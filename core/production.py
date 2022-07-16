@@ -1,6 +1,8 @@
 # core.production.py
 
 from core.settings import *
+import dj_database_url
+
 
 # SECURITY WARNING: don't run with debug turned on in production
 DEBUG = TEMPLATE_DEBUG = False
@@ -11,3 +13,5 @@ ALLOWED_HOSTS = [
     '*.herokuapp.com'
 ]
 
+prod_db = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(prod_db)
