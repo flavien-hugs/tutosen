@@ -1,2 +1,2 @@
-web: gunicorn core.wsgi --access-logfile - --error-logfile
+web: gunicorn core.wsgi --log-file -
 init: make migrate
