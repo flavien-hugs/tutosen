@@ -34,7 +34,7 @@ Markdown==3.4.1
 markdown2==2.4.3
 mysqlclient==2.1.1
 oauthlib==3.2.0
-phonenumbers==8.12.51
+phonenumbers==8.13.3
 Pillow==9.2.0
 psycopg2-binary==2.9.3
 pycparser==2.21
