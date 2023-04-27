@@ -20,7 +20,7 @@ django-compressor==4.3
 django-cors-headers==3.13.0
 django-countries==7.3.2
 django-filter==22.1
-django-phonenumber-field==6.3.0
+django-phonenumber-field==7.1.0
 django-summernote==0.8.20.0
 django-taggit==3.0.0
 django-widget-tweaks==1.4.12
