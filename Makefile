@@ -23,27 +23,11 @@ migrate: ## Make and run migrations
 	$(MANAGE) makemigrations
 	$(MANAGE) migrate
 
-start: install migrate run ## Install requirements, apply migrations, then start development server
-
 createsuperuser: ## Run the Django server
-	$(MANAGE) createsuperuser --email="unsta.inc@pm.me"
+	$(MANAGE) createsuperuser --email="ssh.unsta@pm.me"
 
 changepassword: ## Change password superuser
-	$(MANAGE) changepassword unste.inc@pm.me
+	$(MANAGE) changepassword ssh.unsta@pm.me
 
 collectstatic: ## Run collectstatic
 	$(MANAGE) collectstatic --noinput
-
-dumpdata: ## dump data
-	$(MANAGE) dumpdata --indent=4 --natural-foreign --natural-primary -e contenttypes --format=json accounts.user > __backups__/users.json
-	$(MANAGE) dumpdata --indent=4 --format=json sites.site > __backups__/sites.json
-	$(MANAGE) dumpdata --indent=4 --natural-foreign --natural-primary -e contenttypes  --format=json courses.subject > __backups__/subjects.json
-	$(MANAGE) dumpdata --indent=4 --natural-foreign --natural-primary -e contenttypes  --format=json courses.course > __backups__/courses.json
-	$(MANAGE) dumpdata --indent=4 --natural-foreign --natural-primary -e contenttypes  --format=json courses.coursechapter > __backups__/lessons.json
-
-loaddata: ## load data
-	$(MANAGE) loaddata __backups__/users.json
-	$(MANAGE) loaddata __backups__/sites.json
-	$(MANAGE) loaddata __backups__/subjects.json
-	$(MANAGE) loaddata __backups__/courses.json
-	$(MANAGE) loaddata __backups__/lessons.json

@@ -10,40 +10,44 @@ from distutils.util import strtobool
 
 class CourseFilterPrice(django_filters.FilterSet):
     price = django_filters.NumberFilter()
-    
+
     class Meta:
         model = Subject
-        fields = ['price']
+        fields = ["price"]
 
 
 class CourseFilter(django_filters.FilterSet):
 
     category = django_filters.ChoiceFilter(
-        label='catégories de cours',
+        label="catégories de cours",
         choices=Subject.SUBJECT_CATEGORY,
         widget=forms.RadioSelect(
             attrs={
-                'class': 'custom-control-input',
+                "class": "custom-control-input",
             }
-        )
+        ),
     )
 
     language = django_filters.ChoiceFilter(
-        label='langues',
+        label="langues",
         choices=Subject.LANGUAGE_CHOICES,
-        widget=forms.RadioSelect(attrs={
-            'class': 'custom-control-input',
-        }))
+        widget=forms.RadioSelect(
+            attrs={
+                "class": "custom-control-input",
+            }
+        ),
+    )
 
     level = django_filters.ChoiceFilter(
         label="niveau d'étude",
         choices=Subject.SUBJECT_LEVEL,
         widget=forms.RadioSelect(
             attrs={
-                'class': 'custom-control-input',
+                "class": "custom-control-input",
             }
-        ))
+        ),
+    )
 
     class Meta:
         model = Subject
-        fields = ['category', 'language', 'level']
+        fields = ["category", "language", "level"]

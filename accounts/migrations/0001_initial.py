@@ -13,90 +13,279 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('auth', '0012_alter_user_first_name_max_length'),
+        ("auth", "0012_alter_user_first_name_max_length"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='User',
+            name="User",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('password', models.CharField(max_length=128, verbose_name='password')),
-                ('last_login', models.DateTimeField(blank=True, null=True, verbose_name='last login')),
-                ('is_superuser', models.BooleanField(default=False, help_text='Designates that this user has all permissions without explicitly assigning them.', verbose_name='superuser status')),
-                ('first_name', models.CharField(blank=True, max_length=150, verbose_name='first name')),
-                ('last_name', models.CharField(blank=True, max_length=150, verbose_name='last name')),
-                ('is_staff', models.BooleanField(default=False, help_text='Designates whether the user can log into this admin site.', verbose_name='staff status')),
-                ('is_active', models.BooleanField(default=True, help_text='Designates whether this user should be treated as active. Unselect this instead of deleting accounts.', verbose_name='active')),
-                ('date_joined', models.DateTimeField(default=django.utils.timezone.now, verbose_name='date joined')),
-                ('uuid', models.UUIDField(db_index=True, default=uuid.uuid4, editable=False, verbose_name='UUID')),
-                ('civility', models.CharField(choices=[('M.', 'M.'), ('Mme', 'Mme'), ('Mlle', 'Mlle')], default='M.', max_length=4, verbose_name='civilité')),
-                ('type', models.CharField(choices=[('STUDENT', 'Élève'), ('PARENT_OR_TUTOR', 'Parent/Tuteur'), ('TEACHER', 'Enseignant(e)/Professionnel(le)')], default='STUDENT', max_length=50, verbose_name='user type')),
-                ('email', models.EmailField(default='adresseemail@gmail.com', max_length=80, unique=True, verbose_name='adresse email')),
-                ('statut', models.CharField(blank=True, help_text='Votre statut actuelle.', max_length=150, null=True, verbose_name='statut')),
-                ('brief_desc', models.TextField(blank=True, help_text='Vous pour utiliser la syntaxe markdown        pour éditer votre profile.', null=True, verbose_name='brief description')),
-                ('phone_number', phonenumber_field.modelfields.PhoneNumberField(blank=True, max_length=128, region=None, verbose_name='Téléphone mobile')),
-                ('state', models.CharField(blank=True, max_length=120, null=True, verbose_name='ville de résidence')),
-                ('country', django_countries.fields.CountryField(blank=True, max_length=2, verbose_name='pays de résidence')),
-                ('avatar', models.ImageField(blank=True, null=True, upload_to=utils.func_utils.save_avatar_file, verbose_name='user avatar')),
-                ('cover', models.ImageField(blank=True, null=True, upload_to=utils.func_utils.save_cover_file, verbose_name='user cover')),
-                ('link', models.SlugField(blank=True, editable=False, max_length=225, null=True, unique=True)),
-                ('facebook', models.CharField(blank=True, max_length=250, null=True, verbose_name='compte facebook')),
-                ('twitter', models.CharField(blank=True, max_length=250, null=True, verbose_name='compte twitter')),
-                ('linkedin', models.URLField(blank=True, max_length=250, null=True, verbose_name='compte linkedin')),
-                ('groups', models.ManyToManyField(blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.', related_name='user_set', related_query_name='user', to='auth.Group', verbose_name='groups')),
-                ('user_permissions', models.ManyToManyField(blank=True, help_text='Specific permissions for this user.', related_name='user_set', related_query_name='user', to='auth.Permission', verbose_name='user permissions')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("password", models.CharField(max_length=128, verbose_name="password")),
+                (
+                    "last_login",
+                    models.DateTimeField(
+                        blank=True, null=True, verbose_name="last login"
+                    ),
+                ),
+                (
+                    "is_superuser",
+                    models.BooleanField(
+                        default=False,
+                        help_text="Designates that this user has all permissions without explicitly assigning them.",
+                        verbose_name="superuser status",
+                    ),
+                ),
+                (
+                    "first_name",
+                    models.CharField(
+                        blank=True, max_length=150, verbose_name="first name"
+                    ),
+                ),
+                (
+                    "last_name",
+                    models.CharField(
+                        blank=True, max_length=150, verbose_name="last name"
+                    ),
+                ),
+                (
+                    "is_staff",
+                    models.BooleanField(
+                        default=False,
+                        help_text="Designates whether the user can log into this admin site.",
+                        verbose_name="staff status",
+                    ),
+                ),
+                (
+                    "is_active",
+                    models.BooleanField(
+                        default=True,
+                        help_text="Designates whether this user should be treated as active. Unselect this instead of deleting accounts.",
+                        verbose_name="active",
+                    ),
+                ),
+                (
+                    "date_joined",
+                    models.DateTimeField(
+                        default=django.utils.timezone.now, verbose_name="date joined"
+                    ),
+                ),
+                (
+                    "uuid",
+                    models.UUIDField(
+                        db_index=True,
+                        default=uuid.uuid4,
+                        editable=False,
+                        verbose_name="UUID",
+                    ),
+                ),
+                (
+                    "civility",
+                    models.CharField(
+                        choices=[("M.", "M."), ("Mme", "Mme"), ("Mlle", "Mlle")],
+                        default="M.",
+                        max_length=4,
+                        verbose_name="civilité",
+                    ),
+                ),
+                (
+                    "type",
+                    models.CharField(
+                        choices=[
+                            ("STUDENT", "Élève"),
+                            ("PARENT_OR_TUTOR", "Parent/Tuteur"),
+                            ("TEACHER", "Enseignant(e)/Professionnel(le)"),
+                        ],
+                        default="STUDENT",
+                        max_length=50,
+                        verbose_name="user type",
+                    ),
+                ),
+                (
+                    "email",
+                    models.EmailField(
+                        default="adresseemail@gmail.com",
+                        max_length=80,
+                        unique=True,
+                        verbose_name="adresse email",
+                    ),
+                ),
+                (
+                    "statut",
+                    models.CharField(
+                        blank=True,
+                        help_text="Votre statut actuelle.",
+                        max_length=150,
+                        null=True,
+                        verbose_name="statut",
+                    ),
+                ),
+                (
+                    "brief_desc",
+                    models.TextField(
+                        blank=True,
+                        help_text="Vous pour utiliser la syntaxe markdown        pour éditer votre profile.",
+                        null=True,
+                        verbose_name="brief description",
+                    ),
+                ),
+                (
+                    "phone_number",
+                    phonenumber_field.modelfields.PhoneNumberField(
+                        blank=True,
+                        max_length=128,
+                        region=None,
+                        verbose_name="Téléphone mobile",
+                    ),
+                ),
+                (
+                    "state",
+                    models.CharField(
+                        blank=True,
+                        max_length=120,
+                        null=True,
+                        verbose_name="ville de résidence",
+                    ),
+                ),
+                (
+                    "country",
+                    django_countries.fields.CountryField(
+                        blank=True, max_length=2, verbose_name="pays de résidence"
+                    ),
+                ),
+                (
+                    "avatar",
+                    models.ImageField(
+                        blank=True,
+                        null=True,
+                        upload_to=utils.func_utils.save_avatar_file,
+                        verbose_name="user avatar",
+                    ),
+                ),
+                (
+                    "cover",
+                    models.ImageField(
+                        blank=True,
+                        null=True,
+                        upload_to=utils.func_utils.save_cover_file,
+                        verbose_name="user cover",
+                    ),
+                ),
+                (
+                    "link",
+                    models.SlugField(
+                        blank=True,
+                        editable=False,
+                        max_length=225,
+                        null=True,
+                        unique=True,
+                    ),
+                ),
+                (
+                    "facebook",
+                    models.CharField(
+                        blank=True,
+                        max_length=250,
+                        null=True,
+                        verbose_name="compte facebook",
+                    ),
+                ),
+                (
+                    "twitter",
+                    models.CharField(
+                        blank=True,
+                        max_length=250,
+                        null=True,
+                        verbose_name="compte twitter",
+                    ),
+                ),
+                (
+                    "linkedin",
+                    models.URLField(
+                        blank=True,
+                        max_length=250,
+                        null=True,
+                        verbose_name="compte linkedin",
+                    ),
+                ),
+                (
+                    "groups",
+                    models.ManyToManyField(
+                        blank=True,
+                        help_text="The groups this user belongs to. A user will get all permissions granted to each of their groups.",
+                        related_name="user_set",
+                        related_query_name="user",
+                        to="auth.Group",
+                        verbose_name="groups",
+                    ),
+                ),
+                (
+                    "user_permissions",
+                    models.ManyToManyField(
+                        blank=True,
+                        help_text="Specific permissions for this user.",
+                        related_name="user_set",
+                        related_query_name="user",
+                        to="auth.Permission",
+                        verbose_name="user permissions",
+                    ),
+                ),
             ],
             options={
-                'verbose_name_plural': 'Utilisateurs',
-                'ordering': ('-date_joined', '-last_login'),
-                'get_latest_by': ('-date_joined', '-last_login'),
+                "verbose_name_plural": "Utilisateurs",
+                "ordering": ("-date_joined", "-last_login"),
+                "get_latest_by": ("-date_joined", "-last_login"),
             },
         ),
         migrations.CreateModel(
-            name='ParentOrTutor',
-            fields=[
-            ],
+            name="ParentOrTutor",
+            fields=[],
             options={
-                'verbose_name_plural': 'tuteurs/trices',
-                'ordering': ('-date_joined', '-last_login'),
-                'get_latest_by': ('-date_joined', '-last_login'),
-                'proxy': True,
-                'indexes': [],
-                'constraints': [],
+                "verbose_name_plural": "tuteurs/trices",
+                "ordering": ("-date_joined", "-last_login"),
+                "get_latest_by": ("-date_joined", "-last_login"),
+                "proxy": True,
+                "indexes": [],
+                "constraints": [],
             },
-            bases=('accounts.user',),
+            bases=("accounts.user",),
         ),
         migrations.CreateModel(
-            name='Student',
-            fields=[
-            ],
+            name="Student",
+            fields=[],
             options={
-                'verbose_name_plural': 'Etudiants(es)',
-                'ordering': ('-date_joined', '-last_login'),
-                'get_latest_by': ('-date_joined', '-last_login'),
-                'proxy': True,
-                'indexes': [],
-                'constraints': [],
+                "verbose_name_plural": "Etudiants(es)",
+                "ordering": ("-date_joined", "-last_login"),
+                "get_latest_by": ("-date_joined", "-last_login"),
+                "proxy": True,
+                "indexes": [],
+                "constraints": [],
             },
-            bases=('accounts.user',),
+            bases=("accounts.user",),
         ),
         migrations.CreateModel(
-            name='Teacher',
-            fields=[
-            ],
+            name="Teacher",
+            fields=[],
             options={
-                'verbose_name_plural': 'instructeurs',
-                'ordering': ('-date_joined', '-last_login'),
-                'get_latest_by': ('-date_joined', '-last_login'),
-                'proxy': True,
-                'indexes': [],
-                'constraints': [],
+                "verbose_name_plural": "instructeurs",
+                "ordering": ("-date_joined", "-last_login"),
+                "get_latest_by": ("-date_joined", "-last_login"),
+                "proxy": True,
+                "indexes": [],
+                "constraints": [],
             },
-            bases=('accounts.user',),
+            bases=("accounts.user",),
         ),
         migrations.AddIndex(
-            model_name='user',
-            index=models.Index(fields=['id', 'uuid'], name='accounts_us_id_fbf5d9_idx'),
+            model_name="user",
+            index=models.Index(fields=["id", "uuid"], name="accounts_us_id_fbf5d9_idx"),
         ),
     ]

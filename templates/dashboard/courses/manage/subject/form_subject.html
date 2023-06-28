@@ -4,7 +4,7 @@
 
 {% block dashboard_subheader %}
     {% url 'subject:list_subject_url' request.user.get_first_name as subject_list_url %}
-    
+
     <div class="mb-2 mb-lg-0">
         <h1 class="mb-1 h2 font-weight-bold">
             {{ page_title|capfirst }}

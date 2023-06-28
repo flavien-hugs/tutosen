@@ -1,4 +1,4 @@
-# [tutosen](https://github.com/flavien-hugs/tutosen.git) - Plateforme d'apprentissage et de mentorat en ligne 
+# [tutosen](https://github.com/flavien-hugs/tutosen.git) - Plateforme d'apprentissage et de mentorat en ligne
 
 [![tutosen](https://img.shields.io/badge/tutosen-build-orange.svg)](https://www.tutosen.com/)
 [![Django Version](https://img.shields.io/badge/Django-Version3-success.svg)](http://www.djangoproject.com)

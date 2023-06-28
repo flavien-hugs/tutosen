@@ -9,74 +9,182 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('blog', '0001_initial'),
+        ("blog", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='AboutUs',
+            name="AboutUs",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content', models.TextField(help_text="Description de l'Entreprise: Activité, Mission, Objectif, etc", verbose_name='description')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "content",
+                    models.TextField(
+                        help_text="Description de l'Entreprise: Activité, Mission, Objectif, etc",
+                        verbose_name="description",
+                    ),
+                ),
             ],
             options={
-                'verbose_name_plural': 'About Us',
+                "verbose_name_plural": "About Us",
             },
         ),
         migrations.CreateModel(
-            name='Contact',
+            name="Contact",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('first_name', models.CharField(help_text='votre nom', max_length=80, verbose_name='nom')),
-                ('last_name', models.CharField(help_text='votre prénom', max_length=80, verbose_name='prénom')),
-                ('email', models.EmailField(help_text='votre adresse email', max_length=180, verbose_name='email')),
-                ('phone', models.CharField(help_text='votre numéro de téléphone', max_length=24, verbose_name='téléphone')),
-                ('reason', models.CharField(help_text='sujet du message', max_length=180, verbose_name='sujet')),
-                ('message', models.TextField(help_text='votre message', verbose_name='message')),
-                ('date_added', models.DateField(auto_now_add=True, verbose_name='date added')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "first_name",
+                    models.CharField(
+                        help_text="votre nom", max_length=80, verbose_name="nom"
+                    ),
+                ),
+                (
+                    "last_name",
+                    models.CharField(
+                        help_text="votre prénom", max_length=80, verbose_name="prénom"
+                    ),
+                ),
+                (
+                    "email",
+                    models.EmailField(
+                        help_text="votre adresse email",
+                        max_length=180,
+                        verbose_name="email",
+                    ),
+                ),
+                (
+                    "phone",
+                    models.CharField(
+                        help_text="votre numéro de téléphone",
+                        max_length=24,
+                        verbose_name="téléphone",
+                    ),
+                ),
+                (
+                    "reason",
+                    models.CharField(
+                        help_text="sujet du message",
+                        max_length=180,
+                        verbose_name="sujet",
+                    ),
+                ),
+                (
+                    "message",
+                    models.TextField(help_text="votre message", verbose_name="message"),
+                ),
+                (
+                    "date_added",
+                    models.DateField(auto_now_add=True, verbose_name="date added"),
+                ),
             ],
             options={
-                'verbose_name_plural': 'Contact',
-                'ordering': ['-date_added'],
+                "verbose_name_plural": "Contact",
+                "ordering": ["-date_added"],
             },
         ),
         migrations.CreateModel(
-            name='PageCGU',
+            name="PageCGU",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content', models.TextField(help_text="Description de la Condition Générale d'Utilisation du site.", verbose_name='description de la CGU')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "content",
+                    models.TextField(
+                        help_text="Description de la Condition Générale d'Utilisation du site.",
+                        verbose_name="description de la CGU",
+                    ),
+                ),
             ],
             options={
-                'verbose_name_plural': 'CGU',
-                'db_table': 'cgu_db',
+                "verbose_name_plural": "CGU",
+                "db_table": "cgu_db",
             },
         ),
         migrations.CreateModel(
-            name='PageSupport',
+            name="PageSupport",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content', models.TextField(help_text='Description des questions', verbose_name='description support')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "content",
+                    models.TextField(
+                        help_text="Description des questions",
+                        verbose_name="description support",
+                    ),
+                ),
             ],
             options={
-                'verbose_name_plural': 'Support',
-                'db_table': 'support_db',
+                "verbose_name_plural": "Support",
+                "db_table": "support_db",
             },
         ),
         migrations.CreateModel(
-            name='Newsletters',
+            name="Newsletters",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('email', models.CharField(max_length=50, unique=True, verbose_name='email')),
-                ('date_joinded', models.DateField(auto_now_add=True, verbose_name='date joined')),
-                ('post', models.OneToOneField(on_delete=django.db.models.deletion.PROTECT, to='blog.post', verbose_name='post')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "email",
+                    models.CharField(max_length=50, unique=True, verbose_name="email"),
+                ),
+                (
+                    "date_joinded",
+                    models.DateField(auto_now_add=True, verbose_name="date joined"),
+                ),
+                (
+                    "post",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        to="blog.post",
+                        verbose_name="post",
+                    ),
+                ),
             ],
             options={
-                'verbose_name_plural': 'Newsletters',
-                'ordering': ['-date_joinded'],
+                "verbose_name_plural": "Newsletters",
+                "ordering": ["-date_joinded"],
             },
         ),
         migrations.AddIndex(
-            model_name='newsletters',
-            index=models.Index(fields=['id'], name='id_index_newsletter'),
+            model_name="newsletters",
+            index=models.Index(fields=["id"], name="id_index_newsletter"),
         ),
     ]

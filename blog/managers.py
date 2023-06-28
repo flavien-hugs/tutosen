@@ -8,10 +8,7 @@ from django.utils import timezone
 class BlogPostQuerySet(models.QuerySet):
     def published(self):
         now = timezone.now()
-        return self.filter(
-            published=True,
-            created_at__lte=now
-        )
+        return self.filter(published=True, created_at__lte=now)
 
     def search(self, query):
         lookup = (

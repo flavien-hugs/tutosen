@@ -11,29 +11,80 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('courses', '0001_initial'),
+        ("courses", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Comment',
+            name="Comment",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('uuid', models.UUIDField(db_index=True, default=uuid.uuid4, editable=False, verbose_name='Subject ID')),
-                ('rate', models.PositiveIntegerField(default=1, verbose_name='note')),
-                ('comment', models.TextField(help_text='ajouter un commentaire', max_length=500, verbose_name='comment')),
-                ('date_added', models.DateTimeField(auto_now_add=True, verbose_name='created at')),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='author')),
-                ('course', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='course', to='courses.subject', verbose_name='course')),
-                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='replies', to='comment.comment', verbose_name='replies')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "uuid",
+                    models.UUIDField(
+                        db_index=True,
+                        default=uuid.uuid4,
+                        editable=False,
+                        verbose_name="Subject ID",
+                    ),
+                ),
+                ("rate", models.PositiveIntegerField(default=1, verbose_name="note")),
+                (
+                    "comment",
+                    models.TextField(
+                        help_text="ajouter un commentaire",
+                        max_length=500,
+                        verbose_name="comment",
+                    ),
+                ),
+                (
+                    "date_added",
+                    models.DateTimeField(auto_now_add=True, verbose_name="created at"),
+                ),
+                (
+                    "author",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                        verbose_name="author",
+                    ),
+                ),
+                (
+                    "course",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="course",
+                        to="courses.subject",
+                        verbose_name="course",
+                    ),
+                ),
+                (
+                    "parent",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="replies",
+                        to="comment.comment",
+                        verbose_name="replies",
+                    ),
+                ),
             ],
             options={
-                'verbose_name_plural': 'comments',
+                "verbose_name_plural": "comments",
             },
         ),
         migrations.AddIndex(
-            model_name='comment',
-            index=models.Index(fields=['id', 'uuid'], name='comment_com_id_1ff20d_idx'),
+            model_name="comment",
+            index=models.Index(fields=["id", "uuid"], name="comment_com_id_1ff20d_idx"),
         ),
     ]

@@ -11,7 +11,7 @@
     {% url 'account_email' as email_url %}
     {% url 'account_login' as account_login %}
     {% url 'account_confirm_email' confirmation.key as account_confirm_email %}
-    
+
     <a href="{{ home_url }}">
         <img loading='lazy' src="{{ STATIC_PREFIX }}img/logo-icon.svg" class="mb-4" alt="{{ title }}">
     </a>
@@ -20,7 +20,7 @@
         {% user_display confirmation.email_address.user as user_display %}
 
         <p class="verification_sent_info" >
-            {% with confirmation.email_address.email as email %} 
+            {% with confirmation.email_address.email as email %}
                 S'il vous plaît, veuillez confirmer que
                 <a class="font-weight-bold" href="mailto:{{ email }}">{{ email }}</a>
                 est votre adresse e-mail.

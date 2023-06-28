@@ -12,35 +12,105 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('taggit', '0005_auto_20220424_2025'),
-        ('accounts', '0001_initial'),
+        ("taggit", "0005_auto_20220424_2025"),
+        ("accounts", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Post',
+            name="Post",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('uuid', models.UUIDField(db_index=True, default=uuid.uuid4, editable=False, verbose_name='post ID')),
-                ('title', models.CharField(help_text='add title for article', max_length=255, verbose_name='title')),
-                ('subtitle', models.CharField(blank=True, help_text='add subtitle for article', max_length=255, verbose_name='subtitle')),
-                ('slug', models.SlugField(max_length=255, unique=True, verbose_name='post link')),
-                ('body', models.TextField(verbose_name='content')),
-                ('image', models.ImageField(blank=True, null=True, upload_to=utils.func_utils.save_post_cover_file, verbose_name='post cover')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='date created')),
-                ('date_modified', models.DateTimeField(auto_now=True, verbose_name='date modified')),
-                ('published', models.BooleanField(default=False, verbose_name='published')),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='accounts.teacher', verbose_name='author')),
-                ('tags', taggit.managers.TaggableManager(help_text='A comma-separated list of tags.', through='taggit.TaggedItem', to='taggit.Tag', verbose_name='keywords')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "uuid",
+                    models.UUIDField(
+                        db_index=True,
+                        default=uuid.uuid4,
+                        editable=False,
+                        verbose_name="post ID",
+                    ),
+                ),
+                (
+                    "title",
+                    models.CharField(
+                        help_text="add title for article",
+                        max_length=255,
+                        verbose_name="title",
+                    ),
+                ),
+                (
+                    "subtitle",
+                    models.CharField(
+                        blank=True,
+                        help_text="add subtitle for article",
+                        max_length=255,
+                        verbose_name="subtitle",
+                    ),
+                ),
+                (
+                    "slug",
+                    models.SlugField(
+                        max_length=255, unique=True, verbose_name="post link"
+                    ),
+                ),
+                ("body", models.TextField(verbose_name="content")),
+                (
+                    "image",
+                    models.ImageField(
+                        blank=True,
+                        null=True,
+                        upload_to=utils.func_utils.save_post_cover_file,
+                        verbose_name="post cover",
+                    ),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(
+                        auto_now_add=True, verbose_name="date created"
+                    ),
+                ),
+                (
+                    "date_modified",
+                    models.DateTimeField(auto_now=True, verbose_name="date modified"),
+                ),
+                (
+                    "published",
+                    models.BooleanField(default=False, verbose_name="published"),
+                ),
+                (
+                    "author",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        to="accounts.teacher",
+                        verbose_name="author",
+                    ),
+                ),
+                (
+                    "tags",
+                    taggit.managers.TaggableManager(
+                        help_text="A comma-separated list of tags.",
+                        through="taggit.TaggedItem",
+                        to="taggit.Tag",
+                        verbose_name="keywords",
+                    ),
+                ),
             ],
             options={
-                'verbose_name_plural': 'blog',
-                'ordering': ['-created_at'],
-                'get_latest_by': ['-created_at'],
+                "verbose_name_plural": "blog",
+                "ordering": ["-created_at"],
+                "get_latest_by": ["-created_at"],
             },
         ),
         migrations.AddIndex(
-            model_name='post',
-            index=models.Index(fields=['id', 'uuid'], name='blog_post_id_7a5176_idx'),
+            model_name="post",
+            index=models.Index(fields=["id", "uuid"], name="blog_post_id_7a5176_idx"),
         ),
     ]

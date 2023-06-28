@@ -10,7 +10,7 @@ from courses import models
 
 
 class UserViewSet(viewsets.ModelViewSet):
-    lookup_field = 'pk'
+    lookup_field = "pk"
     queryset = get_user_model().objects.all()
     serializer_class = serializers.UserSerializer
     permission_classes = [permissions.IsUserOrReadOnly]
@@ -21,7 +21,7 @@ user_viewset = UserViewSet
 
 
 class CourseViewSet(viewsets.ModelViewSet):
-    lookup_field = 'pk'
+    lookup_field = "pk"
     queryset = models.Subject.objects.all()
     serializer_class = serializers.CourseSerializer
     permission_classes = [permissions.IsUserOrReadOnly]

@@ -33,9 +33,9 @@
                 <img src="{% if comment.image %} {{ comment.image.url }}
                     {% else %}{{ STATIC_PREFIX }}img/cours/empty.jpg{% endif %}"
                     alt="{{ comment.title|slugify }}"/>
-        
+
                 <div class="card-body">
-                    <span class="font-size-sm font-weight-semi-bold d-block mb-3 text-primary"> 
+                    <span class="font-size-sm font-weight-semi-bold d-block mb-3 text-primary">
                         <i class="fe fe-bookmark"></i>
                         {{ comment.get_category_display|capfirst|safe }}
                     </span>
@@ -43,7 +43,7 @@
                     <h4 class="mb-2 text-truncate-line-2 ">
                         {{ comment.title|capfirst }}
                     </h4>
-                    
+
                     <ul class="mb-3 list-inline">
                         <li class="list-inline-item">
                             <i class="far fa-clock mr-1"></i>
@@ -70,7 +70,7 @@
                         <h3 class="mb-0">{{ page_title|capfirst|safe }}</h3>
                     </div>
                 </div>
-    
+
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
                         {% for feedback in feedbacks %}

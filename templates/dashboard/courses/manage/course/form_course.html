@@ -3,7 +3,7 @@
 {% load widget_tweaks %}
 
 {% block dashboard_subheader %}
-    
+
     <div class="mb-2 mb-lg-0">
         <h1 class="mb-1 h2 font-weight-bold">
             {{ page_title|capfirst }}
@@ -40,7 +40,7 @@
 {% block teacher_content %}
     <div class="row justify-content-center rounded-lg">
         <div class="{% if request.resolver_match.url_name == 'update_course_url' %}col-xl-9 col-lg-8{% else %}col-xl-8 col-lg-8{% endif %} col-12">
-            
+
             <form method="post" action=".">
                 {% csrf_token %}
 

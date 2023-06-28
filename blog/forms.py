@@ -12,14 +12,15 @@ class CreatePostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = [
-            "title", "subtitle", "body",
-            "tags", "image", "published"
-        ]
+        fields = ["title", "subtitle", "body", "tags", "image", "published"]
 
     def __init__(self, *args, **kwargs):
-    	super(CreatePostForm, self).__init__(*args, **kwargs)
-    	for field in self.fields.keys():
-            self.fields[field].widget.attrs.update({'class': 'form-control shadow-none'})
-            self.fields['tags'].widget.attrs.update({'class': ''})
-            self.fields['published'].widget.attrs.update({'class': 'custom-control-input shadow-none'})           
+        super(CreatePostForm, self).__init__(*args, **kwargs)
+        for field in self.fields.keys():
+            self.fields[field].widget.attrs.update(
+                {"class": "form-control shadow-none"}
+            )
+            self.fields["tags"].widget.attrs.update({"class": ""})
+            self.fields["published"].widget.attrs.update(
+                {"class": "custom-control-input shadow-none"}
+            )

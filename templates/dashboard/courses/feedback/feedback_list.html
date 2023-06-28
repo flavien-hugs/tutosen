@@ -12,7 +12,7 @@
             <li class="breadcrumb-item">
                 <a href="{{ user.get_userdetail_url }}">Dashboard</a>
             </li>
-            
+
             <li class="breadcrumb-item active" aria-current="page">
                 {{ page_title|lower|safe }}
             </li>
@@ -34,7 +34,7 @@
                         <a href="#!" class="btn btn-outline-primary btn-sm">Export To CSV...</a>
                     </div>
                 </div>
-    
+
                 <div class="card-body">
                     <form class="form-row mb-4">
                         <div class="col-xl-7 col-lg-6 col-md-4 col-12 mb-2 mb-lg-0">
@@ -69,7 +69,7 @@
                             </select>
                         </div>
                     </form>
-    
+
                     <ul class="list-group list-group-flush">
                         {% if course_list %}
                             {% for course in course_list %}

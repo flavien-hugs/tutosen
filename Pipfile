@@ -4,14 +4,12 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "==3.2"
+django = "*"
 pillow = "*"
 argon2-cffi = "*"
-whitenoise = {extras = ["brotli"], version = "*"}
 django-3-jet = "*"
 django-phonenumber-field = "*"
 phonenumbers = "*"
-mysqlclient = "*"
 gunicorn = "*"
 feedparser = "*"
 django-allauth = "*"
@@ -29,10 +27,14 @@ django-compressor = "*"
 readtime = "*"
 python-dotenv = "*"
 dj-database-url = "*"
+whitenoise = {extras = ["brotli"], version = "*"}
 
 [dev-packages]
 flake8 = "*"
 django-debug-toolbar = "*"
+isort = "*"
+black = "*"
+pre-commit = "*"
 
 [requires]
 python_version = "3.8"

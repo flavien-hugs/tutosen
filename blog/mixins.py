@@ -24,7 +24,7 @@ class PostEditMixin(PostMixin):
     def form_valid(self, form, *args, **kwargs):
         author = self.request.user
         post = form.save(commit=False)
-        image = form.cleaned_data['image']
+        image = form.cleaned_data["image"]
         post.author = author
         post.image = image
         post.save()

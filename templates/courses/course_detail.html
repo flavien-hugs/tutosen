@@ -6,7 +6,7 @@
 
 {% block page_content %}
     {% url 'boards:teacher_profile_url' as teacher_profile_url %}
-    
+
     <div class="pt-lg-8 pb-lg-16 pt-8 pb-12 bg-primary">
         <div class="container">
             <div class="row align-items-center">
@@ -65,14 +65,14 @@
                                         <a class="nav-link active" id="table-tab" data-toggle="pill" href="#table" role="tab"
                                         aria-controls="table" aria-selected="true">Content</a>
                                     </li>
-                                  
+
                                     <li class="nav-item">
                                         <a class="nav-link" id="description-tab" data-toggle="pill" href="#description" role="tab"
                                         aria-controls="description" aria-selected="false">Description</a>
                                     </li>
 
                                     <li class="nav-item">
-                                        <a class="nav-link" id="review-tab" data-toggle="pill" href="#review" role="tab" 
+                                        <a class="nav-link" id="review-tab" data-toggle="pill" href="#review" role="tab"
                                         aria-controls="review" aria-selected="false">Avis</a>
                                     </li>
 
@@ -116,12 +116,12 @@
                                                                                     {% else %}
                                                                                         text-secondary
                                                                                     {% endif %} icon-sm rounded-circle mr-2">
-                                                                                    
+
                                                                                     {% if lesson.access %}
                                                                                         <i class="mdi mdi-play font-size-md">
                                                                                     {% else %}
                                                                                         <i class="fe fe-lock font-size-md"></i>
-                                                                                    {% endif %} 
+                                                                                    {% endif %}
                                                                                     </i>
                                                                                 </span>
                                                                                 <span>
@@ -145,7 +145,7 @@
                                                             <i class="fe fe-chevron-down font-size-md"></i>
                                                         </span>
                                                     </a>
-                                                    
+
                                                     <div class="collapse" id="courseResume" data-parent="#courseAccordion">
                                                         <div class="pt-3 pb-2">
                                                             <p>{{ course.resume|safe }}</p>
@@ -202,7 +202,7 @@
                                                 the language specifics. We're also gonna get into MDX. MDX is a way to write React components in
                                                 your markdown.
                                             </p>
-                                            
+
                                             <p>
                                                 We'll dive into GraphQL, the fundamentals of GraphQL. We're only gonna use the pieces of it that
                                                 we need to build in Gatsby. We're not gonna be doing a deep dive into what GraphQL is or
@@ -243,7 +243,7 @@
                             {% endif %}
                         </div>
                     </div>
-                    
+
                     <div class="card mb-4">
                         <div>
                             <div class="card-header">
@@ -254,12 +254,12 @@
                                     <i class="fe fe-award mr-2 align-middle text-success"></i>
                                     Certificat inclu
                                 </li>
-                                
+
                                 <li class="list-group-item bg-transparent">
                                     <i class="fe fe-calendar align-middle mr-2 text-info"></i>
                                     {{ course.count_subjects_course }} Lesson{{ course.count_subjects_course|pluralize }}
                                 </li>
-                                
+
                                 <li class="list-group-item bg-transparent border-bottom-0">
                                     <i class="fe fe-clock align-middle mr-2 text-warning"></i>
                                     Accès à vie

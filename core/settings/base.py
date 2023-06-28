@@ -1,10 +1,3 @@
-# core.settings.py
-
-"""
-For the full list of settings and their values, see
-https://docs.djangoproject.com/en/3.1/ref/settings/
-"""
-
 import re
 import os
 import logging.config
@@ -15,19 +8,13 @@ from dotenv import dotenv_values
 
 env = dotenv_values(".env")
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+abspath = os.path.abspath(__file__)
+dirname = os.path.dirname(os.path.dirname(abspath))
+BASE_DIR = os.path.dirname(dirname)
 
+SECRET_KEY = env.get('SECRET_KEY')
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
-
-# SECURITY WARNING: don't run with debug turned on in production!
-
-DEBUG = os.environ.get('DEBUG')
+DEBUG = env.get('DEBUG')
 TEMPLATE_DEBUG = DEBUG
 
 META_KEYWORDS = ''
@@ -37,17 +24,16 @@ SITE_DESCRIPTION = "Apprendre, Comprendre, Innover & Partager"
 
 ALLOWED_HOSTS = []
 
-SITE_NAME = 'unsta, inc school'
+SITE_NAME = 'Bahut forum Labs'
 THOUSAND_SEPARATOR = ' '
 USE_THOUSAND_SEPARATOR = True
 DEFAULT_CONTENT_TYPE = 'text/html'
 
 SITE_ID = 3
-ADMIN_URL = 'shc-unsta/'
+ADMIN_URL = 'ssh-unsta/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.auth',
@@ -64,8 +50,6 @@ INSTALLED_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
-    'jet.dashboard',
-    'jet',
     'django_summernote',
     'django.contrib.admin',
 
@@ -97,8 +81,6 @@ LOCALS_APPS = [
 
 INSTALLED_APPS += THIRD_PARTY_APPS + LOCALS_APPS
 
-# https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
-
 AUTH_USER_MODEL = "accounts.User"
 
 MIDDLEWARE = [
@@ -122,9 +104,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'core.urls'
 
-# https://docs.djangoproject.com/en/dev/ref/settings/#templates
-
-TEMPLATE_DIR = str(BASE_DIR / 'templates')
+TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -151,37 +131,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-# https://docs.djangoproject.com/en/dev/ref/settings/#session-cookie-httponly
-
 CSRF_COOKIE_HTTPONLY = True
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = "SAMEORIGIN"
-
-# Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-if os.environ.get('GITHUB_WORKFLOW'):
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'github_actions',
-            'USER': 'postgres',
-            'PASSWORD': 'postgres',
-            'HOST': '127.0.0.1',
-            'PORT': 5432,
-            'ATOMIC_REQUESTS': True
-        }
-    }
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': str(BASE_DIR / 'db.sqlite3')
-    }
-}
-
-# password hashers
-# https://docs.djangoproject.com/en/dev/ref/settings/#password-hashers
-# https://docs.djangoproject.com/en/dev/topics/auth/passwords/#using-argon2-with-django
 
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.Argon2PasswordHasher',
@@ -190,14 +142,7 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
 ]
 
-# Hashage des donnees
-# https://docs.djangoproject.com/fr/3.1/ref/settings/
-
 DEFAULT_HASHING_ALGORITHM = 'sha1'
-
-# Password validation
-# https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -211,9 +156,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# See: https://docs.djangoproject.com/en/3.2/ref/settings/#language-code
-
 TIME_ZONE = 'UTC'
 LANGUAGE_CODE = 'fr'
 
@@ -222,18 +164,11 @@ USE_I18N = USE_L10N = True
 DATE_INPUT_FORMATS = ('%d/%m/%Y', '%Y-%m-%d')
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.1/howto/static-files/
-# See: https://docs.djangoproject.com/en/3.2/ref/settings/#static-root
-
 MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
-MEDIA_ROOT = str(BASE_DIR / 'media')
-STATIC_ROOT = str(BASE_DIR / 'staticfiles')
-STATICFILES_DIRS = [str(BASE_DIR / 'static')]
-
-# staticfiles finders
-# See: https://docs.djangoproject.com/en/3.1/ref/contrib/staticfiles/#staticfiles-finders
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -241,23 +176,16 @@ STATICFILES_FINDERS = [
     'compressor.finders.CompressorFinder',
 ]
 
-# AUTHENTICATION CONFIGURATION
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
-
-# https://docs.djangoproject.com/fr/dev/ref/settings/#logout-url
 
 LOGOUT_URL = 'home'
 LOGIN_URL = 'account_login'
 ACCOUNT_LOGOUT_REDIRECT = 'home'
 ACCOUNT_ADAPTER = "accounts.adapter.CustomAccountAdapter"
 LOGIN_REDIRECT_URL = ACCOUNT_ADAPTER
-
-
-# Configuration django-allauth
-# https://django-allauth.readthedocs.io/en/latest/configuration.html
 
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_REQUIRED = True
@@ -282,28 +210,19 @@ ACCOUNT_EMAIL_SUBJECT_PREFIX = f"{SITE_NAME} <no-reply@unsta.me>"
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = LOGIN_URL
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = LOGIN_REDIRECT_URL
 
-# Control the forms that django-allauth uses
 
 ACCOUNT_FORMS = {
     "signup": "accounts.forms.CustomSignupForm",
 }
 
-EMAIL_HOST = os.environ.get('EMAIL_HOST')
-EMAIL_PORT = os.environ.get('EMAIL_PORT')
-EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_HOST = env.get('EMAIL_HOST')
+EMAIL_PORT = env.get('EMAIL_PORT')
+EMAIL_USE_TLS = env.get('EMAIL_USE_TLS')
+EMAIL_HOST_USER = env.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env.get('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = SERVER_EMAIL = 'no-reply@unstainc.com'
 
-# WHITENOISE_KEEP_ONLY_HASHED_FILES = True
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-# django/core/serializers/json.Serializer pour avoir la fonction de `dumps`.
-
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
-
-# https://docs.djangoproject.com/fr/3.2/ref/settings/#message-tags
-# Messages built-in framework
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-secondary',
@@ -312,9 +231,6 @@ MESSAGE_TAGS = {
     messages.WARNING: 'alert-warning',
     messages.ERROR: 'alert-danger',
 }
-
-# Configuration django-jet
-# https://jet.readthedocs.io/en/latest/config_file.html
 
 JET_THEMES = [
     {
@@ -328,28 +244,18 @@ JET_SIDE_MENU_COMPACT = True
 JET_CHANGE_FORM_SIBLING_LINKS = True
 
 PHONENUMBER_DEFAULT_REGION = "CI"
-PHONENUMBER_DB_FORMAT = "INTERNATIONAL"
+PHONENUMBER_DB_FORMAT = "NATIONAL"
 
-# Summernote configuration
-# https://github.com/summernote/django-summernote
-
-# Show summernote with Bootstrap4
 SUMMERNOTE_THEME = 'bs4'
 
 SUMMERNOTE_CONFIG = {
-    # Using SummernoteWidget - iframe mode, default
     'iframe': True,
 
     'summernote': {
-        # As an example, using Summernote Air-mode
         'airMode': False,
 
-        # Change editor size
         'width': '100%',
         'height': '300',
-
-        # Toolbar customization
-        # https://summernote.org/deep-dive/#custom-toolbar-popover
         'toolbar': [
             ['font', ['bold', 'italic', 'underline', 'clear', 'strikethrough', 'superscript', 'subscript']],
             ['fontname', ['fontname']],
@@ -360,32 +266,23 @@ SUMMERNOTE_CONFIG = {
             ['view', ['fullscreen', 'codeview', 'help']],
         ],
 
-        # Set to `True` to return attachment paths in absolute URIs.
         'attachment_absolute_uri': True,
 
-        # Require users to be authenticated for uploading attachments.
         'attachment_require_authentication': True,
 
-        # Set custom storage class for attachments.
         'attachment_storage_class': 'utils.function_utils.upload_image_path',
 
         'codemirror': {
             'mode': 'htmlmixed',
             'lineNumbers': 'true',
-            # You have to include theme file in 'css' or 'css_for_inplace' before using it.
             'theme': 'monokai',
         },
     },
 }
-
-# config django-debug-toolbar
-# https://django-debug-toolbar.readthedocs.io/en/latest/installation.html
-
 SECURE_SSL_REDIRECT = False
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'http')
 INTERNAL_IPS = ['localhost', '127.0.0.1', '127.0.0.1:8001', '127.0.0.1:8002']
 
-# http://www.django-rest-framework.org/api-guide/settings/
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
@@ -406,11 +303,7 @@ CORS_ORIGIN_WHITELIST = (
     'https://tutosen.unsta.net'
 )
 
-# https://django-taggit.readthedocs.io/en/latest/getting_started.html
-
 TAGGIT_CASE_INSENSITIVE = True
-
-# https://docs.djangoproject.com/fr/3.2/ref/settings/#ignorable-404-urls
 
 IGNORABLE_404_URLS = [
     re.compile(r'^/cpc/'),
@@ -428,9 +321,6 @@ DISALLOWED_USER_AGENTS = [
     re.compile(r'^sohu-search'),
 ]
 
-
-# Django-compressor config
-# https://django-compressor.readthedocs.io/en/stable/settings/#settings
 
 COMPRESS_ENABLED = True
 COMPRESS_URL = STATIC_URL

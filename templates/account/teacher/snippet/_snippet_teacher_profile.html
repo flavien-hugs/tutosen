@@ -9,7 +9,7 @@
                     {% else %}
                         {{ object.instructor.email|gravatar:80 }}
                 {% endif %}
-                
+
                 <a href="{{ teacher_profile_url }}" class="position-absolute mt-2 ml-n3" data-toggle="tooltip" data-placement="top" title="Compte vérifié">
                     <img src="{{ STATIC_PREFIX }}img/checked-mark.svg" alt="{{ object.instructor.first_name|slugify }}" height="30" width="30"/>
                 </a>

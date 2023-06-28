@@ -52,7 +52,7 @@
                             {{ request.user.email|gravatar:80 }}
                         {% endif %}
                     </div>
-                    
+
                     <div class="ml-3 lh-1">
                         <h5 class="mb-1">
                             {% if request.user.first_name or request.user.last_name %}
@@ -67,7 +67,7 @@
             </div>
 
             <div class="dropdown-divider"></div>
-            
+
             <ul class="list-unstyled">
                 <li>
                     <a class="dropdown-item" href="{{ request.user.get_userdetail_url }}">
@@ -83,7 +83,7 @@
                     </a>
                 </li>
             </ul>
-            
+
             <div class="dropdown-divider"></div>
 
             <ul class="list-unstyled">
@@ -98,7 +98,7 @@
     </li>
 {% else %}
     <li class="d-inline-block">
-        <a class="text-uppercase font-weight-bold mx-2 mr-lg-0" 
+        <a class="text-uppercase font-weight-bold mx-2 mr-lg-0"
         href="{{ account_login }}">
             commencer
         </a>

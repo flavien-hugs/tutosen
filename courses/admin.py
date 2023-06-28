@@ -9,17 +9,14 @@ from django_summernote.admin import SummernoteModelAdmin
 class CourseChapterAdmin(admin.StackedInline):
     model = CourseChapter
     extra = 1
-    readonly_fields = ['order']
+    readonly_fields = ["order"]
     fieldsets = (
         (
-            'Course information', {
-                'classes': ('collapse',),
-                'fields': (
-                   ( "order", 'title'),
-                    ('movie', 'document'),
-                    'chapter_desc'
-                )
-            }
+            "Course information",
+            {
+                "classes": ("collapse",),
+                "fields": (("order", "title"), ("movie", "document"), "chapter_desc"),
+            },
         ),
     )
     verbose_name_plural = "Lessons"
@@ -28,18 +25,13 @@ class CourseChapterAdmin(admin.StackedInline):
 @admin.register(Course)
 class CourseAdmin(SummernoteModelAdmin):
     model = Course
-    date_hierarchy = 'created_at'
+    date_hierarchy = "created_at"
     extra = 1
-    readonly_fields = ['order']
+    readonly_fields = ["order"]
     fieldsets = (
         (
-            'Course information', {
-                'classes': ('collapse',),
-                'fields': (
-                   ( "order", 'title'),
-                    'description'
-                )
-            }
+            "Course information",
+            {"classes": ("collapse",), "fields": (("order", "title"), "description")},
         ),
     )
     inlines = [CourseChapterAdmin]
@@ -49,37 +41,44 @@ class CourseAdmin(SummernoteModelAdmin):
 @admin.register(Subject)
 class SubjectAdmin(SummernoteModelAdmin):
     model = Subject
-    date_hierarchy = 'created_at'
+    date_hierarchy = "created_at"
     fieldsets = (
         (
-            'Subject information', {
-                'classes': ('collapse',),
-                'fields': (
+            "Subject information",
+            {
+                "classes": ("collapse",),
+                "fields": (
                     "instructor",
-                    'level',
-                    ('language', 'category'),
-                    ('title', 'slug'),
-                    'published'
-                )
-            }
+                    "level",
+                    ("language", "category"),
+                    ("title", "slug"),
+                    "published",
+                ),
+            },
         ),
         (
-            'Course description', {
-                'classes': ('collapse',),
-                'fields': ("description", 'image')
-            }
+            "Course description",
+            {"classes": ("collapse",), "fields": ("description", "image")},
         ),
     )
     list_per_page = 10
     list_editable = ["published"]
-    list_display_links = ['title']
-    readonly_fields = ['instructor']
-    prepopulated_fields = {'slug': ('title',)}
-    search_fields = ['title', 'level', 'language', 'category',]
-    list_filter = ['level', 'language', 'category', "created_at"]
-    list_display = [
-        'title', 'instructor', 'category',
-        'count_students', 'count_subjects_course',
-        'created_at', 'published'
+    list_display_links = ["title"]
+    readonly_fields = ["instructor"]
+    prepopulated_fields = {"slug": ("title",)}
+    search_fields = [
+        "title",
+        "level",
+        "language",
+        "category",
     ]
-    
+    list_filter = ["level", "language", "category", "created_at"]
+    list_display = [
+        "title",
+        "instructor",
+        "category",
+        "count_students",
+        "count_subjects_course",
+        "created_at",
+        "published",
+    ]

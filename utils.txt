@@ -16,4 +16,3 @@
 
 5 - Give our new user access to administer our new database:
     GRANT ALL PRIVILEGES ON DATABASE database_name TO database_username;
-

@@ -21,15 +21,13 @@ class BlogPostListView(generic.ListView):
     template_name = "blog/blog_post_list.html"
 
 
-blog_post_list_view = BlogPostListView.as_view(
-    extra_context={"page_title": "blog"}
-)
+blog_post_list_view = BlogPostListView.as_view(extra_context={"page_title": "blog"})
 
 
 def ajax_post_view(request):
     dataset = get_list_or_404(models.Post, published=True)
-    data = serializers.serialize('json', dataset)
-    return JsonResponse(data, content_type='application/json', safe=False)
+    data = serializers.serialize("json", dataset)
+    return JsonResponse(data, content_type="application/json", safe=False)
 
 
 ajax_post_view = ajax_post_view
@@ -41,8 +39,8 @@ class PostDetailView(generic.DetailView):
     template_name = "blog/blog_post_detail.html"
 
     def get_context_data(self, **kwargs):
-        kwargs['form'] = NewslettersForm()
-        kwargs['page_title'] = f"{self.object.title}"
+        kwargs["form"] = NewslettersForm()
+        kwargs["page_title"] = f"{self.object.title}"
         return super().get_context_data(**kwargs)
 
 
@@ -62,22 +60,17 @@ class TeacherPostListView(LoginRequiredMixin, generic.ListView):
     template_name = "dashboard/blog/post_list.html"
 
     def get_queryset(self):
-        post = self.model.objects.filter(
-            author=self.request.user
-        )[:11]
+        post = self.model.objects.filter(author=self.request.user)[:11]
         return post
 
 
-post_list_view = TeacherPostListView.as_view(
-    extra_context={"page_title": "your blog"}
-)
+post_list_view = TeacherPostListView.as_view(extra_context={"page_title": "your blog"})
 
 
-@method_decorator(xframe_options_exempt, name='dispatch')
+@method_decorator(xframe_options_exempt, name="dispatch")
 class TeacherPostCreateView(
-    views.SuccessMessageMixin,
-    mixins.PostEditMixin, generic.CreateView
-):  
+    views.SuccessMessageMixin, mixins.PostEditMixin, generic.CreateView
+):
     success_message = "Post successfully created !"
     template_name = "dashboard/blog/post_create.html"
 
@@ -87,16 +80,15 @@ post_create_view = TeacherPostCreateView.as_view(
 )
 
 
-@method_decorator(xframe_options_exempt, name='dispatch')
+@method_decorator(xframe_options_exempt, name="dispatch")
 class TeacherPostUpdateiew(
-    views.SuccessMessageMixin,
-    mixins.PostEditMixin, generic.UpdateView
-):  
+    views.SuccessMessageMixin, mixins.PostEditMixin, generic.UpdateView
+):
     success_message = "Post successfully updated !"
     template_name = "dashboard/blog/post_create.html"
 
     def get_context_data(self, **kwargs):
-        kwargs['page_title'] = f'Update post "{self.object.title}"'
+        kwargs["page_title"] = f'Update post "{self.object.title}"'
         return super().get_context_data(**kwargs)
 
 
@@ -104,8 +96,7 @@ post_update_view = TeacherPostUpdateiew.as_view()
 
 
 class TeacherPostDeleteView(
-    views.SuccessMessageMixin,
-    mixins.PostEditMixin, generic.DeleteView
+    views.SuccessMessageMixin, mixins.PostEditMixin, generic.DeleteView
 ):
     def delete(self, request, *args, **kwargs):
         return super(TeacherPostDeleteView, self).delete(request, *args, **kwargs)

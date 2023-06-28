@@ -10,15 +10,15 @@
                     <span class="text-primary mb-3 d-block text-uppercase fw-semi-bold ls-xl">
                         World-class Instructors
                     </span>
-                    
+
                     <h2 class="mb-2 display-4 fw-bold">Classes Taught by Industry Expert</h2>
-                    
+
                     <p class="lead">
                         Geeks teachers are icons, experts, and industry rock stars excited to share their experience, wisdom, and trusted tools with you.
                     </p>
                 </div>
             </div>
-        
+
             <div class="row">
                 {% for instructor in instructors %}
                     {% include "account/teacher/snippet/_snippet_teacher_card.html" with object=instructor %}

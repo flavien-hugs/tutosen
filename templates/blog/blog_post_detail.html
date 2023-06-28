@@ -9,7 +9,7 @@
 				<div class="col-xl-8 col-lg-8 col-md-12 col-12 mb-2">
 					<div class="text-center mb-4">
 						<a href="#!" class="font-size-sm font-weight-semi-bold d-block mb-4 text-primary">Courses</a>
-						
+
 						<h1 class="display-3 font-weight-bold mb-4">{{ post.title|capfirst|safe }}</h1>
 						<span class="mb-3 d-inline-block">{{ post.get_readtime }}</span>
 					</div>
@@ -49,7 +49,7 @@
 					</div>
 
 					<hr class="mt-8 mb-5">
-					
+
 					<div class="d-flex justify-content-between align-items-center mb-5">
 						<div class="d-flex align-items-center">
 							<img src="{{ post.author.avatar.url }}" alt="{{ post.author.get_fullname }}" class="rounded-circle avatar-md">
@@ -71,7 +71,7 @@
 			</div>
 		</div>
 
-		<!-- container related post -->  
-		
+		<!-- container related post -->
+
 	</div>
 {% endblock page_content %}
