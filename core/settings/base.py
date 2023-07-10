@@ -47,8 +47,6 @@ INSTALLED_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
-    'jet.dashboard',
-    'jet',
     'django_summernote',
     'django.contrib.admin',
 
@@ -105,16 +103,12 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'core.urls'
 
-# https://docs.djangoproject.com/en/dev/ref/settings/#templates
-# https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-TEMPLATES-BACKEND
-# https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
-# https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
-# https://docs.djangoproject.com/en/dev/ref/templates/api/#loader-types
+TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [str(BASE_DIR / 'templates')],
+        'DIRS': [TEMPLATES_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -154,18 +148,7 @@ if os.environ.get('GITHUB_WORKFLOW'):
             'ATOMIC_REQUESTS': True
         }
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': "django.db.backends.postgresql",
-            'NAME': os.environ.get('DATABASE_NAME', 'tutosen'),
-            'USER': os.environ.get('DATABASE_USER', 'tutosen'),
-            'PASSWORD': os.environ.get('DATABASE_PASSWORD', 'tutosen'),
-            'HOST': os.environ.get('DATABASE_HOST', 'localhost'),
-            'PORT': os.environ.get('DATABASE_PORT', 5432),
-            'ATOMIC_REQUESTS': True
-        }
-    }
+
 
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.Argon2PasswordHasher',
@@ -194,16 +177,16 @@ USE_I18N = USE_L10N = USE_TZ = True
 DATE_INPUT_FORMATS = ('%d/%m/%Y', '%Y-%m-%d')
 
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
 STATIC_URL = '/static/'
-MEDIA_ROOT = BASE_DIR / 'media'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-
-    # django compressor staticfiles
     'compressor.finders.CompressorFinder',
 ]
 
@@ -269,8 +252,8 @@ EMAIL_BACKEND = os.environ.get(
     default='django.core.mail.backends.smtp.EmailBackend',
 )
 
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+WHITENOISE_KEEP_ONLY_HASHED_FILES = True
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
@@ -383,3 +366,18 @@ DISALLOWED_USER_AGENTS = [
     re.compile(r'^SiteSucker.*'),
     re.compile(r'^sohu-search'),
 ]
+
+
+COMPRESS_ENABLED = True
+COMPRESS_URL = STATIC_URL
+COMPRESS_OUTPUT_DIR = "cache"
+COMPRESS_STORAGE = "compressor.storage.GzipCompressorFileStorage"
+COMPRESS_CSS_FILTERS = [
+    "compressor.filters.css_default.CssAbsoluteFilter",
+    "compressor.filters.cssmin.CSSMinFilter",
+]
+COMPRESS_JS_FILTERS = ["compressor.filters.jsmin.JSMinFilter"]
+COMPRESS_REBUILD_TIMEOUT = 5400
+COMPRESS_OFFLINE_CONTEXT = {
+    "STATIC_URL": "STATIC_URL",
+}
