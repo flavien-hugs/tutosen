@@ -6,10 +6,10 @@ from django.dispatch.dispatcher import receiver
 
 
 class BlogConfig(AppConfig):
-    name = "blog"
-    label = "blog"
-    verbose_name = "blog"
-
+    name = 'blog'
+    label = 'blog'
+    verbose_name = 'blog'
+    
     def ready(self):
-        blog = self.get_model("Post")
+        blog = self.get_model('Post')
         pre_save.connect(receiver, sender=blog)

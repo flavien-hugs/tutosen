@@ -20,8 +20,8 @@
                         <div class="position-relative mt-n9">
                             {% if teacher.avatar %}
                                 <img class="avatar-xl rounded-circle" src="{{ teacher.avatar.url }}" alt="user-{{ teacher.first_name|slugify }}">
-                            {% else %}
-                                {{ teacher.email|gravatar:80 }}
+                                {% else %}
+                                    {{ teacher.email|gravatar:80 }}
                             {% endif %}
                         </div>
 
@@ -48,12 +48,12 @@
                             {% else %} href="{{ request.build_absolute_uri }}#"
                             {% endif %} class="mdi mdi-facebook text-muted mr-2">
                         </a>
-
+                        
                         <a {% if teacher_object.twitter %} target="_blank" href="{{ teacher.twitter }}"
                             {% else %} href="{{ request.build_absolute_uri }}#"
                             {% endif %} class="mdi mdi-twitter text-muted mr-2">
                         </a>
-
+                        
                         <a {% if teacher_object.linkedin %} target="_blank" href="{{ teacher.linkedin }}"
                             {% else %} href="{{ request.build_absolute_uri }}#"
                             {% endif %} class="mdi mdi-linkedin text-muted mr-2">
@@ -104,7 +104,7 @@
                                     <span><i class="mdi mdi-text-box-multiple font-size-lg"></i></span>
                                 </div>
                             </div>
-
+                            
                             <div class="d-flex align-items-center justify-content-between border-bottom pb-3 mb-3">
                                 <div>
                                     <h4 class="mb-0 font-weight-bold">11,604</h4>
@@ -114,7 +114,7 @@
                                     <span><i class="fe fe-users font-size-lg"></i></span>
                                 </div>
                             </div>
-
+                            
                             <div class="d-flex align-items-center justify-content-between">
                                 <div>
                                     <h4 class="mb-0 font-weight-bold">12,230</h4>

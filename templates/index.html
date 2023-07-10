@@ -2,10 +2,18 @@
 
 {% load accounts_tags coursetags %}
 
+{% block navigation %}
+	{% include "includes/_partials_navigation.html" %}
+{% endblock navigation %}
+
 {% block page_content %}
 	{% include "includes/_partials_hero.html" %}
 
 	{% latest_courses 4 %}
+	
+	<hr class="my-3">
+
+	{% instructors_list 4 %}
 
 	{% include "layouts/_layouts_explain_use.html" %}
 
@@ -16,3 +24,7 @@
 	<hr class="my-0">
 	{% include "layouts/_layouts_cta.html" %}
 {% endblock page_content %}
+
+{% block footer %}
+	{% include "includes/_partials_footer.html" %}
+{% endblock footer %}

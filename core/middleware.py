@@ -1,3 +1,9 @@
+# core/middleware.py
+"""
+custom middleware that calculates and logs
+the execution time of each request
+"""
+
 import time
 import logging
 
@@ -24,5 +30,4 @@ def metric_middleware(get_response):
         logger.debug(f"Number of queries: {total_queries}")
         logger.debug(f"Total time: {(total_time):.2f}s")
         return response
-
     return middleware

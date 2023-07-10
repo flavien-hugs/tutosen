@@ -69,7 +69,7 @@
                 <li class="list-group-item">
                   <h4>Content of courses</h4>
                 </li>
-
+                
                 {% for subject in courses %}
                     <li class="list-group-item">
                         <a class="d-flex align-items-center text-inherit text-decoration-none h4 mb-0" data-toggle="collapse" href="#course{{ subject.pk }}" role="button" aria-expanded="true" aria-controls="course{{ subject.pk }}">
@@ -101,7 +101,7 @@
                         </div>
                     </li>
                 {% endfor %}
-            </ul>
+            </ul>   
         </div>
     </div>
 {% endblock page_content %}

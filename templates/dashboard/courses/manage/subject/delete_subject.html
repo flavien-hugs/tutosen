@@ -3,7 +3,7 @@
 
 {% block dashboard_subheader %}
     {% url 'subject:list_subject_url' user.get_first_name as subject_list_url %}
-
+    
     <div class="mb-2 mb-lg-0">
         <h1 class="mb-1 h2 font-weight-bold">
             {{ page_title|capfirst }}
@@ -28,7 +28,7 @@
 
 {% block teacher_content %}
     {% url 'subject:list_subject_url' user.get_first_name as subject_list_url %}
-
+    
     <div class="card">
         <div class="card-header">
             <h3 class="mb-0">Remove this course</h3>
@@ -37,7 +37,7 @@
 
         <div class="card-body p-4">
             <span class="text-danger h4">Avertissement</span>
-
+            
             <p>
                 Si vous fermez votre compte, vous serez désinscrit de tous vos 0 cours,
                 et vous en perdrez l'accès pour toujours.

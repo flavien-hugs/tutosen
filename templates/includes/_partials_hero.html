@@ -1,84 +1,71 @@
-{% comment %}
-hero section
-{% endcomment %}
+{% comment %} hero section {% endcomment %}
 
 {% url 'account_signup' as account_signup %}
 {% url 'courses:course_list' as course_list_url %}
 
-<section class="py-lg-10 py-5">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6 mb-4 mb-lg-0">
-                <div class="">
-                    <h1 class="display-3 fw-bold mb-3">
-                        Bienvenue sur <br>
-                        <span class="bg-primary text-white p-1 my-2">{{ title }}</span>
-                    </h1>
-                    <p class="pe-lg-10 mb-5">
-                        Choisissez parmi des centaines de tuteurs, contactez votre tuteur choisi; et commencez votre cours individuel personnalisé à un moment qui vous convient.
-                    </p>
-                    <a href="{{ course_list_url }}" class="btn btn-primary">
-                        Parcourir nos cours
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-6 d-flex justify-content-center">
-                <img src="{{ STATIC_PREFIX }}img/girl.png" alt="{{ title }}"></div>
-        </div>
-    </div>
-</section>
+<div class="bg-primary">
+	<div class="container">
+		<div class="row align-items-center no-gutters">
+			<div class="col-xl-5 col-lg-6 col-md-12">
+				<div class="py-5 py-lg-0">
+					<h1 class="text-white display-4 font-weight-bold">
+						Bienvenue sur {{ title|upper }}
+					</h1>
+					<p class="text-white-50 mb-4 lead">
+						Choisissez parmi des centaines de tuteurs, contactez votre tuteur choisi;
+						et commencez votre cours individuel personnalisé à un moment qui vous convient.
+					</p>
+					<a href="{{ course_list_url }}" class="btn btn-success mb-3 mb-lg-0 mb-sm-0">
+					Parcourir les cours</a>
+					<a href="{{ account_signup }}" class="btn btn-white">Vous êtes un instructeur ?</a>
+				</div>
+			</div>
+			<div class="col-xl-7 col-lg-6 text-lg-right text-center d-none d-md-block">
+				<img src="{{ STATIC_PREFIX }}img/hero-img.png" alt="{{ title }}" class="img-fluid">
+			</div>
+		</div>
+	</div>
+</div>
 
-{% comment %}features{% endcomment %}
-<section class="py-lg-4 py-3">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 col-lg-3 border-top-md border-bottom border-end-md">
-                <div class="py-5 text-center">
-                    <div class="mb-3">
-                        <i class="fe fe-award fs-2 text-info"></i>
-                    </div>
-                    <div class="lh-1">
-                        <h2 class="mb-1">+100</h2>
-                        <span>Professeurs qualifiés</span>
-                    </div>
-                </div>
-            </div>
+{% comment %} features {% endcomment %}
+<div class="bg-white py-4 shadow-sm">
+	<div class="container">
+		<div class="row align-items-center no-gutters">
+			<div class="col-xl-4 col-lg-4 col-md-6 mb-lg-0 mb-4">
+				<div class="d-flex align-items-center">
+					<span class="icon-sahpe icon-lg bg-light-warning rounded-circle text-center text-dark-warning font-size-md">
+						<i class="fe fe-video"></i>
+					</span>
+					<div class="ml-3">
+						<h4 class="mb-0 font-weight-semi-bold">30,000 cours en ligne</h4>
+						<p class="mb-0">Profitez d'une variété de sujets inédits</p>
+					</div>
+				</div>
+			</div>
 
-            <div class="col-md-6 col-lg-3 border-top-md border-bottom border-end-lg">
-                <div class="py-5 text-center">
-                    <div class="mb-3">
-                        <i class="fe fe-users fs-2 text-warning"></i>
-                    </div>
-                    <div class="lh-1">
-                        <h2 class="mb-1">+100</h2>
-                        <span>Enseignants et encadreurs experts</span>
-                    </div>
-                </div>
-            </div>
+			<div class="col-xl-4 col-lg-4 col-md-6 mb-lg-0 mb-4">
+				<div class="d-flex align-items-center">
+					<span class="icon-sahpe icon-lg bg-light-warning rounded-circle text-center text-dark-warning font-size-md">
+						<i class="fe fe-users"></i>
+					</span>
+					<div class="ml-3">
+						<h4 class="mb-0 font-weight-semi-bold">Instructeurs expertes</h4>
+						<p class="mb-0">Trouvez le bon instructeur pour vous</p>
+					</div>
+				</div>
+			</div>
 
-            <div class="col-md-6 col-lg-3 border-top-lg border-bottom border-end-md">
-                <div class="py-5 text-center">
-                    <div class="mb-3">
-                        <i class="fe fe-tv fs-2 text-success"></i>
-                    </div>
-                    <div class="lh-1">
-                        <h2 class="mb-1">+200</h2>
-                        <span>Vidéos de cours</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-lg-3 border-top-lg border-bottom">
-                <div class="py-5 text-center">
-                    <div class="mb-3">
-                        <i class="fe fe-file fs-2 text-success"></i>
-                    </div>
-                    <div class="lh-1">
-                        <h2 class="mb-1">+1000</h2>
-                        <span class="mb-0">Ressources en accès libre</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+			<div class="col-xl-4 col-lg-4 col-md-12">
+				<div class="d-flex align-items-center">
+					<span class="icon-sahpe icon-lg bg-light-warning rounded-circle text-center text-dark-warning font-size-md">
+						<i class="fe fe-clock"></i>
+					</span>
+					<div class="ml-3">
+						<h4 class="mb-0 font-weight-semi-bold">Accès à vie</h4>
+						<p class="mb-0">Apprenez à votre rythme</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

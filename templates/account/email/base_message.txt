@@ -14,7 +14,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> 
     </div>
 
     {% with site_name=current_site.name site_domain=current_site.domain %}

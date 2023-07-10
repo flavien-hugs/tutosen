@@ -13,7 +13,7 @@
 
     <div class="mb-4">
         <a href="{{ home_url }}" title="{{ title }}">
-            <img width="80" height="80" loading='lazy' src="{{ STATIC_PREFIX }}img/logo.png" class="mb-4" alt="{{ title }}">
+            <img loading='lazy' src="{{ STATIC_PREFIX }}img/logo-icon.svg" class="mb-4" alt="{{ title }}">
         </a>
 
         <h3 class="mb-1 font-weight-bold">Adresse E-mail</h3>
@@ -58,7 +58,7 @@
             <p class="email_settings_info">
                 <strong>Avertissement: </strong>
                 Vous n'avez actuellement pas d'adresse électronique configurée.
-                Vous devriez vraiment ajouter une adresse e-mail afin de pouvoir recevoir des
+                Vous devriez vraiment ajouter une adresse e-mail afin de pouvoir recevoir des 
                 notifications, réinitialiser votre mot de passe, etc.
             </p>
         {% endif %}
@@ -66,7 +66,7 @@
         <p>Ajouter une adresse électronique. </p>
         <form method="post" action="{% url 'account_email' %}" class="add_email">
             {% csrf_token %}
-
+            
             {{ form|crispy }}
 
             <button class="btn btn-primary" name="action_add" type="submit">

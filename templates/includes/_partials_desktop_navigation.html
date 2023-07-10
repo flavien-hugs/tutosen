@@ -1,48 +1,43 @@
 {% comment %} header navigation {% endcomment %}
 
+{% url "courses:search" as search_list %}
 {% url 'account_login' as account_login %}
 {% url 'account_signup' as account_signup %}
 {% url 'account_logout' as account_logout %}
-{% url "blog:post_list" as blog_post_url %}
-{% url "courses:search" as search_list %}
-{% url 'courses:course_list' as course_list_url %}
-{% url 'product:product_list' as product_list_view %}
+{% url 'accounts:teacher_list_view' as teacher_list_view %}
 
 <div class="collapse navbar-collapse" id="navbar-default">
-	<ul class="navbar-nav ms-auto">
-		<li class="nav-item">
-			<a href="{{ course_list_url }}" class="nav-link text-capitalize font-weight-bold">
-				cours
+
+	<ul class="navbar-nav navbar-left-wrap mt-3 mt-lg-0">
+		<li class="d-inline-block nav-item">
+			<a href="/course/" class="nav-link text-uppercase font-weight-bold">
+				courses
 			</a>
 		</li>
 
-		<li class="nav-item">
-			<a href="{{ blog_post_url }}" class="nav-link text-capitalize font-weight-bold">
-				blog
+		<li class="d-inline-block nav-item">
+			<a href="{{ teacher_list_view }}" class="nav-link text-uppercase font-weight-bold">
+				instructors
 			</a>
 		</li>
 
-		<li class="nav-item">
-			<a href="{{ product_list_view }}" class="nav-link text-capitalize font-weight-bold">
-				boutique
-			</a>
-		</li>
-
-		<li class="nav-item">
-			<a href="#" class="nav-link text-capitalize font-weight-bold">
-				forum
+		<li class="d-inline-block nav-item">
+			<a href="#" class="nav-link text-uppercase font-weight-bold">
+				careers
 			</a>
 		</li>
 	</ul>
 
-	<div class="ms-auto mt-3 mt-lg-0">
-		<div class="d-flex align-items-center">
-			{% if request.user.is_authenticated %}
-				<a class="btn btn-primary ms-1" href="{{ account_signup }}">Mon compte</a>
-			{% else %}
-				<a class="btn btn-outline-primary ms-3" href="{{ account_login }}">Se connecter</a>
-		    	<a class="btn btn-primary ms-1" href="{{ account_signup }}">S'inscrire</a>
-			{% endif %}
-		</div>
-	</div>
+	<ul class="navbar-nav navbar-right-wrap ml-auto d-none d-lg-block">
+		<li class="d-inline-block">
+			<form action="{{ search_list }}" accept-charset="utf-8" method="GET" class="mt-3 mt-lg-0 ml-lg-3 d-flex align-items-center">
+				<span class="position-absolute pl-3 search-icon">
+					<i class="fe fe-search"></i>
+				</span>
+				<input autocomplete="False" role="search" type="search" name="q" class="form-control pl-6 rounded-0" placeholder="{% if request.GET.q %}{{ request.GET.q }}{% else %}Search courses, instructors ...{% endif %}">
+			</form>
+		</li>
+
+		{% include "includes/snippets/_snippet_navigation.html" %}
+	</ul>
 </div>

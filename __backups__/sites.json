@@ -1,8 +1,10 @@
-[{
+[
+{
     "model": "sites.site",
     "pk": 3,
     "fields": {
-        "domain": "unstaschool.herokuapp.com",
-        "name": "unsta school"
+        "domain": "example.com",
+        "name": "example.com"
     }
-}]
+}
+]

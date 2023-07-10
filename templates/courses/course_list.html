@@ -14,6 +14,16 @@
                         <div class="col-md-6 col-lg-8 col-xl-9">
                             <h4 class="mb-3 mb-lg-0">Affichage de {{ object_course_list.count }} sur {{ object_course_list.count }} course{{ object_course_list.count|pluralize }}</h4>
                         </div>
+
+                        <div class="d-inline-flex">
+                            <select class="selectpicker" data-width="100%">
+                                <option value="">Trier par</option>
+                                <option value="Newest">Les plus récent</option>
+                                <option value="Free">Gratuit</option>
+                                <option value="Most Popular">Les plus populaire</option>
+                                <option value="Highest Rated">Les plus cotés</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 

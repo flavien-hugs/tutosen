@@ -1,20 +1,19 @@
 {% load static boards_tags %}
 {% get_static_prefix as STATIC_PREFIX %}
 
-<div class="col-lg-4 col-md-6 col-12">
-    <article class="card card-hover mb-4 h-100">
+<article class="{% if request.resolver_match.url_name == 'search' or request.resolver_match.url_name == 'course_list' %}col-lg-4{% else %}col-lg-3{% endif %} col-md-6 col-12 mb-4">
+    <div class="card card-hover h-100">
         <a href="{{ object.get_absolute_url }}" class="card-img-top">
             <img src="{% if object.image %} {{ object.image.url }}
-            {% else %}{{ STATIC_PREFIX }}img/cours/empty.jpg{% endif %}"
-            alt="{{ object.title|slugify }}" class="card-img-top rounded-top-md stretched-link"/>
+                {% else %}{{ STATIC_PREFIX }}img/cours/empty.jpg{% endif %}"
+                alt="{{ object.title|slugify }}" class="card-img-top rounded-top"/>
         </a>
 
         <div class="card-body">
-            <span class="font-size-sm font-weight-semi-bold d-block mb-3 text-primary">
+            <a href="#!" class="font-size-sm font-weight-semi-bold d-block mb-3 text-primary"> 
                 <i class="fe fe-bookmark"></i>
                 {{ object.get_category_display|capfirst|safe }}
-                &smid; <i class="fe fe-bar-chart mr-1"></i> {{ object.get_level_display|capfirst|safe }}
-            </span>
+            </a>
 
             <h4 class="mb-2 text-truncate-line-2">
                 <a href="{{ object.get_absolute_url }}" class="text-inherit">
@@ -22,10 +21,63 @@
                 </a>
             </h4>
 
+            <ul class="mb-3 list-inline">
+                <li class="list-inline-item">
+                    <span class="text-dark font-weight-bold">
+                        £{{ object.price|safe }}
+                    </span>
+
+                    {% if object.sale_price %}
+                        <del class="text-muted">
+                            £{{ object.sale_price|safe }}
+                        </del>
+                    {% endif %}
+                </li>
+                
+                <li class="list-inline-item">
+                    <i class="fe fe-bar-chart mr-1"></i>
+                    {{ object.get_level_display|capfirst|safe }}
+                </li>
+            </ul>
+
             <div class="lh-1">
+                <span>
+                    <i class="mdi mdi-star text-warning mr-n1"></i>
+                    <i class="mdi mdi-star text-warning mr-n1"></i>
+                    <i class="mdi mdi-star text-warning mr-n1"></i>
+                    <i class="mdi mdi-star text-warning mr-n1"></i>
+                    <i class="mdi mdi-star text-warning"></i>
+                </span>
                 <span class="text-warning">4.5</span>
                 <span class="font-size-xs text-muted">(7,700)</span>
             </div>
         </div>
-    </article>
-</div>
+
+        <div class="card-footer">
+            <div class="row align-items-center no-gutters">
+                <div class="col-auto">
+                    {% if object.instructor.avatar %}
+                        <img src="{{ object.instructor.avatar.url }}" class="rounded-circle avatar-xs" alt="{{ object.instructor|slugify }}"/>
+                    {% else %}
+                        {{ object.instructor.email|gravatar:80 }}
+                    {% endif %}
+                </div>
+
+                <div class="col ml-2">
+                    <a class="text-inherit" href="{{ course.instructor.get_teacher_detail_url }}">
+                        <span class="small font-weight-bold">
+                            {{ object.instructor.get_civility_display|safe }}
+                            {{ object.instructor.first_name|capfirst|upper|safe }}
+                        </span>
+                    </a>
+                </div>
+
+                <div class="col-auto">
+                    <a href="#!" class="text-muted" data-toggle="tooltip" data-placement="top" title="{{ course.instructor.statut|striptags|safe }}">
+                        <i class="fe fe-info"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>

@@ -5,37 +5,37 @@
 
 		{% include "includes/_partials_meta.html" %}
 		{% include "includes/_static_css_link.html" %}
-
+		
 		<title>
 			{% block head_title %}
-				{% if page_title %}
+				{% ifequal page_title 'page_title' %}
 					{{ page_title|capfirst }}
 				{% else %}
 					{{ site_description|capfirst }}
-				{% endif %}
+				{% endifequal %}
 			{% endblock head_title %} &smid; {{ title|upper }}
 		</title>
 	</head>
 
-	<body class="bg-white">
+	<body onselectstart="return false" oncontextmenu="return false" ondragstart="return false" onMouseOver="window.status='..message perso .. '; return true;" >
 		{% block navigation %}
-			{% include "includes/_partials_navigation.html" %}
+		
 		{% endblock navigation %}
 
 		<main>
 			{% block page_content %}
-
+			
 			{% endblock page_content %}
 		</main>
 
 		{% block footer %}
-			{% include "includes/_partials_footer.html" %}
+
 		{% endblock footer %}
 
 		{% include "includes/_static_javascript_link.html" %}
 
 		{% block ajax_javascript %}
-
+			
 		{% endblock ajax_javascript %}
 	</body>
 </html>

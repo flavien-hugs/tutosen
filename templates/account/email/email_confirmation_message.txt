@@ -5,7 +5,7 @@
     {% with site_name=current_site.name site_domain=current_site.domain %}
         <p class="mb-4">Pour continuer votre inscription,
         vérifiez votre adresse email en cliquant sur le lien ci dessous :</p>
-
+            
         <a class="btn btn-primary btn-block btn-shadow" href="{{ activate_url }}" target="_blank">
             Confirmer votre adresse électronique
         </a>

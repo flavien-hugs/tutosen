@@ -8,20 +8,21 @@ from courses import mixins
 from courses.models import Subject
 
 
-class SearchView(mixins.CourseSearchMixin, ListView):
+class SearchView(
+    mixins.CourseSearchMixin,
+    ListView
+):
     model = Subject
     paginate_by = 10
     context_object_name = "object_course_list"
-    template_name = "courses/course_list.html"
-    success_url = reverse_lazy("courses:search")
+    template_name = 'courses/course_list.html'
+    success_url = reverse_lazy('courses:search')
 
     def head(self, *args, **kwargs):
-        last_course = self.get_queryset().latest("-created_at")
+        last_course = self.get_queryset().latest('-created_at')
         response = HttpResponse(
             headers={
-                "Last-Modified": last_course.created_at.strftime(
-                    "%a, %d %b %Y %H:%M:%S GMT"
-                )
+                'Last-Modified': last_course.created_at.strftime('%a, %d %b %Y %H:%M:%S GMT')
             },
         )
         return response
