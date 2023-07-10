@@ -1,26 +1,15 @@
-# core.production.py
 
 from core.settings import *
 
-# SECURITY WARNING: don't run with debug turned on in production
 PREPEND_WWW = True
 DEBUG = TEMPLATE_DEBUG = False
 
-# https://docs.djangoproject.com/en/3.0/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = [
-    'tutosen.unsta.net',
-    '*.unsta.net'
-]
-
-# APPLICATION DEFINITION
+ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS += ['whitenoise.runserver_nostatic']
 
-# 'django.middleware.security.SecurityMiddleware',
 MIDDLEWARE += ['whitenoise.middleware.WhiteNoiseMiddleware']
 
-# https://docs.djangoproject.com/fr/3.0/ref/settings/
-# Let's Encrypt ssl/tls https
 
 X_FRAME_OPTIONS = "DENY"
 SECURE_SSL_REDIRECT = True
@@ -36,8 +25,6 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 CSRF_USE_SESSIONS = True
 CSRF_COOKIE_SECURE = True
-
-# https://warehouse.python.org/project/whitenoise/
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
@@ -87,10 +74,8 @@ LOGGING = {
 }
 
 if DEBUG:
-    # Clear prev config
     LOGGING_CONFIG = None
 
-    # Get loglevel from env
     LOGLEVEL = os.getenv('DJANGO_LOGLEVEL', 'info').upper()
 
     logging.config.dictConfig({
