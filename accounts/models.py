@@ -218,22 +218,6 @@ class User(AbstractUser):
     def get_teacher_post_url(self):
         return reverse("accounts:teacher_blog_url", kwargs={"link": self.link})
 
-    def get_teacher_courses(self):
-        from courses.models import Subject
-
-        courses = Subject.objects.get_courses_published().filter(instructor=self)
-        return courses
-
-    @admin.display(description="numbers of course")
-    def get_teacher_courses_count(self):
-        number_of_courses = self.get_teacher_courses().aggregate(
-            count=models.Count("id")
-        )
-        counter = 0
-        if number_of_courses["count"] is not None:
-            counter = int(number_of_courses["count"])
-        return counter
-
     @admin.display(description="posts", empty_value="???")
     def get_posts(self):
         from blog.models import Post
@@ -261,7 +245,6 @@ class User(AbstractUser):
         return counter
 
     def get_local_today(self):
-        # recupere la date de l'User conneceté en cours
         return timezone.now()
 
 

@@ -50,6 +50,7 @@ urlpatterns = [
     path(route="", view=home_view, name="home"),
     path("me/", include("boards.urls")),
     path("courses/", include("courses.urls")),
+    path("produits/", include("product.urls", namespace="product")),
     path("blog/", include("blog.urls", namespace="blog")),
     path("pages/", include("pages.urls", namespace="pages")),
     path("summernote/", include("django_summernote.urls")),

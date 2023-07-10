@@ -97,10 +97,6 @@
         </div>
     </li>
 {% else %}
-    <li class="d-inline-block">
-        <a class="text-uppercase font-weight-bold mx-2 mr-lg-0"
-        href="{{ account_login }}">
-            commencer
-        </a>
-    </li>
+    <a class="btn btn-outline-dark ms-3" href="{{ account_login }}">Se connecter</a>
+    <a class="btn btn-dark ms-1" href="{{ account_login }}">S'inscrire</a>
 {% endif %}

@@ -20,8 +20,8 @@
                         <div class="position-relative mt-n9">
                             {% if teacher.avatar %}
                                 <img class="avatar-xl rounded-circle" src="{{ teacher.avatar.url }}" alt="user-{{ teacher.first_name|slugify }}">
-                                {% else %}
-                                    {{ teacher.email|gravatar:80 }}
+                            {% else %}
+                                {{ teacher.email|gravatar:80 }}
                             {% endif %}
                         </div>
 

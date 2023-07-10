@@ -30,8 +30,7 @@ class Post(models.Model):
     body = models.TextField(verbose_name="content")
     image = models.ImageField(
         verbose_name="post cover",
-        blank=True,
-        null=True,
+        blank=True, null=True,
         upload_to=func_utils.save_post_cover_file,
     )
     created_at = models.DateTimeField(verbose_name="date created", auto_now_add=True)

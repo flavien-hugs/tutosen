@@ -28,12 +28,6 @@ class CourseAdmin(SummernoteModelAdmin):
     date_hierarchy = "created_at"
     extra = 1
     readonly_fields = ["order"]
-    fieldsets = (
-        (
-            "Course information",
-            {"classes": ("collapse",), "fields": (("order", "title"), "description")},
-        ),
-    )
     inlines = [CourseChapterAdmin]
     verbose_name_plural = "Courses"
 
@@ -48,7 +42,6 @@ class SubjectAdmin(SummernoteModelAdmin):
             {
                 "classes": ("collapse",),
                 "fields": (
-                    "instructor",
                     "level",
                     ("language", "category"),
                     ("title", "slug"),
@@ -64,7 +57,6 @@ class SubjectAdmin(SummernoteModelAdmin):
     list_per_page = 10
     list_editable = ["published"]
     list_display_links = ["title"]
-    readonly_fields = ["instructor"]
     prepopulated_fields = {"slug": ("title",)}
     search_fields = [
         "title",
@@ -75,9 +67,7 @@ class SubjectAdmin(SummernoteModelAdmin):
     list_filter = ["level", "language", "category", "created_at"]
     list_display = [
         "title",
-        "instructor",
         "category",
-        "count_students",
         "count_subjects_course",
         "created_at",
         "published",

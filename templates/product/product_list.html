@@ -1,0 +1,35 @@
+{% extends "index.html" %}
+
+{% block head_title %}{{ page_title|capfirst }}{% endblock head_title %}
+
+{% block page_content %}
+    <section class="py-9">
+    	<div class="container">
+    		<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4">
+    			{% for object in product_list %}
+	    			<div class="col mb-4">
+	    				<div class="card h-100">
+	    					<div>
+	    						<a href="{{ object.get_absolute_url }}">
+	    							<img src="{% if object.image %}{{ object.image.url }}{% else %}{{ STATIC_PREFIX }}img/cours/empty.jpg{% endif %}" alt="{{ object.title }}" class="img-fluid rounded-top-md stretched-link">
+                          		</a>
+                        	</div>
+	    					<div class="card-body">
+	    						<div class="mb-2">
+	    							<h4><a href="{{ object.get_absolute_url }}" class="text-inherit">{{ object.title }}</a></h4>
+	                          	</div>
+	                          	<div class="d-flex justify-content-between">
+	                            	<h4 class="mb-0">{{ object.price }} F CFA</h4>
+	                          	</div>
+                        	</div>
+	    				</div>
+	    			</div>
+	    		{% empty %}
+	    			<p class="text-center">Aucun produit disponible.</p>
+    			{% endfor %}
+    			{% include "includes/snippets/_snippet_paginate.html" %}
+    		</div>
+    	</div>
+    </section>
+{% endblock page_content %}
+

@@ -17,9 +17,9 @@
 		</title>
 	</head>
 
-	<body>
+	<body class="bg-white">
 		{% block navigation %}
-
+			{% include "includes/_partials_navigation.html" %}
 		{% endblock navigation %}
 
 		<main>
@@ -29,7 +29,7 @@
 		</main>
 
 		{% block footer %}
-
+			{% include "includes/_partials_footer.html" %}
 		{% endblock footer %}
 
 		{% include "includes/_static_javascript_link.html" %}

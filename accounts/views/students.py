@@ -19,9 +19,7 @@ class StudentDashboardDetailView(GetStudent, generic.DetailView):
     template_name = "dashboard/student/student_dashboard.html"
 
     def get_context_data(self, **kwargs):
-        kwargs["courses_list"] = models.Subject.objects.get_courses_published().filter(
-            instructor=self.request.user
-        )[0:5]
+        kwargs["courses_list"] = models.Subject.objects.get_courses_published()[0:5]
         return super(StudentDashboardDetailView, self).get_context_data(**kwargs)
 
 

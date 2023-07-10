@@ -1,5 +1,3 @@
-# accounts.managers.py
-
 import random
 from django.db import models
 

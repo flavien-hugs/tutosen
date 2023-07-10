@@ -53,18 +53,6 @@ class Subject(models.Model):
     uuid = models.UUIDField(
         db_index=True, default=uuid.uuid4, editable=False, verbose_name="Subject ID"
     )
-    instructor = models.ForeignKey(
-        to=mdl.Teacher,
-        on_delete=models.CASCADE,
-        related_name="course_created",
-        verbose_name="instructor",
-    )
-    students = models.ManyToManyField(
-        to=mdl.Student,
-        verbose_name="Student joined",
-        related_name="student_enrolled",
-        blank=True,
-    )
     title = models.CharField(
         verbose_name="Subject title",
         max_length=60,
@@ -155,7 +143,7 @@ class Subject(models.Model):
     class Meta:
         ordering = ["-created_at"]
         get_latest_by = ["-created_at"]
-        verbose_name_plural = "subject"
+        verbose_name_plural = "sujets"
         indexes = [
             models.Index(fields=["id", "uuid"]),
         ]
@@ -200,11 +188,6 @@ class Subject(models.Model):
     def get_lessons_count(self):
         count_lessons = self.get_lessons().count()
         return count_lessons
-
-    @admin.display(description="total students", empty_value="???")
-    def count_students(self):
-        total_students = self.students.count()
-        return total_students
 
     @admin.display(description="comment for course", empty_value="???")
     def get_comments(self):
@@ -302,7 +285,6 @@ class Course(models.Model):
         help_text="Rédigez un titre de cours de 60 caractères.",
     )
     description = models.TextField(
-        max_length=180,
         verbose_name="chapiter description",
         blank=True,
         null=True,
@@ -324,7 +306,7 @@ class Course(models.Model):
     class Meta:
         ordering = ["order"]
         get_latest_by = ["created_at", "update_at"]
-        verbose_name_plural = "courses"
+        verbose_name_plural = "cours"
         indexes = [
             models.Index(fields=["id", "uuid"]),
         ]

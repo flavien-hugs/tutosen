@@ -16,7 +16,6 @@
 
 					<div class="d-flex justify-content-between align-items-center mb-5">
 						<div class="d-flex align-items-center">
-							<img src="{{ post.author.avatar.url }}" alt="{{ post.author.get_fullname }}" class="rounded-circle avatar-md">
 							<div class="ml-2 lh-1">
 								<h5 class="mb-1">{{ post.author.get_fullname }}</h5>
 								<span class="text-primary">{{ post.author.brief_desc|striptags|capfirst|safe }}</span>
@@ -32,8 +31,8 @@
 				</div>
 			</div>
 			<div class="row justify-content-center">
-				<div class="col-xl-10 col-lg-10 col-md-12 col-12 mb-6">
-					<img src="{{ post.image.url }}" alt="{{ post.title|slugify }}" class="img-fluid rounded-lg">
+				<div class="col-12 mb-3">
+					<img src="{{ post.image.url }}" alt="{{ post.title|slugify }}" class="img-fluid w-100 h-auto rounded-lg">
 				</div>
 			</div>
 
@@ -52,21 +51,18 @@
 
 					<div class="d-flex justify-content-between align-items-center mb-5">
 						<div class="d-flex align-items-center">
-							<img src="{{ post.author.avatar.url }}" alt="{{ post.author.get_fullname }}" class="rounded-circle avatar-md">
 							<div class="ml-2 lh-1">
 								<h5 class="mb-1">{{ post.author.get_fullname|capfirst }}</h5>
 								<span class="text-primary">{{ post.author.brief_desc|striptags|capfirst|safe }}</span>
 							</div>
 						</div>
 						<div>
-							<span class="mr-2 text-muted">Share</span>
+							<span class="mr-2 text-muted">Partager</span>
 							<a href="#!" class="mr-2 text-muted"><i class="fab fa-facebook"></i></a>
 							<a href="#!" class="mr-2 text-muted"><i class="fab fa-twitter"></i></a>
 							<a href="#!" class="mr-2 text-muted "><i class="fab fa-linkedin"></i></a>
 						</div>
 					</div>
-
-					{% include "pages/ps-newsletters.html" %}
 				</div>
 			</div>
 		</div>

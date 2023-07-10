@@ -59,12 +59,9 @@ class CourseDetailView(generic.DetailView, generic.FormView):
 
         if self.request.user.is_authenticated and user.type == "STUDENT":
             if "comment_form" not in context:
-                context["comment_form"] = self.form_class(request=self.request)
+                context["comment_form"] = self.form_class(self.request)
 
-        if (
-            self.request.user.is_authenticated
-            and context.get("course") in user.course_created.all()
-        ):
+        if self.request.user.is_authenticated:
             button_context = "you dont enrolled this course"
             button_text_enrolled = "disableClick"
         elif self.request.user.is_authenticated and user.type == "TEACHER":

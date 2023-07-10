@@ -87,7 +87,6 @@ class CustomUserAdmin(admin.ModelAdmin):
         "email",
         "uppercase_name",
         "country",
-        "get_teacher_courses_count",
         "account_verified",
         "show_user_url",
         "date_joined",
@@ -108,34 +107,6 @@ class CustomUserAdmin(admin.ModelAdmin):
     readonly_fields = ["show_user_url", "last_login", "date_joined"]
     search_fields = ["get_fullname", "email"]
     filter_horizontal = ["groups", "user_permissions"]
-
-    def has_delete_permission(self, request, obj=None):
-        return False
-
-    def get_form(self, request, obj=None, **kwargs):
-        form = super().get_form(request, obj, **kwargs)
-        is_superuser = request.user.is_superuser
-        disabled_fields = set()
-
-        if not is_superuser:
-            disabled_fields |= {
-                "is_superuser",
-                "user_permissions",
-            }
-
-        if not is_superuser and obj is not None and obj == request.user:
-            disabled_fields |= {
-                "is_staff",
-                "is_superuser",
-                "groups",
-                "user_permissions",
-            }
-
-        for f in disabled_fields:
-            if f in form.base_fields:
-                form.base_fields[f].disabled = True
-
-        return form
 
     @admin.display(description="Nom & prénom")
     def uppercase_name(self, obj):
