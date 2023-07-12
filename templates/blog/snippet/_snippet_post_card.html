@@ -4,7 +4,7 @@
 			<a href="{{ object.get_absolute_url }}" class="card-img-top">
 				<img src="{% if object.image %}{{ object.image.url }}{% else %}{{ STATIC_PREFIX }}img/cours/empty.jpg{% endif %}" class="card-img-top rounded-top" alt="{{ object }}">
 			</a>
-
+			
 			<div class="card-body">
 				<h3 class="h4 mb-2 text-truncate-line-2">
 					<a href="{{ object.get_absolute_url }}" class="text-inherit">

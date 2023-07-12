@@ -33,10 +33,10 @@
 							</p>
 
 							<p class="fs-4">
-								<i class="bi bi-telephone text-primary me-2"></i>
+								<i class="bi bi-telephone text-primary me-2"></i> 
 								{{ addr_contact }}
 							</p>
-
+							
 							<p class="fs-4">
 								<i class="bi bi-envelope-open text-primary me-2"></i>
 								{{ addr_email }}
@@ -47,12 +47,12 @@
 								2652 Kooter Lane Charlotte, NC 28263
 							</p>
 						</div>
-
+						
 						<div class="mt-10">
 							<a href="#!" class="text-muted me-3">
 								<i class="fab fa-facebook fs-3"></i>
 							</a>
-
+							
 							<a href="#!" class="text-muted me-3">
 								<i class="fab fa-twitter fs-3"></i>
 							</a>
@@ -60,7 +60,7 @@
 					</div>
 				</div>
 			</div>
-
+			
 			<div class="col-lg-7 d-lg-flex align-items-center w-lg-50 min-vh-lg-100 bg-cover top-0 right-0">
 				<div class="px-xl-10 px-4 py-8 py-lg-0">
 					{% include "account/snippets/_snippet_message.html" %}
@@ -99,7 +99,7 @@
 
 								{% render_field form.phone placeholder=form.phone.help_text %}
 							</div>
-
+							
 							<div class="mb-3 col-12">
 								<label class="text-dark form-label"for="{{ form.reason.id_for_label }}">
 									{{ form.reason.label }}
@@ -108,14 +108,14 @@
 
 								{% render_field form.reason placeholder=form.reason.help_text %}
 							</div>
-
+							
 							<div class="mb-3 col-12">
 								<label class="text-dark form-label"for="{{ form.message.id_for_label }}">
 								{{ form.message.label }}</label>
-
+								
 								{% render_field form.message placeholder=form.message.help_text %}
 							</div>
-
+							
 							<div class="col-12 mb-3">
 								<button type="submit" class="btn btn-primary btn-block">
 									Envoyer

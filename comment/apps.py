@@ -6,10 +6,10 @@ from django.dispatch.dispatcher import receiver
 
 
 class CommentConfig(AppConfig):
-    name = "comment"
-    label = "comment"
-    verbose_name = "comment"
+    name = 'comment'
+    label = 'comment'
+    verbose_name = 'comment'
 
     def ready(self):
-        comment = self.get_model("Comment")
-        pre_save.connect(receiver, sender=comment)
+        comment = self.get_model('Comment')
+        pre_save.connect(receiver, sender=comment) 

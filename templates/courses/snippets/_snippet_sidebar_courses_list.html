@@ -9,7 +9,7 @@
 					{{ filter_course.form.category.label }}
 				</span>
 				{% for category in filter_course.form.category %}
-					<div class="custom-control custom-checkbox mb-1">
+					<div class="custom-control custom-checkbox mb-1">						
 						{{ category.tag }}
 						<label class="custom-control-label" for="{{ category.id_for_label }}">
 							{{ category.choice_label|capfirst }}
@@ -33,7 +33,7 @@
 				{% endfor %}
 				<input class="btn btn-sm btn-dark-primary btn-block mt-3" value="search" type="submit" />
 			</div>
-
+		
 			<div class="card-body border-top">
 				<span class="dropdown-header px-0 mb-2">
 					{{ filter_course.form.language.label }}
@@ -48,7 +48,7 @@
 				{% endfor %}
 				<input class="btn btn-sm btn-dark-primary btn-block mt-3" value="search" type="submit" />
 			</div>
-
+		
 			<div class="card-body border-top">
 				<span class="dropdown-header px-0 mb-2">Évaluation</span>
 				<div class="custom-control custom-radio mb-1">
@@ -62,7 +62,7 @@
 						<span class="font-size-xs">4.5 & UP</span>
 					</label>
 				</div>
-
+			
 				<div class="custom-control custom-radio mb-1">
 					<input type="radio" class="custom-control-input" id="starRadio2" name="customRadio" checked>
 					<label class="custom-control-label" for="starRadio2">
@@ -74,7 +74,7 @@
 						<span class="font-size-xs">4.0 & UP</span>
 					</label>
 				</div>
-
+			
 				<div class="custom-control custom-radio mb-1">
 					<input type="radio" class="custom-control-input" id="starRadio3" name="customRadio">
 					<label class="custom-control-label" for="starRadio3">
@@ -86,7 +86,7 @@
 						<span class="font-size-xs">3.5 & UP</span>
 					</label>
 				</div>
-
+			
 				<div class="custom-control custom-radio mb-1">
 					<input type="radio" class="custom-control-input" id="starRadio4" name="customRadio">
 					<label class="custom-control-label" for="starRadio4">

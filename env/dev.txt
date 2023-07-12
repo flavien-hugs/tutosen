@@ -1,6 +1,0 @@
--r base.txt
-flake8
-isort
-black
-pre-commit
-django-debug-toolbar

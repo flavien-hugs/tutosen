@@ -1,6 +1,8 @@
+# accounts.management.commands.reset_users.py
+
 from django.core.management.base import BaseCommand
 
-from ...models import User
+from ...models import Teacher, Student, User
 
 
 class Command(BaseCommand):

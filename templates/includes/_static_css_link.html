@@ -1,2 +1,15 @@
-{% load static %}{% get_static_prefix as STATIC_PREFIX %}
-<link type="text/css" rel="stylesheet" href="{{ STATIC_PREFIX }}css/theme.min.css" />
+{% comment %} bootstrap CSS {% endcomment %}
+
+{% load static compress %}
+{% get_static_prefix as STATIC_PREFIX %}
+
+{% compress css %}
+<link type="text/css" href="{{ STATIC_PREFIX }}fonts/feather/feather.css" rel="stylesheet"/>
+<link type="text/css" href="{{ STATIC_PREFIX }}css/libs/materialdesignicons.min.css" rel="stylesheet"/>
+<link type="text/css" href="{{ STATIC_PREFIX }}css/libs/magnific-popup.css" rel="stylesheet"/>
+<link type="text/css" href="{{ STATIC_PREFIX }}css/libs/bootstrap-select.min.css" rel="stylesheet"/>
+<link type="text/css" href="{{ STATIC_PREFIX }}css/libs/tagify.css" rel="stylesheet">
+
+<link type="text/css" rel="stylesheet" href="{{ STATIC_PREFIX }}css/theme.min.css"/>
+
+{% endcompress css %}

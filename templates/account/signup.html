@@ -31,9 +31,9 @@
             {{ form.first_name|add_label_class:"form-label" }}
             <div class="input-group">
                 {% render_field form.civility|add_error_class:"is-invalid" class+="custom-select w-25" %}
-
+                
                 {% render_field form.first_name|add_error_class:"is-invalid" class+="form-control w-75" placeholder=form.first_name.label %}
-
+            
                 {% if form.first_name.errors %}
                     <small class="text-muted">
                         {% for error in form.first_name.errors %}
@@ -47,7 +47,7 @@
         <div class="form-group">
             {{ form.last_name|add_label_class:"form-label" }}
             {% render_field form.last_name|add_error_class:"is-invalid" class+="form-control" placeholder=form.last_name.label %}
-
+            
             {% if form.last_name.errors %}
                 <small class="text-muted">
                     {% for error in form.last_name.errors %}
@@ -56,11 +56,11 @@
                 </small>
             {% endif %}
         </div>
-
+        
         <div class="form-group">
             {{ form.email|add_label_class:"form-label" }}
             {% render_field form.email|attr:"type:email"|add_error_class:"is-invalid" class+="form-control shadow-none" placeholder=form.email.label %}
-
+            
             {% if form.email.errors %}
                 <small class="text-muted">
                     {% for error in form.email.errors %}
@@ -70,12 +70,12 @@
             {% endif %}
         </div>
 
-        <!--  <div class="form-group">
+        <div class="form-group">
             {{ form.phone_number|add_label_class:"form-label" }}
             <div class="input-group">
                 {% render_field form.phone_number_prefix|add_error_class:"is-invalid"  class+="custom-select shadow-none w-25" %}
                 {% render_field form.phone_number|add_error_class:"is-invalid" class+="form-control shadow-none w-75" placeholder=form.phone_number.label %}
-
+            
                 {% if form.phone_number.errors %}
                     <small class="text-muted">
                         {% for error in form.phone_number.errors %}
@@ -84,7 +84,7 @@
                     </small>
                 {% endif %}
             </div>
-        </div> -->
+        </div>
 
         <div class="form-group">
             {{ form.type|add_label_class:"form-label" }}
@@ -96,7 +96,7 @@
         <div class="form-group">
             {{ form.password1|add_label_class:"form-label" }}
             {% render_field form.password1|attr:"type:password"|add_error_class:"is-invalid" class+="form-control" placeholder="**************" %}
-
+            
             {% if form.password1.errors %}
                 <small class="text-muted">
                     {% for error in form.password1.errors %}
@@ -109,7 +109,7 @@
         <div class="form-group">
             {{ form.password2|add_label_class:"form-label" }}
             {% render_field form.password2|attr:"type:password"|add_error_class:"is-invalid" class+="form-control" placeholder="**************" %}
-
+            
             {% if form.password2.errors %}
                 <small class="text-muted">
                     {% for error in form.password2.errors %}
@@ -147,7 +147,7 @@
     <script  type="text/javascript">
         $(document).ready(function () {
             $("button").prop("disabled", true);
-
+            
             // When the value of the text area changes...
             $("#id_password1").focusout("input", function() {
                 // If there's at least one character...
@@ -159,10 +159,10 @@
                     $("button").prop("disabled", true);
                 }
             });
-
+            
             $('#id_email').focusout(function (e) {
                 e.preventDefault();
-
+                
                 var form_data = $(this).closest("form");
                 var data_url = "{% url 'accounts:check_validate_data' %}";
 
@@ -200,5 +200,5 @@
                 return false;
             });
         });
-    </script>
+    </script>        
 {% endblock ajax_javascript %}

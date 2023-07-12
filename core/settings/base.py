@@ -3,37 +3,34 @@ import os
 import logging.config
 from pathlib import Path
 from django.contrib.messages import constants as messages
+from django.core.management.utils import get_random_secret_key
 
-from dotenv import dotenv_values
+BASE_DIR = Path(__file__).resolve().parent.parent
 
-env = dotenv_values(".env")
 
-abspath = os.path.abspath(__file__)
-dirname = os.path.dirname(os.path.dirname(abspath))
-BASE_DIR = os.path.dirname(dirname)
+SECRET_KEY = os.getenv('SECRET_KEY', get_random_secret_key())
 
-SECRET_KEY = env.get('SECRET_KEY')
-
-DEBUG = env.get('DEBUG')
+DEBUG = str(os.getenv("DEBUG", "True"))
 TEMPLATE_DEBUG = DEBUG
 
 META_KEYWORDS = ''
-APPEND_SLASH = True
 DEFAULT_CHARSET = 'UTF-8'
 SITE_DESCRIPTION = "Apprendre, Comprendre, Innover & Partager"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.getenv(
+    "DJANGO_ALLOWED_HOSTS",
+    "127.0.0.1, localhost"
+).split(",")
 
-SITE_NAME = 'Bahut forum Labs'
+APPEND_SLASH = True
+SITE_NAME = 'tutosen'
 THOUSAND_SEPARATOR = ' '
 USE_THOUSAND_SEPARATOR = True
-DEFAULT_CONTENT_TYPE = 'text/html'
 
 SITE_ID = 3
-ADMIN_URL = 'ssh-unsta/'
+ADMIN_URL = 'xx-tutosen/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-
 
 INSTALLED_APPS = [
     'django.contrib.auth',
@@ -81,6 +78,7 @@ LOCALS_APPS = [
 
 INSTALLED_APPS += THIRD_PARTY_APPS + LOCALS_APPS
 
+
 AUTH_USER_MODEL = "accounts.User"
 
 MIDDLEWARE = [
@@ -99,16 +97,18 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'django.middleware.gzip.GZipMiddleware',
-    'django.middleware.http.ConditionalGetMiddleware',
+
+    # 'django.middleware.http.ConditionalGetMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
 
-TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
+TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATE_DIR],
+        'DIRS': [TEMPLATES_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -131,9 +131,24 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
+SESSION_COOKIE_HTTPONLY = True
 CSRF_COOKIE_HTTPONLY = True
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = "SAMEORIGIN"
+
+if os.environ.get('GITHUB_WORKFLOW'):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'github_actions',
+            'USER': 'postgres',
+            'PASSWORD': 'postgres',
+            'HOST': '127.0.0.1',
+            'PORT': 5432,
+            'ATOMIC_REQUESTS': True
+        }
+    }
+
 
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.Argon2PasswordHasher',
@@ -143,6 +158,7 @@ PASSWORD_HASHERS = [
 ]
 
 DEFAULT_HASHING_ALGORITHM = 'sha1'
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -155,20 +171,18 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-
 TIME_ZONE = 'UTC'
 LANGUAGE_CODE = 'fr'
-
-USE_TZ = False
-USE_I18N = USE_L10N = True
+USE_I18N = USE_L10N = USE_TZ = True
 DATE_INPUT_FORMATS = ('%d/%m/%Y', '%Y-%m-%d')
 
-
 MEDIA_URL = '/media/'
-STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -182,9 +196,12 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 LOGOUT_URL = 'home'
+
 LOGIN_URL = 'account_login'
 ACCOUNT_LOGOUT_REDIRECT = 'home'
+
 ACCOUNT_ADAPTER = "accounts.adapter.CustomAccountAdapter"
+
 LOGIN_REDIRECT_URL = ACCOUNT_ADAPTER
 
 ACCOUNT_UNIQUE_EMAIL = True
@@ -205,22 +222,38 @@ ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 ACCOUNT_PASSWORD_INPUT_RENDER_VALUE = True
 ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
-ACCOUNT_USER_MODEL_USERNAME_FIELD = 'email'
-ACCOUNT_EMAIL_SUBJECT_PREFIX = f"{SITE_NAME} <no-reply@unsta.me>"
+ACCOUNT_USER_MODEL_USERNAME_FIELD = 'username'
+ACCOUNT_EMAIL_SUBJECT_PREFIX = f"{SITE_NAME} <no-reply@tutosen.com>"
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = LOGIN_URL
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = LOGIN_REDIRECT_URL
 
-
 ACCOUNT_FORMS = {
-    "signup": "accounts.forms.CustomSignupForm",
+    # "login": "allauth.account.forms.LoginForm",
+    # "add_email": "allauth.account.forms.AddEmailForm",
+    # "change_password": "allauth.account.forms.ChangePasswordForm",
+    # "set_password": "allauth.account.forms.SetPasswordForm",
+    # "reset_password": "allauth.account.forms.ResetPasswordForm",
+    # "reset_password_from_key": "allauth.account.forms.ResetPasswordKeyForm",
+    # "disconnect": "allauth.socialaccount.forms.DisconnectForm",
+    "signup": "accounts.forms.CustomSignupForm", # Use our custom signup form
 }
 
-EMAIL_HOST = env.get('EMAIL_HOST')
-EMAIL_PORT = env.get('EMAIL_PORT')
-EMAIL_USE_TLS = env.get('EMAIL_USE_TLS')
-EMAIL_HOST_USER = env.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = env.get('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = SERVER_EMAIL = 'no-reply@unstainc.com'
+EMAIL_PORT = 587
+EMAIL_TIMEOUT = 5
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp-relay.sendinblue.com'
+EMAIL_HOST_USER = 'flavienhgs@gmail.com'
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
+DEFAULT_FROM_EMAIL = SERVER_EMAIL = 'hello@tutosen.com'
+
+EMAIL_BACKEND = os.environ.get(
+    'EMAIL_BACKEND',
+    default='django.core.mail.backends.smtp.EmailBackend',
+)
+
+WHITENOISE_KEEP_ONLY_HASHED_FILES = True
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
@@ -249,13 +282,19 @@ PHONENUMBER_DB_FORMAT = "NATIONAL"
 SUMMERNOTE_THEME = 'bs4'
 
 SUMMERNOTE_CONFIG = {
+    # Using SummernoteWidget - iframe mode, default
     'iframe': True,
 
     'summernote': {
+        # As an example, using Summernote Air-mode
         'airMode': False,
 
+        # Change editor size
         'width': '100%',
         'height': '300',
+
+        # Toolbar customization
+        # https://summernote.org/deep-dive/#custom-toolbar-popover
         'toolbar': [
             ['font', ['bold', 'italic', 'underline', 'clear', 'strikethrough', 'superscript', 'subscript']],
             ['fontname', ['fontname']],
@@ -266,23 +305,27 @@ SUMMERNOTE_CONFIG = {
             ['view', ['fullscreen', 'codeview', 'help']],
         ],
 
+        # Set to `True` to return attachment paths in absolute URIs.
         'attachment_absolute_uri': True,
 
+        # Require users to be authenticated for uploading attachments.
         'attachment_require_authentication': True,
 
+        # Set custom storage class for attachments.
         'attachment_storage_class': 'utils.function_utils.upload_image_path',
 
         'codemirror': {
             'mode': 'htmlmixed',
             'lineNumbers': 'true',
+            # You have to include theme file in 'css' or 'css_for_inplace' before using it.
             'theme': 'monokai',
         },
     },
 }
+
 SECURE_SSL_REDIRECT = False
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'http')
 INTERNAL_IPS = ['localhost', '127.0.0.1', '127.0.0.1:8001', '127.0.0.1:8002']
-
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
@@ -304,6 +347,9 @@ CORS_ORIGIN_WHITELIST = (
 )
 
 TAGGIT_CASE_INSENSITIVE = True
+
+COMPRESS_ENABLED = True
+COMPRESS_STORAGE = "compressor.storage.GzipCompressorFileStorage"
 
 IGNORABLE_404_URLS = [
     re.compile(r'^/cpc/'),
@@ -332,11 +378,6 @@ COMPRESS_CSS_FILTERS = [
 ]
 COMPRESS_JS_FILTERS = ["compressor.filters.jsmin.JSMinFilter"]
 COMPRESS_REBUILD_TIMEOUT = 5400
-COMPRESS_PRECOMPILERS = (
-    ("text/less", "/usr/local/bin/lessc {infile} {outfile}"),
-    ("text/x-sass", "/usr/local/bin/sass {infile} {outfile}"),
-    ("text/x-scss", "/usr/local/bin/sass {infile} {outfile}"),
-)
 COMPRESS_OFFLINE_CONTEXT = {
     "STATIC_URL": "STATIC_URL",
 }

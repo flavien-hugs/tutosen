@@ -1,5 +1,5 @@
 import os
-from . import *  # noqa F405
+from .base import *  # noqa F405
 
 abspath = os.path.abspath(__file__)
 dirname = os.path.dirname(os.path.dirname(abspath))
