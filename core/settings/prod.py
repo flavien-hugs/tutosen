@@ -14,17 +14,6 @@ PREPEND_WWW = True
 DEBUG = TEMPLATE_DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
-DATABASES = {
-    'default': {
-        'ENGINE': "django.db.backends.postgresql",
-        'NAME': os.environ.get('DATABASE_NAME', 'tutosen'),
-        'USER': os.environ.get('DATABASE_USER', 'tutosen'),
-        'PASSWORD': os.environ.get('DATABASE_PASSWORD', 'tutosen'),
-        'HOST': os.environ.get('DATABASE_HOST', 'localhost'),
-        'PORT': os.environ.get('DATABASE_PORT', 5432),
-        'ATOMIC_REQUESTS': True
-    }
-}
 
 INSTALLED_APPS += ['whitenoise.runserver_nostatic']
 
