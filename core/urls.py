@@ -45,8 +45,6 @@ urlpatterns = [
     path('courses/', include('courses.urls')),
     path('blog/', include('blog.urls', namespace="blog")),
     path('pages/', include('pages.urls', namespace='pages')),
-    path('jet/', include('jet.urls', 'jet')),
-    path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     path('summernote/', include('django_summernote.urls')),
     path(settings.ADMIN_URL, admin.site.urls),
     path('', include('accounts.urls')),

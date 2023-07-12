@@ -1,10 +1,3 @@
-# core.settings.py
-
-"""
-For the full list of settings and their values, see
-https://docs.djangoproject.com/en/3.1/ref/settings/
-"""
-
 import re
 import os
 import logging.config
@@ -12,17 +5,11 @@ from pathlib import Path
 from django.contrib.messages import constants as messages
 from django.core.management.utils import get_random_secret_key
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY', get_random_secret_key())
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = str(os.getenv("DEBUG", "True"))
 TEMPLATE_DEBUG = DEBUG
 
@@ -45,8 +32,6 @@ ADMIN_URL = 'xx-tutosen/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
-# Application definition
-
 INSTALLED_APPS = [
     'django.contrib.auth',
 
@@ -62,8 +47,6 @@ INSTALLED_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
-    'jet.dashboard',
-    'jet',
     'django_summernote',
     'django.contrib.admin',
 
@@ -95,7 +78,6 @@ LOCALS_APPS = [
 
 INSTALLED_APPS += THIRD_PARTY_APPS + LOCALS_APPS
 
-# https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
 
 AUTH_USER_MODEL = "accounts.User"
 
@@ -121,16 +103,12 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'core.urls'
 
-# https://docs.djangoproject.com/en/dev/ref/settings/#templates
-# https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-TEMPLATES-BACKEND
-# https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
-# https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
-# https://docs.djangoproject.com/en/dev/ref/templates/api/#loader-types
+TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [str(BASE_DIR / 'templates')],
+        'DIRS': [TEMPLATES_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -153,20 +131,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-# https://docs.djangoproject.com/en/dev/ref/settings/#session-cookie-httponly
 SESSION_COOKIE_HTTPONLY = True
-
-# https://docs.djangoproject.com/en/dev/ref/settings/#csrf-cookie-httponly
 CSRF_COOKIE_HTTPONLY = True
-
-# https://docs.djangoproject.com/en/dev/ref/settings/#secure-browser-xss-filter
 SECURE_BROWSER_XSS_FILTER = True
-
-# https://docs.djangoproject.com/en/dev/ref/settings/#x-frame-options
 X_FRAME_OPTIONS = "SAMEORIGIN"
 
-# Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 if os.environ.get('GITHUB_WORKFLOW'):
     DATABASES = {
         'default': {
@@ -179,22 +148,7 @@ if os.environ.get('GITHUB_WORKFLOW'):
             'ATOMIC_REQUESTS': True
         }
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': "django.db.backends.postgresql",
-            'NAME': os.environ.get('DATABASE_NAME', 'tutosen'),
-            'USER': os.environ.get('DATABASE_USER', 'tutosen'),
-            'PASSWORD': os.environ.get('DATABASE_PASSWORD', 'tutosen'),
-            'HOST': os.environ.get('DATABASE_HOST', 'localhost'),
-            'PORT': os.environ.get('DATABASE_PORT', 5432),
-            'ATOMIC_REQUESTS': True
-        }
-    }
 
-# password hashers
-# https://docs.djangoproject.com/en/dev/ref/settings/#password-hashers
-# https://docs.djangoproject.com/en/dev/topics/auth/passwords/#using-argon2-with-django
 
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.Argon2PasswordHasher',
@@ -203,13 +157,7 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
 ]
 
-# Hashage des donnees
-# https://docs.djangoproject.com/fr/3.1/ref/settings/
-
 DEFAULT_HASHING_ALGORITHM = 'sha1'
-
-# Password validation
-# https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -223,70 +171,38 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-
-# Internationalization
-# See: https://docs.djangoproject.com/en/3.2/ref/settings/#language-code
-# See: https://docs.djangoproject.com/en/3.2/ref/settings/#use-i18n
-# See: https://docs.djangoproject.com/en/3.2/ref/settings/#use-l10n
-# See: https://docs.djangoproject.com/en/3.2/ref/settings/#use-tz
-
 TIME_ZONE = 'UTC'
 LANGUAGE_CODE = 'fr'
 USE_I18N = USE_L10N = USE_TZ = True
 DATE_INPUT_FORMATS = ('%d/%m/%Y', '%Y-%m-%d')
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.1/howto/static-files/
-# See: https://docs.djangoproject.com/en/3.2/ref/settings/#static-root
-
 MEDIA_URL = '/media/'
-STATIC_URL = '/static/'
-MEDIA_ROOT = BASE_DIR / 'media'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-# staticfiles finders
-# See: https://docs.djangoproject.com/en/3.1/ref/contrib/staticfiles/#staticfiles-finders
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-
-    # django compressor staticfiles
     'compressor.finders.CompressorFinder',
 ]
 
-# AUTHENTICATION CONFIGURATION
 AUTHENTICATION_BACKENDS = [
-    # Nécessaire pour se connecter par nom
-    # d'utilisateur dans l'admin Django, indépendamment de `allauth`
-
     'django.contrib.auth.backends.ModelBackend',
-
-    # méthodes d'authentification spécifiques à` allauth`,
-    # comme la connexion par e-mail
-
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-# Les utilisateurs connectés sont redirigés ici s'ils
-# consultent les pages de connexion/inscription
-
-# https://docs.djangoproject.com/fr/dev/ref/settings/#logout-url
 LOGOUT_URL = 'home'
 
-# https://docs.djangoproject.com/fr/dev/ref/settings/#login-url
 LOGIN_URL = 'account_login'
 ACCOUNT_LOGOUT_REDIRECT = 'home'
 
 ACCOUNT_ADAPTER = "accounts.adapter.CustomAccountAdapter"
 
-# https://docs.djangoproject.com/fr/dev/ref/settings/#login-redirect-url
 LOGIN_REDIRECT_URL = ACCOUNT_ADAPTER
-
-# Configuration django-allauth
-# https://django-allauth.readthedocs.io/en/latest/configuration.html
 
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_REQUIRED = True
@@ -311,8 +227,6 @@ ACCOUNT_EMAIL_SUBJECT_PREFIX = f"{SITE_NAME} <no-reply@tutosen.com>"
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = LOGIN_URL
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = LOGIN_REDIRECT_URL
 
-# Control the forms that django-allauth uses
-
 ACCOUNT_FORMS = {
     # "login": "allauth.account.forms.LoginForm",
     # "add_email": "allauth.account.forms.AddEmailForm",
@@ -333,27 +247,15 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
 DEFAULT_FROM_EMAIL = SERVER_EMAIL = 'hello@tutosen.com'
 
-# Pour le développement, envoyer tous les courriers électroniques
-# à la console au lieu de les envoyer
-
 EMAIL_BACKEND = os.environ.get(
     'EMAIL_BACKEND',
     default='django.core.mail.backends.smtp.EmailBackend',
 )
 
-# Activez le backend de stockage WhiteNoise qui se charge de compresser
-# les fichiers statiques et de créer des noms uniques pour chaque version
-# afin qu'ils puissent être mis en cache à jamais en toute sécurité.
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-# django/core/serializers/json.Serializer pour avoir la fonction de `dumps`.
+WHITENOISE_KEEP_ONLY_HASHED_FILES = True
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
-
-
-# https://docs.djangoproject.com/fr/3.2/ref/settings/#message-tags
-# Messages built-in framework
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-secondary',
@@ -362,9 +264,6 @@ MESSAGE_TAGS = {
     messages.WARNING: 'alert-warning',
     messages.ERROR: 'alert-danger',
 }
-
-# Configuration django-jet
-# https://jet.readthedocs.io/en/latest/config_file.html
 
 JET_THEMES = [
     {
@@ -380,10 +279,6 @@ JET_CHANGE_FORM_SIBLING_LINKS = True
 PHONENUMBER_DEFAULT_REGION = "CI"
 PHONENUMBER_DB_FORMAT = "NATIONAL"
 
-# Summernote configuration
-# https://github.com/summernote/django-summernote
-
-# Show summernote with Bootstrap4
 SUMMERNOTE_THEME = 'bs4'
 
 SUMMERNOTE_CONFIG = {
@@ -428,14 +323,9 @@ SUMMERNOTE_CONFIG = {
     },
 }
 
-# config django-debug-toolbar
-# https://django-debug-toolbar.readthedocs.io/en/latest/installation.html
-
 SECURE_SSL_REDIRECT = False
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'http')
 INTERNAL_IPS = ['localhost', '127.0.0.1', '127.0.0.1:8001', '127.0.0.1:8002']
-
-# http://www.django-rest-framework.org/api-guide/settings/
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
@@ -456,17 +346,10 @@ CORS_ORIGIN_WHITELIST = (
     'https://tutosen.unsta.net'
 )
 
-# https://django-taggit.readthedocs.io/en/latest/getting_started.html
-
 TAGGIT_CASE_INSENSITIVE = True
-
-# Django-compressor config
-# https://django-compressor.readthedocs.io/en/stable/settings/#settings
 
 COMPRESS_ENABLED = True
 COMPRESS_STORAGE = "compressor.storage.GzipCompressorFileStorage"
-
-# https://docs.djangoproject.com/fr/3.2/ref/settings/#ignorable-404-urls
 
 IGNORABLE_404_URLS = [
     re.compile(r'^/cpc/'),
@@ -483,3 +366,18 @@ DISALLOWED_USER_AGENTS = [
     re.compile(r'^SiteSucker.*'),
     re.compile(r'^sohu-search'),
 ]
+
+
+COMPRESS_ENABLED = True
+COMPRESS_URL = STATIC_URL
+COMPRESS_OUTPUT_DIR = "cache"
+COMPRESS_STORAGE = "compressor.storage.GzipCompressorFileStorage"
+COMPRESS_CSS_FILTERS = [
+    "compressor.filters.css_default.CssAbsoluteFilter",
+    "compressor.filters.cssmin.CSSMinFilter",
+]
+COMPRESS_JS_FILTERS = ["compressor.filters.jsmin.JSMinFilter"]
+COMPRESS_REBUILD_TIMEOUT = 5400
+COMPRESS_OFFLINE_CONTEXT = {
+    "STATIC_URL": "STATIC_URL",
+}
