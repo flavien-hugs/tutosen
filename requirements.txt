@@ -48,7 +48,7 @@ packaging==23.1
 pathspec==0.11.1
 phonenumbers==8.13.15
 Pillow==9.5.0
-platformdirs==3.8.0
+platformdirs==3.8.1
 pre-commit==3.3.3
 psycopg2-binary==2.9.6
 pycodestyle==2.10.0
